@@ -90,12 +90,111 @@ const characterGroups: CharacterGroup[] = [
   },
   {
     category: "典故补充",
-    chars: "窕夭灼华扬愿悄荑凝倩盼蒹苍白伊方宾碧眸睐瑰艳闲凫凌波步尘宝珠辉媚韫怀翠耀衣浅暗动黄昏初阳宿雨圆举泉流甸林霰金缕语",
+    chars: "窕夭灼华扬愿悄荑凝倩盼蒹苍白伊方宾碧眸睐瑰艳闲凫凌波步尘宝珠辉媚韫怀翠耀衣浅暗动黄昏初阳宿雨圆举泉流甸林霰金缕语恒升赤子心中育弘亨足止久德言从登志洁成暧依花归日",
     feminine: 3.8,
     rarity: 3.5,
     usability: 3.8,
     familyTag: "",
     folkElement: "依具体字义与流派而异",
+  },
+  {
+    category: "山川林壑",
+    chars: "山川岳岫岑峦峰岭岩屿崖谷丘野原畴陌径蹊亭台阁庭园苑圃坞沙坻皋陆坡麓冈壑汭陂矶岸汀渚洲",
+    feminine: 3.7,
+    rarity: 3.7,
+    usability: 3.8,
+    familyTag: "",
+    folkElement: "土/木/水（依字义与流派而异）",
+  },
+  {
+    category: "时序节候",
+    chars: "春夏秋冬晨暮朝夕昼夜旦曙宵岁年时节序元正朔望旬永初始今古昔未晏晷辰刻暝熙暾旭暁旻昊昶昱昴昧旸旖",
+    feminine: 3.8,
+    rarity: 3.5,
+    usability: 4,
+    familyTag: "",
+    folkElement: "火/木（依字义与流派而异）",
+  },
+  {
+    category: "风雨气象",
+    chars: "风雨霖霄霭霙雷电霆飔飏飒煦暖寒凉润雯霈沛霂霡霦霱霭霪霆霎雹霭霄霁霾霖霏云雪露霜虹烟雾",
+    feminine: 3.9,
+    rarity: 3.9,
+    usability: 3.4,
+    familyTag: "影",
+    folkElement: "水/火（依字义与流派而异）",
+  },
+  {
+    category: "色彩纹理",
+    chars: "丹朱彤绯绛紫黛青缃缥蓝绿红黄赭玄皓皙绚缦缤斓彩皑皦皛皜皎素碧翠金银绀绮锦纹绫绸纱绣练缟",
+    feminine: 4.1,
+    rarity: 3.5,
+    usability: 3.9,
+    familyTag: "",
+    folkElement: "依颜色、字义与流派而异",
+  },
+  {
+    category: "德性志意",
+    chars: "仁义礼智信忠孝恕谦恭俭勤诚正直勇毅廉宽恺穆淳敦厚端庄睦恪敏达通介方端贤淑良恂愉恪恭俨恺悫",
+    feminine: 3.7,
+    rarity: 3.1,
+    usability: 4.1,
+    familyTag: "",
+    folkElement: "依字义与流派而异",
+  },
+  {
+    category: "才思书艺",
+    chars: "才学博哲睿聪悟灵巧妙艺翰简笺砚笔毫篇句典籍史策论赋词曲画篆隶楷章辞墨文书诗咏吟题序颂赞箴铭诵读",
+    feminine: 3.8,
+    rarity: 3.4,
+    usability: 4,
+    familyTag: "",
+    folkElement: "木/火/金（流派不一）",
+  },
+  {
+    category: "舟车居器",
+    chars: "舟帆楫棹樯桥梁轩窗帘帷幕屏扇枕簟席几案灯烛镜奁匣觞杯盏壶鼎罍盘簪钗钿舆车舫榭廊庐舍门扉阶榻",
+    feminine: 3.8,
+    rarity: 3.8,
+    usability: 3.5,
+    familyTag: "",
+    folkElement: "依材质、字义与流派而异",
+  },
+  {
+    category: "草木扩展",
+    chars: "柳竹松柏梧桐榆槐杉檀枫榕樱梨橘柚橙荔蔷薜萝菊茱萸藤萍藻菱蘋蓼芦苇荻蒲茗茶穗禾黍稻桑柞栗榛椿楠栀",
+    feminine: 4.1,
+    rarity: 3.5,
+    usability: 3.8,
+    familyTag: "",
+    folkElement: "木",
+  },
+  {
+    category: "江河水文",
+    chars: "江河湖海溪涧潭瀑泉津浦港湾泽池沼淇淮汉渭泾汶沂洙漳滇洱溯淙潺滟湛渌漾淼澹溶滔沧溟湍汲洄洺洸洢",
+    feminine: 3.9,
+    rarity: 3.6,
+    usability: 3.7,
+    familyTag: "",
+    folkElement: "水",
+  },
+  {
+    category: "乐舞声律",
+    chars: "宫商角徵律吕韵声拍调谱钟磬鼓管埙篪筝笛琵琶箜篌竽筑舞裾裙翩跹蹁旋回翔奏咏吟唱拍曲歌弦琴瑟箫笙",
+    feminine: 4,
+    rarity: 3.8,
+    usability: 3.6,
+    familyTag: "绍",
+    folkElement: "金/木（流派不一）",
+  },
+  {
+    category: "珍宝器饰",
+    chars: "玥玫珏珞珩珺琛玮玟琨瑚瑗瑄瑢璋璜璠璁璥璪璫璿瓒珉珑琮琥玢玠玳珙珣珧琤瑭瑱璘璊璆琯琡",
+    feminine: 4.1,
+    rarity: 4.1,
+    usability: 3.1,
+    familyTag: "玉",
+    folkElement: "土/金（流派不一）",
   },
 ];
 
@@ -109,6 +208,17 @@ const meanings: Record<string, string> = {
   云天禽羽: "云气、天象与禽羽意象",
   文心安和: "文思、慧心与安和意象",
   典故补充: "为核验具体古籍句子而保留的可用字",
+  山川林壑: "山川、洲渚、林壑与地理意象",
+  时序节候: "晨昏、四时、节序与时间意象",
+  风雨气象: "风雨、云霄与气象意象",
+  色彩纹理: "古典色彩、织物与光泽意象",
+  德性志意: "德性、志意与人格修养",
+  才思书艺: "文章、书画、才思与艺事",
+  舟车居器: "舟车、楼台、居室与古代器物",
+  草木扩展: "木本、草本、果实与田园意象",
+  江河水文: "江河湖海、泉潭与水文意象",
+  乐舞声律: "乐器、声律、歌咏与舞姿",
+  珍宝器饰: "玉石、珍宝与古代佩饰",
 };
 
 const seen = new Set<string>();
@@ -133,7 +243,29 @@ export const characterDictionary: CharacterEntry[] = characterGroups.flatMap(
       })),
 );
 
-export const generationCharacters = characterDictionary.slice(0, 160);
+const generationBuckets = new Map<string, CharacterEntry[]>();
+for (const entry of characterDictionary) {
+  const bucket = generationBuckets.get(entry.category);
+  if (bucket) {
+    bucket.push(entry);
+  } else {
+    generationBuckets.set(entry.category, [entry]);
+  }
+}
+
+export const generationCharacters: CharacterEntry[] = [];
+const generationGroups = [...generationBuckets.values()];
+const largestGenerationGroup = Math.max(
+  ...generationGroups.map((group) => group.length),
+);
+for (let index = 0; index < largestGenerationGroup; index += 1) {
+  for (const group of generationGroups) {
+    const entry = group[index];
+    if (entry) generationCharacters.push(entry);
+    if (generationCharacters.length === 560) break;
+  }
+  if (generationCharacters.length === 560) break;
+}
 
 type FragmentRow = readonly [
   id: string,
@@ -189,6 +321,89 @@ const fragmentRows: FragmentRow[] = [
   ["TS-010", "唐宋诗词", "秦观《鹊桥仙》", "金风玉露一相逢，便胜却人间无数。", "七夕相会", "正面", "https://zh.wikisource.org/zh-hans/%E9%B5%B2%E6%A9%8B%E4%BB%99_%28%E7%BA%96%E9%9B%B2%E5%BC%84%E5%B7%A7%29"],
   ["TS-011", "唐宋诗词", "辛弃疾《青玉案·元夕》", "蛾儿雪柳黄金缕，笑语盈盈暗香去。", "元夕女子与灯影", "正面", "https://zh.wikisource.org/zh-hans/%E9%9D%92%E7%8E%89%E6%A1%88_%28%E6%9D%B1%E9%A2%A8%E5%A4%9C%E6%94%BE%E8%8A%B1%E5%8D%83%E6%A8%B9%29"],
   ["TS-012", "唐宋诗词", "柳永《望海潮》", "有三秋桂子，十里荷花。", "桂荷盛景", "正面", "https://zh.wikisource.org/zh-hans/%E6%9C%9B%E6%B5%B7%E6%BD%AE_%28%E6%9D%B1%E5%8D%97%E5%BD%A2%E5%8B%9D%29"],
+  ["SJ-013", "《诗经》", "《诗经·郑风·女曰鸡鸣》", "琴瑟在御，莫不静好。知子之来之，杂佩以赠之。", "夫妇和乐与杂佩", "正面", "https://ctext.org/book-of-poetry/zh"],
+  ["SJ-014", "《诗经》", "《诗经·卫风·淇奥》", "瞻彼淇奥，绿竹猗猗。如切如磋，如琢如磨。", "绿竹与修养", "正面", "https://ctext.org/book-of-poetry/qi-ao/zh"],
+  ["SJ-015", "《诗经》", "《诗经·小雅·车舝》", "高山仰止，景行行止。", "高山与德行", "正面", "https://ctext.org/book-of-poetry/zh"],
+  ["SJ-016", "《诗经》", "《诗经·小雅·斯干》", "如月之恒，如日之升。", "日月恒升", "祝颂语境", "https://ctext.org/book-of-poetry/zh"],
+  ["SJ-017", "《诗经》", "《诗经·大雅·卷阿》", "凤凰于飞，翙翙其羽。", "凤凰和鸣", "祝颂语境", "https://ctext.org/book-of-poetry/zh"],
+  ["SJ-018", "《诗经》", "《诗经·陈风·东门之池》", "彼美淑姬，可与晤歌。", "女子与歌咏", "正面", "https://ctext.org/book-of-poetry/zh"],
+  ["SJ-019", "《诗经》", "《诗经·小雅·湛露》", "湛湛露斯，匪阳不晞。", "晨露与日光", "宴饮祝颂", "https://ctext.org/book-of-poetry/zh"],
+  ["SJ-020", "《诗经》", "《诗经·小雅·庭燎》", "夜如何其？夜未央，庭燎之光。", "庭燎与夜光", "勤政语境", "https://ctext.org/book-of-poetry/zh"],
+  ["CS-009", "《楚辞》", "《楚辞·九歌·湘君》", "美要眇兮宜修，沛吾乘兮桂舟。", "湘水女神与桂舟", "正面中含等待", "https://ctext.org/chu-ci/xiang-jun/zh"],
+  ["CS-010", "《楚辞》", "《楚辞·九歌·东皇太一》", "吉日兮辰良，穆将愉兮上皇。", "吉日与礼乐", "祭祀祝颂", "https://ctext.org/chu-ci/dong-huang-tai-yi/zh"],
+  ["CS-011", "《楚辞》", "《楚辞·九歌·云中君》", "浴兰汤兮沐芳，华采衣兮若英。", "兰汤、芳华与云神", "正面", "https://ctext.org/chu-ci/yun-zhong-jun/zh"],
+  ["CS-012", "《楚辞》", "《楚辞·九歌·河伯》", "乘水车兮荷盖，驾两龙兮骖螭。", "水神车驾与荷盖", "华美神话语境", "https://ctext.org/chu-ci/he-bo/zh"],
+  ["CS-013", "《楚辞》", "《楚辞·九章·橘颂》", "后皇嘉树，橘徕服兮。受命不迁，生南国兮。", "嘉树与坚贞", "正面", "https://ctext.org/chu-ci/ju-song/zh"],
+  ["CS-014", "《楚辞》", "《楚辞·九章·思美人》", "芳与泽其杂糅兮，羌芳华自中出。", "内在芳华", "正面中含忧思", "https://ctext.org/chu-ci/si-mei-ren/zh"],
+  ["CS-015", "《楚辞》", "《楚辞·大招》", "青春受谢，白日昭只。春气奋发，万物遽只。", "春气与万物生长", "招魂篇中的明丽片段", "https://ctext.org/chu-ci/da-zhao/zh"],
+  ["JZ-001", "诸子经传", "《论语·雍也》", "知者乐水，仁者乐山。", "山水与仁智", "正面", "https://ctext.org/analects/yong-ye/zh"],
+  ["JZ-002", "诸子经传", "《论语·述而》", "志于道，据于德，依于仁，游于艺。", "德艺修养", "正面", "https://ctext.org/analects/shu-er/zh"],
+  ["JZ-003", "诸子经传", "《论语·子罕》", "知者不惑，仁者不忧，勇者不惧。", "仁智勇", "正面", "https://ctext.org/analects/zi-han/zh"],
+  ["JZ-004", "诸子经传", "《孟子·尽心上》", "万物皆备于我矣。反身而诚，乐莫大焉。", "自省与诚", "正面", "https://ctext.org/mengzi/jin-xin-i/zh"],
+  ["JZ-005", "诸子经传", "《孟子·离娄下》", "大人者，不失其赤子之心者也。", "赤子之心", "正面", "https://ctext.org/mengzi/li-lou-ii/zh"],
+  ["JZ-006", "诸子经传", "《礼记·大学》", "大学之道，在明明德，在亲民，在止于至善。", "明德与至善", "正面", "https://ctext.org/liji/da-xue/zh"],
+  ["JZ-007", "诸子经传", "《礼记·中庸》", "致中和，天地位焉，万物育焉。", "中和与生育万物", "正面", "https://ctext.org/liji/zhong-yong/zh"],
+  ["JZ-008", "诸子经传", "《礼记·乐记》", "清明象天，广大象地。", "清明广大", "正面", "https://ctext.org/liji/yue-ji/zh"],
+  ["JZ-009", "诸子经传", "《周易·乾》", "云行雨施，品物流形。", "云雨与万物成形", "正面", "https://ctext.org/book-of-changes/qian/zh"],
+  ["JZ-010", "诸子经传", "《周易·坤》", "含弘光大，品物咸亨。", "含弘光大", "正面", "https://ctext.org/book-of-changes/kun/zh"],
+  ["JZ-011", "诸子经传", "《周易·渐》", "鸿渐于陆，其羽可用为仪，吉。", "鸿羽与仪范", "吉辞", "https://ctext.org/book-of-changes/jian/zh"],
+  ["JZ-012", "诸子经传", "《周易·贲·彖传》", "观乎天文，以察时变；观乎人文，以化成天下。", "天文与人文", "正面", "https://ctext.org/book-of-changes/bi/zh"],
+  ["JZ-013", "诸子经传", "《道德经·第八章》", "上善若水。水善利万物而不争。", "上善与水", "正面", "https://ctext.org/dao-de-jing/zh"],
+  ["JZ-014", "诸子经传", "《道德经·第四十四章》", "知足不辱，知止不殆，可以长久。", "知足知止", "正面", "https://ctext.org/dao-de-jing/zh"],
+  ["JZ-015", "诸子经传", "《庄子·逍遥游》", "肌肤若冰雪，绰约若处子。", "姑射神人", "正面神话语境", "https://ctext.org/zhuangzi/enjoyment-in-untroubled-ease/zh"],
+  ["JZ-016", "诸子经传", "《庄子·秋水》", "秋水时至，百川灌河。", "秋水百川", "中性", "https://ctext.org/zhuangzi/floods-of-autumn/zh"],
+  ["JZ-017", "诸子经传", "《庄子·知北游》", "天地有大美而不言，四时有明法而不议。", "天地大美与四时", "正面", "https://ctext.org/zhuangzi/knowledge-rambling-in-the-north/zh"],
+  ["JZ-018", "诸子经传", "《荀子·劝学》", "青，取之于蓝，而青于蓝；冰，水为之，而寒于水。", "青蓝与学习", "正面", "https://ctext.org/xunzi/encouraging-learning/zh"],
+  ["JZ-019", "诸子经传", "《荀子·劝学》", "玉在山而草木润，渊生珠而崖不枯。", "玉润草木", "正面", "https://ctext.org/xunzi/encouraging-learning/zh"],
+  ["JZ-020", "诸子经传", "《荀子·修身》", "君子养心莫善于诚。", "修身与诚", "正面", "https://ctext.org/xunzi/cultivating-ones-character/zh"],
+  ["HT-001", "史传笔记", "《左传·襄公二十四年》", "太上有立德，其次有立功，其次有立言，虽久不废。", "立德、立功、立言", "正面", "https://ctext.org/chun-qiu-zuo-zhuan/zh"],
+  ["HT-002", "史传笔记", "《国语·周语下》", "从善如登，从恶如崩。", "从善", "劝诫语境", "https://ctext.org/guo-yu/zh"],
+  ["HT-003", "史传笔记", "《史记·屈原贾生列传》", "其志洁，故其称物芳。", "志洁与芳物", "赞誉中含悲剧人物语境", "https://ctext.org/shiji/zh"],
+  ["HT-004", "史传笔记", "《世说新语·贤媛》", "王夫人神情散朗，故有林下风气；顾家妇清心玉映，自是闺房之秀。", "女性品评与林下风气", "正面", "https://zh.wikisource.org/zh-hans/%E4%B8%96%E8%AA%AA%E6%96%B0%E8%AA%9E/%E8%B3%A2%E5%AA%9B"],
+  ["HT-005", "史传笔记", "《后汉书·耿弇列传》", "有志者事竟成也。", "志向与成事", "正面", "https://zh.wikisource.org/zh-hans/%E5%BE%8C%E6%BC%A2%E6%9B%B8/%E5%8D%B719"],
+  ["HW-001", "汉魏六朝", "《古诗十九首·庭中有奇树》", "庭中有奇树，绿叶发华滋。", "庭树华滋", "正面中含思念", "https://zh.wikisource.org/zh-hans/%E5%BA%AD%E4%B8%AD%E6%9C%89%E5%A5%87%E6%A8%B9"],
+  ["HW-002", "汉魏六朝", "《古诗十九首·迢迢牵牛星》", "纤纤擢素手，札札弄机杼。", "织女仪态", "篇章含相思", "https://zh.wikisource.org/zh-hans/%E8%BF%A2%E8%BF%A2%E7%89%BD%E7%89%9B%E6%98%9F"],
+  ["HW-003", "汉魏六朝", "陶渊明《归园田居·其一》", "暧暧远人村，依依墟里烟。", "田园烟景", "正面", "https://zh.wikisource.org/zh-hans/%E6%AD%B8%E5%9C%92%E7%94%B0%E5%B1%85"],
+  ["HW-004", "汉魏六朝", "陶渊明《饮酒·其五》", "山气日夕佳，飞鸟相与还。", "山气飞鸟", "正面", "https://zh.wikisource.org/zh-hans/%E9%A3%B2%E9%85%92%E4%BA%8C%E5%8D%81%E9%A6%96"],
+  ["HW-005", "汉魏六朝", "谢灵运《登池上楼》", "池塘生春草，园柳变鸣禽。", "池塘春草", "正面", "https://zh.wikisource.org/zh-hans/%E7%99%BB%E6%B1%A0%E4%B8%8A%E6%A8%93"],
+  ["HW-006", "汉魏六朝", "谢朓《晚登三山还望京邑》", "余霞散成绮，澄江静如练。", "霞绮澄江", "正面", "https://zh.wikisource.org/zh-hans/%E6%99%9A%E7%99%BB%E4%B8%89%E5%B1%B1%E9%82%84%E6%9C%9B%E4%BA%AC%E9%82%91"],
+  ["HW-007", "汉魏六朝", "王羲之《兰亭集序》", "是日也，天朗气清，惠风和畅。", "兰亭春日", "正面", "https://zh.wikisource.org/zh-hans/%E8%98%AD%E4%BA%AD%E9%9B%86%E5%BA%8F"],
+  ["HW-008", "汉魏六朝", "诸葛亮《诫子书》", "非淡泊无以明志，非宁静无以致远。", "宁静明志", "正面劝诫", "https://zh.wikisource.org/zh-hans/%E8%AA%A1%E5%AD%90%E6%9B%B8"],
+  ["HW-009", "汉魏六朝", "谢道韫《泰山吟》", "峨峨东岳高，秀极冲青天。", "泰山高秀", "正面", "https://zh.wikisource.org/zh-hans/%E6%B3%B0%E5%B1%B1%E5%90%9F"],
+  ["HW-010", "汉魏六朝", "陶渊明《桃花源记》", "芳草鲜美，落英缤纷。", "桃花源春景", "正面", "https://zh.wikisource.org/zh-hans/%E6%A1%83%E8%8A%B1%E6%BA%90%E8%A8%98"],
+  ["HW-011", "汉魏六朝", "吴均《与朱元思书》", "风烟俱净，天山共色。从流飘荡，任意东西。", "富春江山水", "正面", "https://zh.wikisource.org/zh-hans/%E8%88%87%E6%9C%B1%E5%85%83%E6%80%9D%E6%9B%B8"],
+  ["HW-012", "汉魏六朝", "郦道元《水经注·三峡》", "素湍绿潭，回清倒影。", "三峡水色", "正面", "https://zh.wikisource.org/zh-hans/%E6%B0%B4%E7%B6%93%E6%B3%A8/34"],
+  ["HW-013", "汉魏六朝", "陶弘景《答谢中书书》", "高峰入云，清流见底。", "山水清景", "正面", "https://zh.wikisource.org/zh-hans/%E7%AD%94%E8%AC%9D%E4%B8%AD%E6%9B%B8%E6%9B%B8"],
+  ["HW-014", "汉魏六朝", "鲍照《芜城赋》", "泽葵依井，荒葛罥涂。", "植物与故城", "篇章荒凉，风险语境", "https://zh.wikisource.org/zh-hans/%E8%95%AA%E5%9F%8E%E8%B3%A6"],
+  ["HW-015", "汉魏六朝", "江淹《别赋》", "春草碧色，春水渌波，送君南浦，伤如之何。", "春草春水", "离别哀伤语境", "https://zh.wikisource.org/zh-hans/%E5%88%A5%E8%B3%A6"],
+  ["TS-013", "唐宋诗词", "王维《鸟鸣涧》", "月出惊山鸟，时鸣春涧中。", "春涧月夜", "静谧", "https://zh.wikisource.org/zh-hans/%E9%B3%A5%E9%B3%B4%E6%BE%97"],
+  ["TS-014", "唐宋诗词", "王维《竹里馆》", "深林人不知，明月来相照。", "竹林明月", "静谧", "https://zh.wikisource.org/zh-hans/%E7%AB%B9%E9%87%8C%E9%A4%A8"],
+  ["TS-015", "唐宋诗词", "李白《渡荆门送别》", "月下飞天镜，云生结海楼。", "江月云楼", "壮阔", "https://zh.wikisource.org/zh-hans/%E6%B8%A1%E8%8D%8A%E9%96%80%E9%80%81%E5%88%A5"],
+  ["TS-016", "唐宋诗词", "张九龄《望月怀远》", "海上生明月，天涯共此时。", "海上明月", "篇章含怀远", "https://zh.wikisource.org/zh-hans/%E6%9C%9B%E6%9C%88%E6%87%B7%E9%81%A0"],
+  ["TS-017", "唐宋诗词", "常建《题破山寺后禅院》", "山光悦鸟性，潭影空人心。", "山光潭影", "清幽禅境", "https://zh.wikisource.org/zh-hans/%E9%A1%8C%E7%A0%B4%E5%B1%B1%E5%AF%BA%E5%BE%8C%E7%A6%AA%E9%99%A2"],
+  ["TS-018", "唐宋诗词", "白居易《忆江南》", "日出江花红胜火，春来江水绿如蓝。", "江南春色", "正面", "https://zh.wikisource.org/zh-hans/%E6%86%B6%E6%B1%9F%E5%8D%97"],
+  ["TS-019", "唐宋诗词", "刘禹锡《竹枝词》", "东边日出西边雨，道是无晴却有晴。", "晴雨双关", "爱情歌谣", "https://zh.wikisource.org/zh-hans/%E7%AB%B9%E6%9E%9D%E8%A9%9E"],
+  ["TS-020", "唐宋诗词", "杜牧《山行》", "停车坐爱枫林晚，霜叶红于二月花。", "晚秋枫林", "正面", "https://zh.wikisource.org/zh-hans/%E5%B1%B1%E8%A1%8C"],
+  ["TS-021", "唐宋诗词", "李商隐《无题》", "身无彩凤双飞翼，心有灵犀一点通。", "彩凤与灵犀", "爱情诗", "https://zh.wikisource.org/zh-hans/%E7%84%A1%E9%A1%8C_(%E6%98%A8%E5%A4%9C%E6%98%9F%E8%BE%B0%E6%98%A8%E5%A4%9C%E9%A2%A8)"],
+  ["TS-022", "唐宋诗词", "苏轼《惠崇春江晚景》", "竹外桃花三两枝，春江水暖鸭先知。", "春江桃花", "正面", "https://zh.wikisource.org/zh-hans/%E6%83%A0%E5%B4%87%E6%98%A5%E6%B1%9F%E6%99%9A%E6%99%AF"],
+  ["TS-023", "唐宋诗词", "欧阳修《采桑子》", "轻舟短棹西湖好，绿水逶迤。芳草长堤，隐隐笙歌处处随。", "西湖轻舟", "正面", "https://zh.wikisource.org/zh-hans/%E6%8E%A1%E6%A1%91%E5%AD%90_(%E8%BC%95%E8%88%9F%E7%9F%AD%E6%A3%B9%E8%A5%BF%E6%B9%96%E5%A5%BD)"],
+  ["TS-024", "唐宋诗词", "王安石《梅花》", "遥知不是雪，为有暗香来。", "寒梅暗香", "正面", "https://zh.wikisource.org/zh-hans/%E6%A2%85%E8%8A%B1_(%E7%8E%8B%E5%AE%89%E7%9F%B3)"],
+  ["TS-025", "唐宋诗词", "姜夔《疏影》", "苔枝缀玉，有翠禽小小，枝上同宿。", "梅枝翠禽", "篇章含兴亡之感", "https://zh.wikisource.org/zh-hans/%E7%96%8F%E5%BD%B1_(%E8%8B%94%E6%9E%9D%E7%B6%B4%E7%8E%89)"],
+  ["TS-026", "唐宋诗词", "陆游《临安春雨初霁》", "小楼一夜听春雨，深巷明朝卖杏花。", "春雨杏花", "篇章含羁旅感", "https://zh.wikisource.org/zh-hans/%E8%87%A8%E5%AE%89%E6%98%A5%E9%9B%A8%E5%88%9D%E9%9C%BD"],
+  ["TS-027", "唐宋诗词", "杨万里《晓出净慈寺送林子方》", "接天莲叶无穷碧，映日荷花别样红。", "夏日荷塘", "正面", "https://zh.wikisource.org/zh-hans/%E6%9B%89%E5%87%BA%E6%B7%A8%E6%85%88%E5%AF%BA%E9%80%81%E6%9E%97%E5%AD%90%E6%96%B9"],
+  ["TS-028", "唐宋诗词", "晏殊《浣溪沙》", "无可奈何花落去，似曾相识燕归来。", "落花归燕", "惜春语境", "https://zh.wikisource.org/zh-hans/%E6%B5%A3%E6%BA%AA%E6%B2%99_(%E4%B8%80%E6%9B%B2%E6%96%B0%E8%A9%9E%E9%85%92%E4%B8%80%E6%9D%AF)"],
+  ["TS-029", "唐宋诗词", "李清照《如梦令》", "常记溪亭日暮，沉醉不知归路。兴尽晚回舟，误入藕花深处。", "溪亭藕花", "欢游", "https://zh.wikisource.org/zh-hans/%E5%A6%82%E5%A4%A2%E4%BB%A4_(%E5%B8%B8%E8%A8%98%E6%BA%AA%E4%BA%AD%E6%97%A5%E6%9A%AE)"],
+  ["TS-030", "唐宋诗词", "李清照《渔家傲》", "九万里风鹏正举。风休住，蓬舟吹取三山去。", "风鹏与蓬舟", "豪迈梦境", "https://zh.wikisource.org/zh-hans/%E6%BC%81%E5%AE%B6%E5%82%B2_(%E5%A4%A9%E6%8E%A5%E9%9B%B2%E6%BF%A4%E9%80%A3%E6%9B%89%E9%9C%A7)"],
+  ["TS-031", "唐宋诗词", "范成大《四时田园杂兴》", "梅子金黄杏子肥，麦花雪白菜花稀。", "初夏田园", "正面", "https://zh.wikisource.org/zh-hans/%E5%9B%9B%E6%99%82%E7%94%B0%E5%9C%92%E9%9B%9C%E8%88%88"],
+  ["TS-032", "唐宋诗词", "朱熹《春日》", "等闲识得东风面，万紫千红总是春。", "春日万紫千红", "正面", "https://zh.wikisource.org/zh-hans/%E6%98%A5%E6%97%A5_(%E6%9C%B1%E7%86%B9)"],
+  ["TS-033", "唐宋诗词", "贺铸《青玉案》", "一川烟草，满城风絮，梅子黄时雨。", "烟草风絮梅雨", "篇章含闲愁", "https://zh.wikisource.org/zh-hans/%E9%9D%92%E7%8E%89%E6%A1%88_(%E5%87%8C%E6%B3%A2%E4%B8%8D%E9%81%8E%E6%A9%AB%E5%A1%98%E8%B7%AF)"],
+  ["TS-034", "唐宋诗词", "秦观《行香子》", "小园几许，收尽春光。有桃花红，李花白，菜花黄。", "春日小园", "正面", "https://zh.wikisource.org/zh-hans/%E8%A1%8C%E9%A6%99%E5%AD%90_(%E6%A8%B9%E7%B9%9E%E6%9D%91%E8%8E%8A)"],
+  ["TS-035", "唐宋诗词", "周邦彦《少年游》", "并刀如水，吴盐胜雪，纤手破新橙。", "冬夜新橙", "人物场景正面", "https://zh.wikisource.org/zh-hans/%E5%B0%91%E5%B9%B4%E9%81%8A_(%E4%B8%A6%E5%88%80%E5%A6%82%E6%B0%B4)"],
+  ["TS-036", "唐宋诗词", "苏轼《洞仙歌》", "冰肌玉骨，自清凉无汗。水殿风来暗香满。", "女子与夏夜荷香", "正面", "https://zh.wikisource.org/zh-hans/%E6%B4%9E%E4%BB%99%E6%AD%8C_(%E5%86%B0%E8%82%8C%E7%8E%89%E9%AA%A8)"],
+  ["TS-037", "唐宋诗词", "晏殊《无题》", "梨花院落溶溶月，柳絮池塘淡淡风。", "梨花院落月色", "篇章含怀人", "https://zh.wikisource.org/zh-hans/%E7%84%A1%E9%A1%8C_(%E6%B2%B9%E5%A3%81%E9%A6%99%E8%BB%8A%E4%B8%8D%E5%86%8D%E9%80%A2)"],
+  ["TS-038", "唐宋诗词", "韦应物《滁州西涧》", "独怜幽草涧边生，上有黄鹂深树鸣。", "幽草黄鹂", "清幽", "https://zh.wikisource.org/zh-hans/%E6%BB%81%E5%B7%9E%E8%A5%BF%E6%BE%97"],
+  ["TS-039", "唐宋诗词", "杜甫《绝句》", "迟日江山丽，春风花草香。泥融飞燕子，沙暖睡鸳鸯。", "春日江山", "正面", "https://zh.wikisource.org/zh-hans/%E7%B5%95%E5%8F%A5_(%E9%81%B2%E6%97%A5%E6%B1%9F%E5%B1%B1%E9%BA%97)"],
+  ["TS-040", "唐宋诗词", "李白《清溪行》", "清溪清我心，水色异诸水。", "清溪水色", "正面", "https://zh.wikisource.org/zh-hans/%E6%B8%85%E6%BA%AA%E8%A1%8C"],
 ];
 
 export const classicalFragments: ClassicalFragment[] = fragmentRows.map(
@@ -318,4 +533,3 @@ export const rejectionRules = [
   { code: "G6", category: "录入识读", trigger: "常用系统难以录入，或读写成本超过家庭接受度。", handling: "可调硬筛" },
   { code: "G7", category: "偏好冲突", trigger: "组合等同于常见名，明显违背“不普通”的核心偏好。", handling: "降级/淘汰" },
 ];
-

@@ -70,6 +70,57 @@ export function generateRawPool(
   return pool;
 }
 
+export function diversifyRawCandidates(
+  candidates: readonly RawNameCandidate[],
+): RawNameCandidate[] {
+  const buckets = new Map<string, RawNameCandidate[]>();
+
+  for (const candidate of candidates) {
+    const key = `${candidate.firstCategory}::${candidate.secondCategory}`;
+    const bucket = buckets.get(key);
+    if (bucket) {
+      bucket.push(candidate);
+    } else {
+      buckets.set(key, [candidate]);
+    }
+  }
+
+  const categories = [
+    ...new Set(
+      candidates.flatMap((candidate) => [
+        candidate.firstCategory,
+        candidate.secondCategory,
+      ]),
+    ),
+  ];
+  const grouped: RawNameCandidate[][] = [];
+
+  for (let offset = 0; offset < categories.length; offset += 1) {
+    for (let firstIndex = 0; firstIndex < categories.length; firstIndex += 1) {
+      const firstCategory = categories[firstIndex];
+      const secondCategory =
+        categories[(firstIndex + offset) % categories.length];
+      if (!firstCategory || !secondCategory) continue;
+      const bucket = buckets.get(`${firstCategory}::${secondCategory}`);
+      if (bucket) grouped.push(bucket);
+    }
+  }
+  const largestBucket = grouped.reduce(
+    (maximum, bucket) => Math.max(maximum, bucket.length),
+    0,
+  );
+  const diversified: RawNameCandidate[] = [];
+
+  for (let index = 0; index < largestBucket; index += 1) {
+    for (const bucket of grouped) {
+      const candidate = bucket[index];
+      if (candidate) diversified.push(candidate);
+    }
+  }
+
+  return diversified;
+}
+
 export function generateAllusionCandidates(
   fragments: readonly ClassicalFragment[],
   characterSet: ReadonlySet<string>,

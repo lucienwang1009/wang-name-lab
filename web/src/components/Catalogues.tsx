@@ -5,6 +5,7 @@ import type {
   CuratedCandidate,
   RawNameCandidate,
 } from "../domain/types";
+import { diversifyRawCandidates } from "../domain/nameSystem";
 import { SectionHeader } from "./AppShell";
 
 type RankedCandidate = CuratedCandidate & {
@@ -56,8 +57,11 @@ export function NameExplorer({
 }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("全部");
-  const [minimumFeminine, setMinimumFeminine] = useState(4);
+  const [minimumFeminine, setMinimumFeminine] = useState(3.6);
   const [familyOnly, setFamilyOnly] = useState(false);
+  const [sortMode, setSortMode] = useState<
+    "门类均衡" | "女性感" | "稀有度" | "家族线"
+  >("门类均衡");
   const [page, setPage] = useState(1);
 
   const categories = useMemo(
@@ -73,7 +77,7 @@ export function NameExplorer({
     [candidates],
   );
 
-  const filtered = useMemo(() => {
+  const matched = useMemo(() => {
     const normalized = query.trim();
     return candidates.filter(
       (candidate) =>
@@ -88,6 +92,31 @@ export function NameExplorer({
         (!familyOnly || candidate.familyProxy > 0),
     );
   }, [candidates, category, familyOnly, minimumFeminine, query]);
+  const filtered = useMemo(() => {
+    if (sortMode === "门类均衡") return diversifyRawCandidates(matched);
+    const score = (candidate: RawNameCandidate) =>
+      sortMode === "女性感"
+        ? candidate.feminineProxy
+        : sortMode === "稀有度"
+          ? candidate.rarityProxy
+          : candidate.familyProxy;
+    return [...matched].sort(
+      (left, right) =>
+        score(right) - score(left) ||
+        right.usabilityProxy - left.usabilityProxy ||
+        left.name.localeCompare(right.name),
+    );
+  }, [matched, sortMode]);
+  const sourceCharacterCount = useMemo(
+    () =>
+      new Set(
+        candidates.flatMap((candidate) => [
+          candidate.first,
+          candidate.second,
+        ]),
+      ).size,
+    [candidates],
+  );
 
   const safePage = Math.min(page, Math.max(1, Math.ceil(filtered.length / PAGE_SIZE)));
   const visible = filtered.slice(
@@ -98,9 +127,9 @@ export function NameExplorer({
   return (
     <section className="page-section">
       <SectionHeader
-        eyebrow="DISCOVERY INDEX · 发现层"
-        title="原始寻名"
-        description="这里用于发现陌生而可用的字组，不等同于推荐榜。每一个组合仍需进入古籍核验、音义排雷与人工精审。"
+        eyebrow="DISCOVERY INDEX · 广泛粗筛"
+        title="字词组合池"
+        description={`由 ${sourceCharacterCount} 个基础可用字交叉生成，默认跨意象门类均衡展示。这里用于发现陌生搭配，不等同于已有典故或正式推荐。`}
         aside={
           <div className="large-count">
             <strong>{filtered.length.toLocaleString("zh-CN")}</strong>
@@ -112,7 +141,7 @@ export function NameExplorer({
       <div className="archive-warning">
         <b>待核典</b>
         <p>
-          本页名字由字库机械组合产生。看到喜欢的字形或气质后，请到“古籍典故库”寻找可靠出处，不能直接声称有典故。
+          本页名字由广泛字库机械组合产生。“玉／影／绍”只是可选筛选与排序项，不会主导默认结果。看到喜欢的搭配后，仍须进入古籍典故库核验。
         </p>
       </div>
 
@@ -143,6 +172,27 @@ export function NameExplorer({
             ))}
           </select>
         </label>
+        <label className="field">
+          <span>结果次序</span>
+          <select
+            value={sortMode}
+            onChange={(event) => {
+              setSortMode(
+                event.target.value as
+                  | "门类均衡"
+                  | "女性感"
+                  | "稀有度"
+                  | "家族线",
+              );
+              setPage(1);
+            }}
+          >
+            <option>门类均衡</option>
+            <option>女性感</option>
+            <option>稀有度</option>
+            <option>家族线</option>
+          </select>
+        </label>
         <label className="field range-field">
           <span>女性感不低于 {minimumFeminine.toFixed(1)}</span>
           <input
@@ -166,7 +216,7 @@ export function NameExplorer({
               setPage(1);
             }}
           />
-          <span>只看可呼应“玉 / 影 / 绍”的组合</span>
+          <span>只看可呼应“玉 / 影 / 绍”的组合（可选偏好，不是默认条件）</span>
         </label>
       </div>
 
@@ -226,6 +276,10 @@ export function AllusionLibrary({
     () => ["全部", ...new Set(candidates.map((candidate) => candidate.corpus))],
     [candidates],
   );
+  const fragmentCount = useMemo(
+    () => new Set(candidates.map((candidate) => candidate.fragmentId)).size,
+    [candidates],
+  );
   const filtered = useMemo(() => {
     const normalized = query.trim();
     return candidates.filter(
@@ -249,7 +303,7 @@ export function AllusionLibrary({
       <SectionHeader
         eyebrow="TEXTUAL EVIDENCE · 证据层"
         title="古籍典故库"
-        description="所有候选都保留原文、篇目、取字方式与上下文。A级为原文连续，B级为同句隔字、首尾或尾首。"
+        description={`由 ${fragmentCount} 条原典片段生成，覆盖 ${corpora.length - 1} 类文献。所有候选保留原文、篇目、取字方式与上下文；A级为原文连续，B级为同句隔字、首尾或尾首。`}
         aside={
           <div className="large-count">
             <strong>{candidates.length}</strong>
@@ -601,4 +655,3 @@ export function CuratedRanking({
     </section>
   );
 }
-

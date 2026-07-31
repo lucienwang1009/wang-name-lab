@@ -9,6 +9,7 @@ import {
 import {
   buildBirthScenarios,
   culturalScore,
+  diversifyRawCandidates,
   generateAllusionCandidates,
   generateRawPool,
   rerankCandidate,
@@ -18,16 +19,32 @@ describe("取名领域核心", () => {
   it("提供足够且不重复的古典用字", () => {
     const characters = characterDictionary.map((item) => item.char);
 
-    expect(characterDictionary.length).toBeGreaterThanOrEqual(145);
+    expect(characterDictionary.length).toBeGreaterThanOrEqual(500);
     expect(new Set(characters).size).toBe(characters.length);
   });
 
-  it("生成不少于两万个不重复姓名，并排除叠字", () => {
+  it("生成不少于二十五万个不重复姓名，并排除叠字", () => {
     const pool = generateRawPool(generationCharacters);
 
-    expect(pool.length).toBeGreaterThanOrEqual(20_000);
+    expect(pool.length).toBeGreaterThanOrEqual(250_000);
     expect(new Set(pool.map((item) => item.name)).size).toBe(pool.length);
     expect(pool.every((item) => item.first !== item.second)).toBe(true);
+  });
+
+  it("默认粗筛结果跨意象门类均衡分布", () => {
+    const pool = diversifyRawCandidates(generateRawPool(generationCharacters));
+    const firstPage = pool.slice(0, 48);
+    const categoryPairs = new Set(
+      firstPage.map(
+        (candidate) =>
+          `${candidate.firstCategory}::${candidate.secondCategory}`,
+      ),
+    );
+
+    expect(categoryPairs.size).toBeGreaterThanOrEqual(30);
+    expect(
+      firstPage.filter((candidate) => candidate.familyProxy > 0).length,
+    ).toBeLessThan(firstPage.length / 2);
   });
 
   it("每个典故候选都保留可复核证据", () => {
@@ -36,7 +53,22 @@ describe("取名领域核心", () => {
       new Set(characterDictionary.map((item) => item.char)),
     );
 
-    expect(candidates.length).toBeGreaterThanOrEqual(500);
+    expect(classicalFragments.length).toBeGreaterThanOrEqual(120);
+    expect(new Set(classicalFragments.map((item) => item.corpus)).size).toBeGreaterThanOrEqual(
+      6,
+    );
+    expect(new Set(classicalFragments.map((item) => item.id)).size).toBe(
+      classicalFragments.length,
+    );
+    expect(candidates.length).toBeGreaterThanOrEqual(1_200);
+    const coveredFragmentIds = new Set(
+      candidates.map((candidate) => candidate.fragmentId),
+    );
+    expect(
+      classicalFragments
+        .filter((fragment) => !coveredFragmentIds.has(fragment.id))
+        .map((fragment) => fragment.id),
+    ).toEqual([]);
     expect(
       candidates.every(
         (item) =>
@@ -84,4 +116,3 @@ describe("取名领域核心", () => {
     expect(buildBirthScenarios("2026-08-20", "2026-08-30")).toHaveLength(132);
   });
 });
-

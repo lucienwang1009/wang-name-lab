@@ -9,6 +9,12 @@ import {
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import App from "./App";
+import {
+  characterDictionary,
+  classicalFragments,
+  generationCharacters,
+} from "./data/nameSystemData";
+import { generateAllusionCandidates } from "./domain/nameSystem";
 
 describe("取名实验室应用", () => {
   afterEach(cleanup);
@@ -30,8 +36,16 @@ describe("取名实验室应用", () => {
       screen.getByRole("heading", { name: "为一个名字，留下完整来路" }),
     ).toBeTruthy();
     const metrics = within(screen.getByLabelText("候选规模"));
-    expect(metrics.getByText("25,440")).toBeTruthy();
-    expect(metrics.getByText("511")).toBeTruthy();
+    const rawCount = generationCharacters.length * (generationCharacters.length - 1);
+    expect(metrics.getByText(rawCount.toLocaleString("zh-CN"))).toBeTruthy();
+    const allusionCount = generateAllusionCandidates(
+      classicalFragments,
+      new Set(characterDictionary.map((entry) => entry.char)),
+    ).length;
+    expect(
+      metrics.getByText(classicalFragments.length.toLocaleString("zh-CN")),
+    ).toBeTruthy();
+    expect(metrics.getByText(allusionCount.toLocaleString("zh-CN"))).toBeTruthy();
     expect(metrics.getByText("132")).toBeTruthy();
   });
 

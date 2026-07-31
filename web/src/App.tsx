@@ -37,6 +37,13 @@ const sections = new Set<SectionId>([
   "method",
 ]);
 
+let rawCandidatesCache: ReturnType<typeof generateRawPool> | undefined;
+
+function getRawCandidates() {
+  rawCandidatesCache ??= generateRawPool(generationCharacters);
+  return rawCandidatesCache;
+}
+
 function sectionFromHash(): SectionId {
   const value = window.location.hash.replace(/^#\/?/, "") as SectionId;
   return sections.has(value) ? value : "overview";
@@ -48,10 +55,10 @@ export default function App() {
   );
   const local = useLocalProfile();
 
-  const rawCandidates = useMemo(
-    () => generateRawPool(generationCharacters),
-    [],
-  );
+  const rawCandidateCount =
+    generationCharacters.length * (generationCharacters.length - 1);
+  const rawCandidates =
+    currentSection === "explore" ? getRawCandidates() : [];
   const allusionCandidates = useMemo(
     () =>
       generateAllusionCandidates(
@@ -107,7 +114,12 @@ export default function App() {
       {currentSection === "overview" ? (
         <FunnelOverview
           counts={{
-            raw: rawCandidates.length,
+            raw: rawCandidateCount,
+            characters: generationCharacters.length,
+            fragments: classicalFragments.length,
+            corpora: new Set(
+              classicalFragments.map((fragment) => fragment.corpus),
+            ).size,
             allusions: allusionCandidates.length,
             curated: rankedCandidates.length,
             passing: rankedCandidates.filter(
@@ -161,4 +173,3 @@ export default function App() {
     </AppShell>
   );
 }
-

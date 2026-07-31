@@ -418,7 +418,7 @@
 
 .metric-strip {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   margin-bottom: 72px;
   border: solid var(--line);
   border-width: 0 0 1px 1px;
@@ -622,7 +622,11 @@
 
 .filter-ledger {
   display: grid;
-  grid-template-columns: minmax(250px, 1.5fr) minmax(150px, 0.7fr) minmax(190px, 1fr);
+  grid-template-columns:
+    minmax(230px, 1.35fr)
+    minmax(140px, 0.65fr)
+    minmax(135px, 0.6fr)
+    minmax(180px, 0.9fr);
   gap: 16px;
   align-items: end;
   margin-bottom: 28px;
@@ -732,13 +736,14 @@
 
 .index-ticket dl {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 4px;
   margin-bottom: 9px;
 }
 
 .index-ticket dl div {
   display: grid;
+  min-width: 0;
 }
 
 .index-ticket dt {

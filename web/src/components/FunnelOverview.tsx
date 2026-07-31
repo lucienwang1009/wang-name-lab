@@ -4,6 +4,9 @@ import { SectionHeader } from "./AppShell";
 interface FunnelOverviewProps {
   counts: {
     raw: number;
+    characters: number;
+    fragments: number;
+    corpora: number;
     allusions: number;
     curated: number;
     passing: number;
@@ -20,7 +23,7 @@ const steps = [
     number: "01",
     title: "字库组合",
     tag: "发现层",
-    description: "由 160 个候选字交叉生成，不冒充有典故的名字。",
+    description: "跨意象门类广泛组合，不冒充有典故的名字。",
   },
   {
     id: "allusions" as const,
@@ -116,8 +119,12 @@ export function FunnelOverview({ counts, onNavigate }: FunnelOverviewProps) {
           <span>原始组合</span>
         </div>
         <div>
+          <strong>{counts.fragments}</strong>
+          <span>{counts.corpora} 类古籍 · 原典片段</span>
+        </div>
+        <div>
           <strong>{counts.allusions.toLocaleString("zh-CN")}</strong>
-          <span>典故取字</span>
+          <span>可复核取字路径</span>
         </div>
         <div>
           <strong>{counts.curated}</strong>
@@ -156,7 +163,11 @@ export function FunnelOverview({ counts, onNavigate }: FunnelOverviewProps) {
                   <span className="step-copy">
                     <small>{step.tag}</small>
                     <b>{step.title}</b>
-                    <em>{step.description}</em>
+                    <em>
+                      {index === 0
+                        ? `由 ${counts.characters} 个基础字交叉生成，${step.description}`
+                        : step.description}
+                    </em>
                   </span>
                   <strong>{amount.toLocaleString("zh-CN")}</strong>
                   <span aria-hidden="true">→</span>

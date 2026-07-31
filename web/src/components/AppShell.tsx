@@ -24,7 +24,7 @@ const navigation: Array<{
   shortLabel: string;
 }> = [
   { id: "overview", index: "序", label: "工作台总览", shortLabel: "总览" },
-  { id: "explore", index: "一", label: "原始寻名", shortLabel: "寻名" },
+  { id: "explore", index: "一", label: "字词组合池", shortLabel: "组合" },
   { id: "allusions", index: "二", label: "古籍典故库", shortLabel: "典故" },
   { id: "curated", index: "三", label: "人工精选榜", shortLabel: "精选" },
   { id: "compare", index: "四", label: "四名对照", shortLabel: "对照" },
