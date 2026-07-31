@@ -1,0 +1,439 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-31",
+  "files": [
+    {
+      "key": "chinese-poetry/LICENSE",
+      "url": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/LICENSE",
+      "sha256": "c195319aeaa3ffcbe16aa5d26eec19eae5a42f84337dd2b3dc3c9d5ccbbd6507",
+      "bytes": 1076
+    },
+    {
+      "key": "chinese-poetry/chuci.json",
+      "url": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E6%A5%9A%E8%BE%9E/chuci.json",
+      "sha256": "5069e733d93781cecd55405c6d4699a7c17125b3f13cf79810d68792482e5b9b",
+      "bytes": 141832
+    },
+    {
+      "key": "chinese-poetry/daxue.json",
+      "url": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E5%9B%9B%E4%B9%A6%E4%BA%94%E7%BB%8F/daxue.json",
+      "sha256": "1939dfeb2cb8fde6c96fb5ce6bd1cff93df05460027c90c685f4863b05c550e8",
+      "bytes": 6767
+    },
+    {
+      "key": "chinese-poetry/guwenguanzhi.json",
+      "url": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E8%92%99%E5%AD%A6/guwenguanzhi.json",
+      "sha256": "ba10ec02849d58bebcc8da575dda3da07a1123e2a31dab3f734acd95d48c5cac",
+      "bytes": 475985
+    },
+    {
+      "key": "chinese-poetry/lunyu.json",
+      "url": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E8%AE%BA%E8%AF%AD/lunyu.json",
+      "sha256": "bc336a3839706377892719db44c48a09794a493190535a42bf1c7d4c4233e96c",
+      "bytes": 74799
+    },
+    {
+      "key": "chinese-poetry/mengzi.json",
+      "url": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E5%9B%9B%E4%B9%A6%E4%BA%94%E7%BB%8F/mengzi.json",
+      "sha256": "349888018acd0b3fea58de92e53403b8c77640d84b1ae9d37360d5ff1966bcdc",
+      "bytes": 146745
+    },
+    {
+      "key": "chinese-poetry/shijing.json",
+      "url": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E8%AF%97%E7%BB%8F/shijing.json",
+      "sha256": "3c7ca54d59424542ada99adfcc85420287fbbd5c8a511e9baf705cb2b04051e7",
+      "bytes": 156972
+    },
+    {
+      "key": "chinese-poetry/songcisanbaishou.json",
+      "url": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E5%AE%8B%E8%AF%8D/%E5%AE%8B%E8%AF%8D%E4%B8%89%E7%99%BE%E9%A6%96.json",
+      "sha256": "ca5d74f7fdb9d5a6acc22a7c8b4395228cad4bb8be53df44c19ba83ab6983b20",
+      "bytes": 151283
+    },
+    {
+      "key": "chinese-poetry/tangshisanbaishou.json",
+      "url": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E5%85%A8%E5%94%90%E8%AF%97/%E5%94%90%E8%AF%97%E4%B8%89%E7%99%BE%E9%A6%96.json",
+      "sha256": "d77a145f7470da2ed2f79515944563c062ffc43fceda07f195a36ead66b7e5c7",
+      "bytes": 190787
+    },
+    {
+      "key": "chinese-poetry/zhongyong.json",
+      "url": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E5%9B%9B%E4%B9%A6%E4%BA%94%E7%BB%8F/zhongyong.json",
+      "sha256": "2962a8b52bf78c010b051622b8803a956b461813ae0ed86148e4851e7d605ed8",
+      "bytes": 13889
+    },
+    {
+      "key": "early-chinese/chun-qiu-gong-yang-zhuan.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR1e0007.jsonl",
+      "sha256": "40050662a659cfe8874aceab9b5c362c47c3441a54469e60c0ad6cafa5b7e357",
+      "bytes": 133079
+    },
+    {
+      "key": "early-chinese/chun-qiu-gu-liang-zhuan.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR1e0008.jsonl",
+      "sha256": "c0a94551117985f2e8cad1e0f9e9ef84af17e8a8caac23130bff7a7488d66dc0",
+      "bytes": 126639
+    },
+    {
+      "key": "early-chinese/chun-qiu-zuo-zhuan.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR1e0001.jsonl",
+      "sha256": "253ad8a27a4388342b157d4519297e0b3b4be9f6254db3bb2b4faa10b5671998",
+      "bytes": 595465
+    },
+    {
+      "key": "early-chinese/er-ya.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR1j0002.jsonl",
+      "sha256": "83163ec95658fd26643c8b1b66905e2fef3b3f60abbf236eee491c56de902baf",
+      "bytes": 35901
+    },
+    {
+      "key": "early-chinese/guan-zi.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR3c0001.jsonl",
+      "sha256": "d6702b854d1b1bdb0896a5d0e9d0aba8a1e63599e3d4214185b135447c814d58",
+      "bytes": 369655
+    },
+    {
+      "key": "early-chinese/guo-yu.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR2e0001.jsonl",
+      "sha256": "e064e4e448549bdc898fdc1583cba69afbbeaa7a0f13fb60725145a7708d062f",
+      "bytes": 197784
+    },
+    {
+      "key": "early-chinese/han-fei-zi.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR3c0005.jsonl",
+      "sha256": "ffd3a7f5f3cc97fd1e5236ca6db457561ccc4bd118f4269e45c9fb841640efd1",
+      "bytes": 319432
+    },
+    {
+      "key": "early-chinese/han-shu.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR2a0007.jsonl",
+      "sha256": "1d2cace334194a62e0e3de0a0203f18ac3846d052319962eaf3e607ae393d561",
+      "bytes": 2393929
+    },
+    {
+      "key": "early-chinese/huai-nan-zi.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR3j0010.jsonl",
+      "sha256": "8e2ae0a7bfed6528244766efa3e9fd575b67499e8d5939d060873ff31cb7ef2d",
+      "bytes": 393765
+    },
+    {
+      "key": "early-chinese/kong-zi-jia-yu.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR3a0001.jsonl",
+      "sha256": "afabe008af8379dc94c629d31db1b7f21dabe67369f2417d6d80920bfbec94e3",
+      "bytes": 169686
+    },
+    {
+      "key": "early-chinese/lao-zi.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR5c0057.jsonl",
+      "sha256": "5a99b195f0b90e264ae796ee10efc8436cc2b9f5f7a27f3ece51811de906de84",
+      "bytes": 21333
+    },
+    {
+      "key": "early-chinese/li-ji.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR1d0052.jsonl",
+      "sha256": "5881d312efdc556f59fadcd2ca4f3b7f149913fd5a676dd4e6dc2bbbdb18bf30",
+      "bytes": 296883
+    },
+    {
+      "key": "early-chinese/lie-zi.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR5c0124.jsonl",
+      "sha256": "119900597435f09d8d202b34f5879ac25456dfeaff7366665588633016b503c3",
+      "bytes": 92922
+    },
+    {
+      "key": "early-chinese/lun-heng.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR3j0080.jsonl",
+      "sha256": "6099a844c71177959a3f956a598fab916bc171e24b4371bf8db0829e202d2875",
+      "bytes": 635489
+    },
+    {
+      "key": "early-chinese/lv-shi-chun-qiu.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR3j0009.jsonl",
+      "sha256": "2bbb1c1412386fbb057d4602b012ab0ac4471e3a0920b1647bf986587758b32a",
+      "bytes": 301027
+    },
+    {
+      "key": "early-chinese/mo-zi.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR3j0002.jsonl",
+      "sha256": "1327ebcc73d6f7f83b7a8d835ceaeda73bde54ac1e7a149c7bfa85424679b206",
+      "bytes": 228248
+    },
+    {
+      "key": "early-chinese/shang-jun-shu.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR3c0004.jsonl",
+      "sha256": "0b898de78f4ddc8270645efc71755a66c44ad2c8348a6bbb1b2d384371de1846",
+      "bytes": 60077
+    },
+    {
+      "key": "early-chinese/shang-shu.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR1b0001.jsonl",
+      "sha256": "6bf302bef7c024b64b74a267ba87c5026925644f4bfc58c20f410612d3e44e12",
+      "bytes": 87721
+    },
+    {
+      "key": "early-chinese/shi-ji.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR2a0001.jsonl",
+      "sha256": "eb84daf5949d354182cedf0d944b6a67962df6db132a7d508be0ca55269ca6ea",
+      "bytes": 1740534
+    },
+    {
+      "key": "early-chinese/shi-ming.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR1j0007.jsonl",
+      "sha256": "b7cdfdc12c10184a847cdc799e3bb6836843c7422aa4f7cd6fa1f36bbd28ce07",
+      "bytes": 63095
+    },
+    {
+      "key": "early-chinese/shuo-wen-jie-zi.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR1j0018.jsonl",
+      "sha256": "d1fc54f48a24b464de3e6bcfee69847f828353242961a575a9895a872542cbad",
+      "bytes": 39847
+    },
+    {
+      "key": "early-chinese/sun-zi-bing-fa.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR3b0003.jsonl",
+      "sha256": "7cb1ef136184dd12b40e04a9beb30354295841800c0261a4f25064e1b4d6003e",
+      "bytes": 18208
+    },
+    {
+      "key": "early-chinese/wu-yue-chun-qiu.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR2i0001.jsonl",
+      "sha256": "d9f4714a2687dfd9eda16941e17668b6c167f482ff115eeefc44131370e2b7a6",
+      "bytes": 118581
+    },
+    {
+      "key": "early-chinese/xiao-jing.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR1f0001.jsonl",
+      "sha256": "d9ee74b59584027d7bc09603bea7a3b7964b70fb9aa807a3973e7e750692dffa",
+      "bytes": 6417
+    },
+    {
+      "key": "early-chinese/xin-shu.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR3a0005.jsonl",
+      "sha256": "cc324a1af3ae714a77562f5176ac3f579814a465553ff7e612c10214a321d8af",
+      "bytes": 152253
+    },
+    {
+      "key": "early-chinese/xun-zi.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR3a0002.jsonl",
+      "sha256": "ece9ea648573715206c361707d6c8e63aac25501a42faa072e5585e60502f333",
+      "bytes": 234280
+    },
+    {
+      "key": "early-chinese/yan-tie-lun.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR3a0006.jsonl",
+      "sha256": "be351e4286500096e6ffc843db9a5252f35195f69918f8df877dd46fc9548d9e",
+      "bytes": 149230
+    },
+    {
+      "key": "early-chinese/yi-li.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR1d0026.jsonl",
+      "sha256": "6b96ca0c0877c5971f36c3bef5f45923b8781546ee4eb7379d2bec712f5a0875",
+      "bytes": 167599
+    },
+    {
+      "key": "early-chinese/yi-zhou-shu.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR2d0001.jsonl",
+      "sha256": "d61a7aa7eb3fe119bacfc71160848943d94adfeb0219e9df140f091c17299efa",
+      "bytes": 85937
+    },
+    {
+      "key": "early-chinese/yue-jue-shu.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR2i0002.jsonl",
+      "sha256": "60fe102a726131146777a4f2ac187da1fbaf4df96a1300668396260a13f56509",
+      "bytes": 92818
+    },
+    {
+      "key": "early-chinese/zhan-guo-ce.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR2e0003.jsonl",
+      "sha256": "44a0bb99ae074a59af9259436b97fa256dfec89bba27524a6998b8a82050e3ec",
+      "bytes": 371909
+    },
+    {
+      "key": "early-chinese/zhou-li.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR1d0002.jsonl",
+      "sha256": "32ef375d1f6a486698f91da83fdaa5643145186658da0d72fa6470011ae6e569",
+      "bytes": 148300
+    },
+    {
+      "key": "early-chinese/zhou-yi.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR1a0001.jsonl",
+      "sha256": "efd330a201a9d47311f2504593e99e4ba084fc2fbb757eb2597aa868e1fdef77",
+      "bytes": 67959
+    },
+    {
+      "key": "early-chinese/zhuang-zi.jsonl",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR5c0126.jsonl",
+      "sha256": "961d67a5e498f83129d6d1d115798568e59891398b9626527bf2ec453e92ce31",
+      "bytes": 197702
+    },
+    {
+      "key": "kanripo/bai-shi-chang-qing-ji.txt",
+      "url": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4c0069%20%E7%99%BD%E6%B0%8F%E9%95%B7%E6%85%B6%E9%9B%86-%E5%94%90-%E7%99%BD%E5%B1%85%E6%98%93.txt",
+      "sha256": "4eaca018d5b76dd990c1da7c4da6eadbd7cbf3d3e4ac487a6187722f5c2f109a",
+      "bytes": 1328423
+    },
+    {
+      "key": "kanripo/cao-zi-jian-ji.txt",
+      "url": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4b0004%20%E6%9B%B9%E5%AD%90%E5%BB%BA%E9%9B%86-%E9%AD%8F-%E6%9B%B9%E6%A4%8D.txt",
+      "sha256": "9095965c15f7f3a3d7193b06e684b3dacb28873f61b18ad8a32c055a71b30c0c",
+      "bytes": 104351
+    },
+    {
+      "key": "kanripo/dong-po-quan-ji.txt",
+      "url": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4d0076%20%E6%9D%B1%E5%9D%A1%E5%85%A8%E9%9B%86-%E5%AE%8B-%E8%98%87%E8%BB%BE.txt",
+      "sha256": "5d16b79a92ef4a71b3d9e11ae9b204f8bb69e771ceb08a156ef4032396d78f10",
+      "bytes": 2913181
+    },
+    {
+      "key": "kanripo/du-gong-bu-ji.txt",
+      "url": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4c0018%20%E9%9B%86%E5%8D%83%E5%AE%B6%E8%A8%BB%E6%9D%9C%E5%B7%A5%E9%83%A8%E8%A9%A9%E9%9B%86-%E5%94%90-%E6%9D%9C%E7%94%AB.txt",
+      "sha256": "74be8287bfac2733a754363ffa0a6997e41696c74839247021cf053c13a8ff32",
+      "bytes": 1747815
+    },
+    {
+      "key": "kanripo/fang-yan.txt",
+      "url": "https://raw.githubusercontent.com/kr-shadow/KR1/87ca682e6e875d570f353fe8cb25cdb5fd15d1ec/KR1j0006%20%E8%BC%B6%E8%BB%92%E4%BD%BF%E8%80%85%E7%B5%95%E4%BB%A3%E8%AA%9E%E9%87%8B%E5%88%A5%E5%9C%8B%E6%96%B9%E8%A8%80-%E6%BC%A2-%E6%8F%9A%E9%9B%84.txt",
+      "sha256": "7c7e0885049920ce9a7e88bab476ccecaf3776de61fc2c463572e889df61213e",
+      "bytes": 64508
+    },
+    {
+      "key": "kanripo/gu-shi-shi-jiu-shou--source.txt",
+      "url": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0001%20%E6%96%87%E9%81%B8-%E6%A2%81-%E8%95%AD%E7%B5%B1.txt",
+      "sha256": "8a50a23818d030bd1957a488e164da030ef8d94188198d5f4c9836161ab10986",
+      "bytes": 984294
+    },
+    {
+      "key": "kanripo/guang-ya.txt",
+      "url": "https://raw.githubusercontent.com/kr-shadow/KR1/87ca682e6e875d570f353fe8cb25cdb5fd15d1ec/KR1j0008%20%E5%BB%A3%E9%9B%85-%E9%AD%8F-%E5%BC%B5%E6%8F%96.txt",
+      "sha256": "cab80fdfcf13428b287e579f1a743f05fcdd1f75968ffc158671961c4d4e0ba5",
+      "bytes": 100405
+    },
+    {
+      "key": "kanripo/gui-gu-zi.txt",
+      "url": "https://raw.githubusercontent.com/kr-shadow/KR3/eca6cb15ba5ee47a4267fde608db2ecd2d5f55ac/KR3j0008%20%E9%AC%BC%E8%B0%B7%E5%AD%90-%E5%91%A8-%E9%AC%BC%E8%B0%B7%E5%AD%90.txt",
+      "sha256": "ad0b4f1d5610d6a35567d26dba1740edef61888cb81b26c2ebed5fa1be2ead27",
+      "bytes": 26087
+    },
+    {
+      "key": "kanripo/hou-han-shu.txt",
+      "url": "https://raw.githubusercontent.com/kr-shadow/KR2/cd4bd65ceb1329febd63436e37d5bb4b98f14208/KR2a0009%20%E5%BE%8C%E6%BC%A2%E6%9B%B8-%E5%AE%8B-%E8%8C%83%E6%9B%84.txt",
+      "sha256": "572636c0b334772c64f8d6d63043f1db1730254e49f304d622ce3acdb06b102d",
+      "bytes": 3688725
+    },
+    {
+      "key": "kanripo/jia-xuan-chang-duan-ju.txt",
+      "url": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4j0040%20%E7%A8%BC%E8%BB%92%E8%A9%9E-%E5%AE%8B-%E8%BE%9B%E6%A3%84%E7%96%BE.txt",
+      "sha256": "8e083a208443b6375a7d88e593d6c60211bb083a4c0221fa52872556c00f0cf3",
+      "bytes": 150827
+    },
+    {
+      "key": "kanripo/li-shang-yin-shi-ji.txt",
+      "url": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4c0074%20%E6%9D%8E%E7%BE%A9%E5%B1%B1%E8%A9%A9%E9%9B%86-%E5%94%90-%E6%9D%8E%E5%95%86%E9%9A%B1.txt",
+      "sha256": "dd067c8538fea310ab2fccef1764454e8539cf480fbe0895dbcbc98fa4a6a0e0",
+      "bytes": 115126
+    },
+    {
+      "key": "kanripo/li-tai-bai-ji.txt",
+      "url": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4c0013%20%E6%9D%8E%E5%A4%AA%E7%99%BD%E9%9B%86%E5%88%86%E9%A1%9E%E8%A3%9C%E8%A8%BB-%E5%94%90-%E6%9D%8E%E7%99%BD.txt",
+      "sha256": "25b4543d8822f3fadde170b96dba49eae154a4cc62844932dc1569774546489c",
+      "bytes": 1525113
+    },
+    {
+      "key": "kanripo/san-guo-zhi.txt",
+      "url": "https://github.com/kanripo/KR2a0012/tree/214fcafa79894355909c9d8c2c1533089e7791c6",
+      "sha256": "0de12c085ce8bf2978a822a70314664a22b44195fdab73c373e308c88cdce0fe",
+      "bytes": 1481124,
+      "parts": 31
+    },
+    {
+      "key": "kanripo/shen-zi.txt",
+      "url": "https://raw.githubusercontent.com/kr-shadow/KR3/eca6cb15ba5ee47a4267fde608db2ecd2d5f55ac/KR3j0005%20%E6%84%BC%E5%AD%90-%E5%91%A8-%E6%84%BC%E5%88%B0.txt",
+      "sha256": "676eb3e7b50386ba07728f548a758a3940e701400ef23904307be79e9f5fbe61",
+      "bytes": 52647
+    },
+    {
+      "key": "kanripo/shi-pin.txt",
+      "url": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4i0003%20%E8%A9%A9%E5%93%81-%E6%A2%81-%E9%8D%BE%E5%B6%B8.txt",
+      "sha256": "bd82ed0b4f5676a6724acd06e18c67b19074e4e1c4472d1b012707ee1379673b",
+      "bytes": 21038
+    },
+    {
+      "key": "kanripo/shi-shuo-xin-yu.txt",
+      "url": "https://raw.githubusercontent.com/kr-shadow/KR3/eca6cb15ba5ee47a4267fde608db2ecd2d5f55ac/KR3l0002%20%E4%B8%96%E8%AA%AA%E6%96%B0%E8%AA%9E-%E5%8A%89%E5%AE%8B-%E5%8A%89%E7%BE%A9%E6%85%B6.txt",
+      "sha256": "b2a97ee6b1dd1e83a7022325ff27f8a97f330046e0f9d6b2fc390bbe88b031fc",
+      "bytes": 499448
+    },
+    {
+      "key": "kanripo/shu-yu-ci.txt",
+      "url": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4j0027%20%E6%BC%B1%E7%8E%89%E8%A9%9E-%E5%AE%8B-%E6%9D%8E%E6%B8%85%E7%85%A7.txt",
+      "sha256": "67056d4199cb1d3ca9722c916260d89952f496c834cdddf85845708dfb058adb",
+      "bytes": 8064
+    },
+    {
+      "key": "kanripo/tao-yuan-ming-ji.txt",
+      "url": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4b0008%20%E9%99%B6%E6%B7%B5%E6%98%8E%E9%9B%86-%E6%99%89-%E9%99%B6%E6%BD%9B.txt",
+      "sha256": "cecfe28851bccc829cd2fbf72111e6289ce65ce6ccebc1a1d6ada010b8674877",
+      "bytes": 107990
+    },
+    {
+      "key": "kanripo/wang-you-cheng-ji.txt",
+      "url": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4c0021%20%E9%A0%88%E6%BA%AA%E5%85%88%E7%94%9F%E6%A0%A1%E6%9C%AC%E5%94%90%E7%8E%8B%E5%8F%B3%E4%B8%9E%E9%9B%86-%E5%94%90-.txt",
+      "sha256": "17cad5f95b6c833de06851ec418868f982a6a72f2c8162d30447b68b73b0a096",
+      "bytes": 90190
+    },
+    {
+      "key": "kanripo/wen-xin-diao-long.txt",
+      "url": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4i0001%20%E6%96%87%E5%BF%83%E9%9B%95%E9%BE%8D-%E6%A2%81-%E5%8A%89%E5%8B%B0.txt",
+      "sha256": "f4ff99b7ca04eec85d7d885a083ce465725187aa53127c16877e5d65c9eb2746",
+      "bytes": 118798
+    },
+    {
+      "key": "kanripo/wen-xuan.txt",
+      "url": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0001%20%E6%96%87%E9%81%B8-%E6%A2%81-%E8%95%AD%E7%B5%B1.txt",
+      "sha256": "8a50a23818d030bd1957a488e164da030ef8d94188198d5f4c9836161ab10986",
+      "bytes": 984294
+    },
+    {
+      "key": "kanripo/wen-zi.txt",
+      "url": "https://raw.githubusercontent.com/kr-shadow/KR5/10d3f4d9e1b633175af795f84243794dad90ebf3/KR5c0118%20%E6%96%87%E5%AD%90-%E5%91%A8-%E8%BE%9B%E9%88%83.txt",
+      "sha256": "14bfc43d973505b0773d17695c7851e2b58b61480e01cb3b247caba00c3b803d",
+      "bytes": 123295
+    },
+    {
+      "key": "kanripo/wu-zi.txt",
+      "url": "https://raw.githubusercontent.com/kr-shadow/KR3/eca6cb15ba5ee47a4267fde608db2ecd2d5f55ac/KR3b0004%20%E5%90%B3%E5%AD%90-%E5%91%A8-%E5%90%B3%E8%B5%B7.txt",
+      "sha256": "26077ac7a858290d8c8d5c36c2f8a88979534b137f64f3fe254e44aa83ecc570",
+      "bytes": 14673
+    },
+    {
+      "key": "kanripo/yin-wen-zi.txt",
+      "url": "https://raw.githubusercontent.com/kr-shadow/KR3/eca6cb15ba5ee47a4267fde608db2ecd2d5f55ac/KR3j0004%20%E5%B0%B9%E6%96%87%E5%AD%90-%E5%91%A8-%E5%B0%B9%E6%96%87.txt",
+      "sha256": "6807c2454a873a772a6b4048b002e7b31f0f00d7f8023442cdc07a3c327d3559",
+      "bytes": 21633
+    },
+    {
+      "key": "kanripo/yu-pian.txt",
+      "url": "https://raw.githubusercontent.com/kr-shadow/KR1/87ca682e6e875d570f353fe8cb25cdb5fd15d1ec/KR1j0022%20%E9%87%8D%E4%BF%AE%E7%8E%89%E7%AF%87-%E6%A2%81-%E9%A1%A7%E9%87%8E%E7%8E%8B.txt",
+      "sha256": "e887f12d5ea332c962ec6f6c440e0609b6d9858864c92c1836953b9b4f1de5df",
+      "bytes": 725958
+    },
+    {
+      "key": "kanripo/yu-tai-xin-yong.txt",
+      "url": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0005%20%E7%8E%89%E8%87%BA%E6%96%B0%E8%A9%A0-%E9%99%B3-%E5%BE%90%E9%99%B5.txt",
+      "sha256": "2b2c468133848f106aeb750472af55cdd21b5689cc8711284062d97961b4dae4",
+      "bytes": 149339
+    },
+    {
+      "key": "kanripo/yue-fu-shi-ji.txt",
+      "url": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0034%20%E6%A8%82%E5%BA%9C%E8%A9%A9%E9%9B%86-%E5%AE%8B-%E9%83%AD%E8%8C%82%E5%80%A9.txt",
+      "sha256": "0fd1434e5a403aa67423ed94caeed7f7d1b718ff6795b3bf9a7f38ef3da0f350",
+      "bytes": 1436916
+    },
+    {
+      "key": "licenses/CC-BY-SA-4.0.txt",
+      "url": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/LICENSE",
+      "sha256": "3b2890eacd851373001c4a14623458e3adaf1b1967939aa9c38a318e28d61c00",
+      "bytes": 20138
+    }
+  ]
+}

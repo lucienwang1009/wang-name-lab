@@ -8,6 +8,7 @@ export interface CorpusSource {
   rightsNote: string;
   retrievedAt: string;
   checksum?: string;
+  segmentation?: "punctuated" | "unpunctuated";
 }
 
 export interface CorpusBook {

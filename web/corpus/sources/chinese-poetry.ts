@@ -2,11 +2,21 @@ export const chinesePoetryRevision =
   "b8594f81a89752241442f2ce267d6f66f96704ee";
 
 export interface PinnedCorpusFile {
-  bookId?: "shi-jing" | "chu-ci" | "lun-yu" | "meng-zi" | "da-xue";
+  bookId?:
+    | "shi-jing"
+    | "chu-ci"
+    | "lun-yu"
+    | "meng-zi"
+    | "da-xue"
+    | "zhong-yong"
+    | "tang-shi-san-bai-shou"
+    | "song-ci-san-bai-shou"
+    | "gu-wen-guan-zhi";
   target: string;
   url: string;
-  sha256: string;
+  sha256?: string;
   verificationUrl?: string;
+  format?: "classic" | "poetry";
 }
 
 const rawRoot = `https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/${chinesePoetryRevision}`;
@@ -46,6 +56,36 @@ export const chinesePoetryFiles: readonly PinnedCorpusFile[] = [
     url: `${rawRoot}/%E5%9B%9B%E4%B9%A6%E4%BA%94%E7%BB%8F/daxue.json`,
     sha256: "1939dfeb2cb8fde6c96fb5ce6bd1cff93df05460027c90c685f4863b05c550e8",
     verificationUrl: "https://zh.wikisource.org/zh-hans/%E5%A4%A7%E5%AD%B8",
+  },
+  {
+    bookId: "zhong-yong",
+    target: "zhongyong.json",
+    url: `${rawRoot}/%E5%9B%9B%E4%B9%A6%E4%BA%94%E7%BB%8F/zhongyong.json`,
+    verificationUrl: "https://zh.wikisource.org/zh-hans/%E4%B8%AD%E5%BA%B8",
+  },
+  {
+    bookId: "tang-shi-san-bai-shou",
+    target: "tangshisanbaishou.json",
+    url: `${rawRoot}/%E5%85%A8%E5%94%90%E8%AF%97/%E5%94%90%E8%AF%97%E4%B8%89%E7%99%BE%E9%A6%96.json`,
+    verificationUrl:
+      "https://zh.wikisource.org/zh-hans/%E5%94%90%E8%A9%A9%E4%B8%89%E7%99%BE%E9%A6%96",
+    format: "poetry",
+  },
+  {
+    bookId: "song-ci-san-bai-shou",
+    target: "songcisanbaishou.json",
+    url: `${rawRoot}/%E5%AE%8B%E8%AF%8D/%E5%AE%8B%E8%AF%8D%E4%B8%89%E7%99%BE%E9%A6%96.json`,
+    verificationUrl:
+      "https://zh.wikisource.org/zh-hans/%E5%AE%8B%E8%A9%9E%E4%B8%89%E7%99%BE%E9%A6%96",
+    format: "poetry",
+  },
+  {
+    bookId: "gu-wen-guan-zhi",
+    target: "guwenguanzhi.json",
+    url: `${rawRoot}/%E8%92%99%E5%AD%A6/guwenguanzhi.json`,
+    verificationUrl:
+      "https://zh.wikisource.org/zh-hans/%E5%8F%A4%E6%96%87%E8%A7%80%E6%AD%A2",
+    format: "poetry",
   },
   {
     target: "LICENSE",

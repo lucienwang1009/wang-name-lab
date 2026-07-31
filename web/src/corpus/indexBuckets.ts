@@ -3,7 +3,5 @@ export function bucketForCharacter(character: string): string {
   if (codePoint === undefined) {
     throw new TypeError("无法为字符为空的检索项分桶。");
   }
-  const highByte = (codePoint >>> 8).toString(16).padStart(4, "0");
-  const lowByteQuarter = ((codePoint & 0xff) >>> 6).toString(16);
-  return `${highByte}-${lowByteQuarter}`;
+  return Math.floor(codePoint / 0x100).toString(16).padStart(3, "0");
 }

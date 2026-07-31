@@ -1,15 +1,8 @@
 import { normalizeSearchText, splitClassicalSentences } from "../normalizeText.ts";
 import type { CorpusPassage } from "../types.ts";
 
-type ChinesePoetryBookId =
-  | "shi-jing"
-  | "chu-ci"
-  | "lun-yu"
-  | "meng-zi"
-  | "da-xue";
-
 interface ImportOptions {
-  bookId: ChinesePoetryBookId;
+  bookId: string;
   raw: unknown;
   sourceUrl: string;
   verificationUrl: string;
@@ -61,6 +54,36 @@ function readParagraphWork(value: unknown): WorkInput | undefined {
   return { title: chapter, chapterTitle: chapter, segments };
 }
 
+function readPoetryWork(value: unknown): WorkInput | undefined {
+  if (!isRecord(value)) return undefined;
+  const title = readString(value.title) ?? readString(value.rhythmic);
+  const segments = readStringArray(value.paragraphs);
+  if (!title || !segments) return undefined;
+  const author = readString(value.author);
+  return {
+    title,
+    chapterTitle: author ? `${author}·${title}` : title,
+    segments,
+  };
+}
+
+function readNestedAnthology(raw: unknown): WorkInput[] | undefined {
+  if (!isRecord(raw) || !Array.isArray(raw.content)) return undefined;
+  const works: WorkInput[] = [];
+  for (const volume of raw.content) {
+    if (!isRecord(volume) || !Array.isArray(volume.content)) return undefined;
+    const volumeTitle = readString(volume.title) ?? "选篇";
+    for (const item of volume.content) {
+      if (!isRecord(item)) return undefined;
+      const title = readString(item.chapter) ?? readString(item.title);
+      const segments = readStringArray(item.paragraphs);
+      if (!title || !segments) return undefined;
+      works.push({ title, chapterTitle: volumeTitle, segments });
+    }
+  }
+  return works.length > 0 ? works : undefined;
+}
+
 function parseWorks(raw: unknown): WorkInput[] {
   if (Array.isArray(raw)) {
     const contentWorks = raw.map(readContentWork);
@@ -72,9 +95,16 @@ function parseWorks(raw: unknown): WorkInput[] {
     if (paragraphWorks.every((work): work is WorkInput => Boolean(work))) {
       return paragraphWorks;
     }
+
+    const poetryWorks = raw.map(readPoetryWork);
+    if (poetryWorks.every((work): work is WorkInput => Boolean(work))) {
+      return poetryWorks;
+    }
   } else {
     const paragraphWork = readParagraphWork(raw);
     if (paragraphWork) return [paragraphWork];
+    const anthology = readNestedAnthology(raw);
+    if (anthology) return anthology;
   }
 
   throw new TypeError("无法识别 chinese-poetry 源文件结构。 ");

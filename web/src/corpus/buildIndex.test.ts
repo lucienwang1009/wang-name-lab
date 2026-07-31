@@ -26,27 +26,19 @@ describe("古籍静态字符索引", () => {
   it("记录同一原句中字符的全部位置，但只生成一条结构化 posting", () => {
     const source = passage("shi-jing/work-0001/passage-0001", "高山仰止，景行行止。", "高山仰止景行行止", 1);
     const result = buildCorpusIndex([source]);
-    const bucket = result.buckets[bucketForCharacter("行")];
+    const shard = result.indexShards[`${bucketForCharacter("行")}-000.json`];
 
-    expect(bucket?.characters["行"]).toEqual([
-      {
-        passageId: source.id,
-        bookId: source.bookId,
-        workId: source.workId,
-        chapterId: source.chapterId,
-        positions: [5, 6],
-      },
-    ]);
+    expect(shard?.characters["行"]).toEqual([[0, 0, 0, 0, [5, 6]]]);
   });
 
   it("按 Unicode 高位字节稳定分桶并生成繁简别名", () => {
     const source = passage("shi-jing/work-0001/passage-0001", "令儀孔昭。", "令仪孔昭", 1);
     const result = buildCorpusIndex([source]);
 
-    expect(bucketForCharacter("景")).toBe("0066-1");
+    expect(bucketForCharacter("景")).toBe("066");
     expect(result.aliases).toEqual({ 儀: "仪" });
-    expect(result.buckets[bucketForCharacter("仪")]?.characters["仪"]?.[0])
-      .toMatchObject({ passageId: source.id, positions: [1] });
+    expect(result.indexShards[`${bucketForCharacter("仪")}-000.json`]?.characters["仪"]?.[0])
+      .toEqual([0, 0, 0, 0, [1]]);
   });
 
   it("按书生成正文分片，且输出不受输入顺序影响", () => {
@@ -57,8 +49,9 @@ describe("古籍静态字符索引", () => {
     const reversed = buildCorpusIndex([second, first]);
 
     expect(reversed).toEqual(forward);
-    expect(forward.textShards["shi-jing"]).toEqual({
-      schemaVersion: 1,
+    expect(forward.textShards["shi-jing/000.json"]).toEqual({
+      schemaVersion: 2,
+      shardId: "shi-jing/000",
       bookId: "shi-jing",
       sourceUrl: first.sourceUrl,
       verificationUrl: first.verificationUrl,
@@ -72,6 +65,7 @@ describe("古籍静态字符索引", () => {
           order: first.order,
           text: first.text,
           normalizedText: first.normalizedText,
+          ordinal: 0,
         },
         {
           id: second.id,
@@ -82,6 +76,7 @@ describe("古籍静态字符索引", () => {
           order: second.order,
           text: second.text,
           normalizedText: second.normalizedText,
+          ordinal: 1,
         },
       ],
     });

@@ -306,7 +306,7 @@ export function AllusionLibrary({
       <SectionHeader
         eyebrow="TEXTUAL EVIDENCE · 证据层"
         title="古籍典故库"
-        description={`首批全文库已接入 5 部古籍，另有 ${fragments.length} 条精选片段覆盖 ${corpora.length - 1} 类文献。名字反查采用 A–F 六级证据：从原文连续、同句取字，逐级扩展到同篇、同书、跨典与单字用例。`}
+        description={`核心全文库已接入 70 部古籍，另有 ${fragments.length} 条精选片段覆盖 ${corpora.length - 1} 类文献。名字反查采用 A–F 六级证据：从原文连续、同句取字，逐级扩展到同篇、同书、跨典与单字用例。`}
         aside={
           <div className="large-count">
             <strong>{candidates.length}</strong>

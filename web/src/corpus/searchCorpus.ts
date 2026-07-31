@@ -1,10 +1,9 @@
 import { normalizeGivenName } from "../domain/nameSystem";
 import type {
-  CharacterIndexBucket,
+  CharacterIndexShard,
   CharacterPosting,
   CorpusTextShard,
 } from "./buildIndex";
-import { bucketForCharacter } from "./indexBuckets";
 import type { CorpusBook } from "./types";
 
 export type CorpusEvidenceGrade = "A" | "B" | "C" | "D" | "E" | "F";
@@ -46,9 +45,10 @@ export interface CorpusSearchResult {
 }
 
 interface CorpusCatalogue {
-  schemaVersion: 1;
+  schemaVersion: 2;
   buildVersion: string;
-  indexBuckets: string[];
+  characterIndex: Record<string, string[]>;
+  textShards: string[];
   books: CorpusBook[];
 }
 
@@ -111,10 +111,10 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 function parseCatalogue(value: unknown): CorpusCatalogue {
   if (
     !isRecord(value) ||
-    value.schemaVersion !== 1 ||
+    value.schemaVersion !== 2 ||
     typeof value.buildVersion !== "string" ||
-    !Array.isArray(value.indexBuckets) ||
-    !value.indexBuckets.every((item) => typeof item === "string") ||
+    !isRecord(value.characterIndex) ||
+    !Array.isArray(value.textShards) ||
     !Array.isArray(value.books)
   ) {
     throw new TypeError("全文库目录格式无效。");
@@ -129,39 +129,47 @@ function parseAliases(value: unknown): CorpusAliasFile {
   return value as unknown as CorpusAliasFile;
 }
 
-function parseIndexBucket(value: unknown, bucket: string): CharacterIndexBucket {
+function parseIndexShard(
+  value: unknown,
+  character: string,
+  path: string,
+): CharacterIndexShard {
   if (
     !isRecord(value) ||
-    value.schemaVersion !== 1 ||
-    value.bucket !== bucket ||
-    !isRecord(value.characters)
+    value.schemaVersion !== 2 ||
+    typeof value.bucket !== "string" ||
+    typeof value.part !== "number" ||
+    !isRecord(value.characters) ||
+    !Array.isArray(value.characters[character])
   ) {
-    throw new TypeError(`全文库索引桶 ${bucket} 格式无效。`);
+    throw new TypeError(`全文库字符索引 ${path} 格式无效。`);
   }
-  return value as unknown as CharacterIndexBucket;
+  return value as unknown as CharacterIndexShard;
 }
 
-function parseTextShard(value: unknown, bookId: string): CorpusTextShard {
+function parseTextShard(value: unknown, path: string): CorpusTextShard {
   if (
     !isRecord(value) ||
-    value.schemaVersion !== 1 ||
-    value.bookId !== bookId ||
+    value.schemaVersion !== 2 ||
+    typeof value.shardId !== "string" ||
+    typeof value.bookId !== "string" ||
     typeof value.sourceUrl !== "string" ||
     typeof value.verificationUrl !== "string" ||
     !Array.isArray(value.passages)
   ) {
-    throw new TypeError(`全文库正文分片 ${bookId} 格式无效。`);
+    throw new TypeError(`全文库正文分片 ${path} 格式无效。`);
   }
   return value as unknown as CorpusTextShard;
 }
 
 function groupPostings(
   postings: readonly CharacterPosting[],
-  key: "workId" | "bookId",
-): Map<string, CharacterPosting[]> {
-  const groups = new Map<string, CharacterPosting[]>();
+  key: "work" | "book",
+): Map<number, CharacterPosting[]> {
+  const groups = new Map<number, CharacterPosting[]>();
+  const index = key === "work" ? 2 : 1;
   for (const posting of postings) {
-    const value = posting[key];
+    const value = posting[index];
     const group = groups.get(value) ?? [];
     group.push(posting);
     groups.set(value, group);
@@ -190,6 +198,28 @@ function positionsAreForwardAdjacent(
   return first.some((position) => secondPositions.has(position + 1));
 }
 
+function hasDirectCharacterSequence(
+  text: string,
+  normalizedSequence: readonly string[],
+  aliases: Readonly<Record<string, string>>,
+): boolean {
+  if (normalizedSequence.length !== 2) return false;
+  const characters = [...text];
+  for (let index = 0; index < characters.length - 1; index += 1) {
+    const first = characters[index];
+    const second = characters[index + 1];
+    if (
+      first &&
+      second &&
+      (aliases[first] ?? first) === normalizedSequence[0] &&
+      (aliases[second] ?? second) === normalizedSequence[1]
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function buildMatchSeeds(
   displayChars: readonly string[],
   normalizedChars: readonly string[],
@@ -216,7 +246,7 @@ function buildMatchSeeds(
   ): boolean => {
     if ((countByGrade.get(grade) ?? 0) >= gradeLimits[grade]) return false;
     const id = `${grade}:${citations
-      .map((citation) => `${citation.posting.passageId}:${citation.matchedChar}`)
+      .map((citation) => `${citation.posting[0]}:${citation.matchedChar}`)
       .join("|")}`;
     if (seen.has(id)) return false;
     seen.add(id);
@@ -237,38 +267,38 @@ function buildMatchSeeds(
   const sameCharacter = firstNormalized === secondNormalized;
   if (sameCharacter) {
     for (const posting of firstPostings) {
-      if (posting.positions.length < 2) continue;
+      if (posting[4].length < 2) continue;
       const isAdjacent = positionsAreForwardAdjacent(
-        posting.positions,
-        posting.positions.filter((_, index) => index > 0),
+        posting[4],
+        posting[4].filter((_, index) => index > 0),
       );
       add(
         isAdjacent ? "A" : "B",
         isAdjacent
-          ? `全文原句连续出现：${firstDisplay}${secondDisplay}`
+          ? `全文转录字符连续出现：${firstDisplay}${secondDisplay}`
           : `全文同句分见：${firstDisplay}…${secondDisplay}`,
         [{ posting, matchedChar: `${firstDisplay}${secondDisplay}` }],
       );
     }
   } else {
     const secondByPassage = new Map(
-      secondPostings.map((posting) => [posting.passageId, posting]),
+      secondPostings.map((posting) => [posting[0], posting]),
     );
     for (const firstPosting of firstPostings) {
-      const secondPosting = secondByPassage.get(firstPosting.passageId);
+      const secondPosting = secondByPassage.get(firstPosting[0]);
       if (!secondPosting) continue;
       const forward = positionsAreForwardAdjacent(
-        firstPosting.positions,
-        secondPosting.positions,
+        firstPosting[4],
+        secondPosting[4],
       );
       const reverse = positionsAreForwardAdjacent(
-        secondPosting.positions,
-        firstPosting.positions,
+        secondPosting[4],
+        firstPosting[4],
       );
       add(
         forward ? "A" : "B",
         forward
-          ? `全文原句连续出现：${firstDisplay}${secondDisplay}`
+          ? `全文转录字符连续出现：${firstDisplay}${secondDisplay}`
           : reverse
             ? `全文同句反序连续：${secondDisplay}${firstDisplay} → ${firstDisplay}${secondDisplay}`
             : `全文同句分见：${firstDisplay}…${secondDisplay}`,
@@ -277,8 +307,8 @@ function buildMatchSeeds(
     }
   }
 
-  const firstByWork = groupPostings(firstPostings, "workId");
-  const secondByWork = groupPostings(secondPostings, "workId");
+  const firstByWork = groupPostings(firstPostings, "work");
+  const secondByWork = groupPostings(secondPostings, "work");
   for (const workId of [...firstByWork.keys()].sort()) {
     const left = firstByWork.get(workId) ?? [];
     const right = secondByWork.get(workId);
@@ -287,7 +317,7 @@ function buildMatchSeeds(
       left,
       right,
       (firstPosting, secondPosting) =>
-        firstPosting.passageId !== secondPosting.passageId,
+        firstPosting[0] !== secondPosting[0],
     );
     if (!pair) continue;
     add(
@@ -300,8 +330,8 @@ function buildMatchSeeds(
     );
   }
 
-  const firstByBook = groupPostings(firstPostings, "bookId");
-  const secondByBook = groupPostings(secondPostings, "bookId");
+  const firstByBook = groupPostings(firstPostings, "book");
+  const secondByBook = groupPostings(secondPostings, "book");
   for (const bookId of [...firstByBook.keys()].sort()) {
     const left = firstByBook.get(bookId) ?? [];
     const right = secondByBook.get(bookId);
@@ -310,7 +340,7 @@ function buildMatchSeeds(
       left,
       right,
       (firstPosting, secondPosting) =>
-        firstPosting.workId !== secondPosting.workId,
+        firstPosting[2] !== secondPosting[2],
     );
     if (!pair) continue;
     add(
@@ -340,10 +370,10 @@ function buildMatchSeeds(
     }
   }
 
-  const firstPassageIds = new Set(firstPostings.map((posting) => posting.passageId));
-  const secondPassageIds = new Set(secondPostings.map((posting) => posting.passageId));
+  const firstPassageIds = new Set(firstPostings.map((posting) => posting[0]));
+  const secondPassageIds = new Set(secondPostings.map((posting) => posting[0]));
   const singleSources: Array<
-    [string, readonly CharacterPosting[], ReadonlySet<string>]
+    [string, readonly CharacterPosting[], ReadonlySet<number>]
   > = [
     [firstDisplay, firstPostings, secondPassageIds],
     [secondDisplay, secondPostings, firstPassageIds],
@@ -351,7 +381,7 @@ function buildMatchSeeds(
   for (const [character, postings, otherPassageIds] of singleSources) {
     let addedForCharacter = 0;
     for (const posting of postings) {
-      if (sameCharacter ? posting.positions.length > 1 : otherPassageIds.has(posting.passageId)) {
+      if (sameCharacter ? posting[4].length > 1 : otherPassageIds.has(posting[0])) {
         continue;
       }
       if (add(
@@ -367,8 +397,7 @@ function buildMatchSeeds(
 
   return seeds.sort(
     (left, right) =>
-      gradeOrder[left.grade] - gradeOrder[right.grade] ||
-      left.id.localeCompare(right.id),
+      gradeOrder[left.grade] - gradeOrder[right.grade],
   );
 }
 
@@ -422,25 +451,25 @@ export function createCorpusSearcher({
           (character) => aliasFile.aliases[character] ?? character,
         );
         const normalizedGivenName = normalizedChars.join("");
-        const availableBuckets = new Set(catalogue.indexBuckets);
-        const requiredBuckets = [
-          ...new Set(normalizedChars.map(bucketForCharacter)),
-        ].filter((bucket) => availableBuckets.has(bucket));
-        const bucketValues = await Promise.all(
-          requiredBuckets.map(async (bucket) => [
-            bucket,
-            parseIndexBucket(
-              await loadJson(`index/${bucket}.json`, catalogue.buildVersion),
-              bucket,
-            ),
-          ] as const),
-        );
-        const buckets = new Map(bucketValues);
         const postingsByCharacter = new Map<string, readonly CharacterPosting[]>();
-        for (const character of normalizedChars) {
-          const bucket = buckets.get(bucketForCharacter(character));
-          postingsByCharacter.set(character, bucket?.characters[character] ?? []);
-        }
+        await Promise.all(
+          [...new Set(normalizedChars)].map(async (character) => {
+            const paths = catalogue.characterIndex[character] ?? [];
+            const shards = await Promise.all(
+              paths.map(async (path) =>
+                parseIndexShard(
+                  await loadJson(`index/${path}`, catalogue.buildVersion),
+                  character,
+                  path,
+                ),
+              ),
+            );
+            postingsByCharacter.set(
+              character,
+              shards.flatMap((shard) => shard.characters[character] ?? []),
+            );
+          }),
+        );
 
         const seeds = buildMatchSeeds(
           displayChars,
@@ -462,45 +491,44 @@ export function createCorpusSearcher({
           };
         }
 
-        const requiredBookIds = [
+        const requiredTextShards = [
           ...new Set(
             seeds.flatMap((seed) =>
-              seed.citations.map((citation) => citation.posting.bookId),
+              seed.citations.map((citation) => citation.posting[3]),
             ),
           ),
-        ].sort();
+        ].sort((left, right) => left - right);
         const shardValues = await Promise.all(
-          requiredBookIds.map(async (bookId) => [
-            bookId,
-            parseTextShard(
-              await loadJson(`texts/${bookId}.json`, catalogue.buildVersion),
-              bookId,
-            ),
-          ] as const),
+          requiredTextShards.map(async (shardOrdinal) => {
+            const path = catalogue.textShards[shardOrdinal];
+            if (!path) throw new Error(`全文库缺少正文分片编号：${shardOrdinal}`);
+            return [
+              shardOrdinal,
+              parseTextShard(
+                await loadJson(`texts/${path}`, catalogue.buildVersion),
+                path,
+              ),
+            ] as const;
+          }),
         );
-        const shards = new Map(shardValues);
         const books = new Map(catalogue.books.map((book) => [book.id, book]));
         const passages = new Map(
-          shardValues.flatMap(([bookId, shard]) =>
+          shardValues.flatMap(([_shardOrdinal, shard]) =>
             shard.passages.map((passage) => [
-              passage.id,
-              { bookId, shard, passage },
+              passage.ordinal,
+              { bookId: shard.bookId, shard, passage },
             ] as const),
           ),
         );
-        const matches: CorpusEvidenceMatch[] = seeds.map((seed) => ({
-          id: seed.id,
-          grade: seed.grade,
-          givenName,
-          extraction: seed.extraction,
-          citations: seed.citations.map(({ posting, matchedChar }) => {
-            const loaded = passages.get(posting.passageId);
+        const matches: CorpusEvidenceMatch[] = seeds.map((seed) => {
+          const citations = seed.citations.map(({ posting, matchedChar }) => {
+            const loaded = passages.get(posting[0]);
             if (!loaded) {
-              throw new Error(`正文分片缺少索引原句：${posting.passageId}`);
+              throw new Error(`正文分片缺少索引原句：${posting[0]}`);
             }
             const book = books.get(loaded.bookId);
             return {
-              passageId: posting.passageId,
+              passageId: loaded.passage.id,
               matchedChar,
               bookId: loaded.bookId,
               bookTitle: book?.title ?? loaded.bookId,
@@ -511,8 +539,37 @@ export function createCorpusSearcher({
               sourceUrl: loaded.shard.sourceUrl,
               verificationUrl: loaded.shard.verificationUrl,
             };
-          }),
-        }));
+          });
+          let grade = seed.grade;
+          let extraction = seed.extraction;
+          if (grade === "A") {
+            const citation = citations[0];
+            const book = citation ? books.get(citation.bookId) : undefined;
+            const direct = Boolean(
+              citation &&
+                book?.source?.segmentation === "punctuated" &&
+                hasDirectCharacterSequence(
+                  citation.text,
+                  normalizedChars,
+                  aliasFile.aliases,
+                ),
+            );
+            if (!direct) {
+              grade = "B";
+              extraction = `全文检索段相邻出现：${displayChars.join("…")}；上游无可靠句读或字间有标点，不作为原文连续词组`;
+            }
+          }
+          return {
+            id: `${grade}:${seed.id.slice(2)}`,
+            grade,
+            givenName,
+            extraction,
+            citations,
+          };
+        }).sort(
+          (left, right) =>
+            gradeOrder[left.grade] - gradeOrder[right.grade],
+        );
 
         return {
           status: "hit",
@@ -534,4 +591,10 @@ export function createCorpusSearcher({
   };
 }
 
-export const corpusSearcher = createCorpusSearcher();
+const configuredCorpusBaseUrl = import.meta.env.VITE_CORPUS_BASE_URL?.trim();
+
+export const corpusSearcher = createCorpusSearcher(
+  configuredCorpusBaseUrl
+    ? { baseUrl: configuredCorpusBaseUrl }
+    : undefined,
+);

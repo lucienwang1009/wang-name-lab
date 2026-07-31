@@ -56,6 +56,7 @@ const books: CorpusBook[] = [
       editionNote: "测试固定转录",
       rightsNote: "公版测试",
       retrievedAt: "2026-07-31",
+      segmentation: "punctuated",
     },
   },
   {
@@ -70,31 +71,36 @@ const books: CorpusBook[] = [
       editionNote: "测试固定转录",
       rightsNote: "公版测试",
       retrievedAt: "2026-07-31",
+      segmentation: "punctuated",
     },
   },
 ];
 
-function fixtures() {
+function fixtures(segmentation: "punctuated" | "unpunctuated" = "punctuated") {
   const built = buildCorpusIndex(passages);
   const values = new Map<string, unknown>([
     [
       "/corpus/catalog.json",
       {
-        schemaVersion: 1,
+        schemaVersion: 2,
         buildVersion: "fixture-v1",
         scope: "测试全文库",
         coverageCaveat: "仅测试",
-        indexBuckets: Object.keys(built.buckets),
-        books,
+        characterIndex: built.indexPathsByCharacter,
+        textShards: built.textShardPaths,
+        books: books.map((book) => ({
+          ...book,
+          source: book.source ? { ...book.source, segmentation } : undefined,
+        })),
       },
     ],
     ["/corpus/aliases.json", { schemaVersion: 1, aliases: built.aliases }],
   ]);
-  for (const [bucket, value] of Object.entries(built.buckets)) {
-    values.set(`/corpus/index/${bucket}.json`, value);
+  for (const [path, value] of Object.entries(built.indexShards)) {
+    values.set(`/corpus/index/${path}`, value);
   }
-  for (const [bookId, value] of Object.entries(built.textShards)) {
-    values.set(`/corpus/texts/${bookId}.json`, value);
+  for (const [path, value] of Object.entries(built.textShards)) {
+    values.set(`/corpus/texts/${path}`, value);
   }
   return values;
 }
@@ -168,6 +174,20 @@ describe("浏览器端古籍全文检索", () => {
       .toHaveLength(1);
   });
 
+  it("无可靠句读的机器分段不把相邻字误报为 A 级", async () => {
+    const searcher = createCorpusSearcher({
+      baseUrl: "/corpus/",
+      fetcher: createFixtureFetcher(fixtures("unpunctuated")),
+    });
+
+    const result = await searcher.search("王令仪");
+
+    expect(result.matches.some((match) => match.grade === "A")).toBe(false);
+    expect(result.matches.some((match) =>
+      match.grade === "B" && match.extraction.includes("不作为原文连续词组"),
+    )).toBe(true);
+  });
+
   it("索引中没有该字时返回 no-hit，不把缺桶误报成网络错误", async () => {
     const searcher = createCorpusSearcher({
       baseUrl: "/corpus/",
@@ -181,7 +201,7 @@ describe("浏览器端古籍全文检索", () => {
   it("正文分片加载失败时返回 error，而不是伪装成无结果", async () => {
     const searcher = createCorpusSearcher({
       baseUrl: "/corpus/",
-      fetcher: createFixtureFetcher(fixtures(), "/corpus/texts/book-a.json"),
+      fetcher: createFixtureFetcher(fixtures(), "/corpus/texts/book-a/000.json"),
     });
     const result = await searcher.search("王令仪");
     expect(result.status).toBe("error");

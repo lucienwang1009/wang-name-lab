@@ -19,7 +19,7 @@ const gradeCopy: Record<
   EvidenceMatchGrade,
   { title: string; explanation: string }
 > = {
-  A: { title: "A级 · 原文连续", explanation: "两字按名字顺序连续出现" },
+  A: { title: "A级 · 转录连续", explanation: "两字按名字顺序直接相连；仍须结合句义判断是否成词" },
   B: { title: "B级 · 同句取字", explanation: "同句隔字、首尾或反序出现" },
   C: { title: "C级 · 同篇分见", explanation: "同一篇目的不同原句分别出现" },
   D: { title: "D级 · 同书异篇", explanation: "同一部古籍的不同篇目分别取字" },
@@ -30,7 +30,7 @@ const gradeCopy: Record<
 const examples = ["王景玉", "王令仪", "王皎舒"];
 const grades = ["A", "B", "C", "D", "E", "F"] as const;
 const relationGrades = ["A", "B", "C", "D", "E"] as const;
-const initialReadyBookCount = 5;
+const initialReadyBookCount = 70;
 
 type FullTextViewState =
   | { status: "idle" }
@@ -179,13 +179,13 @@ function FullTextLayer({ state }: { state: FullTextViewState }) {
       <header className="evidence-layer-header">
         <div>
           <p className="eyebrow">FULL TEXT · 全文检索层</p>
-          <h3 id="fulltext-layer-title">首批五部古籍全文</h3>
-          <p>先查固定版本的完整转录；每条同时给出机器来源与公版复核页。</p>
+          <h3 id="fulltext-layer-title">七十部核心古籍正文</h3>
+          <p>先查固定版本的机器转录；每条同时给出数据来源与人工复核页。</p>
         </div>
         <span className="layer-count">{readyBooks} 部已就绪</span>
       </header>
       <p className="fulltext-edition-note">
-        版本说明：这里使用开源仓库的机器可读转录与现代标点，并非指定古籍底本或校勘本；重要取名依据请打开公版页面复核。
+        版本说明：这里使用 Chinese Poetry、ECT-KRP 与 Kanripo 的开源数字转录；部分语料保留古注，部分仅取正文，且机器分段不等于现代权威校勘本。重要取名依据请打开来源复核。
       </p>
 
       {state.status === "loading" ? (
@@ -212,8 +212,8 @@ function FullTextLayer({ state }: { state: FullTextViewState }) {
         <div className="fulltext-state fulltext-none">
           <span aria-hidden="true">○</span>
           <div>
-            <b>首批 {readyBooks} 部全文未找到对应关系</b>
-            <p>这只是当前五部覆盖范围内的结论，不代表所有古籍中都不存在。</p>
+            <b>当前 {readyBooks} 部核心库未找到对应关系</b>
+            <p>这只是当前收录范围内的结论，不代表全部传世文献中都不存在。</p>
           </div>
         </div>
       ) : null}
@@ -359,7 +359,7 @@ export function EvidenceSearch({
         <div>
           <span>01 · FULL TEXT</span>
           <strong>全文库 {initialReadyBookCount} 部</strong>
-          <small>完整转录 · 按需加载</small>
+          <small>开源正文 · 按需加载</small>
         </div>
         <i aria-hidden="true">/</i>
         <div>

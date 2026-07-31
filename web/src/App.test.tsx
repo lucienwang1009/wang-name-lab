@@ -27,7 +27,7 @@ const fullTextHit: CorpusSearchResult = {
   normalizedGivenName: "令仪",
   coverage: {
     targetBooks: 70,
-    readyBooks: 5,
+    readyBooks: 70,
     buildVersion: "fixture-v1",
   },
   matches: [
@@ -61,7 +61,7 @@ const fullTextNoHit: CorpusSearchResult = {
   matches: [],
   coverage: {
     targetBooks: 70,
-    readyBooks: 5,
+    readyBooks: 70,
     buildVersion: "fixture-v1",
   },
 };
@@ -124,7 +124,7 @@ describe("取名实验室应用", () => {
     };
     render(<App corpusSearchClient={corpusSearchClient} />);
 
-    expect(screen.getByText("全文库 5 部")).toBeTruthy();
+    expect(screen.getByText("全文库 70 部")).toBeTruthy();
     expect(screen.getByText("精选片段 126 条")).toBeTruthy();
 
     const search = screen.getByRole("searchbox", {
@@ -133,7 +133,7 @@ describe("取名实验室应用", () => {
     fireEvent.change(search, { target: { value: "王令仪" } });
 
     expect(await screen.findByText("正在查找全文索引")).toBeTruthy();
-    expect(screen.getByText(/并非指定古籍底本或校勘本/)).toBeTruthy();
+    expect(screen.getByText(/不等于现代权威校勘本/)).toBeTruthy();
     await act(async () => {
       resolveFirst?.(fullTextHit);
       await firstSearch;
@@ -143,7 +143,7 @@ describe("取名实验室应用", () => {
     expect(screen.getByRole("link", { name: "公版页面复核 ↗" })).toBeTruthy();
     expect(screen.getByText("原文连续出现：令仪")).toBeTruthy();
     const fullTextHeading = screen.getByRole("heading", {
-      name: "首批五部古籍全文",
+      name: "七十部核心古籍正文",
     });
     const curatedHeading = screen.getByRole("heading", {
       name: "精选片段补充",
@@ -155,7 +155,7 @@ describe("取名实验室应用", () => {
 
     fireEvent.change(search, { target: { value: "王景玉" } });
     expect(
-      await screen.findByText("首批 5 部全文未找到对应关系"),
+      await screen.findByText("当前 70 部核心库未找到对应关系"),
     ).toBeTruthy();
     expect(screen.getByText("精选片段暂未找到同句或同篇共同出处")).toBeTruthy();
     expect(screen.getByText("D级 · 同书异篇")).toBeTruthy();

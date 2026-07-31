@@ -4,8 +4,8 @@ node_modules/
 outputs/
 web/node_modules/
 web/dist/
+web/public/corpus/
 *.inspect.ndjson
 .env
 .env.local
 .env.*.local
-

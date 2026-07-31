@@ -1,1 +1,4 @@
 corpus/vendor/chinese-poetry/*.json -text -diff
+corpus/vendor/early-chinese/** -text -diff -whitespace
+corpus/vendor/kanripo/** -text -diff -whitespace
+corpus/vendor/licenses/** -text -diff -whitespace
