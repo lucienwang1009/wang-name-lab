@@ -2,6 +2,8 @@ import type {
   AllusionCandidate,
   BirthScenario,
   CharacterEntry,
+  ClassicalEvidenceCitation,
+  ClassicalEvidenceMatch,
   ClassicalFragment,
   CuratedCandidate,
   RawNameCandidate,
@@ -172,6 +174,276 @@ export function generateAllusionCandidates(
   }
 
   return candidates;
+}
+
+const isChineseCharacter = (char: string): boolean =>
+  /[\u3400-\u9fff]/u.test(char);
+
+const maxCompositeMatchesPerGrade = 12;
+
+function sourceFamily(source: string): string {
+  const opening = source.indexOf("《");
+  const closing = source.indexOf("》", opening + 1);
+  if (opening < 0 || closing < 0) return source;
+
+  const prefix = source.slice(0, opening);
+  const title = source.slice(opening + 1, closing);
+  const rootTitle = title.split("·")[0];
+  return `${prefix}《${rootTitle}》`;
+}
+
+function toCitation(
+  fragment: ClassicalFragment,
+  matchedChar: string,
+): ClassicalEvidenceCitation {
+  return {
+    fragmentId: fragment.id,
+    matchedChar,
+    corpus: fragment.corpus,
+    source: fragment.source,
+    quote: fragment.quote,
+    scene: fragment.scene,
+    contextTone: fragment.contextTone,
+    url: fragment.url,
+  };
+}
+
+function uniqueBySource(
+  fragments: readonly ClassicalFragment[],
+): ClassicalFragment[] {
+  const seen = new Set<string>();
+  return fragments.filter((fragment) => {
+    if (seen.has(fragment.source)) return false;
+    seen.add(fragment.source);
+    return true;
+  });
+}
+
+export function normalizeGivenName(query: string, surname = "王"): string {
+  const characters = [...query].filter(isChineseCharacter);
+  if (characters[0] === surname) characters.shift();
+  return characters.slice(0, 2).join("");
+}
+
+export function searchClassicalEvidence(
+  query: string,
+  fragments: readonly ClassicalFragment[],
+  surname = "王",
+): ClassicalEvidenceMatch[] {
+  const givenName = normalizeGivenName(query, surname);
+  const chars = [...givenName];
+  if (chars.length === 0) return [];
+
+  const first = chars[0];
+  const second = chars[1];
+  const direct: ClassicalEvidenceMatch[] = [];
+  const single: ClassicalEvidenceMatch[] = [];
+
+  for (const fragment of fragments) {
+    const matchedChars = chars.filter(
+      (char, index) => chars.indexOf(char) === index && fragment.quote.includes(char),
+    );
+    if (matchedChars.length === 0) continue;
+
+    if (first && second && fragment.quote.includes(`${first}${second}`)) {
+      direct.push({
+        id: `A:${fragment.id}:${givenName}`,
+        givenName,
+        matchedChars: [first, second],
+        grade: "A",
+        corpus: fragment.corpus,
+        source: fragment.source,
+        quote: fragment.quote,
+        extraction: `原文连续出现：${first}${second}`,
+        scene: fragment.scene,
+        contextTone: fragment.contextTone,
+        url: fragment.url,
+        citations: [toCitation(fragment, `${first}${second}`)],
+      });
+      continue;
+    }
+
+    if (first && second && matchedChars.length === 2) {
+      const firstIndex = fragment.quote.indexOf(first);
+      const secondIndex = fragment.quote.indexOf(second);
+      const reverseContiguous = fragment.quote.includes(`${second}${first}`);
+      direct.push({
+        id: `B:${fragment.id}:${givenName}`,
+        givenName,
+        matchedChars: [first, second],
+        grade: "B",
+        corpus: fragment.corpus,
+        source: fragment.source,
+        quote: fragment.quote,
+        extraction: reverseContiguous
+          ? `同句反序连续：${second}${first} → ${first}${second}`
+          : firstIndex < secondIndex
+            ? `同句顺取：${first}…${second}`
+            : `同句反序：${second}…${first}`,
+        scene: fragment.scene,
+        contextTone: fragment.contextTone,
+        url: fragment.url,
+        citations: [toCitation(fragment, `${first}${second}`)],
+      });
+      continue;
+    }
+
+    single.push({
+      id: `S:${fragment.id}:${matchedChars.join("")}`,
+      givenName,
+      matchedChars,
+      grade: "F",
+      corpus: fragment.corpus,
+      source: fragment.source,
+      quote: fragment.quote,
+      extraction: `仅含${matchedChars.map((char) => `“${char}”`).join("、")}，只算单字用例，不能作为完整名字出处`,
+      scene: fragment.scene,
+      contextTone: fragment.contextTone,
+      url: fragment.url,
+      citations: [toCitation(fragment, matchedChars.join("、"))],
+    });
+  }
+
+  const sameSource: ClassicalEvidenceMatch[] = [];
+  if (first && second) {
+    const sourceGroups = new Map<string, ClassicalFragment[]>();
+    for (const fragment of fragments) {
+      const group = sourceGroups.get(fragment.source);
+      if (group) group.push(fragment);
+      else sourceGroups.set(fragment.source, [fragment]);
+    }
+
+    for (const sourceFragments of sourceGroups.values()) {
+      if (
+        sourceFragments.some(
+          (fragment) =>
+            fragment.quote.includes(first) && fragment.quote.includes(second),
+        )
+      ) {
+        continue;
+      }
+      const firstFragment = sourceFragments.find((fragment) =>
+        fragment.quote.includes(first),
+      );
+      const secondFragment = sourceFragments.find((fragment) =>
+        fragment.quote.includes(second),
+      );
+      if (!firstFragment || !secondFragment || firstFragment.id === secondFragment.id) {
+        continue;
+      }
+      sameSource.push({
+        id: `C:${firstFragment.id}:${secondFragment.id}:${givenName}`,
+        givenName,
+        matchedChars: [first, second],
+        grade: "C",
+        corpus: firstFragment.corpus,
+        source: firstFragment.source,
+        quote: `${firstFragment.quote} ／ ${secondFragment.quote}`,
+        extraction: `同篇分见：${first}…${second}，需人工复核篇内距离与语境`,
+        scene: `${firstFragment.scene}；${secondFragment.scene}`,
+        contextTone: `${firstFragment.contextTone}；${secondFragment.contextTone}`,
+        url: firstFragment.url,
+        citations: [
+          toCitation(firstFragment, first),
+          toCitation(secondFragment, second),
+        ],
+      });
+    }
+  }
+
+  const sameBook: ClassicalEvidenceMatch[] = [];
+  const crossClassic: ClassicalEvidenceMatch[] = [];
+  if (first && second) {
+    const firstOnly = uniqueBySource(
+      fragments.filter(
+        (fragment) =>
+          fragment.quote.includes(first) && !fragment.quote.includes(second),
+      ),
+    );
+    const secondOnly = uniqueBySource(
+      fragments.filter(
+        (fragment) =>
+          fragment.quote.includes(second) && !fragment.quote.includes(first),
+      ),
+    );
+    const seenBookPairs = new Set<string>();
+    const seenCrossPairs = new Set<string>();
+
+    for (const firstFragment of firstOnly) {
+      for (const secondFragment of secondOnly) {
+        if (firstFragment.id === secondFragment.id) continue;
+        const firstFamily = sourceFamily(firstFragment.source);
+        const secondFamily = sourceFamily(secondFragment.source);
+        const pairKey = `${firstFragment.source}|${secondFragment.source}`;
+
+        if (
+          firstFamily === secondFamily &&
+          firstFragment.source !== secondFragment.source &&
+          !seenBookPairs.has(pairKey) &&
+          sameBook.length < maxCompositeMatchesPerGrade
+        ) {
+          seenBookPairs.add(pairKey);
+          sameBook.push({
+            id: `D:${firstFragment.id}:${secondFragment.id}:${givenName}`,
+            givenName,
+            matchedChars: [first, second],
+            grade: "D",
+            corpus: firstFragment.corpus,
+            source: firstFamily,
+            quote: `${firstFragment.quote} ／ ${secondFragment.quote}`,
+            extraction: `同书异篇：分别取“${first}”“${second}”，不是原文固有词组`,
+            scene: `${firstFragment.scene}；${secondFragment.scene}`,
+            contextTone: `${firstFragment.contextTone}；${secondFragment.contextTone}`,
+            url: firstFragment.url,
+            citations: [
+              toCitation(firstFragment, first),
+              toCitation(secondFragment, second),
+            ],
+          });
+          continue;
+        }
+
+        if (
+          firstFamily !== secondFamily &&
+          !seenCrossPairs.has(pairKey) &&
+          crossClassic.length < maxCompositeMatchesPerGrade
+        ) {
+          seenCrossPairs.add(pairKey);
+          crossClassic.push({
+            id: `E:${firstFragment.id}:${secondFragment.id}:${givenName}`,
+            givenName,
+            matchedChars: [first, second],
+            grade: "E",
+            corpus: `${firstFragment.corpus} × ${secondFragment.corpus}`,
+            source: "跨典双源",
+            quote: `${firstFragment.quote} ／ ${secondFragment.quote}`,
+            extraction: `跨典合取：分别取“${first}”“${second}”，只表示命名组合，不是共同出处`,
+            scene: `${firstFragment.scene}；${secondFragment.scene}`,
+            contextTone: `${firstFragment.contextTone}；${secondFragment.contextTone}`,
+            url: firstFragment.url,
+            citations: [
+              toCitation(firstFragment, first),
+              toCitation(secondFragment, second),
+            ],
+          });
+        }
+
+        if (
+          sameBook.length >= maxCompositeMatchesPerGrade &&
+          crossClassic.length >= maxCompositeMatchesPerGrade
+        ) {
+          break;
+        }
+      }
+    }
+  }
+
+  const gradeOrder = { A: 0, B: 1, C: 2, D: 3, E: 4, F: 5 } as const;
+  return [...direct, ...sameSource, ...sameBook, ...crossClassic, ...single].sort(
+    (left, right) =>
+      gradeOrder[left.grade] - gradeOrder[right.grade] ||
+      left.source.localeCompare(right.source),
+  );
 }
 
 export function culturalScore(candidate: CuratedCandidate): number {

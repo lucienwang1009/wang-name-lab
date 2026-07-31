@@ -12,7 +12,9 @@ import {
   diversifyRawCandidates,
   generateAllusionCandidates,
   generateRawPool,
+  normalizeGivenName,
   rerankCandidate,
+  searchClassicalEvidence,
 } from "./nameSystem";
 
 describe("取名领域核心", () => {
@@ -110,6 +112,39 @@ describe("取名领域核心", () => {
         metaphysicsScore: 100,
       }).effectiveMetaphysicsWeight,
     ).toBe(0.15);
+  });
+
+  it("按名字分级检索原典证据，不把单字旁证冒充完整典故", () => {
+    expect(normalizeGivenName("王景玉")).toBe("景玉");
+    expect(normalizeGivenName(" 令仪 ")).toBe("令仪");
+
+    const exact = searchClassicalEvidence("王令仪", classicalFragments);
+    expect(exact.some((item) => item.grade === "A" && item.quote.includes("令仪"))).toBe(
+      true,
+    );
+
+    const separated = searchClassicalEvidence("王皎舒", classicalFragments);
+    expect(
+      separated.some(
+        (item) =>
+          item.grade === "B" &&
+          item.quote.includes("皎") &&
+          item.quote.includes("舒"),
+      ),
+    ).toBe(true);
+
+    const sameWork = searchClassicalEvidence("王云仪", classicalFragments);
+    expect(sameWork.some((item) => item.grade === "C")).toBe(true);
+
+    const familyIdea = searchClassicalEvidence("王景玉", classicalFragments);
+    expect(familyIdea.some((item) => item.grade === "D")).toBe(true);
+    expect(familyIdea.some((item) => item.grade === "E")).toBe(true);
+    expect(familyIdea.some((item) => item.grade === "F")).toBe(true);
+    expect(
+      familyIdea
+        .filter((item) => item.grade === "F")
+        .every((item) => item.extraction.includes("不能作为完整名字出处")),
+    ).toBe(true);
   });
 
   it("预产主窗口形成132个日期时辰情景", () => {

@@ -2,11 +2,13 @@ import { useMemo, useState } from "react";
 
 import type {
   AllusionCandidate,
+  ClassicalFragment,
   CuratedCandidate,
   RawNameCandidate,
 } from "../domain/types";
 import { diversifyRawCandidates } from "../domain/nameSystem";
 import { SectionHeader } from "./AppShell";
+import { EvidenceSearch } from "./EvidenceSearch";
 
 type RankedCandidate = CuratedCandidate & {
   culturalScore: number;
@@ -264,8 +266,10 @@ export function NameExplorer({
 
 export function AllusionLibrary({
   candidates,
+  fragments,
 }: {
   candidates: readonly AllusionCandidate[];
+  fragments: readonly ClassicalFragment[];
 }) {
   const [query, setQuery] = useState("");
   const [grade, setGrade] = useState("全部");
@@ -273,12 +277,8 @@ export function AllusionLibrary({
   const [page, setPage] = useState(1);
   const pageSize = 20;
   const corpora = useMemo(
-    () => ["全部", ...new Set(candidates.map((candidate) => candidate.corpus))],
-    [candidates],
-  );
-  const fragmentCount = useMemo(
-    () => new Set(candidates.map((candidate) => candidate.fragmentId)).size,
-    [candidates],
+    () => ["全部", ...new Set(fragments.map((fragment) => fragment.corpus))],
+    [fragments],
   );
   const filtered = useMemo(() => {
     const normalized = query.trim();
@@ -303,7 +303,7 @@ export function AllusionLibrary({
       <SectionHeader
         eyebrow="TEXTUAL EVIDENCE · 证据层"
         title="古籍典故库"
-        description={`由 ${fragmentCount} 条原典片段生成，覆盖 ${corpora.length - 1} 类文献。所有候选保留原文、篇目、取字方式与上下文；A级为原文连续，B级为同句隔字、首尾或尾首。`}
+        description={`由 ${fragments.length} 条原典片段生成，覆盖 ${corpora.length - 1} 类文献。名字反查采用 A–F 六级证据：从原文连续、同句取字，逐级扩展到同篇、同书、跨典与单字用例。`}
         aside={
           <div className="large-count">
             <strong>{candidates.length}</strong>
@@ -311,6 +311,8 @@ export function AllusionLibrary({
           </div>
         }
       />
+
+      <EvidenceSearch fragments={fragments} />
 
       <div className="filter-ledger compact">
         <label className="field field-wide">

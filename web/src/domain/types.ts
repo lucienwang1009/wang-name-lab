@@ -81,6 +81,34 @@ export interface AllusionCandidate {
   reviewStatus: "机器生成，待人工精审";
 }
 
+export type EvidenceMatchGrade = "A" | "B" | "C" | "D" | "E" | "F";
+
+export interface ClassicalEvidenceCitation {
+  fragmentId: string;
+  matchedChar: string;
+  corpus: string;
+  source: string;
+  quote: string;
+  scene: string;
+  contextTone: string;
+  url: string;
+}
+
+export interface ClassicalEvidenceMatch {
+  id: string;
+  givenName: string;
+  matchedChars: string[];
+  grade: EvidenceMatchGrade;
+  corpus: string;
+  source: string;
+  quote: string;
+  extraction: string;
+  scene: string;
+  contextTone: string;
+  url: string;
+  citations: ClassicalEvidenceCitation[];
+}
+
 export interface BirthScenario {
   id: string;
   date: string;
@@ -102,4 +130,3 @@ export interface RerankResult {
   finalScore: number;
   status: "硬筛淘汰" | "待出生后录入" | "待命理评分" | "已复排";
 }
-

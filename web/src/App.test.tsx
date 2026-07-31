@@ -60,4 +60,23 @@ describe("取名实验室应用", () => {
       ).toBeTruthy();
     });
   });
+
+  it("可以输入名字并按证据等级反查古籍原句", () => {
+    window.location.hash = "#allusions";
+    render(<App />);
+
+    const search = screen.getByRole("searchbox", {
+      name: "输入姓名查找古籍原句",
+    });
+    fireEvent.change(search, { target: { value: "王令仪" } });
+    expect(screen.getByText("原文连续出现：令仪")).toBeTruthy();
+
+    fireEvent.change(search, { target: { value: "王景玉" } });
+    expect(screen.getByText("暂未找到同句或同篇共同出处")).toBeTruthy();
+    expect(screen.getByText("D级 · 同书异篇")).toBeTruthy();
+    expect(screen.getByText("E级 · 跨典双源")).toBeTruthy();
+    expect(
+      screen.getAllByText(/不能作为完整名字出处/).length,
+    ).toBeGreaterThan(0);
+  });
 });

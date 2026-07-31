@@ -136,7 +136,10 @@ export default function App() {
         <NameExplorer candidates={rawCandidates} />
       ) : null}
       {currentSection === "allusions" ? (
-        <AllusionLibrary candidates={allusionCandidates} />
+        <AllusionLibrary
+          candidates={allusionCandidates}
+          fragments={classicalFragments}
+        />
       ) : null}
       {currentSection === "curated" ? (
         <CuratedRanking candidates={rankedCandidates} profile={curatedProfile} />
