@@ -1,0 +1,11 @@
+.DS_Store
+.worktrees/
+node_modules/
+outputs/
+web/node_modules/
+web/dist/
+*.inspect.ndjson
+.env
+.env.local
+.env.*.local
+
