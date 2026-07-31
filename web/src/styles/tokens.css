@@ -1,0 +1,24 @@
+:root {
+  color-scheme: light;
+  --paper: #f4efe3;
+  --paper-light: #faf7ef;
+  --paper-deep: #e8dfcd;
+  --paper-shadow: #d9cdb8;
+  --ink: #182721;
+  --ink-soft: #52615a;
+  --ink-faint: #78827c;
+  --jade: #254c40;
+  --jade-light: #dbe5dd;
+  --cinnabar: #9c382d;
+  --cinnabar-light: #f0dcd5;
+  --gold: #9b7a3d;
+  --gold-light: #eadfbe;
+  --line: rgba(24, 39, 33, 0.19);
+  --line-strong: rgba(24, 39, 33, 0.42);
+  --shadow: 0 18px 52px rgba(46, 40, 28, 0.11);
+  --serif: "Songti SC", "STSong", "SimSun", "Noto Serif CJK SC", serif;
+  --sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --rail-width: 256px;
+  --content-max: 1440px;
+}
+
