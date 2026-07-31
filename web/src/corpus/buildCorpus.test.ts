@@ -17,10 +17,13 @@ const passage: CorpusPassage = {
   bookId: "shi-jing",
   workId: "zhou-nan",
   chapterId: "guan-ju",
+  workTitle: "关雎",
+  chapterTitle: "国风·周南",
   order: 1,
   text: "关关雎鸠，在河之洲。",
   normalizedText: "关关雎鸠在河之洲",
   sourceUrl: "https://example.com/shi-jing",
+  verificationUrl: "https://example.com/verify/shi-jing",
 };
 
 describe("古籍语料构建报告", () => {
@@ -84,6 +87,31 @@ describe("古籍语料构建报告", () => {
         "PASSAGE_MISSING_SOURCE_URL",
         "UNKNOWN_PASSAGE_BOOK",
       ]),
+    );
+  });
+
+  it("阻止没有全文的 ready 书目和来源不一致的原句", () => {
+    const readyBook: CorpusBook = {
+      ...plannedBook,
+      status: "ready",
+      source: {
+        originUrl: "https://example.com/pinned.json",
+        editionNote: "固定版本转录",
+        rightsNote: "MIT",
+        retrievedAt: "2026-07-31",
+      },
+    };
+    const noPassages = buildCorpusReport({ books: [readyBook], passages: [] });
+    expect(noPassages.blockingErrors).toContainEqual(
+      expect.objectContaining({ code: "READY_BOOK_WITHOUT_PASSAGES" }),
+    );
+
+    const wrongSource = buildCorpusReport({
+      books: [readyBook],
+      passages: [{ ...passage, sourceUrl: "https://example.com/other.json" }],
+    });
+    expect(wrongSource.blockingErrors).toContainEqual(
+      expect.objectContaining({ code: "PASSAGE_SOURCE_MISMATCH" }),
     );
   });
 

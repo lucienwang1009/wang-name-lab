@@ -25,10 +25,13 @@ export interface CorpusPassage {
   bookId: string;
   workId: string;
   chapterId: string;
+  workTitle: string;
+  chapterTitle: string;
   order: number;
   text: string;
   normalizedText: string;
   sourceUrl: string;
+  verificationUrl: string;
 }
 
 export interface CorpusBuildIssue {

@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "catalogue": {
     "totalBooks": 70,
-    "totalPassages": 0,
-    "totalCharacters": 0,
+    "totalPassages": 10511,
+    "totalCharacters": 109649,
     "byCategory": {
       "经": 14,
       "史": 10,
@@ -12,9 +12,9 @@
       "字书": 6
     },
     "byStatus": {
-      "planned": 70,
+      "planned": 65,
       "source-reviewed": 0,
-      "ready": 0
+      "ready": 5
     }
   },
   "blockingErrors": [],
@@ -32,11 +32,6 @@
     {
       "code": "PLANNED_BOOK_SOURCE_PENDING",
       "message": "目标书目尚未完成版本、来源和授权核验。",
-      "targetId": "chu-ci"
-    },
-    {
-      "code": "PLANNED_BOOK_SOURCE_PENDING",
-      "message": "目标书目尚未完成版本、来源和授权核验。",
       "targetId": "chun-qiu-gong-yang-zhuan"
     },
     {
@@ -48,11 +43,6 @@
       "code": "PLANNED_BOOK_SOURCE_PENDING",
       "message": "目标书目尚未完成版本、来源和授权核验。",
       "targetId": "chun-qiu-zuo-zhuan"
-    },
-    {
-      "code": "PLANNED_BOOK_SOURCE_PENDING",
-      "message": "目标书目尚未完成版本、来源和授权核验。",
-      "targetId": "da-xue"
     },
     {
       "code": "PLANNED_BOOK_SOURCE_PENDING",
@@ -167,17 +157,7 @@
     {
       "code": "PLANNED_BOOK_SOURCE_PENDING",
       "message": "目标书目尚未完成版本、来源和授权核验。",
-      "targetId": "lun-yu"
-    },
-    {
-      "code": "PLANNED_BOOK_SOURCE_PENDING",
-      "message": "目标书目尚未完成版本、来源和授权核验。",
       "targetId": "lv-shi-chun-qiu"
-    },
-    {
-      "code": "PLANNED_BOOK_SOURCE_PENDING",
-      "message": "目标书目尚未完成版本、来源和授权核验。",
-      "targetId": "meng-zi"
     },
     {
       "code": "PLANNED_BOOK_SOURCE_PENDING",
@@ -208,11 +188,6 @@
       "code": "PLANNED_BOOK_SOURCE_PENDING",
       "message": "目标书目尚未完成版本、来源和授权核验。",
       "targetId": "shi-ji"
-    },
-    {
-      "code": "PLANNED_BOOK_SOURCE_PENDING",
-      "message": "目标书目尚未完成版本、来源和授权核验。",
-      "targetId": "shi-jing"
     },
     {
       "code": "PLANNED_BOOK_SOURCE_PENDING",

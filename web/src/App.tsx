@@ -26,6 +26,10 @@ import {
   Methodology,
 } from "./components/DecisionSections";
 import { FunnelOverview } from "./components/FunnelOverview";
+import {
+  corpusSearcher,
+  type CorpusSearchClient,
+} from "./corpus/searchCorpus";
 
 const sections = new Set<SectionId>([
   "overview",
@@ -49,7 +53,13 @@ function sectionFromHash(): SectionId {
   return sections.has(value) ? value : "overview";
 }
 
-export default function App() {
+interface AppProps {
+  corpusSearchClient?: CorpusSearchClient;
+}
+
+export default function App({
+  corpusSearchClient = corpusSearcher,
+}: AppProps = {}) {
   const [currentSection, setCurrentSection] = useState<SectionId>(() =>
     sectionFromHash(),
   );
@@ -139,6 +149,7 @@ export default function App() {
         <AllusionLibrary
           candidates={allusionCandidates}
           fragments={classicalFragments}
+          corpusSearchClient={corpusSearchClient}
         />
       ) : null}
       {currentSection === "curated" ? (

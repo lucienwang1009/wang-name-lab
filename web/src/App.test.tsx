@@ -1,4 +1,5 @@
 import {
+  act,
   cleanup,
   fireEvent,
   render,
@@ -15,6 +16,55 @@ import {
   generationCharacters,
 } from "./data/nameSystemData";
 import { generateAllusionCandidates } from "./domain/nameSystem";
+import type {
+  CorpusSearchClient,
+  CorpusSearchResult,
+} from "./corpus/searchCorpus";
+
+const fullTextHit: CorpusSearchResult = {
+  status: "hit",
+  givenName: "令仪",
+  normalizedGivenName: "令仪",
+  coverage: {
+    targetBooks: 70,
+    readyBooks: 5,
+    buildVersion: "fixture-v1",
+  },
+  matches: [
+    {
+      id: "A:shi-jing/work-0001/passage-0001:令仪",
+      grade: "A",
+      givenName: "令仪",
+      extraction: "全文原句连续出现：令仪",
+      citations: [
+        {
+          passageId: "shi-jing/work-0001/passage-0001",
+          matchedChar: "令仪",
+          bookId: "shi-jing",
+          bookTitle: "《诗经》",
+          category: "经",
+          workTitle: "湛露",
+          chapterTitle: "小雅",
+          text: "岂弟君子，莫不令仪。",
+          sourceUrl: "https://example.com/pinned.json",
+          verificationUrl: "https://example.com/verify",
+        },
+      ],
+    },
+  ],
+};
+
+const fullTextNoHit: CorpusSearchResult = {
+  status: "no-hit",
+  givenName: "景玉",
+  normalizedGivenName: "景玉",
+  matches: [],
+  coverage: {
+    targetBooks: 70,
+    readyBooks: 5,
+    buildVersion: "fixture-v1",
+  },
+};
 
 describe("取名实验室应用", () => {
   afterEach(cleanup);
@@ -61,22 +111,81 @@ describe("取名实验室应用", () => {
     });
   });
 
-  it("可以输入名字并按证据等级反查古籍原句", () => {
+  it("先展示全文命中，再用精选片段补充 A–F 证据", async () => {
     window.location.hash = "#allusions";
-    render(<App />);
+    let resolveFirst: ((result: CorpusSearchResult) => void) | undefined;
+    const firstSearch = new Promise<CorpusSearchResult>((resolve) => {
+      resolveFirst = resolve;
+    });
+    const corpusSearchClient: CorpusSearchClient = {
+      search: vi.fn((query) =>
+        query.includes("令") ? firstSearch : Promise.resolve(fullTextNoHit),
+      ),
+    };
+    render(<App corpusSearchClient={corpusSearchClient} />);
+
+    expect(screen.getByText("全文库 5 部")).toBeTruthy();
+    expect(screen.getByText("精选片段 126 条")).toBeTruthy();
 
     const search = screen.getByRole("searchbox", {
       name: "输入姓名查找古籍原句",
     });
     fireEvent.change(search, { target: { value: "王令仪" } });
+
+    expect(await screen.findByText("正在查找全文索引")).toBeTruthy();
+    expect(screen.getByText(/并非指定古籍底本或校勘本/)).toBeTruthy();
+    await act(async () => {
+      resolveFirst?.(fullTextHit);
+      await firstSearch;
+    });
+    expect(await screen.findByText("全文原句连续出现：令仪")).toBeTruthy();
+    expect(screen.getByRole("link", { name: "固定机器来源 ↗" })).toBeTruthy();
+    expect(screen.getByRole("link", { name: "公版页面复核 ↗" })).toBeTruthy();
     expect(screen.getByText("原文连续出现：令仪")).toBeTruthy();
+    const fullTextHeading = screen.getByRole("heading", {
+      name: "首批五部古籍全文",
+    });
+    const curatedHeading = screen.getByRole("heading", {
+      name: "精选片段补充",
+    });
+    expect(
+      fullTextHeading.compareDocumentPosition(curatedHeading) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
 
     fireEvent.change(search, { target: { value: "王景玉" } });
-    expect(screen.getByText("暂未找到同句或同篇共同出处")).toBeTruthy();
+    expect(
+      await screen.findByText("首批 5 部全文未找到对应关系"),
+    ).toBeTruthy();
+    expect(screen.getByText("精选片段暂未找到同句或同篇共同出处")).toBeTruthy();
     expect(screen.getByText("D级 · 同书异篇")).toBeTruthy();
     expect(screen.getByText("E级 · 跨典双源")).toBeTruthy();
     expect(
       screen.getAllByText(/不能作为完整名字出处/).length,
     ).toBeGreaterThan(0);
+  });
+
+  it("全文库失败时明确报错，但继续展示精选片段", async () => {
+    window.location.hash = "#allusions";
+    const corpusSearchClient: CorpusSearchClient = {
+      search: vi.fn(async (): Promise<CorpusSearchResult> => ({
+        status: "error",
+        givenName: "令仪",
+        normalizedGivenName: "令仪",
+        matches: [],
+        message: "测试网络中断。",
+      })),
+    };
+    render(<App corpusSearchClient={corpusSearchClient} />);
+
+    fireEvent.change(
+      screen.getByRole("searchbox", { name: "输入姓名查找古籍原句" }),
+      { target: { value: "王令仪" } },
+    );
+
+    expect(await screen.findByText("全文库加载失败")).toBeTruthy();
+    expect(screen.getByText(/测试网络中断/)).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "精选片段补充" })).toBeTruthy();
+    expect(screen.getByText("原文连续出现：令仪")).toBeTruthy();
   });
 });

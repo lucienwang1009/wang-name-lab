@@ -860,6 +860,52 @@
   font-size: 11px;
 }
 
+.corpus-layer-status {
+  display: grid;
+  grid-template-columns: minmax(170px, 1fr) auto minmax(190px, 1fr) minmax(220px, 0.8fr);
+  gap: 18px;
+  align-items: center;
+  padding: 16px 30px;
+  color: var(--paper-light);
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035), transparent 38%),
+    var(--jade);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.corpus-layer-status > div {
+  display: grid;
+}
+
+.corpus-layer-status span,
+.corpus-layer-status small {
+  color: rgba(250, 247, 239, 0.52);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+}
+
+.corpus-layer-status strong {
+  margin: 2px 0;
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.corpus-layer-status i {
+  color: var(--gold-light);
+  font-family: var(--serif);
+  font-size: 24px;
+  font-style: normal;
+}
+
+.corpus-layer-status p {
+  margin: 0;
+  padding-left: 18px;
+  color: rgba(250, 247, 239, 0.58);
+  border-left: 1px solid rgba(255, 255, 255, 0.14);
+  font-size: 9px;
+}
+
 .evidence-empty-guide {
   color: var(--paper-light);
   background: var(--jade);
@@ -904,6 +950,150 @@
 .evidence-results {
   padding: 0 30px 32px;
   border-top: 1px solid var(--line);
+}
+
+.evidence-layer {
+  padding-top: 27px;
+}
+
+.evidence-layer + .evidence-layer {
+  margin-top: 42px;
+  padding-top: 34px;
+  border-top: 1px solid var(--line-strong);
+}
+
+.evidence-layer-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 25px;
+  align-items: end;
+  padding-bottom: 13px;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.evidence-layer-header h3 {
+  margin: 1px 0 3px;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.evidence-layer-header p:last-child {
+  max-width: 610px;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 10px;
+}
+
+.layer-count {
+  padding: 5px 10px;
+  color: var(--cinnabar);
+  border: 1px solid rgba(156, 56, 45, 0.4);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+}
+
+.fulltext-layer {
+  position: relative;
+}
+
+.fulltext-layer::before {
+  position: absolute;
+  top: 27px;
+  left: -31px;
+  width: 4px;
+  height: 53px;
+  background: var(--cinnabar);
+  content: "";
+}
+
+.fulltext-edition-note {
+  margin: 12px 0 0;
+  padding: 8px 11px;
+  color: #675b43;
+  background: rgba(207, 180, 111, 0.18);
+  border-left: 2px solid var(--gold);
+  font-size: 8px;
+  line-height: 1.65;
+}
+
+.fulltext-state {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  gap: 15px;
+  align-items: center;
+  min-height: 92px;
+  margin-top: 18px;
+  padding: 18px;
+  background: rgba(232, 223, 205, 0.3);
+  border: 1px solid var(--line);
+}
+
+.fulltext-state > span {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  color: var(--paper-light);
+  background: var(--jade);
+  font-family: var(--serif);
+  font-size: 18px;
+}
+
+.fulltext-state b {
+  font-family: var(--serif);
+  font-size: 15px;
+}
+
+.fulltext-state p {
+  margin: 3px 0 0;
+  color: var(--ink-soft);
+  font-size: 9px;
+}
+
+.fulltext-loading > span {
+  animation: corpus-pulse 1.15s ease-in-out infinite alternate;
+}
+
+.fulltext-error {
+  border-color: rgba(156, 56, 45, 0.38);
+}
+
+.fulltext-error > span {
+  background: var(--cinnabar);
+}
+
+.fulltext-grade-ledger {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  margin-top: 18px;
+  border: solid var(--line);
+  border-width: 1px 0 0 1px;
+}
+
+.fulltext-grade-ledger span {
+  display: grid;
+  padding: 8px 11px;
+  color: var(--ink-faint);
+  border: solid var(--line);
+  border-width: 0 1px 1px 0;
+  font-size: 8px;
+}
+
+.fulltext-grade-ledger b {
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 17px;
+}
+
+@keyframes corpus-pulse {
+  from {
+    box-shadow: 0 0 0 0 rgba(35, 71, 62, 0.08);
+    transform: scale(0.96);
+  }
+  to {
+    box-shadow: 0 0 0 7px rgba(35, 71, 62, 0.12);
+    transform: scale(1);
+  }
 }
 
 .evidence-result-summary {
@@ -1019,6 +1209,23 @@
   border: 1px solid var(--line);
 }
 
+.fulltext-card {
+  position: relative;
+  border-top: 2px solid var(--cinnabar);
+  box-shadow: 0 8px 20px rgba(35, 49, 43, 0.045);
+}
+
+.fulltext-card::after {
+  position: absolute;
+  top: 11px;
+  right: 12px;
+  color: rgba(156, 56, 45, 0.25);
+  font-family: var(--serif);
+  font-size: 8px;
+  letter-spacing: 0.16em;
+  content: "FULL TEXT";
+}
+
 .evidence-card > header {
   display: grid;
   grid-template-columns: 30px 1fr;
@@ -1082,6 +1289,13 @@
   line-height: 1.65;
 }
 
+.fulltext-citation-stack > div > small {
+  display: block;
+  margin-top: 3px;
+  color: var(--ink-faint);
+  font-size: 8px;
+}
+
 .evidence-citation-stack a {
   color: var(--cinnabar);
   font-size: 8px;
@@ -1117,6 +1331,24 @@
   margin-top: auto;
   color: var(--cinnabar);
   font-size: 9px;
+}
+
+.corpus-provenance {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 12px;
+  margin-top: auto;
+  padding-top: 9px;
+  border-top: 1px dotted var(--line);
+}
+
+.corpus-provenance a {
+  color: var(--cinnabar);
+  font-size: 8px;
+}
+
+.corpus-provenance a + a {
+  color: var(--jade);
 }
 
 .evidence-card.evidence-F {
@@ -2167,6 +2399,17 @@
     grid-column: auto;
   }
 
+  .corpus-layer-status {
+    grid-template-columns: 1fr auto 1fr;
+  }
+
+  .corpus-layer-status > p {
+    grid-column: 1 / -1;
+    padding: 10px 0 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    border-left: 0;
+  }
+
   .compare-drawer {
     right: 12px;
     bottom: 72px;
@@ -2260,6 +2503,20 @@
     padding: 22px;
   }
 
+  .corpus-layer-status {
+    grid-template-columns: 1fr;
+    gap: 13px;
+    padding: 17px 22px;
+  }
+
+  .corpus-layer-status i {
+    display: none;
+  }
+
+  .corpus-layer-status > p {
+    grid-column: auto;
+  }
+
   .evidence-empty-guide ol,
   .evidence-grid,
   .evidence-result-summary {
@@ -2285,6 +2542,24 @@
 
   .evidence-results {
     padding: 0 18px 24px;
+  }
+
+  .evidence-layer-header {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    align-items: start;
+  }
+
+  .layer-count {
+    justify-self: start;
+  }
+
+  .fulltext-layer::before {
+    left: -19px;
+  }
+
+  .fulltext-grade-ledger {
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .evidence-result-summary ul {

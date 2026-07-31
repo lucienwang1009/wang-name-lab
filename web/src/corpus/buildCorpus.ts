@@ -70,6 +70,8 @@ export function buildCorpusReport({
   const byCategory = emptyCategoryCounts();
   const byStatus = emptyStatusCounts();
   const bookIds = new Set(books.map((book) => book.id));
+  const booksById = new Map(books.map((book) => [book.id, book]));
+  const passageCountByBook = new Map<string, number>();
   const duplicateBookIds = new Set<string>();
   const seenBookIds = new Set<string>();
 
@@ -127,6 +129,10 @@ export function buildCorpusReport({
         issue("UNKNOWN_PASSAGE_BOOK", "原句引用了不存在的书籍编号。", item.id),
       );
     }
+    passageCountByBook.set(
+      item.bookId,
+      (passageCountByBook.get(item.bookId) ?? 0) + 1,
+    );
     if (!item.normalizedText.trim()) {
       blockingErrors.push(
         issue("EMPTY_NORMALIZED_TEXT", "原句缺少可检索的规范化文本。", item.id),
@@ -135,6 +141,37 @@ export function buildCorpusReport({
     if (!secureUrlPattern.test(item.sourceUrl)) {
       blockingErrors.push(
         issue("PASSAGE_MISSING_SOURCE_URL", "原句缺少可核验的 HTTPS 来源。", item.id),
+      );
+    }
+    if (!secureUrlPattern.test(item.verificationUrl)) {
+      blockingErrors.push(
+        issue(
+          "PASSAGE_MISSING_VERIFICATION_URL",
+          "原句缺少可人工复核的 HTTPS 页面。",
+          item.id,
+        ),
+      );
+    }
+    const parentBook = booksById.get(item.bookId);
+    if (parentBook?.source && item.sourceUrl !== parentBook.source.originUrl) {
+      blockingErrors.push(
+        issue(
+          "PASSAGE_SOURCE_MISMATCH",
+          "原句来源必须与书目中经过核验的固定来源一致。",
+          item.id,
+        ),
+      );
+    }
+  }
+
+  for (const book of books) {
+    if (book.status === "ready" && !passageCountByBook.has(book.id)) {
+      blockingErrors.push(
+        issue(
+          "READY_BOOK_WITHOUT_PASSAGES",
+          "标记为 ready 的书目必须包含至少一条可检索原句。",
+          book.id,
+        ),
       );
     }
   }

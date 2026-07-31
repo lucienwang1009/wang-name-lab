@@ -3,6 +3,10 @@ import type {
   CorpusCategory,
   CorpusPriority,
 } from "./types.ts";
+import {
+  chinesePoetryAttribution,
+  chinesePoetryFiles,
+} from "../../corpus/sources/chinese-poetry.ts";
 
 const plannedBook = (
   id: string,
@@ -12,8 +16,38 @@ const plannedBook = (
   priority: CorpusPriority,
 ): CorpusBook => ({ id, title, category, period, priority, status: "planned" });
 
+type ReadyBookId = "shi-jing" | "chu-ci" | "lun-yu" | "meng-zi" | "da-xue";
+
+const sourceByBookId = new Map(
+  chinesePoetryFiles
+    .filter((file) => file.bookId)
+    .map((file) => [file.bookId, file] as const),
+);
+
+const readyBook = (
+  id: ReadyBookId,
+  title: string,
+  category: CorpusCategory,
+  period: string,
+  priority: CorpusPriority,
+): CorpusBook => {
+  const file = sourceByBookId.get(id);
+  if (!file) throw new Error(`缺少 ${id} 的固定语料来源。`);
+  return {
+    ...plannedBook(id, title, category, period, priority),
+    status: "ready",
+    source: {
+      originUrl: file.url,
+      editionNote: chinesePoetryAttribution.editionCaveat,
+      rightsNote: chinesePoetryAttribution.rightsNote,
+      retrievedAt: chinesePoetryAttribution.retrievedAt,
+      checksum: file.sha256,
+    },
+  };
+};
+
 export const coreCatalogue = [
-  plannedBook("shi-jing", "《诗经》", "经", "先秦", 1),
+  readyBook("shi-jing", "《诗经》", "经", "先秦", 1),
   plannedBook("shang-shu", "《尚书》", "经", "先秦", 1),
   plannedBook("zhou-yi", "《周易》", "经", "先秦", 1),
   plannedBook("zhou-li", "《周礼》", "经", "先秦", 2),
@@ -22,9 +56,9 @@ export const coreCatalogue = [
   plannedBook("chun-qiu-zuo-zhuan", "《春秋左传》", "经", "先秦", 1),
   plannedBook("chun-qiu-gong-yang-zhuan", "《春秋公羊传》", "经", "先秦至汉", 3),
   plannedBook("chun-qiu-gu-liang-zhuan", "《春秋谷梁传》", "经", "先秦至汉", 3),
-  plannedBook("lun-yu", "《论语》", "经", "先秦", 1),
-  plannedBook("meng-zi", "《孟子》", "经", "先秦", 1),
-  plannedBook("da-xue", "《大学》", "经", "先秦至汉", 1),
+  readyBook("lun-yu", "《论语》", "经", "先秦", 1),
+  readyBook("meng-zi", "《孟子》", "经", "先秦", 1),
+  readyBook("da-xue", "《大学》", "经", "先秦至汉", 1),
   plannedBook("zhong-yong", "《中庸》", "经", "先秦至汉", 1),
   plannedBook("xiao-jing", "《孝经》", "经", "先秦至汉", 2),
 
@@ -62,7 +96,7 @@ export const coreCatalogue = [
   plannedBook("wen-xin-diao-long", "《文心雕龙》", "子", "南朝梁", 1),
   plannedBook("shi-pin", "《诗品》", "子", "南朝梁", 2),
 
-  plannedBook("chu-ci", "《楚辞》", "集", "先秦至汉", 1),
+  readyBook("chu-ci", "《楚辞》", "集", "先秦至汉", 1),
   plannedBook("wen-xuan", "《文选》", "集", "南朝梁", 1),
   plannedBook("gu-shi-shi-jiu-shou", "《古诗十九首》", "集", "汉", 1),
   plannedBook("yue-fu-shi-ji", "《乐府诗集》", "集", "北宋", 1),

@@ -1,0 +1,191 @@
+import { describe, expect, it, vi } from "vitest";
+
+import { buildCorpusIndex } from "./buildIndex";
+import { createCorpusSearcher } from "./searchCorpus";
+import type { CorpusBook, CorpusPassage } from "./types";
+
+const sourceUrl = "https://example.com/pinned.json";
+const verificationUrl = "https://example.com/verify";
+
+function passage(
+  bookId: string,
+  workNumber: number,
+  passageNumber: number,
+  text: string,
+  normalizedText: string,
+  order: number,
+): CorpusPassage {
+  const workId = `${bookId}/work-${String(workNumber).padStart(4, "0")}`;
+  return {
+    id: `${workId}/passage-${String(passageNumber).padStart(4, "0")}`,
+    bookId,
+    workId,
+    chapterId: `${bookId}/chapter-${String(workNumber).padStart(4, "0")}`,
+    workTitle: `篇目${workNumber}`,
+    chapterTitle: `卷${workNumber}`,
+    order,
+    text,
+    normalizedText,
+    sourceUrl,
+    verificationUrl,
+  };
+}
+
+const passages = [
+  passage("book-a", 1, 1, "令儀孔昭。", "令仪孔昭", 1),
+  passage("book-a", 1, 2, "令其儀。", "令其仪", 2),
+  passage("book-a", 2, 1, "景行行止。", "景行行止", 3),
+  passage("book-a", 2, 2, "如玉如圭。", "如玉如圭", 4),
+  passage("book-a", 3, 1, "景星庆云。", "景星庆云", 5),
+  passage("book-a", 4, 1, "玉振金声。", "玉振金声", 6),
+  passage("book-a", 5, 1, "皎皎白驹。", "皎皎白驹", 7),
+  passage("book-b", 1, 1, "舒窈纠兮。", "舒窈纠兮", 1),
+  passage("book-b", 2, 1, "怀瑾握玉。", "怀瑾握玉", 2),
+] as const;
+
+const books: CorpusBook[] = [
+  {
+    id: "book-a",
+    title: "《甲书》",
+    category: "经",
+    period: "先秦",
+    priority: 1,
+    status: "ready",
+    source: {
+      originUrl: sourceUrl,
+      editionNote: "测试固定转录",
+      rightsNote: "公版测试",
+      retrievedAt: "2026-07-31",
+    },
+  },
+  {
+    id: "book-b",
+    title: "《乙书》",
+    category: "集",
+    period: "先秦",
+    priority: 1,
+    status: "ready",
+    source: {
+      originUrl: sourceUrl,
+      editionNote: "测试固定转录",
+      rightsNote: "公版测试",
+      retrievedAt: "2026-07-31",
+    },
+  },
+];
+
+function fixtures() {
+  const built = buildCorpusIndex(passages);
+  const values = new Map<string, unknown>([
+    [
+      "/corpus/catalog.json",
+      {
+        schemaVersion: 1,
+        buildVersion: "fixture-v1",
+        scope: "测试全文库",
+        coverageCaveat: "仅测试",
+        indexBuckets: Object.keys(built.buckets),
+        books,
+      },
+    ],
+    ["/corpus/aliases.json", { schemaVersion: 1, aliases: built.aliases }],
+  ]);
+  for (const [bucket, value] of Object.entries(built.buckets)) {
+    values.set(`/corpus/index/${bucket}.json`, value);
+  }
+  for (const [bookId, value] of Object.entries(built.textShards)) {
+    values.set(`/corpus/texts/${bookId}.json`, value);
+  }
+  return values;
+}
+
+function createFixtureFetcher(
+  values = fixtures(),
+  failPath?: string,
+) {
+  return vi.fn(async (input: string) => {
+    const path = new URL(input, "https://example.test").pathname;
+    if (path === failPath) {
+      return { ok: false, status: 503, json: async () => ({}) };
+    }
+    const value = values.get(path);
+    return value === undefined
+      ? { ok: false, status: 404, json: async () => ({}) }
+      : { ok: true, status: 200, json: async () => value };
+  });
+}
+
+describe("浏览器端古籍全文检索", () => {
+  it("区分 A–F 六级关系，并如实标出组合与单字旁证", async () => {
+    const searcher = createCorpusSearcher({
+      baseUrl: "/corpus/",
+      fetcher: createFixtureFetcher(),
+    });
+
+    const direct = await searcher.search("王令仪");
+    expect(direct.status).toBe("hit");
+    expect(direct.matches.map((match) => match.grade)).toEqual(
+      expect.arrayContaining(["A", "B", "C"]),
+    );
+
+    const composite = await searcher.search("王景玉");
+    expect(composite.matches.map((match) => match.grade)).toEqual(
+      expect.arrayContaining(["C", "D", "E", "F"]),
+    );
+    expect(composite.matches.find((match) => match.grade === "D")?.extraction)
+      .toMatch(/不是原文固有词组/);
+    expect(composite.matches.find((match) => match.grade === "E")?.extraction)
+      .toMatch(/不是共同出处/);
+    expect(
+      new Set(
+        composite.matches
+          .filter((match) => match.grade === "F")
+          .flatMap((match) => match.citations.map((citation) => citation.matchedChar)),
+      ),
+    ).toEqual(new Set(["景", "玉"]));
+
+    const single = await searcher.search("王皎");
+    expect(single.matches.every((match) => match.grade === "F")).toBe(true);
+    expect(single.matches[0]?.extraction).toMatch(/只证明单字/);
+  });
+
+  it("用繁简别名命中规范化索引，并复用相同请求", async () => {
+    const fetcher = createFixtureFetcher();
+    const searcher = createCorpusSearcher({ baseUrl: "/corpus/", fetcher });
+
+    const first = await searcher.search("王令儀");
+    const second = await searcher.search("王令儀");
+
+    expect(first.normalizedGivenName).toBe("令仪");
+    expect(first.matches.some((match) => match.grade === "A")).toBe(true);
+    expect(second).toEqual(first);
+    const requestedPaths = fetcher.mock.calls.map(([input]) =>
+      new URL(input, "https://example.test").pathname,
+    );
+    expect(requestedPaths.filter((path) => path === "/corpus/catalog.json"))
+      .toHaveLength(1);
+    expect(requestedPaths.filter((path) => path.startsWith("/corpus/index/")))
+      .toHaveLength(1);
+  });
+
+  it("索引中没有该字时返回 no-hit，不把缺桶误报成网络错误", async () => {
+    const searcher = createCorpusSearcher({
+      baseUrl: "/corpus/",
+      fetcher: createFixtureFetcher(),
+    });
+    const result = await searcher.search("王芷若");
+    expect(result.status).toBe("no-hit");
+    expect(result.matches).toEqual([]);
+  });
+
+  it("正文分片加载失败时返回 error，而不是伪装成无结果", async () => {
+    const searcher = createCorpusSearcher({
+      baseUrl: "/corpus/",
+      fetcher: createFixtureFetcher(fixtures(), "/corpus/texts/book-a.json"),
+    });
+    const result = await searcher.search("王令仪");
+    expect(result.status).toBe("error");
+    expect(result.matches).toEqual([]);
+    expect(result.message).toMatch(/503/);
+  });
+});
