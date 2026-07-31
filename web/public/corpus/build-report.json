@@ -1,0 +1,373 @@
+{
+  "schemaVersion": 1,
+  "catalogue": {
+    "totalBooks": 70,
+    "totalPassages": 0,
+    "totalCharacters": 0,
+    "byCategory": {
+      "经": 14,
+      "史": 10,
+      "子": 22,
+      "集": 18,
+      "字书": 6
+    },
+    "byStatus": {
+      "planned": 70,
+      "source-reviewed": 0,
+      "ready": 0
+    }
+  },
+  "blockingErrors": [],
+  "warnings": [
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "bai-shi-chang-qing-ji"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "cao-zi-jian-ji"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "chu-ci"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "chun-qiu-gong-yang-zhuan"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "chun-qiu-gu-liang-zhuan"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "chun-qiu-zuo-zhuan"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "da-xue"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "dong-po-quan-ji"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "du-gong-bu-ji"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "er-ya"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "fang-yan"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "gu-shi-shi-jiu-shou"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "gu-wen-guan-zhi"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "guan-zi"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "guang-ya"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "gui-gu-zi"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "guo-yu"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "han-fei-zi"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "han-shu"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "hou-han-shu"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "huai-nan-zi"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "jia-xuan-chang-duan-ju"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "kong-zi-jia-yu"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "lao-zi"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "li-ji"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "li-shang-yin-shi-ji"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "li-tai-bai-ji"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "lie-zi"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "lun-heng"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "lun-yu"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "lv-shi-chun-qiu"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "meng-zi"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "mo-zi"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "san-guo-zhi"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "shang-jun-shu"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "shang-shu"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "shen-zi"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "shi-ji"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "shi-jing"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "shi-ming"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "shi-pin"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "shi-shuo-xin-yu"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "shu-yu-ci"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "shuo-wen-jie-zi"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "song-ci-san-bai-shou"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "sun-zi-bing-fa"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "tang-shi-san-bai-shou"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "tao-yuan-ming-ji"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "wang-you-cheng-ji"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "wen-xin-diao-long"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "wen-xuan"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "wen-zi"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "wu-yue-chun-qiu"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "wu-zi"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "xiao-jing"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "xin-shu"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "xun-zi"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "yan-tie-lun"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "yi-li"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "yi-zhou-shu"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "yin-wen-zi"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "yu-pian"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "yu-tai-xin-yong"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "yue-fu-shi-ji"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "yue-jue-shu"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "zhan-guo-ce"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "zhong-yong"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "zhou-li"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "zhou-yi"
+    },
+    {
+      "code": "PLANNED_BOOK_SOURCE_PENDING",
+      "message": "目标书目尚未完成版本、来源和授权核验。",
+      "targetId": "zhuang-zi"
+    }
+  ]
+}

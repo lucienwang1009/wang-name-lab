@@ -1,0 +1,567 @@
+{
+  "schemaVersion": 1,
+  "scope": "核心古籍全文库第一版目标书目",
+  "coverageCaveat": "planned 书目尚未进入全文检索；只有 ready 书目计入实际覆盖。",
+  "books": [
+    {
+      "id": "bai-shi-chang-qing-ji",
+      "title": "《白氏长庆集》",
+      "category": "集",
+      "period": "唐",
+      "priority": 2,
+      "status": "planned"
+    },
+    {
+      "id": "cao-zi-jian-ji",
+      "title": "《曹子建集》",
+      "category": "集",
+      "period": "三国魏",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "chu-ci",
+      "title": "《楚辞》",
+      "category": "集",
+      "period": "先秦至汉",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "chun-qiu-gong-yang-zhuan",
+      "title": "《春秋公羊传》",
+      "category": "经",
+      "period": "先秦至汉",
+      "priority": 3,
+      "status": "planned"
+    },
+    {
+      "id": "chun-qiu-gu-liang-zhuan",
+      "title": "《春秋谷梁传》",
+      "category": "经",
+      "period": "先秦至汉",
+      "priority": 3,
+      "status": "planned"
+    },
+    {
+      "id": "chun-qiu-zuo-zhuan",
+      "title": "《春秋左传》",
+      "category": "经",
+      "period": "先秦",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "da-xue",
+      "title": "《大学》",
+      "category": "经",
+      "period": "先秦至汉",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "dong-po-quan-ji",
+      "title": "《东坡全集》",
+      "category": "集",
+      "period": "北宋",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "du-gong-bu-ji",
+      "title": "《杜工部集》",
+      "category": "集",
+      "period": "唐",
+      "priority": 2,
+      "status": "planned"
+    },
+    {
+      "id": "er-ya",
+      "title": "《尔雅》",
+      "category": "字书",
+      "period": "先秦至汉",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "fang-yan",
+      "title": "《方言》",
+      "category": "字书",
+      "period": "西汉",
+      "priority": 2,
+      "status": "planned"
+    },
+    {
+      "id": "gu-shi-shi-jiu-shou",
+      "title": "《古诗十九首》",
+      "category": "集",
+      "period": "汉",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "gu-wen-guan-zhi",
+      "title": "《古文观止》",
+      "category": "集",
+      "period": "清",
+      "priority": 2,
+      "status": "planned"
+    },
+    {
+      "id": "guan-zi",
+      "title": "《管子》",
+      "category": "子",
+      "period": "先秦至汉",
+      "priority": 2,
+      "status": "planned"
+    },
+    {
+      "id": "guang-ya",
+      "title": "《广雅》",
+      "category": "字书",
+      "period": "三国魏",
+      "priority": 2,
+      "status": "planned"
+    },
+    {
+      "id": "gui-gu-zi",
+      "title": "《鬼谷子》",
+      "category": "子",
+      "period": "先秦至六朝",
+      "priority": 3,
+      "status": "planned"
+    },
+    {
+      "id": "guo-yu",
+      "title": "《国语》",
+      "category": "史",
+      "period": "先秦",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "han-fei-zi",
+      "title": "《韩非子》",
+      "category": "子",
+      "period": "先秦",
+      "priority": 2,
+      "status": "planned"
+    },
+    {
+      "id": "han-shu",
+      "title": "《汉书》",
+      "category": "史",
+      "period": "东汉",
+      "priority": 2,
+      "status": "planned"
+    },
+    {
+      "id": "hou-han-shu",
+      "title": "《后汉书》",
+      "category": "史",
+      "period": "南朝宋",
+      "priority": 2,
+      "status": "planned"
+    },
+    {
+      "id": "huai-nan-zi",
+      "title": "《淮南子》",
+      "category": "子",
+      "period": "西汉",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "jia-xuan-chang-duan-ju",
+      "title": "《稼轩长短句》",
+      "category": "集",
+      "period": "南宋",
+      "priority": 2,
+      "status": "planned"
+    },
+    {
+      "id": "kong-zi-jia-yu",
+      "title": "《孔子家语》",
+      "category": "子",
+      "period": "汉魏",
+      "priority": 2,
+      "status": "planned"
+    },
+    {
+      "id": "lao-zi",
+      "title": "《老子》",
+      "category": "子",
+      "period": "先秦",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "li-ji",
+      "title": "《礼记》",
+      "category": "经",
+      "period": "先秦至汉",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "li-shang-yin-shi-ji",
+      "title": "《李商隐诗集》",
+      "category": "集",
+      "period": "唐",
+      "priority": 2,
+      "status": "planned"
+    },
+    {
+      "id": "li-tai-bai-ji",
+      "title": "《李太白集》",
+      "category": "集",
+      "period": "唐",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "lie-zi",
+      "title": "《列子》",
+      "category": "子",
+      "period": "先秦至魏晋",
+      "priority": 2,
+      "status": "planned"
+    },
+    {
+      "id": "lun-heng",
+      "title": "《论衡》",
+      "category": "子",
+      "period": "东汉",
+      "priority": 2,
+      "status": "planned"
+    },
+    {
+      "id": "lun-yu",
+      "title": "《论语》",
+      "category": "经",
+      "period": "先秦",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "lv-shi-chun-qiu",
+      "title": "《吕氏春秋》",
+      "category": "子",
+      "period": "先秦",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "meng-zi",
+      "title": "《孟子》",
+      "category": "经",
+      "period": "先秦",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "mo-zi",
+      "title": "《墨子》",
+      "category": "子",
+      "period": "先秦",
+      "priority": 2,
+      "status": "planned"
+    },
+    {
+      "id": "san-guo-zhi",
+      "title": "《三国志》",
+      "category": "史",
+      "period": "西晋",
+      "priority": 2,
+      "status": "planned"
+    },
+    {
+      "id": "shang-jun-shu",
+      "title": "《商君书》",
+      "category": "子",
+      "period": "先秦",
+      "priority": 3,
+      "status": "planned"
+    },
+    {
+      "id": "shang-shu",
+      "title": "《尚书》",
+      "category": "经",
+      "period": "先秦",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "shen-zi",
+      "title": "《慎子》",
+      "category": "子",
+      "period": "先秦",
+      "priority": 3,
+      "status": "planned"
+    },
+    {
+      "id": "shi-ji",
+      "title": "《史记》",
+      "category": "史",
+      "period": "西汉",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "shi-jing",
+      "title": "《诗经》",
+      "category": "经",
+      "period": "先秦",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "shi-ming",
+      "title": "《释名》",
+      "category": "字书",
+      "period": "东汉",
+      "priority": 2,
+      "status": "planned"
+    },
+    {
+      "id": "shi-pin",
+      "title": "《诗品》",
+      "category": "子",
+      "period": "南朝梁",
+      "priority": 2,
+      "status": "planned"
+    },
+    {
+      "id": "shi-shuo-xin-yu",
+      "title": "《世说新语》",
+      "category": "史",
+      "period": "南朝宋",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "shu-yu-ci",
+      "title": "《漱玉词》",
+      "category": "集",
+      "period": "南宋",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "shuo-wen-jie-zi",
+      "title": "《说文解字》",
+      "category": "字书",
+      "period": "东汉",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "song-ci-san-bai-shou",
+      "title": "《宋词三百首》",
+      "category": "集",
+      "period": "近代",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "sun-zi-bing-fa",
+      "title": "《孙子兵法》",
+      "category": "子",
+      "period": "先秦",
+      "priority": 2,
+      "status": "planned"
+    },
+    {
+      "id": "tang-shi-san-bai-shou",
+      "title": "《唐诗三百首》",
+      "category": "集",
+      "period": "清",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "tao-yuan-ming-ji",
+      "title": "《陶渊明集》",
+      "category": "集",
+      "period": "东晋",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "wang-you-cheng-ji",
+      "title": "《王右丞集》",
+      "category": "集",
+      "period": "唐",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "wen-xin-diao-long",
+      "title": "《文心雕龙》",
+      "category": "子",
+      "period": "南朝梁",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "wen-xuan",
+      "title": "《文选》",
+      "category": "集",
+      "period": "南朝梁",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "wen-zi",
+      "title": "《文子》",
+      "category": "子",
+      "period": "先秦至汉",
+      "priority": 3,
+      "status": "planned"
+    },
+    {
+      "id": "wu-yue-chun-qiu",
+      "title": "《吴越春秋》",
+      "category": "史",
+      "period": "东汉",
+      "priority": 3,
+      "status": "planned"
+    },
+    {
+      "id": "wu-zi",
+      "title": "《吴子》",
+      "category": "子",
+      "period": "先秦",
+      "priority": 3,
+      "status": "planned"
+    },
+    {
+      "id": "xiao-jing",
+      "title": "《孝经》",
+      "category": "经",
+      "period": "先秦至汉",
+      "priority": 2,
+      "status": "planned"
+    },
+    {
+      "id": "xin-shu",
+      "title": "《新书》",
+      "category": "子",
+      "period": "西汉",
+      "priority": 2,
+      "status": "planned"
+    },
+    {
+      "id": "xun-zi",
+      "title": "《荀子》",
+      "category": "子",
+      "period": "先秦",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "yan-tie-lun",
+      "title": "《盐铁论》",
+      "category": "子",
+      "period": "西汉",
+      "priority": 3,
+      "status": "planned"
+    },
+    {
+      "id": "yi-li",
+      "title": "《仪礼》",
+      "category": "经",
+      "period": "先秦",
+      "priority": 2,
+      "status": "planned"
+    },
+    {
+      "id": "yi-zhou-shu",
+      "title": "《逸周书》",
+      "category": "史",
+      "period": "先秦",
+      "priority": 3,
+      "status": "planned"
+    },
+    {
+      "id": "yin-wen-zi",
+      "title": "《尹文子》",
+      "category": "子",
+      "period": "先秦",
+      "priority": 3,
+      "status": "planned"
+    },
+    {
+      "id": "yu-pian",
+      "title": "《玉篇》",
+      "category": "字书",
+      "period": "南朝梁",
+      "priority": 3,
+      "status": "planned"
+    },
+    {
+      "id": "yu-tai-xin-yong",
+      "title": "《玉台新咏》",
+      "category": "集",
+      "period": "南朝梁",
+      "priority": 2,
+      "status": "planned"
+    },
+    {
+      "id": "yue-fu-shi-ji",
+      "title": "《乐府诗集》",
+      "category": "集",
+      "period": "北宋",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "yue-jue-shu",
+      "title": "《越绝书》",
+      "category": "史",
+      "period": "汉",
+      "priority": 3,
+      "status": "planned"
+    },
+    {
+      "id": "zhan-guo-ce",
+      "title": "《战国策》",
+      "category": "史",
+      "period": "先秦至汉",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "zhong-yong",
+      "title": "《中庸》",
+      "category": "经",
+      "period": "先秦至汉",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "zhou-li",
+      "title": "《周礼》",
+      "category": "经",
+      "period": "先秦",
+      "priority": 2,
+      "status": "planned"
+    },
+    {
+      "id": "zhou-yi",
+      "title": "《周易》",
+      "category": "经",
+      "period": "先秦",
+      "priority": 1,
+      "status": "planned"
+    },
+    {
+      "id": "zhuang-zi",
+      "title": "《庄子》",
+      "category": "子",
+      "period": "先秦",
+      "priority": 1,
+      "status": "planned"
+    }
+  ]
+}

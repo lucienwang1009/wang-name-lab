@@ -4,11 +4,15 @@
   "version": "0.1.0",
   "type": "module",
   "packageManager": "pnpm@11.9.0",
+  "engines": {
+    "node": ">=22.18"
+  },
   "scripts": {
     "dev": "vite",
+    "corpus:build": "node scripts/build-corpus.mjs",
     "typecheck": "tsc -b --pretty false",
     "test": "vitest run",
-    "build": "pnpm typecheck && vite build",
+    "build": "pnpm corpus:build && pnpm typecheck && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -26,4 +30,3 @@
     "vitest": "4.1.10"
   }
 }
-
