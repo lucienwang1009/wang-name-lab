@@ -118,6 +118,7 @@ describe("取名实验室应用", () => {
       resolveFirst = resolve;
     });
     const corpusSearchClient: CorpusSearchClient = {
+      discover: vi.fn(async () => []),
       search: vi.fn((query) =>
         query.includes("令") ? firstSearch : Promise.resolve(fullTextNoHit),
       ),
@@ -168,6 +169,7 @@ describe("取名实验室应用", () => {
   it("全文库失败时明确报错，但继续展示精选片段", async () => {
     window.location.hash = "#allusions";
     const corpusSearchClient: CorpusSearchClient = {
+      discover: vi.fn(async () => []),
       search: vi.fn(async (): Promise<CorpusSearchResult> => ({
         status: "error",
         givenName: "令仪",

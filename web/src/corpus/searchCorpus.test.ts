@@ -2,7 +2,11 @@ import { describe, expect, it, vi } from "vitest";
 
 import { buildCorpusIndex } from "./buildIndex";
 import { createCorpusSearcher } from "./searchCorpus";
-import type { CorpusBook, CorpusPassage } from "./types";
+import type {
+  CorpusBook,
+  CorpusDiscoveryCandidate,
+  CorpusPassage,
+} from "./types";
 
 const sourceUrl = "https://example.com/pinned.json";
 const verificationUrl = "https://example.com/verify";
@@ -78,6 +82,25 @@ const books: CorpusBook[] = [
 
 function fixtures(segmentation: "punctuated" | "unpunctuated" = "punctuated") {
   const built = buildCorpusIndex(passages);
+  const discoveryCandidate: CorpusDiscoveryCandidate = {
+    id: "corpus-discovery:令仪",
+    givenName: "令仪",
+    grade: "A",
+    bookId: "book-a",
+    bookTitle: "《甲书》",
+    category: "经",
+    passageId: passages[0].id,
+    workTitle: passages[0].workTitle,
+    chapterTitle: passages[0].chapterTitle,
+    quote: passages[0].text,
+    extraction: "转录字符连续：令仪",
+    sourceUrl,
+    verificationUrl,
+    feminine: 4.5,
+    rarity: 3.5,
+    usability: 4.5,
+    familyScore: 0,
+  };
   const values = new Map<string, unknown>([
     [
       "/corpus/catalog.json",
@@ -88,6 +111,8 @@ function fixtures(segmentation: "punctuated" | "unpunctuated" = "punctuated") {
         coverageCaveat: "仅测试",
         characterIndex: built.indexPathsByCharacter,
         textShards: built.textShardPaths,
+        discoveryPath: "discovery.json",
+        discoveryCount: 1,
         books: books.map((book) => ({
           ...book,
           source: book.source ? { ...book.source, segmentation } : undefined,
@@ -95,6 +120,15 @@ function fixtures(segmentation: "punctuated" | "unpunctuated" = "punctuated") {
       },
     ],
     ["/corpus/aliases.json", { schemaVersion: 1, aliases: built.aliases }],
+    [
+      "/corpus/discovery.json",
+      {
+        schemaVersion: 1,
+        buildVersion: "fixture-v1",
+        count: 1,
+        candidates: [discoveryCandidate],
+      },
+    ],
   ]);
   for (const [path, value] of Object.entries(built.indexShards)) {
     values.set(`/corpus/index/${path}`, value);
@@ -122,6 +156,23 @@ function createFixtureFetcher(
 }
 
 describe("浏览器端古籍全文检索", () => {
+  it("按构建版本加载并缓存典籍寻名池", async () => {
+    const fetcher = createFixtureFetcher();
+    const searcher = createCorpusSearcher({ baseUrl: "/corpus/", fetcher });
+
+    const first = await searcher.discover();
+    const second = await searcher.discover();
+
+    expect(first).toHaveLength(1);
+    expect(first[0]).toMatchObject({ givenName: "令仪", grade: "A" });
+    expect(second).toEqual(first);
+    expect(
+      fetcher.mock.calls.filter(([input]) =>
+        new URL(input, "https://example.test").pathname.endsWith("/discovery.json"),
+      ),
+    ).toHaveLength(1);
+  });
+
   it("区分 A–F 六级关系，并如实标出组合与单字旁证", async () => {
     const searcher = createCorpusSearcher({
       baseUrl: "/corpus/",

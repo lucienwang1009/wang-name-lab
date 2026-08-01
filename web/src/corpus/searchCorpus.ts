@@ -4,7 +4,11 @@ import type {
   CharacterPosting,
   CorpusTextShard,
 } from "./buildIndex";
-import type { CorpusBook } from "./types";
+import type {
+  CorpusBook,
+  CorpusDiscoveryCandidate,
+  CorpusDiscoveryFile,
+} from "./types";
 
 export type CorpusEvidenceGrade = "A" | "B" | "C" | "D" | "E" | "F";
 
@@ -49,6 +53,8 @@ interface CorpusCatalogue {
   buildVersion: string;
   characterIndex: Record<string, string[]>;
   textShards: string[];
+  discoveryPath?: string;
+  discoveryCount?: number;
   books: CorpusBook[];
 }
 
@@ -71,6 +77,7 @@ interface SearcherOptions {
 }
 
 export interface CorpusSearchClient {
+  discover(): Promise<CorpusDiscoveryCandidate[]>;
   search(query: string): Promise<CorpusSearchResult>;
 }
 
@@ -127,6 +134,23 @@ function parseAliases(value: unknown): CorpusAliasFile {
     throw new TypeError("全文库繁简别名表格式无效。");
   }
   return value as unknown as CorpusAliasFile;
+}
+
+function parseDiscoveryFile(
+  value: unknown,
+  expectedBuildVersion: string,
+): CorpusDiscoveryFile {
+  if (
+    !isRecord(value) ||
+    value.schemaVersion !== 1 ||
+    value.buildVersion !== expectedBuildVersion ||
+    typeof value.count !== "number" ||
+    !Array.isArray(value.candidates) ||
+    value.candidates.length !== value.count
+  ) {
+    throw new TypeError("典籍寻名池格式无效或与全文库版本不一致。");
+  }
+  return value as unknown as CorpusDiscoveryFile;
 }
 
 function parseIndexShard(
@@ -430,6 +454,17 @@ export function createCorpusSearcher({
     parseCatalogue(await loadJson("catalog.json"));
 
   return {
+    async discover(): Promise<CorpusDiscoveryCandidate[]> {
+      const catalogue = await loadCatalogue();
+      const discovery = parseDiscoveryFile(
+        await loadJson(
+          catalogue.discoveryPath ?? "discovery.json",
+          catalogue.buildVersion,
+        ),
+        catalogue.buildVersion,
+      );
+      return discovery.candidates;
+    },
     async search(query: string): Promise<CorpusSearchResult> {
       const givenName = normalizeGivenName(query);
       if (!givenName) {
