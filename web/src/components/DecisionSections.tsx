@@ -2,6 +2,7 @@ import { useMemo } from "react";
 
 import { rejectionRules, sourceGradeMap } from "../data/nameSystemData";
 import { rerankCandidate } from "../domain/nameSystem";
+import type { DiscoveryCandidate } from "../domain/discovery";
 import type { CuratedCandidate } from "../domain/types";
 import {
   exportProfile,
@@ -16,6 +17,13 @@ type RankedCandidate = CuratedCandidate & {
   culturalScore: number;
   rank: number | null;
 };
+type ComparisonCandidate = RankedCandidate | DiscoveryCandidate;
+
+function isRankedCandidate(
+  candidate: ComparisonCandidate,
+): candidate is RankedCandidate {
+  return "culturalScore" in candidate;
+}
 
 export function CompareDrawer({
   names,
@@ -57,46 +65,67 @@ export function CompareDrawer({
 
 const compareRows: Array<{
   label: string;
-  value: (candidate: RankedCandidate) => string;
+  value: (candidate: ComparisonCandidate) => string;
 }> = [
-  { label: "读音", value: (candidate) => candidate.pinyin },
-  { label: "声调", value: (candidate) => candidate.tones },
+  { label: "读音", value: (candidate) => candidate.pinyin ?? "待人工复核" },
+  { label: "声调", value: (candidate) => candidate.tones ?? "待补" },
   { label: "出处", value: (candidate) => candidate.source },
   { label: "取字", value: (candidate) => candidate.extraction },
   {
     label: "文化分",
-    value: (candidate) => candidate.culturalScore.toFixed(1),
+    value: (candidate) =>
+      isRankedCandidate(candidate)
+        ? candidate.culturalScore.toFixed(1)
+        : "全文发现 · 未精审",
   },
   {
     label: "女性感",
-    value: (candidate) => candidate.scores.feminine.toFixed(1),
+    value: (candidate) =>
+      (isRankedCandidate(candidate)
+        ? candidate.scores.feminine
+        : candidate.feminine
+      ).toFixed(1),
   },
   {
     label: "家族线",
-    value: (candidate) => candidate.scores.family.toFixed(1),
+    value: (candidate) =>
+      (isRankedCandidate(candidate)
+        ? candidate.scores.family
+        : candidate.familyScore
+      ).toFixed(1),
   },
   {
     label: "稀有度",
-    value: (candidate) => candidate.scores.rarity.toFixed(1),
+    value: (candidate) =>
+      (isRankedCandidate(candidate)
+        ? candidate.scores.rarity
+        : candidate.rarity
+      ).toFixed(1),
   },
-  { label: "家族呼应", value: (candidate) => candidate.familyNote },
-  { label: "主要风险", value: (candidate) => candidate.risk },
+  { label: "家族呼应", value: (candidate) => candidate.familyNote ?? "待人工判断" },
+  { label: "主要风险", value: (candidate) => candidate.risk ?? "待人工判断" },
 ];
 
 export function CompareTable({
   candidates,
+  discoveryCandidates,
   profile,
   onRemove,
   onNavigate,
 }: {
   candidates: readonly RankedCandidate[];
+  discoveryCandidates: readonly DiscoveryCandidate[];
   profile: LocalProfile;
   onRemove: (name: string) => void;
   onNavigate: (section: SectionId) => void;
 }) {
   const selected = profile.compareNames
-    .map((name) => candidates.find((candidate) => candidate.name === name))
-    .filter((candidate): candidate is RankedCandidate => Boolean(candidate));
+    .map(
+      (name) =>
+        candidates.find((candidate) => candidate.name === name) ??
+        discoveryCandidates.find((candidate) => candidate.name === name),
+    )
+    .filter((candidate): candidate is ComparisonCandidate => Boolean(candidate));
 
   return (
     <section className="page-section">
@@ -116,13 +145,13 @@ export function CompareTable({
         <div className="empty-state spacious">
           <span className="empty-seal">待</span>
           <b>对照栏还是空的</b>
-          <p>从人工精选榜加入 2–4 个名字，再回来横向比较。</p>
+          <p>从“典籍寻名”加入 2–4 个名字，再回来横向比较。</p>
           <button
             className="button button-primary"
             type="button"
-            onClick={() => onNavigate("curated")}
+            onClick={() => onNavigate("explore")}
           >
-            去精选榜
+            去典籍寻名
           </button>
         </div>
       ) : (
@@ -130,9 +159,9 @@ export function CompareTable({
           <div className="compare-nameplates">
             {selected.map((candidate) => (
               <article key={candidate.name}>
-                <span>第 {candidate.rank} 名</span>
+                <span>{isRankedCandidate(candidate) ? `第 ${candidate.rank} 名` : "全文发现"}</span>
                 <h2>{candidate.name}</h2>
-                <p>{candidate.pinyin}</p>
+                <p>{candidate.pinyin ?? "读音待人工复核"}</p>
                 <button type="button" onClick={() => onRemove(candidate.name)}>
                   移出
                 </button>
@@ -673,4 +702,3 @@ export function Methodology({
     </section>
   );
 }
-

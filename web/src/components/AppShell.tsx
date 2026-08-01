@@ -4,7 +4,6 @@ export type SectionId =
   | "overview"
   | "explore"
   | "allusions"
-  | "curated"
   | "compare"
   | "birth"
   | "method";
@@ -24,11 +23,10 @@ const navigation: Array<{
   shortLabel: string;
 }> = [
   { id: "overview", index: "序", label: "工作台总览", shortLabel: "总览" },
-  { id: "explore", index: "一", label: "字词组合池", shortLabel: "组合" },
-  { id: "allusions", index: "二", label: "古籍典故库", shortLabel: "典故" },
-  { id: "curated", index: "三", label: "人工精选榜", shortLabel: "精选" },
-  { id: "compare", index: "四", label: "四名对照", shortLabel: "对照" },
-  { id: "birth", index: "五", label: "出生后复排", shortLabel: "复排" },
+  { id: "explore", index: "一", label: "典籍寻名", shortLabel: "寻名" },
+  { id: "allusions", index: "二", label: "古籍核查", shortLabel: "核查" },
+  { id: "compare", index: "三", label: "四名对照", shortLabel: "对照" },
+  { id: "birth", index: "四", label: "出生后复排", shortLabel: "复排" },
   { id: "method", index: "附", label: "方法与隐私", shortLabel: "方法" },
 ];
 
@@ -94,7 +92,7 @@ export function AppShell({
             >
               <span>{item.index}</span>
               {item.label}
-              {item.id === "curated" && favoriteCount > 0 ? (
+              {item.id === "explore" && favoriteCount > 0 ? (
                 <em>{favoriteCount}</em>
               ) : null}
               {item.id === "compare" && compareCount > 0 ? (

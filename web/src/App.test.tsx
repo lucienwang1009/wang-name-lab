@@ -10,16 +10,11 @@ import {
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import App from "./App";
-import {
-  characterDictionary,
-  classicalFragments,
-  generationCharacters,
-} from "./data/nameSystemData";
-import { generateAllusionCandidates } from "./domain/nameSystem";
 import type {
   CorpusSearchClient,
   CorpusSearchResult,
 } from "./corpus/searchCorpus";
+import type { CorpusDiscoveryCandidate } from "./corpus/types";
 
 const fullTextHit: CorpusSearchResult = {
   status: "hit",
@@ -66,6 +61,38 @@ const fullTextNoHit: CorpusSearchResult = {
   },
 };
 
+const idleClient: CorpusSearchClient = {
+  discover: vi.fn(async () => []),
+  search: vi.fn(async (): Promise<CorpusSearchResult> => ({
+    status: "idle",
+    givenName: "",
+    normalizedGivenName: "",
+    matches: [],
+  })),
+};
+
+function discoveryCandidate(givenName: string): CorpusDiscoveryCandidate {
+  return {
+    id: `corpus-discovery:${givenName}`,
+    givenName,
+    grade: "A",
+    bookId: "shi-jing",
+    bookTitle: "《诗经》",
+    category: "经",
+    passageId: `passage:${givenName}`,
+    workTitle: "烝民",
+    chapterTitle: "大雅",
+    quote: `古籍原句${givenName}。`,
+    extraction: `转录字符连续：${givenName}`,
+    sourceUrl: "https://example.com/source",
+    verificationUrl: "https://example.com/verify",
+    feminine: 4.5,
+    rarity: 4,
+    usability: 4,
+    familyScore: 0,
+  };
+}
+
 describe("取名实验室应用", () => {
   afterEach(cleanup);
 
@@ -80,35 +107,59 @@ describe("取名实验室应用", () => {
   });
 
   it("展示筛选漏斗与候选规模", () => {
-    render(<App />);
+    render(<App corpusSearchClient={idleClient} />);
 
     expect(
       screen.getByRole("heading", { name: "为一个名字，留下完整来路" }),
     ).toBeTruthy();
     const metrics = within(screen.getByLabelText("候选规模"));
-    const rawCount = generationCharacters.length * (generationCharacters.length - 1);
-    expect(metrics.getByText(rawCount.toLocaleString("zh-CN"))).toBeTruthy();
-    const allusionCount = generateAllusionCandidates(
-      classicalFragments,
-      new Set(characterDictionary.map((entry) => entry.char)),
-    ).length;
-    expect(
-      metrics.getByText(classicalFragments.length.toLocaleString("zh-CN")),
-    ).toBeTruthy();
-    expect(metrics.getByText(allusionCount.toLocaleString("zh-CN"))).toBeTruthy();
+    expect(metrics.getByText("1,200")).toBeTruthy();
+    expect(metrics.getByText("900")).toBeTruthy();
+    expect(metrics.getByText("300")).toBeTruthy();
+    expect(metrics.getByText("126")).toBeTruthy();
     expect(metrics.getByText("132")).toBeTruthy();
   });
 
-  it("可以从总览进入人工精选榜", async () => {
-    render(<App />);
+  it("可以从总览进入合并后的典籍寻名", async () => {
+    render(<App corpusSearchClient={idleClient} />);
 
-    fireEvent.click(screen.getByRole("button", { name: "先看人工精选" }));
+    fireEvent.click(screen.getByRole("button", { name: "开始典籍寻名" }));
 
     await waitFor(() => {
       expect(
-        screen.getByRole("heading", { name: "人工精选榜", level: 1 }),
+        screen.getByRole("heading", { name: "典籍寻名", level: 1 }),
       ).toBeTruthy();
     });
+    expect(screen.getByRole("button", { name: "A + B 可靠出处" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: "人工精选" })).toBeTruthy();
+  });
+
+  it("从候选卡直接带名字进入完整典籍核查", async () => {
+    window.location.hash = "#explore";
+    const candidates = [
+      discoveryCandidate("景玉"),
+      ...Array.from({ length: 11 }, (_, index) =>
+        discoveryCandidate(`令${String.fromCharCode(0x4e00 + index)}`),
+      ),
+    ];
+    const corpusSearchClient: CorpusSearchClient = {
+      discover: vi.fn(async () => candidates),
+      search: vi.fn(async () => fullTextNoHit),
+    };
+    const random = vi.spyOn(Math, "random").mockReturnValue(0.999);
+    render(<App corpusSearchClient={corpusSearchClient} />);
+
+    const heading = await screen.findByRole("heading", { name: "王景玉", level: 2 });
+    const card = heading.closest("article");
+    expect(card).toBeTruthy();
+    fireEvent.click(within(card as HTMLElement).getByRole("button", { name: "查完整典籍" }));
+
+    const search = await screen.findByRole("searchbox", {
+      name: "输入姓名查找古籍原句",
+    });
+    expect((search as HTMLInputElement).value).toBe("王景玉");
+    expect(window.location.hash).toContain("allusions?name=");
+    random.mockRestore();
   });
 
   it("先展示全文命中，再用精选片段补充 A–F 证据", async () => {

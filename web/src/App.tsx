@@ -4,20 +4,18 @@ import {
   characterDictionary,
   classicalFragments,
   curatedCandidates,
-  generationCharacters,
 } from "./data/nameSystemData";
 import {
   buildBirthScenarios,
   generateAllusionCandidates,
-  generateRawPool,
   rankCuratedCandidates,
 } from "./domain/nameSystem";
+import { mergeDiscoveryCandidates } from "./domain/discovery";
 import { useLocalProfile } from "./state/useLocalProfile";
 import { AppShell, type SectionId } from "./components/AppShell";
 import {
   AllusionLibrary,
-  CuratedRanking,
-  NameExplorer,
+  ClassicsNameDiscovery,
 } from "./components/Catalogues";
 import {
   BirthProfile,
@@ -30,27 +28,27 @@ import {
   corpusSearcher,
   type CorpusSearchClient,
 } from "./corpus/searchCorpus";
+import type { CorpusDiscoveryCandidate } from "./corpus/types";
 
 const sections = new Set<SectionId>([
   "overview",
   "explore",
   "allusions",
-  "curated",
   "compare",
   "birth",
   "method",
 ]);
 
-let rawCandidatesCache: ReturnType<typeof generateRawPool> | undefined;
-
-function getRawCandidates() {
-  rawCandidatesCache ??= generateRawPool(generationCharacters);
-  return rawCandidatesCache;
+function sectionFromHash(): SectionId {
+  const value = window.location.hash.replace(/^#\/?/, "").split("?")[0] ?? "";
+  if (value === "curated") return "explore";
+  const section = value as SectionId;
+  return sections.has(section) ? section : "overview";
 }
 
-function sectionFromHash(): SectionId {
-  const value = window.location.hash.replace(/^#\/?/, "") as SectionId;
-  return sections.has(value) ? value : "overview";
+function nameFromHash(): string {
+  const query = window.location.hash.split("?")[1];
+  return query ? new URLSearchParams(query).get("name") ?? "" : "";
 }
 
 interface AppProps {
@@ -63,12 +61,14 @@ export default function App({
   const [currentSection, setCurrentSection] = useState<SectionId>(() =>
     sectionFromHash(),
   );
+  const [lookupName, setLookupName] = useState(() => nameFromHash());
+  const [corpusDiscovery, setCorpusDiscovery] = useState<
+    CorpusDiscoveryCandidate[]
+  >([]);
+  const [discoveryLoading, setDiscoveryLoading] = useState(true);
+  const [discoveryError, setDiscoveryError] = useState<string>();
   const local = useLocalProfile();
 
-  const rawCandidateCount =
-    generationCharacters.length * (generationCharacters.length - 1);
-  const rawCandidates =
-    currentSection === "explore" ? getRawCandidates() : [];
   const allusionCandidates = useMemo(
     () =>
       generateAllusionCandidates(
@@ -81,6 +81,10 @@ export default function App({
     () => rankCuratedCandidates(curatedCandidates),
     [],
   );
+  const discoveryCandidates = useMemo(
+    () => mergeDiscoveryCandidates(corpusDiscovery, curatedCandidates),
+    [corpusDiscovery],
+  );
   const birthScenarios = useMemo(
     () => buildBirthScenarios("2026-08-20", "2026-08-30"),
     [],
@@ -89,11 +93,37 @@ export default function App({
   useEffect(() => {
     const handleHash = () => {
       setCurrentSection(sectionFromHash());
+      setLookupName(nameFromHash());
       window.scrollTo({ top: 0, behavior: "smooth" });
     };
     window.addEventListener("hashchange", handleHash);
     return () => window.removeEventListener("hashchange", handleHash);
   }, []);
+
+  useEffect(() => {
+    if (currentSection !== "explore" && currentSection !== "compare") return;
+    let active = true;
+    setDiscoveryLoading(true);
+    setDiscoveryError(undefined);
+    void corpusSearchClient
+      .discover()
+      .then((candidates) => {
+        if (active) setCorpusDiscovery(candidates);
+      })
+      .catch((error: unknown) => {
+        if (active) {
+          setDiscoveryError(
+            error instanceof Error ? error.message : "典籍寻名池加载失败。",
+          );
+        }
+      })
+      .finally(() => {
+        if (active) setDiscoveryLoading(false);
+      });
+    return () => {
+      active = false;
+    };
+  }, [corpusSearchClient, currentSection]);
 
   const navigate = (section: SectionId) => {
     if (currentSection === section) {
@@ -101,6 +131,10 @@ export default function App({
       return;
     }
     window.location.hash = section;
+  };
+
+  const openLookup = (name: string) => {
+    window.location.hash = `allusions?name=${encodeURIComponent(name)}`;
   };
 
   const curatedProfile = {
@@ -124,14 +158,13 @@ export default function App({
       {currentSection === "overview" ? (
         <FunnelOverview
           counts={{
-            raw: rawCandidateCount,
-            characters: generationCharacters.length,
+            discovery: 1200,
+            gradeA: 900,
+            gradeB: 300,
             fragments: classicalFragments.length,
             corpora: new Set(
               classicalFragments.map((fragment) => fragment.corpus),
             ).size,
-            allusions: allusionCandidates.length,
-            curated: rankedCandidates.length,
             passing: rankedCandidates.filter(
               (candidate) => candidate.gate === "通过",
             ).length,
@@ -143,21 +176,26 @@ export default function App({
         />
       ) : null}
       {currentSection === "explore" ? (
-        <NameExplorer candidates={rawCandidates} />
+        <ClassicsNameDiscovery
+          candidates={discoveryCandidates}
+          loading={discoveryLoading}
+          error={discoveryError}
+          profile={curatedProfile}
+          onLookup={openLookup}
+        />
       ) : null}
       {currentSection === "allusions" ? (
         <AllusionLibrary
           candidates={allusionCandidates}
           fragments={classicalFragments}
           corpusSearchClient={corpusSearchClient}
+          initialQuery={lookupName}
         />
-      ) : null}
-      {currentSection === "curated" ? (
-        <CuratedRanking candidates={rankedCandidates} profile={curatedProfile} />
       ) : null}
       {currentSection === "compare" ? (
         <CompareTable
           candidates={rankedCandidates}
+          discoveryCandidates={discoveryCandidates}
           profile={local.profile}
           onRemove={local.toggleCompare}
           onNavigate={navigate}

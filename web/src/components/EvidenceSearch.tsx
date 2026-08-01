@@ -260,11 +260,13 @@ function FullTextLayer({ state }: { state: FullTextViewState }) {
 export function EvidenceSearch({
   fragments,
   corpusSearchClient,
+  initialQuery = "",
 }: {
   fragments: readonly ClassicalFragment[];
   corpusSearchClient: CorpusSearchClient;
+  initialQuery?: string;
 }) {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(initialQuery);
   const [showAllSingle, setShowAllSingle] = useState(false);
   const [fullTextState, setFullTextState] = useState<FullTextViewState>({
     status: "idle",
@@ -281,6 +283,12 @@ export function EvidenceSearch({
     (grade) => grouped[grade].length > 0,
   );
   const visibleSingle = showAllSingle ? grouped.F : grouped.F.slice(0, 8);
+
+  useEffect(() => {
+    if (!initialQuery) return;
+    setQuery(initialQuery);
+    setShowAllSingle(false);
+  }, [initialQuery]);
 
   useEffect(() => {
     if (!givenName) {

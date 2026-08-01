@@ -95,8 +95,14 @@ export function filterDiscoveryCandidates(
   favoriteNames: readonly string[],
 ): DiscoveryCandidate[] {
   const favoriteSet = new Set(favoriteNames);
+  const feminineEvidence = (candidate: DiscoveryCandidate) =>
+    candidate.feminine >= 4 &&
+    candidate.usability >= 3.5 &&
+    [...candidate.givenName][0] !== [...candidate.givenName][1];
   if (mode === "a-only") {
-    return candidates.filter((candidate) => candidate.grade === "A");
+    return candidates.filter(
+      (candidate) => candidate.grade === "A" && feminineEvidence(candidate),
+    );
   }
   if (mode === "curated") {
     return candidates.filter((candidate) => candidate.origin === "curated");
@@ -105,7 +111,9 @@ export function filterDiscoveryCandidates(
     return candidates.filter((candidate) => favoriteSet.has(candidate.name));
   }
   return candidates.filter(
-    (candidate) => candidate.grade === "A" || candidate.grade === "B",
+    (candidate) =>
+      (candidate.grade === "A" || candidate.grade === "B") &&
+      feminineEvidence(candidate),
   );
 }
 

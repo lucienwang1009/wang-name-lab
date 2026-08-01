@@ -3,12 +3,11 @@ import { SectionHeader } from "./AppShell";
 
 interface FunnelOverviewProps {
   counts: {
-    raw: number;
-    characters: number;
+    discovery: number;
+    gradeA: number;
+    gradeB: number;
     fragments: number;
     corpora: number;
-    allusions: number;
-    curated: number;
     passing: number;
     favorites: number;
     compare: number;
@@ -21,23 +20,23 @@ const steps = [
   {
     id: "explore" as const,
     number: "01",
-    title: "字库组合",
-    tag: "发现层",
-    description: "跨意象门类广泛组合，不冒充有典故的名字。",
+    title: "典籍寻名",
+    tag: "发现与精审",
+    description: "直接从古籍原句取字，混合全文发现与人工精选，反复换一批。",
   },
   {
     id: "allusions" as const,
     number: "02",
-    title: "古籍核典",
+    title: "完整核查",
     tag: "证据层",
-    description: "区分原文连续、同句首尾与隔字取名，保留上下文。",
+    description: "给出任意名字，反查 70 部全文并区分 A–F 六级关系。",
   },
   {
-    id: "curated" as const,
+    id: "compare" as const,
     number: "03",
-    title: "人工精审",
+    title: "家庭对照",
     tag: "决策层",
-    description: "女性感、稀有度、音律、家族呼应与风险一并评分。",
+    description: "把收藏压缩到四名，逐项比较出处、女性感、家族呼应与风险。",
   },
   {
     id: "birth" as const,
@@ -54,7 +53,7 @@ export function FunnelOverview({ counts, onNavigate }: FunnelOverviewProps) {
       <SectionHeader
         eyebrow="WANG FAMILY · NAME ARCHIVE 2026"
         title="为一个名字，留下完整来路"
-        description="不是一次性抽签，而是一套能反复筛选、核验、比较并在出生后校准的取名档案。当前偏好：女孩、王姓、古典但不熟滥，可用隔字、首尾或尾首取法。"
+        description="从古籍原文开始发现名字，再反复换一批、收藏、核验和比较。当前偏好：女孩、王姓、古典但不熟滥，可用隔字、首尾或尾首取法。"
         aside={
           <div className="status-stamp">
             <span>当前阶段</span>
@@ -82,9 +81,9 @@ export function FunnelOverview({ counts, onNavigate }: FunnelOverviewProps) {
               <button
                 className="button button-primary"
                 type="button"
-                onClick={() => onNavigate("curated")}
+                onClick={() => onNavigate("explore")}
               >
-                先看人工精选
+                开始典籍寻名
               </button>
               <button
                 className="button button-quiet"
@@ -115,20 +114,20 @@ export function FunnelOverview({ counts, onNavigate }: FunnelOverviewProps) {
 
       <div className="metric-strip" aria-label="候选规模">
         <div>
-          <strong>{counts.raw.toLocaleString("zh-CN")}</strong>
-          <span>原始组合</span>
+          <strong>{counts.discovery.toLocaleString("zh-CN")}</strong>
+          <span>典籍寻名候选</span>
+        </div>
+        <div>
+          <strong>{counts.gradeA}</strong>
+          <span>A 级 · 原文连续</span>
+        </div>
+        <div>
+          <strong>{counts.gradeB}</strong>
+          <span>B 级 · 同句或相邻</span>
         </div>
         <div>
           <strong>{counts.fragments}</strong>
-          <span>{counts.corpora} 类古籍 · 原典片段</span>
-        </div>
-        <div>
-          <strong>{counts.allusions.toLocaleString("zh-CN")}</strong>
-          <span>可复核取字路径</span>
-        </div>
-        <div>
-          <strong>{counts.curated}</strong>
-          <span>人工精审</span>
+          <span>{counts.corpora} 类精选片段</span>
         </div>
         <div>
           <strong>{counts.passing}</strong>
@@ -150,11 +149,11 @@ export function FunnelOverview({ counts, onNavigate }: FunnelOverviewProps) {
           {steps.map((step, index) => {
             const amount =
               index === 0
-                ? counts.raw
+                ? counts.discovery
                 : index === 1
-                  ? counts.allusions
+                  ? 70
                   : index === 2
-                    ? counts.passing
+                    ? counts.compare
                     : counts.scenarios;
             return (
               <li key={step.id}>
@@ -164,9 +163,7 @@ export function FunnelOverview({ counts, onNavigate }: FunnelOverviewProps) {
                     <small>{step.tag}</small>
                     <b>{step.title}</b>
                     <em>
-                      {index === 0
-                        ? `由 ${counts.characters} 个基础字交叉生成，${step.description}`
-                        : step.description}
+                      {step.description}
                     </em>
                   </span>
                   <strong>{amount.toLocaleString("zh-CN")}</strong>

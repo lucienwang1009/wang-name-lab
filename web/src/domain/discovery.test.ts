@@ -80,6 +80,19 @@ describe("统一典籍寻名池", () => {
       .toEqual(["王皎莹"]);
   });
 
+  it("默认随机层排除女性感偏低和叠字候选，收藏模式仍可主动找回", () => {
+    const lowFeminine = { ...corpus("景行"), feminine: 3.5 };
+    const repeated = corpus("昭昭");
+    const merged = mergeDiscoveryCandidates([lowFeminine, repeated], []);
+
+    expect(filterDiscoveryCandidates(merged, "evidence", [])).toEqual([]);
+    expect(
+      filterDiscoveryCandidates(merged, "favorites", ["王景行"]).map(
+        (item) => item.name,
+      ),
+    ).toEqual(["王景行"]);
+  });
+
   it("换一批时在池子足够的情况下不重复上一批", () => {
     const candidates = Array.from({ length: 8 }, (_, index) => ({
       ...corpus(`名${index}`),

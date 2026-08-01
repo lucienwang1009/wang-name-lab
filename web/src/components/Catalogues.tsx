@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import type {
   AllusionCandidate,
@@ -7,6 +7,12 @@ import type {
   RawNameCandidate,
 } from "../domain/types";
 import { diversifyRawCandidates } from "../domain/nameSystem";
+import {
+  filterDiscoveryCandidates,
+  sampleDiscoveryCandidates,
+  type DiscoveryCandidate,
+  type DiscoveryMode,
+} from "../domain/discovery";
 import { SectionHeader } from "./AppShell";
 import { EvidenceSearch } from "./EvidenceSearch";
 import type { CorpusSearchClient } from "../corpus/searchCorpus";
@@ -269,10 +275,12 @@ export function AllusionLibrary({
   candidates,
   fragments,
   corpusSearchClient,
+  initialQuery,
 }: {
   candidates: readonly AllusionCandidate[];
   fragments: readonly ClassicalFragment[];
   corpusSearchClient: CorpusSearchClient;
+  initialQuery?: string;
 }) {
   const [query, setQuery] = useState("");
   const [grade, setGrade] = useState("全部");
@@ -305,7 +313,7 @@ export function AllusionLibrary({
     <section className="page-section">
       <SectionHeader
         eyebrow="TEXTUAL EVIDENCE · 证据层"
-        title="古籍典故库"
+        title="古籍核查"
         description={`核心全文库已接入 70 部古籍，另有 ${fragments.length} 条精选片段覆盖 ${corpora.length - 1} 类文献。名字反查采用 A–F 六级证据：从原文连续、同句取字，逐级扩展到同篇、同书、跨典与单字用例。`}
         aside={
           <div className="large-count">
@@ -318,6 +326,7 @@ export function AllusionLibrary({
       <EvidenceSearch
         fragments={fragments}
         corpusSearchClient={corpusSearchClient}
+        initialQuery={initialQuery}
       />
 
       <div className="filter-ledger compact">
@@ -564,6 +573,200 @@ export interface CuratedProfileActions {
   toggleRejected: (name: string) => void;
   toggleCompare: (name: string) => void;
   updateNote: (name: string, note: string) => void;
+}
+
+const discoveryModes: Array<{
+  id: DiscoveryMode;
+  label: string;
+}> = [
+  { id: "evidence", label: "A + B 可靠出处" },
+  { id: "a-only", label: "只看 A 级" },
+  { id: "curated", label: "人工精选" },
+  { id: "favorites", label: "我的收藏" },
+];
+
+function DiscoveryCard({
+  candidate,
+  profile,
+  onLookup,
+}: {
+  candidate: DiscoveryCandidate;
+  profile: CuratedProfileActions;
+  onLookup: (name: string) => void;
+}) {
+  const favorite = profile.favoriteNames.includes(candidate.name);
+  const rejected = profile.rejectedNames.includes(candidate.name);
+  const compared = profile.compareNames.includes(candidate.name);
+  const compareFull = profile.compareNames.length >= 4;
+  return (
+    <article className={`discovery-card ${rejected ? "is-rejected" : ""}`}>
+      <header>
+        <div>
+          <span className="discovery-origin">
+            {candidate.origin === "curated" ? "人工精选" : "全文发现"}
+          </span>
+          <h2>{candidate.name}</h2>
+          <p>{candidate.pinyin ? `${candidate.pinyin} · ${candidate.tones}` : "王姓女孩 · 读音待人工复核"}</p>
+        </div>
+        <span className={`grade-badge grade-${candidate.grade}`}>
+          {candidate.grade}级
+        </span>
+      </header>
+
+      <blockquote>“{candidate.quote}”</blockquote>
+      <div className="discovery-source">
+        <strong>{candidate.source}</strong>
+        <span>{candidate.extraction}</span>
+      </div>
+
+      <dl className="discovery-signals">
+        <div><dt>女性感</dt><dd>{candidate.feminine.toFixed(1)}</dd></div>
+        <div><dt>稀有度</dt><dd>{candidate.rarity.toFixed(1)}</dd></div>
+        <div><dt>易用性</dt><dd>{candidate.usability.toFixed(1)}</dd></div>
+        <div><dt>家族线</dt><dd>{candidate.familyScore.toFixed(1)}</dd></div>
+      </dl>
+
+      {candidate.familyNote || candidate.risk ? (
+        <dl className="review-notes">
+          {candidate.familyNote ? <div><dt>家族呼应</dt><dd>{candidate.familyNote}</dd></div> : null}
+          {candidate.risk ? <div><dt>风险提示</dt><dd>{candidate.risk}</dd></div> : null}
+        </dl>
+      ) : (
+        <p className="discovery-caveat">机器只负责发现原文取字路径；音律、谐音和完整语境仍需人工判断。</p>
+      )}
+
+      <details className="personal-note">
+        <summary>写下家人的直觉与意见</summary>
+        <textarea
+          value={profile.notes[candidate.name] ?? ""}
+          placeholder="例如：喜欢出处，但担心某个字难读……"
+          onChange={(event) => profile.updateNote(candidate.name, event.target.value)}
+        />
+      </details>
+
+      <footer>
+        <div className="discovery-links">
+          <a href={candidate.verificationUrl} target="_blank" rel="noreferrer">核验原文 ↗</a>
+          <button type="button" onClick={() => onLookup(candidate.name)}>查完整典籍</button>
+        </div>
+        <div className="discovery-actions">
+          <button
+            type="button"
+            className={favorite ? "is-active" : ""}
+            aria-pressed={favorite}
+            onClick={() => profile.toggleFavorite(candidate.name)}
+          >{favorite ? "已收藏" : "收藏"}</button>
+          <button
+            type="button"
+            className={rejected ? "is-danger" : ""}
+            aria-pressed={rejected}
+            onClick={() => profile.toggleRejected(candidate.name)}
+          >{rejected ? "已排除" : "排除"}</button>
+          <button
+            type="button"
+            className={compared ? "is-active" : ""}
+            aria-pressed={compared}
+            disabled={!compared && compareFull}
+            onClick={() => profile.toggleCompare(candidate.name)}
+          >{compared ? "移出对照" : compareFull ? "对照已满" : "加入对照"}</button>
+        </div>
+      </footer>
+    </article>
+  );
+}
+
+export function ClassicsNameDiscovery({
+  candidates,
+  loading,
+  error,
+  profile,
+  onLookup,
+}: {
+  candidates: readonly DiscoveryCandidate[];
+  loading: boolean;
+  error?: string;
+  profile: CuratedProfileActions;
+  onLookup: (name: string) => void;
+}) {
+  const [mode, setMode] = useState<DiscoveryMode>("evidence");
+  const [batch, setBatch] = useState<DiscoveryCandidate[]>([]);
+  const filtered = useMemo(() => {
+    const candidatesForMode = filterDiscoveryCandidates(
+      candidates,
+      mode,
+      profile.favoriteNames,
+    );
+    return mode === "favorites"
+      ? candidatesForMode
+      : candidatesForMode.filter(
+          (candidate) => !profile.rejectedNames.includes(candidate.name),
+        );
+  }, [candidates, mode, profile.favoriteNames, profile.rejectedNames]);
+
+  useEffect(() => {
+    setBatch(sampleDiscoveryCandidates(filtered, 12));
+  }, [filtered]);
+
+  const refresh = () => {
+    setBatch((current) =>
+      sampleDiscoveryCandidates(
+        filtered,
+        12,
+        current.map((candidate) => candidate.id),
+      ),
+    );
+  };
+
+  return (
+    <section className="page-section discovery-page">
+      <SectionHeader
+        eyebrow="CLASSICS-FIRST DISCOVERY · 原文寻名"
+        title="典籍寻名"
+        description="不再先拼字、后找典故。每个随机名字都直接取自古籍原文，并携带书名、篇目、原句和取字方式；默认只出现通过女性感、易用性初筛的 A、B 两级路径。"
+        aside={<div className="large-count"><strong>{candidates.length.toLocaleString("zh-CN")}</strong><span>当前可抽取候选</span></div>}
+      />
+
+      <div className="discovery-console">
+        <div className="segmented-control discovery-modes" aria-label="典籍寻名模式">
+          {discoveryModes.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              className={mode === item.id ? "is-active" : ""}
+              aria-pressed={mode === item.id}
+              onClick={() => setMode(item.id)}
+            >{item.label}</button>
+          ))}
+        </div>
+        <button className="button button-primary discovery-refresh" type="button" onClick={refresh} disabled={filtered.length === 0}>
+          换一批 · 12 名
+        </button>
+      </div>
+
+      <div className="discovery-status" aria-live="polite">
+        {loading ? <span>正在载入 70 部古籍生成的寻名池…</span> : null}
+        {error ? <span className="is-error">全文寻名池暂未载入：{error}；仍可浏览人工精选。</span> : null}
+        {!loading && !error ? <span>本批不会在候选足够时立即重复上一批；收藏与排除只保存在此浏览器。</span> : null}
+      </div>
+
+      <div className="discovery-grid">
+        {batch.map((candidate) => (
+          <DiscoveryCard
+            key={candidate.id}
+            candidate={candidate}
+            profile={profile}
+            onLookup={onLookup}
+          />
+        ))}
+      </div>
+      {batch.length === 0 && !loading ? (
+        <div className="empty-state">
+          <b>{mode === "favorites" ? "还没有收藏名字" : "当前模式没有可用候选"}</b>
+          <p>{mode === "favorites" ? "回到 A + B 模式，看到有感觉的名字就先收藏。" : "切换到其他模式再看看。"}</p>
+        </div>
+      ) : null}
+    </section>
+  );
 }
 
 export function CuratedRanking({
