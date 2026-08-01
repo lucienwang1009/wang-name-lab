@@ -35,6 +35,33 @@ export interface CorpusPassage {
   verificationUrl: string;
 }
 
+export interface CorpusDiscoveryCandidate {
+  id: string;
+  givenName: string;
+  grade: "A" | "B";
+  bookId: string;
+  bookTitle: string;
+  category: CorpusCategory;
+  passageId: string;
+  workTitle: string;
+  chapterTitle: string;
+  quote: string;
+  extraction: string;
+  sourceUrl: string;
+  verificationUrl: string;
+  feminine: number;
+  rarity: number;
+  usability: number;
+  familyScore: number;
+}
+
+export interface CorpusDiscoveryFile {
+  schemaVersion: 1;
+  buildVersion: string;
+  count: number;
+  candidates: CorpusDiscoveryCandidate[];
+}
+
 export interface CorpusBuildIssue {
   code: string;
   message: string;

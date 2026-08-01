@@ -20,6 +20,8 @@ const [
   { ingestEarlyChinese },
   { ingestKanripo },
   { buildCorpusIndex },
+  { buildDiscoveryPool },
+  { characterDictionary },
   { chinesePoetryFiles },
   { earlyChineseFiles },
   { kanripoFiles, kanripoDirectSeries },
@@ -30,6 +32,8 @@ const [
   import("../src/corpus/importers/earlyChinese.ts"),
   import("../src/corpus/importers/kanripo.ts"),
   import("../src/corpus/buildIndex.ts"),
+  import("../src/corpus/buildDiscoveryPool.ts"),
+  import("../src/data/nameSystemData.ts"),
   import("../corpus/sources/chinese-poetry.ts"),
   import("../corpus/sources/early-chinese.ts"),
   import("../corpus/sources/kanripo.ts"),
@@ -137,6 +141,11 @@ const sortedPassages = importedGroups.flat().sort(
     compareText(left.id, right.id),
 );
 const report = buildCorpusReport({ books: sortedBooks, passages: sortedPassages });
+const discoveryCandidates = buildDiscoveryPool({
+  books: sortedBooks,
+  characters: characterDictionary,
+  passages: sortedPassages,
+});
 
 console.log(
   `Corpus import: ${report.catalogue.totalPassages} passages, ` +
@@ -156,6 +165,12 @@ const buildVersion = sha256(
     sourceLock.files.map(({ key, sha256: checksum }) => [key, checksum]),
   ),
 );
+const discovery = {
+  schemaVersion: 1,
+  buildVersion,
+  count: discoveryCandidates.length,
+  candidates: discoveryCandidates,
+};
 const catalogue = {
   schemaVersion: 2,
   buildVersion,
@@ -165,6 +180,8 @@ const catalogue = {
   characterIndex: indexBuild.indexPathsByCharacter,
   textShards: indexBuild.textShardPaths,
   textShardsByBook: indexBuild.textShardPathsByBook,
+  discoveryPath: "discovery.json",
+  discoveryCount: discoveryCandidates.length,
   books: sortedBooks,
 };
 const attribution = {
@@ -183,6 +200,10 @@ const metadataArtifacts = [
   {
     relativePath: "aliases.json",
     content: `${JSON.stringify({ schemaVersion: 1, aliases: indexBuild.aliases })}\n`,
+  },
+  {
+    relativePath: "discovery.json",
+    content: `${JSON.stringify(discovery)}\n`,
   },
 ].sort((left, right) => compareText(left.relativePath, right.relativePath));
 
@@ -242,4 +263,9 @@ console.log(
   `Corpus build: ${counts.totalBooks} books (${counts.byStatus.ready} ready), ` +
     `${counts.totalPassages} passages, ${report.blockingErrors.length} blocking errors, ` +
     `${report.warnings.length} warnings, ${artifactCount} static files.`,
+);
+console.log(
+  `Discovery pool: ${discoveryCandidates.length} names (` +
+    `${discoveryCandidates.filter(({ grade }) => grade === "A").length} A, ` +
+    `${discoveryCandidates.filter(({ grade }) => grade === "B").length} B).`,
 );
