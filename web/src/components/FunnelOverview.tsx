@@ -3,8 +3,8 @@ import { SectionHeader } from "./AppShell";
 
 interface FunnelOverviewProps {
   counts: {
-    recommendable: number;
-    searchOnly: number;
+    humanReviewed: number;
+    corpusDiscoveries: number;
     calibration: number;
     fragments: number;
     books: number;
@@ -52,7 +52,7 @@ export function FunnelOverview({ counts, onNavigate }: FunnelOverviewProps) {
       <SectionHeader
         eyebrow="WANG FAMILY · NAME ARCHIVE 2026"
         title="为一个名字，留下完整来路"
-        description="先用少量对比学习你们真正的取舍，再从通过语义审核的古籍候选中推荐；其余全文发现只用于搜索，不冒充精选名字。"
+        description="先用少量人工精审候选校准取舍，再让人工精审与规则粗筛共同参与个性组批；两种审核层级始终分开标注。"
         aside={
           <div className="status-stamp">
             <span>当前阶段</span>
@@ -113,12 +113,12 @@ export function FunnelOverview({ counts, onNavigate }: FunnelOverviewProps) {
 
       <div className="metric-strip" aria-label="候选规模">
         <div>
-          <strong>{counts.recommendable.toLocaleString("zh-CN")}</strong>
-          <span>已语义审核可推荐</span>
+          <strong>{counts.humanReviewed.toLocaleString("zh-CN")}</strong>
+          <span>人工精审 · 名字级语义</span>
         </div>
         <div>
-          <strong>{counts.searchOnly.toLocaleString("zh-CN")}</strong>
-          <span>全文发现 · 仅供搜索</span>
+          <strong>{counts.corpusDiscoveries.toLocaleString("zh-CN")}</strong>
+          <span>全文粗筛 · 再按规则分层</span>
         </div>
         <div>
           <strong>{counts.calibration} / 8</strong>
@@ -148,7 +148,7 @@ export function FunnelOverview({ counts, onNavigate }: FunnelOverviewProps) {
           {steps.map((step, index) => {
             const amount =
               index === 0
-                ? counts.recommendable
+                ? counts.humanReviewed
               : index === 1
                   ? counts.books
                   : index === 2

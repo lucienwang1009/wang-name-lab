@@ -183,9 +183,13 @@ const recommendationsV2 = {
   buildVersion,
   corpusVersion: buildVersion,
   recommendableCount: recommendationPool.recommendable.length,
+  ruleScreenedCount: recommendationPool.provisional.length,
   searchOnlyCount: recommendationPool.searchOnly.length,
   blockedCount: recommendationPool.blocked.length,
-  candidates: recommendationPool.recommendable,
+  candidates: [
+    ...recommendationPool.recommendable,
+    ...recommendationPool.provisional,
+  ],
 };
 const catalogue = {
   schemaVersion: 2,
@@ -199,7 +203,10 @@ const catalogue = {
   discoveryPath: "discovery.json",
   discoveryCount: discoveryCandidates.length,
   recommendationPath: "recommendations-v2.json",
-  recommendationCount: recommendationPool.recommendable.length,
+  recommendationCount:
+    recommendationPool.recommendable.length + recommendationPool.provisional.length,
+  humanReviewedCount: recommendationPool.recommendable.length,
+  ruleScreenedCount: recommendationPool.provisional.length,
   books: sortedBooks,
 };
 const attribution = {
@@ -293,6 +300,7 @@ console.log(
 );
 console.log(
   `Recommendation V2: ${recommendationPool.recommendable.length} recommendable, ` +
+    `${recommendationPool.provisional.length} rule-screened, ` +
     `${recommendationPool.searchOnly.length} search-only, ` +
     `${recommendationPool.blocked.length} blocked.`,
 );

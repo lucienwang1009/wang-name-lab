@@ -155,12 +155,23 @@ function RecommendationCard({
   candidate,
   reason,
   selectionKind,
+  mmr,
   profile,
   onLookup,
 }: {
   candidate: PersonalizedCandidate;
   reason: readonly string[];
   selectionKind: "fit" | "diverse" | "explore";
+  mmr: {
+    relevance: number;
+    diversity: number;
+    weightedScore: number;
+    uncertainty: number;
+    exposurePenalty: number;
+    diversityBonus: number;
+    selectionScore: number;
+    closestSelectedName?: string;
+  };
   profile: CuratedProfileActions;
   onLookup: (name: string) => void;
 }) {
@@ -175,13 +186,19 @@ function RecommendationCard({
       : selectionKind === "diverse"
         ? "拓宽本轮风格"
         : "帮助继续学习";
+  const humanReviewed = candidate.evidence.reviewStatus === "reviewed";
+  const percent = (value: number) => `${Math.round(value * 100)}%`;
+  const score = (value: number) => value.toFixed(2);
   return (
     <article className={`personalized-card ${rejected ? "is-rejected" : ""}`}>
       <header>
         <div>
           <span className="recommendation-kind">{selectionLabel}</span>
+          <span className={`review-tier ${humanReviewed ? "is-reviewed" : "is-rule-screened"}`}>
+            {humanReviewed ? "人工精审" : "规则粗筛 · 待人工精审"}
+          </span>
           <h2>{candidate.fullName}</h2>
-          <p>{candidate.quality.pinyin} · {candidate.quality.tones}</p>
+          <p>{humanReviewed ? `${candidate.quality.pinyin} · ${candidate.quality.tones}` : "读音与声调待人工复核"}</p>
         </div>
         <span className="evidence-relation">{relationLabels[candidate.evidence.relation]}</span>
       </header>
@@ -201,7 +218,25 @@ function RecommendationCard({
       <dl className="recommendation-reasons">
         <div>
           <dt>为什么出现</dt>
-          <dd>{reason.length > 0 ? reason.join("；") : "通过语义核验，并作为本轮多样性候选加入。"}</dd>
+          <dd>{reason.length > 0 ? reason.join("；") : "作为本轮个人适配与多样性候选加入。"}</dd>
+        </div>
+        <div>
+          <dt>{selectionKind === "explore" ? "探索组批依据" : "MMR 组批依据"}</dt>
+          {selectionKind === "explore" ? (
+            <dd>
+              偏好不确定性 {percent(mmr.uncertainty)} × 50% + 本批差异 {percent(mmr.diversity)} × 30% + 个人适配 {percent(mmr.relevance)} × 20%
+              {mmr.exposurePenalty > 0 ? `，再扣除曝光惩罚 ${score(mmr.exposurePenalty)}` : ""}，本轮选择值 {score(mmr.selectionScore)}。
+            </dd>
+          ) : (
+            <dd>
+              个人适配 {percent(mmr.relevance)} × 75% + 本批差异 {percent(mmr.diversity)} × 25%
+              = {score(mmr.weightedScore)}
+              {mmr.diversityBonus > 0 ? `；拓宽奖励 ${score(mmr.diversityBonus)}` : ""}
+              {mmr.exposurePenalty > 0 ? `；曝光惩罚 ${score(mmr.exposurePenalty)}` : ""}
+              {`；本轮选择值 ${score(mmr.selectionScore)}`}
+              {mmr.closestSelectedName ? `；最接近已选项为${mmr.closestSelectedName}` : "；本批首项暂无相似项"}。
+            </dd>
+          )}
         </div>
         <div>
           <dt>使用权衡</dt>
@@ -278,6 +313,12 @@ export function PersonalizedNameDiscovery({
 }) {
   const [viewpoint, setViewpoint] = useState<Viewpoint>("personal");
   const [previousBatch, setPreviousBatch] = useState<string[]>([]);
+  const humanReviewedCount = candidates.filter(
+    (candidate) => candidate.evidence.reviewStatus === "reviewed",
+  ).length;
+  const ruleScreenedCount = candidates.filter(
+    (candidate) => candidate.evidence.reviewStatus === "rule-screened",
+  ).length;
   const anchors = useMemo(() => selectCalibrationAnchors(candidates), [candidates]);
   const pairIndex = Math.min(7, preference.calibrationProgress);
   const left = anchors[pairIndex * 2];
@@ -319,7 +360,7 @@ export function PersonalizedNameDiscovery({
   };
 
   if (loading) {
-    return <section className="page-section loading-panel">正在加载经语义审核的候选池……</section>;
+    return <section className="page-section loading-panel">正在加载分层候选池……</section>;
   }
   if (error) {
     return (
@@ -371,8 +412,8 @@ export function PersonalizedNameDiscovery({
       <SectionHeader
         eyebrow="PERSONALIZED DISCOVERY · 适配与多样性并行"
         title="个性寻名"
-        description="默认一批 12 个：7 个贴近当前偏好、3 个主动拓宽风格、2 个帮助继续学习。这里不设万能总分；出处、名字质量、个人适配与传统命理分别说明。"
-        aside={<div className="large-count"><strong>{candidates.length}</strong><span>已通过语义审核</span></div>}
+        description={`候选池分为 ${humanReviewedCount} 个“人工精审”和 ${ruleScreenedCount} 个“规则粗筛”；后者只核对连续出处、用字代理与负面语境，不冒充语义审核。每批仍按 7 个贴近偏好、3 个拓宽风格、2 个继续学习组批。`}
+        aside={<div className="large-count"><strong>{candidates.length}</strong><span>个性候选 · 分层审核</span></div>}
       />
       <div className="discovery-console personalized-console">
         <div className="segmented-control discovery-modes" aria-label="推荐观察角度">
@@ -393,12 +434,13 @@ export function PersonalizedNameDiscovery({
       </div>
       <p className="ranking-caveat">排序只表示“与当前选择的相对适配”，不表示名字有客观高低；每张卡都会说明入选原因与使用权衡。</p>
       <div className="personalized-grid">
-        {batch.map(({ candidate, reasons, selectionKind }) => (
+        {batch.map(({ candidate, reasons, selectionKind, mmr }) => (
           <RecommendationCard
             key={candidate.id}
             candidate={candidate}
             reason={reasons}
             selectionKind={selectionKind}
+            mmr={mmr}
             profile={profile}
             onLookup={onLookup}
           />

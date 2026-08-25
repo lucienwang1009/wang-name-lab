@@ -32,6 +32,8 @@ function discovery(
     rarity: 4,
     usability: 4,
     familyScore: 0,
+    firstCategory: "姿容德性",
+    secondCategory: "姿容德性",
   };
 }
 
@@ -73,7 +75,7 @@ const reviewedSeeds: Record<string, ReviewedSeedMetadata> = {
 };
 
 describe("方法论 V2 推荐池", () => {
-  it("只把具备名字级说明的人工核验种子放入主动推荐", () => {
+  it("区分人工精审、规则粗筛和仅检索", () => {
     const pool = buildRecommendationPool({
       curatedCandidates: [curated("令仪")],
       discoveryCandidates: [
@@ -84,8 +86,32 @@ describe("方法论 V2 推荐池", () => {
     });
 
     expect(pool.recommendable.map((item) => item.givenName)).toContain("令仪");
-    expect(pool.searchOnly.map((item) => item.givenName)).toContain("残片");
+    expect(pool.provisional.map((item) => item.givenName)).toContain("残片");
     expect(pool.recommendable.map((item) => item.givenName)).not.toContain("残片");
+    expect(pool.provisional[0]).toMatchObject({
+      eligibility: "provisional",
+      evidence: { reviewStatus: "rule-screened" },
+    });
+  });
+
+  it("同句近距、叠字和低代理指标仍只用于检索", () => {
+    const near = { ...discovery("清影", "清光照影。"), grade: "B" as const };
+    const repeated = discovery("清清", "清清水色。", "passage:repeated");
+    const lowUsability = {
+      ...discovery("清影", "清影相随。", "passage:low"),
+      usability: 3.2,
+    };
+    const pool = buildRecommendationPool({
+      curatedCandidates: [],
+      discoveryCandidates: [near, repeated, lowUsability],
+      reviewedSeeds: {},
+    });
+
+    expect(pool.provisional).toHaveLength(0);
+    expect(pool.searchOnly.map((item) => item.givenName).sort()).toEqual([
+      "清影",
+      "清清",
+    ]);
   });
 
   it("负面上下文和人工硬筛候选不能进入推荐", () => {

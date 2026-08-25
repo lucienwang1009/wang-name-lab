@@ -203,7 +203,13 @@ export function CompareTable({
           <div className="compare-nameplates">
             {selected.map((candidate) => (
               <article key={comparisonName(candidate)}>
-                <span>{isPersonalizedCandidate(candidate) ? "语义审核候选" : "旧版保留名称"}</span>
+                <span>{
+                  isPersonalizedCandidate(candidate)
+                    ? candidate.evidence.reviewStatus === "reviewed"
+                      ? "人工精审候选"
+                      : "规则粗筛 · 待精审"
+                    : "旧版保留名称"
+                }</span>
                 <h2>{comparisonName(candidate)}</h2>
                 <p>{comparisonPinyin(candidate)}</p>
                 <button type="button" onClick={() => onRemove(comparisonName(candidate))}>
@@ -564,7 +570,7 @@ export function BirthProfile({
                       <b>{candidate.fullName}</b>
                       <span>{candidate.quality.pinyin}</span>
                     </th>
-                    <td>{reasons.join("；") || "通过语义核验的多样性候选"}</td>
+                    <td>{reasons.join("；") || "个人适配与多样性组批候选"}</td>
                     <td>
                       <div className="assessment-input">
                         <input
@@ -659,7 +665,7 @@ export function Methodology({
         <div>
           <h2>宽进、分级、窄出，再让家庭偏好参与排序</h2>
           <p>
-            70 部古籍可以广泛发现字词，但只有取字关系、完整语义和使用风险都通过复核的名字才进入默认推荐。其余保留在全文搜索中，不冒充精选结论。
+            70 部古籍先广泛发现字词，再分成“人工精审、规则粗筛、仅检索”三层。前两层可进入个性组批，但规则粗筛始终标明待人工复核，不冒充精选结论。
           </p>
         </div>
       </div>
@@ -698,7 +704,9 @@ export function Methodology({
           <span>04</span>
           <h3>多样性组批</h3>
           <p>每批 12 个名字中，7 个贴近当前偏好，3 个主动拓宽风格，2 个用于继续学习。</p>
-          <p>组批会惩罚共享字、同音、同意象和同一典籍过度集中，避免页面只是同一种审美的微调版。</p>
+          <p>7 个适配项和 3 个拓宽项逐个使用 MMR：0.75 × 个人适配 + 0.25 × 与本批已选名字的差异；2 个学习项另加偏好不确定性。</p>
+          <p>候选相似度由风格 45%、共享字 20%、同音 15%、同典籍 10%、同取字关系 10% 构成；“本批差异”取 1 减去与已选项的最高相似度。规则粗筛尚未复核读音时不加同音判定；意象重复另作组批上限与拓宽奖励。</p>
+          <p>每张卡公开本轮的适配、差异、MMR 基值、拓宽奖励与曝光惩罚。</p>
         </article>
 
         <article>

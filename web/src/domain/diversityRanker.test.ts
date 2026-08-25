@@ -141,6 +141,36 @@ describe("个性化多样性组批", () => {
       .toBeGreaterThanOrEqual(3);
     expect(new Set(selected.map((item) => item.evidence.relation)).size)
       .toBeGreaterThanOrEqual(2);
+    expect(first.every((item) =>
+      item.mmr.weightedScore ===
+        item.mmr.relevance * 0.75 + item.mmr.diversity * 0.25,
+    )).toBe(true);
+  });
+
+  it("让规则粗筛候选参与 MMR 组批但保留审核层级", () => {
+    const provisional = {
+      ...candidate(0),
+      id: "candidate:rule-screened",
+      givenName: "清影",
+      fullName: "王清影",
+      evidence: {
+        ...candidate(0).evidence,
+        reviewStatus: "rule-screened" as const,
+      },
+      eligibility: "provisional" as const,
+    };
+
+    const batch = buildPersonalizedBatch(
+      [provisional, ...candidates.slice(0, 3)],
+      createDefaultPreference(),
+      { size: 4 },
+    );
+
+    expect(batch.some((item) => item.candidate.fullName === "王清影")).toBe(true);
+    expect(
+      batch.find((item) => item.candidate.fullName === "王清影")?.candidate.evidence
+        .reviewStatus,
+    ).toBe("rule-screened");
   });
 
   it("排除明确拒绝项，并通过曝光惩罚降低反复出现", () => {

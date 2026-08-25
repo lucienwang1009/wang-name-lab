@@ -85,6 +85,25 @@ describe("名字级特征", () => {
     ).toBe("search-only");
   });
 
+  it("规则粗筛有可靠出处时进入待精审层而不冒充人工精审", () => {
+    expect(
+      recommendationEligibility(
+        candidate({
+          evidence: {
+            ...candidate().evidence,
+            reviewStatus: "rule-screened",
+          },
+          quality: {
+            ...candidate().quality,
+            pinyin: "",
+            meaning: "",
+            semanticExplanation: "",
+          },
+        }),
+      ),
+    ).toBe("provisional");
+  });
+
   it("硬风险不会被其他特征抵消", () => {
     expect(
       recommendationEligibility(

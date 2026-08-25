@@ -10,6 +10,16 @@ export interface PersonalizedBatchItem {
   fit: number;
   selectionKind: BatchSelectionKind;
   reasons: string[];
+  mmr: {
+    relevance: number;
+    diversity: number;
+    weightedScore: number;
+    uncertainty: number;
+    exposurePenalty: number;
+    diversityBonus: number;
+    selectionScore: number;
+    closestSelectedName?: string;
+  };
 }
 
 export interface PersonalizedBatchOptions {
@@ -95,13 +105,40 @@ export function candidateSimilarity(
   );
 }
 
-function maximumSimilarity(
+function mmrBreakdown(
   candidate: PersonalizedCandidate,
   selected: readonly PersonalizedCandidate[],
-): number {
-  return selected.length === 0
-    ? 0
-    : Math.max(...selected.map((item) => candidateSimilarity(candidate, item)));
+  preference: PreferenceState,
+  kind: BatchSelectionKind,
+): PersonalizedBatchItem["mmr"] {
+  const similarities = selected.map((item) => ({
+    name: item.fullName,
+    similarity: candidateSimilarity(candidate, item),
+  }));
+  const closest = [...similarities].sort(
+    (left, right) =>
+      right.similarity - left.similarity || compareText(left.name, right.name),
+  )[0];
+  const relevance = personalFit(preference, candidate);
+  const diversity = 1 - (closest?.similarity ?? 0);
+  const weightedScore =
+    relevance * mmrWeights.relevance + diversity * mmrWeights.diversity;
+  const uncertainty = 1 - Math.abs(relevance - 0.5) * 2;
+  const penalty = exposurePenalty(preference, candidate);
+  const bonus = kind === "diverse" ? diversityBonus(candidate, selected) : 0;
+  const selectionScore = kind === "explore"
+    ? uncertainty * 0.5 + diversity * 0.3 + relevance * 0.2 - penalty
+    : weightedScore + bonus - penalty;
+  return {
+    relevance,
+    diversity,
+    weightedScore,
+    uncertainty,
+    exposurePenalty: penalty,
+    diversityBonus: bonus,
+    selectionScore,
+    closestSelectedName: closest?.name,
+  };
 }
 
 function exposurePenalty(
@@ -179,16 +216,7 @@ function phaseScore(
   selected: readonly PersonalizedCandidate[],
   preference: PreferenceState,
 ): number {
-  const fit = personalFit(preference, candidate);
-  const diversity = 1 - maximumSimilarity(candidate, selected);
-  const penalty = exposurePenalty(preference, candidate);
-  if (kind === "explore") {
-    const uncertainty = 1 - Math.abs(fit - 0.5) * 2;
-    return uncertainty * 0.5 + diversity * 0.3 + fit * 0.2 - penalty;
-  }
-  const base =
-    fit * mmrWeights.relevance + diversity * mmrWeights.diversity - penalty;
-  return kind === "diverse" ? base + diversityBonus(candidate, selected) : base;
+  return mmrBreakdown(candidate, selected, preference, kind).selectionScore;
 }
 
 function chooseCandidate(
@@ -222,7 +250,8 @@ export function buildPersonalizedBatch(
   const remaining = candidates
     .filter(
       (candidate) =>
-        candidate.eligibility === "recommendable" &&
+        (candidate.eligibility === "recommendable" ||
+          candidate.eligibility === "provisional") &&
         !excluded.has(candidate.fullName) &&
         !excluded.has(candidate.givenName),
     )
@@ -238,6 +267,7 @@ export function buildPersonalizedBatch(
   ];
   const selected: PersonalizedCandidate[] = [];
   const kinds = new Map<string, BatchSelectionKind>();
+  const breakdowns = new Map<string, PersonalizedBatchItem["mmr"]>();
 
   for (const [kind, target] of phases) {
     for (let index = 0; index < target; index += 1) {
@@ -246,6 +276,7 @@ export function buildPersonalizedBatch(
       );
       const next = chooseCandidate(available, selected, preference, kind);
       if (!next) break;
+      breakdowns.set(next.id, mmrBreakdown(next, selected, preference, kind));
       selected.push(next);
       kinds.set(next.id, kind);
     }
@@ -255,6 +286,7 @@ export function buildPersonalizedBatch(
     const available = remaining.filter((candidate) => !kinds.has(candidate.id));
     const next = chooseCandidate(available, selected, preference, "diverse");
     if (!next) break;
+    breakdowns.set(next.id, mmrBreakdown(next, selected, preference, "diverse"));
     selected.push(next);
     kinds.set(next.id, "diverse");
   }
@@ -264,5 +296,7 @@ export function buildPersonalizedBatch(
     fit: personalFit(preference, candidate),
     selectionKind: kinds.get(candidate.id) ?? "diverse",
     reasons: recommendationReasons(preference, candidate),
+    mmr: breakdowns.get(candidate.id) ??
+      mmrBreakdown(candidate, [], preference, kinds.get(candidate.id) ?? "diverse"),
   }));
 }

@@ -26,6 +26,7 @@ export interface BuildRecommendationPoolOptions {
 
 export interface RecommendationPoolBuild {
   recommendable: PersonalizedCandidate[];
+  provisional: PersonalizedCandidate[];
   searchOnly: PersonalizedCandidate[];
   blocked: PersonalizedCandidate[];
 }
@@ -33,10 +34,17 @@ export interface RecommendationPoolBuild {
 const compareText = (left: string, right: string): number =>
   left < right ? -1 : left > right ? 1 : 0;
 
-const negativeContextPattern = /墓|葬|死|喪|丧|兵|刑|殺|杀|哀|殤|殇|諷|讽|貶|贬|譏|讥/u;
+const negativeContextPattern = /墓|葬|死|喪|丧|兵|刑|殺|杀|哀|殤|殇|諷|讽|貶|贬|譏|讥|愁|恨|淚|泪|病|苦|怨|孤|寡|鬼|尸|血|災|灾|禍|祸|敗|败|辱|賤|贱|惡|恶|凶/u;
 const pronunciationRiskPattern = /讀|读|音|聲|声|多音|上聲|上声|去聲|去声|陽平|阳平/u;
 const writingRiskPattern = /識讀|识读|字形|繁|成本|難寫|难写/u;
 const commonnessRiskPattern = /熟悉|常見|常见|使用較多|使用较多|重名|熟語|熟语|過於熟|过于熟/u;
+const functionCharacterPattern = /[不无無未莫其之兮者也矣于於以而与與为為乃则則曰何所且将將公君我你今昔日中上下来去入出有又正曾]/u;
+
+const ruleThresholds = {
+  feminine: 4,
+  rarity: 3.5,
+  usability: 3.6,
+} as const;
 
 function relationForGrade(grade: CuratedCandidate["grade"]): EvidenceRelation {
   if (grade === "A") return "exact-phrase";
@@ -75,6 +83,48 @@ function automaticRisk(candidate: CorpusDiscoveryCandidate): NameRisk[] {
       summary: "自动扫描发现原句含有需要排除的负面语境词，不能主动推荐。",
     },
   ];
+}
+
+function passesRuleScreen(candidate: CorpusDiscoveryCandidate): boolean {
+  const characters = [...candidate.givenName];
+  return (
+    candidate.grade === "A" &&
+    characters.length === 2 &&
+    characters[0] !== characters[1] &&
+    !functionCharacterPattern.test(candidate.givenName) &&
+    !negativeContextPattern.test(candidate.quote) &&
+    candidate.feminine >= ruleThresholds.feminine &&
+    candidate.rarity >= ruleThresholds.rarity &&
+    candidate.usability >= ruleThresholds.usability
+  );
+}
+
+function automaticFeatures(candidate: CorpusDiscoveryCandidate): NameFeatureVector {
+  const feminine = candidate.feminine / 5;
+  const rarity = candidate.rarity / 5;
+  const usability = candidate.usability / 5;
+  return normalizeFeatures({
+    classical: 0.9,
+    graceful: feminine,
+    gentle: 0.35 + feminine * 0.45,
+    bright: 0.25 + usability * 0.45,
+    austere: 0.25 + rarity * 0.5,
+    modern: 0.15,
+    pronounceable: 0.5,
+    writable: usability,
+    recognizable: usability,
+    uncommon: rarity,
+    familyMeaning: candidate.familyScore / 2,
+    exactPhrasePreference: candidate.grade === "A" ? 1 : 0.35,
+    recompositionPreference: 0,
+  });
+}
+
+function automaticStyle(candidate: CorpusDiscoveryCandidate): NameStyle {
+  if (candidate.rarity >= 4.1) return "austere";
+  if (candidate.feminine >= 4.2) return "graceful";
+  if (candidate.usability >= 4.1) return "bright";
+  return "classical";
 }
 
 function styleFeatures(style: NameStyle): Partial<NameFeatureVector> {
@@ -179,6 +229,7 @@ function fromCurated(
 }
 
 function fromDiscovery(candidate: CorpusDiscoveryCandidate): PersonalizedCandidate {
+  const ruleScreened = passesRuleScreen(candidate);
   const result: PersonalizedCandidate = {
     id: `personalized:${candidate.givenName}`,
     surname: "王",
@@ -186,24 +237,39 @@ function fromDiscovery(candidate: CorpusDiscoveryCandidate): PersonalizedCandida
     fullName: `王${candidate.givenName}`,
     evidence: {
       relation: candidate.grade === "A" ? "exact-phrase" : "clause-related",
-      reviewStatus: "automatic",
+      reviewStatus: ruleScreened ? "rule-screened" : "automatic",
       extraction: candidate.extraction,
       citations: [discoveryCitation(candidate)],
     },
-    features: normalizeFeatures({}),
+    features: automaticFeatures(candidate),
     quality: {
       pinyin: "",
       tones: "",
-      meaning: "",
-      semanticExplanation: "",
-      pronunciationNote: "待人工复核完整姓名读音。",
-      usabilityNote: "待人工复核识读和输入成本。",
-      uncommonnessNote: "未接入实际重名数据。",
-      primaryStyle: "classical",
-      imageryCategory: "自动提取，待语义核验",
+      meaning: `原文中连续出现“${candidate.givenName}”二字。`,
+      semanticExplanation: ruleScreened
+        ? "当前只确认连续出处、用字代理指标与负面语境扫描；二字作为姓名时是否形成完整、合宜的语义，仍待人工精审。"
+        : "机器发现项，尚未达到个性页面的规则粗筛门槛。",
+      pronunciationNote: "完整姓名读音、方言谐音与多音风险尚未人工复核。",
+      usabilityNote: `字表易用性代理值 ${candidate.usability.toFixed(1)} / 5；仍需核对实际输入与登记。`,
+      uncommonnessNote: `字表少见度代理值 ${candidate.rarity.toFixed(1)} / 5；未接入属地重名数据。`,
+      primaryStyle: automaticStyle(candidate),
+      imageryCategory:
+        candidate.firstCategory === candidate.secondCategory
+          ? candidate.firstCategory
+          : `${candidate.firstCategory} × ${candidate.secondCategory}`,
     },
     eligibility: "search-only",
-    risks: automaticRisk(candidate),
+    risks: [
+      ...automaticRisk(candidate),
+      ...(ruleScreened
+        ? [{
+            code: "rule-screen-pending-human-review",
+            kind: "source-context" as const,
+            severity: "review" as const,
+            summary: "规则粗筛不是人工语义审核；组合语义、声韵、谐音和姓名碰撞均待精审。",
+          }]
+        : []),
+    ],
   };
   return { ...result, eligibility: recommendationEligibility(result) };
 }
@@ -260,6 +326,7 @@ export function buildRecommendationPool({
   const all = [...byName.values()].sort((a, b) => compareText(a.givenName, b.givenName));
   return {
     recommendable: all.filter((candidate) => candidate.eligibility === "recommendable"),
+    provisional: all.filter((candidate) => candidate.eligibility === "provisional"),
     searchOnly: all.filter((candidate) => candidate.eligibility === "search-only"),
     blocked: all.filter((candidate) => candidate.eligibility === "blocked"),
   };

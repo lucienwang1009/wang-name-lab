@@ -55,6 +55,8 @@ export interface CorpusDiscoveryCandidate {
   rarity: number;
   usability: number;
   familyScore: number;
+  firstCategory: string;
+  secondCategory: string;
 }
 
 export interface CorpusDiscoveryFile {
@@ -69,7 +71,9 @@ export interface CorpusRecommendationFile {
   buildVersion: string;
   corpusVersion: string;
   recommendableCount: number;
+  ruleScreenedCount: number;
   searchOnlyCount: number;
+  blockedCount: number;
   candidates: PersonalizedCandidate[];
 }
 

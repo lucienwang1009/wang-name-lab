@@ -89,8 +89,12 @@ export type EvidenceRelation =
   | "passage-related"
   | "cultural-recomposition";
 
-export type EvidenceReviewStatus = "reviewed" | "automatic";
-export type RecommendationEligibility = "recommendable" | "search-only" | "blocked";
+export type EvidenceReviewStatus = "reviewed" | "rule-screened" | "automatic";
+export type RecommendationEligibility =
+  | "recommendable"
+  | "provisional"
+  | "search-only"
+  | "blocked";
 
 export interface NameFeatureVector {
   classical: number;

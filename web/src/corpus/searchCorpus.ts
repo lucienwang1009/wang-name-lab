@@ -146,15 +146,22 @@ function parseRecommendationFile(
     value.buildVersion !== expectedBuildVersion ||
     value.corpusVersion !== expectedBuildVersion ||
     typeof value.recommendableCount !== "number" ||
+    typeof value.ruleScreenedCount !== "number" ||
     typeof value.searchOnlyCount !== "number" ||
+    typeof value.blockedCount !== "number" ||
     !Array.isArray(value.candidates) ||
-    value.candidates.length !== value.recommendableCount ||
+    value.candidates.length !==
+      value.recommendableCount + value.ruleScreenedCount ||
     value.candidates.some(
       (candidate) =>
         !isRecord(candidate) ||
-        candidate.eligibility !== "recommendable" ||
         !isRecord(candidate.evidence) ||
-        candidate.evidence.reviewStatus !== "reviewed",
+        !(
+          (candidate.eligibility === "recommendable" &&
+            candidate.evidence.reviewStatus === "reviewed") ||
+          (candidate.eligibility === "provisional" &&
+            candidate.evidence.reviewStatus === "rule-screened")
+        ),
     )
   ) {
     throw new TypeError("个性化推荐池格式无效或与全文库版本不一致。");

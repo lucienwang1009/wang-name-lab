@@ -119,6 +119,8 @@ export function buildDiscoveryPool({
       usability: (first.usability + second.usability) / 2,
       familyScore:
         Number(Boolean(first.familyTag)) + Number(Boolean(second.familyTag)),
+      firstCategory: first.category,
+      secondCategory: second.category,
     };
     const existing = bestByName.get(givenName);
     if (

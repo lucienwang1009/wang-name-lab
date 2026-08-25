@@ -1734,6 +1734,25 @@
   letter-spacing: 0.14em;
 }
 
+.review-tier {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 3px 6px;
+  border: 1px solid var(--line-strong);
+  font-size: 8px;
+  letter-spacing: 0.06em;
+}
+
+.review-tier.is-reviewed {
+  color: var(--jade);
+  border-color: rgba(45, 77, 68, 0.35);
+}
+
+.review-tier.is-rule-screened {
+  color: var(--ink-faint);
+  border-style: dashed;
+}
+
 .calibration-candidate h2 {
   margin: 8px 0 2px;
   font-family: var(--serif);

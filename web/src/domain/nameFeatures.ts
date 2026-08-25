@@ -51,9 +51,15 @@ export function recommendationEligibility(
     candidate.quality.semanticExplanation.trim().length > 0 &&
     candidate.quality.pinyin.trim().length > 0;
 
-  return candidate.evidence.reviewStatus === "reviewed" &&
+  if (
+    candidate.evidence.reviewStatus === "reviewed" &&
     hasCitation &&
     hasNameLevelExplanation
-    ? "recommendable"
-    : "search-only";
+  ) {
+    return "recommendable";
+  }
+  if (candidate.evidence.reviewStatus === "rule-screened" && hasCitation) {
+    return "provisional";
+  }
+  return "search-only";
 }

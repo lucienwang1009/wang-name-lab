@@ -153,8 +153,8 @@ export default function App({
       {currentSection === "overview" ? (
         <FunnelOverview
           counts={{
-            recommendable: Object.keys(reviewedSeedMetadata).length,
-            searchOnly: 1176,
+            humanReviewed: Object.keys(reviewedSeedMetadata).length,
+            corpusDiscoveries: 1200,
             calibration: local.profile.preference.calibrationProgress,
             fragments: classicalFragments.length,
             books: 70,

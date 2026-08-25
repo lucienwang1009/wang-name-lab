@@ -161,7 +161,7 @@ describe("取名实验室应用", () => {
     ).toBeTruthy();
     const metrics = within(screen.getByLabelText("候选规模"));
     expect(metrics.getByText("25")).toBeTruthy();
-    expect(metrics.getByText("1,176")).toBeTruthy();
+    expect(metrics.getByText("1,200")).toBeTruthy();
     expect(metrics.getByText("0 / 8")).toBeTruthy();
     expect(metrics.getByText("126")).toBeTruthy();
     expect(metrics.getByText("70")).toBeTruthy();
@@ -234,6 +234,36 @@ describe("取名实验室应用", () => {
     expect(window.location.hash).toContain("allusions?name=");
   });
 
+  it("规则粗筛候选参与组批但明确标注待人工精审与 MMR 依据", async () => {
+    window.location.hash = "#explore";
+    completeCalibration();
+    const reviewed = recommendationCandidate("景玉");
+    const provisional: PersonalizedCandidate = {
+      ...reviewed,
+      evidence: { ...reviewed.evidence, reviewStatus: "rule-screened" },
+      eligibility: "provisional",
+      quality: {
+        ...reviewed.quality,
+        pinyin: "",
+        tones: "",
+        semanticExplanation: "组合语义仍待人工精审。",
+      },
+    };
+    const corpusSearchClient: CorpusSearchClient = {
+      discover: vi.fn(async () => [provisional]),
+      search: idleClient.search,
+    };
+    render(<App corpusSearchClient={corpusSearchClient} />);
+
+    const card = (await screen.findByRole("heading", {
+      name: "王景玉",
+      level: 2,
+    })).closest("article") as HTMLElement;
+    expect(within(card).getByText("规则粗筛 · 待人工精审")).toBeTruthy();
+    expect(within(card).getByText("MMR 组批依据")).toBeTruthy();
+    expect(within(card).getByText(/个人适配 .* × 75% \+ 本批差异 .* × 25%/)).toBeTruthy();
+  });
+
   it("收藏与对照保留 V2 候选的语义和证据", async () => {
     window.location.hash = "#explore";
     completeCalibration();
@@ -267,7 +297,8 @@ describe("取名实验室应用", () => {
     expect(screen.getByRole("heading", { name: "名字质量" })).toBeTruthy();
     expect(screen.getByRole("heading", { name: "个人适配" })).toBeTruthy();
     expect(screen.getByRole("heading", { name: "传统参考边界" })).toBeTruthy();
-    expect(screen.getByText(/70 部古籍可以广泛发现/)).toBeTruthy();
+    expect(screen.getByText(/70 部古籍先广泛发现/)).toBeTruthy();
+    expect(screen.getByText(/0\.75 × 个人适配 \+ 0\.25/)).toBeTruthy();
     expect(screen.queryByText("文化评分")).toBeNull();
     expect(screen.queryByText(/25%.*女性感/)).toBeNull();
   });

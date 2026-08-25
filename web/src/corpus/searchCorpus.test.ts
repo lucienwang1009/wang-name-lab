@@ -157,7 +157,9 @@ function fixtures(segmentation: "punctuated" | "unpunctuated" = "punctuated") {
         buildVersion: "fixture-v1",
         corpusVersion: "fixture-v1",
         recommendableCount: 1,
+        ruleScreenedCount: 0,
         searchOnlyCount: 8,
+        blockedCount: 0,
         candidates: [recommendationCandidate],
       },
     ],
@@ -188,7 +190,7 @@ function createFixtureFetcher(
 }
 
 describe("浏览器端古籍全文检索", () => {
-  it("按构建版本加载并缓存语义审核后的 V2 推荐池", async () => {
+  it("按构建版本加载并缓存分层后的 V2 候选池", async () => {
     const fetcher = createFixtureFetcher();
     const searcher = createCorpusSearcher({ baseUrl: "/corpus/", fetcher });
 

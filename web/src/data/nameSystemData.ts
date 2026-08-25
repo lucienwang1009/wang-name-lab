@@ -560,5 +560,5 @@ export const rejectionRules = [
   { code: "G4", category: "姓名碰撞", trigger: "完整姓名被显著历史人物、公众人物或强势虚构角色占用。", handling: "硬淘汰" },
   { code: "G5", category: "典故真实性", trigger: "不能提供原文、篇目、链接或合理取字路径。", handling: "硬淘汰" },
   { code: "G6", category: "读写成本", trigger: "多音、误读、书写或输入成本明显超过家庭可接受范围。", handling: "可调硬筛" },
-  { code: "G7", category: "语义完整", trigger: "只因字符相邻就组合，无法说明完整名字的语义或关系。", handling: "降为仅搜索" },
+  { code: "G7", category: "语义完整", trigger: "只因字符相邻就组合，无法说明完整名字的语义或关系。", handling: "仅作规则粗筛或全文检索，不得标为人工精审" },
 ];

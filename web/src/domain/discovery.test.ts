@@ -27,6 +27,8 @@ function corpus(givenName: string, grade: "A" | "B" = "A"): CorpusDiscoveryCandi
     rarity: 3.5,
     usability: 4.5,
     familyScore: 0,
+    firstCategory: "姿容德性",
+    secondCategory: "姿容德性",
   };
 }
 
