@@ -6,9 +6,9 @@ import type {
 } from "./buildIndex";
 import type {
   CorpusBook,
-  CorpusDiscoveryCandidate,
-  CorpusDiscoveryFile,
+  CorpusRecommendationFile,
 } from "./types";
+import type { PersonalizedCandidate } from "../domain/types";
 
 export type CorpusEvidenceGrade = "A" | "B" | "C" | "D" | "E" | "F";
 
@@ -53,8 +53,8 @@ interface CorpusCatalogue {
   buildVersion: string;
   characterIndex: Record<string, string[]>;
   textShards: string[];
-  discoveryPath?: string;
-  discoveryCount?: number;
+  recommendationPath?: string;
+  recommendationCount?: number;
   books: CorpusBook[];
 }
 
@@ -77,7 +77,7 @@ interface SearcherOptions {
 }
 
 export interface CorpusSearchClient {
-  discover(): Promise<CorpusDiscoveryCandidate[]>;
+  discover(): Promise<PersonalizedCandidate[]>;
   search(query: string): Promise<CorpusSearchResult>;
 }
 
@@ -136,21 +136,30 @@ function parseAliases(value: unknown): CorpusAliasFile {
   return value as unknown as CorpusAliasFile;
 }
 
-function parseDiscoveryFile(
+function parseRecommendationFile(
   value: unknown,
   expectedBuildVersion: string,
-): CorpusDiscoveryFile {
+): CorpusRecommendationFile {
   if (
     !isRecord(value) ||
-    value.schemaVersion !== 1 ||
+    value.schemaVersion !== 2 ||
     value.buildVersion !== expectedBuildVersion ||
-    typeof value.count !== "number" ||
+    value.corpusVersion !== expectedBuildVersion ||
+    typeof value.recommendableCount !== "number" ||
+    typeof value.searchOnlyCount !== "number" ||
     !Array.isArray(value.candidates) ||
-    value.candidates.length !== value.count
+    value.candidates.length !== value.recommendableCount ||
+    value.candidates.some(
+      (candidate) =>
+        !isRecord(candidate) ||
+        candidate.eligibility !== "recommendable" ||
+        !isRecord(candidate.evidence) ||
+        candidate.evidence.reviewStatus !== "reviewed",
+    )
   ) {
-    throw new TypeError("典籍寻名池格式无效或与全文库版本不一致。");
+    throw new TypeError("个性化推荐池格式无效或与全文库版本不一致。");
   }
-  return value as unknown as CorpusDiscoveryFile;
+  return value as unknown as CorpusRecommendationFile;
 }
 
 function parseIndexShard(
@@ -445,7 +454,10 @@ export function createCorpusSearcher({
         throw new Error(`全文库资源加载失败（HTTP ${response.status}）：${path}`);
       }
       return response.json();
-    })();
+    })().catch((error: unknown) => {
+      requestCache.delete(url);
+      throw error;
+    });
     requestCache.set(url, request);
     return request;
   };
@@ -454,16 +466,16 @@ export function createCorpusSearcher({
     parseCatalogue(await loadJson("catalog.json"));
 
   return {
-    async discover(): Promise<CorpusDiscoveryCandidate[]> {
+    async discover(): Promise<PersonalizedCandidate[]> {
       const catalogue = await loadCatalogue();
-      const discovery = parseDiscoveryFile(
+      const recommendations = parseRecommendationFile(
         await loadJson(
-          catalogue.discoveryPath ?? "discovery.json",
+          catalogue.recommendationPath ?? "recommendations-v2.json",
           catalogue.buildVersion,
         ),
         catalogue.buildVersion,
       );
-      return discovery.candidates;
+      return recommendations.candidates;
     },
     async search(query: string): Promise<CorpusSearchResult> {
       const givenName = normalizeGivenName(query);

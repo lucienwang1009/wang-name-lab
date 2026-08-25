@@ -14,7 +14,11 @@ import type {
   CorpusSearchClient,
   CorpusSearchResult,
 } from "./corpus/searchCorpus";
-import type { CorpusDiscoveryCandidate } from "./corpus/types";
+import type { PersonalizedCandidate } from "./domain/types";
+import {
+  createDefaultProfile,
+  PROFILE_STORAGE_KEY,
+} from "./state/storage";
 
 const fullTextHit: CorpusSearchResult = {
   status: "hit",
@@ -71,26 +75,69 @@ const idleClient: CorpusSearchClient = {
   })),
 };
 
-function discoveryCandidate(givenName: string): CorpusDiscoveryCandidate {
+function recommendationCandidate(
+  givenName: string,
+  index = 0,
+): PersonalizedCandidate {
   return {
-    id: `corpus-discovery:${givenName}`,
+    id: `recommendation:${String(index).padStart(2, "0")}:${givenName}`,
+    surname: "王",
     givenName,
-    grade: "A",
-    bookId: "shi-jing",
-    bookTitle: "《诗经》",
-    category: "经",
-    passageId: `passage:${givenName}`,
-    workTitle: "烝民",
-    chapterTitle: "大雅",
-    quote: `古籍原句${givenName}。`,
-    extraction: `转录字符连续：${givenName}`,
-    sourceUrl: "https://example.com/source",
-    verificationUrl: "https://example.com/verify",
-    feminine: 4.5,
-    rarity: 4,
-    usability: 4,
-    familyScore: 0,
+    fullName: `王${givenName}`,
+    evidence: {
+      relation: index % 3 === 0 ? "exact-phrase" : "clause-related",
+      reviewStatus: "reviewed",
+      extraction: `经审核的取字：${givenName}`,
+      citations: [{
+        id: `citation:${givenName}`,
+        bookId: index % 2 === 0 ? "shi-jing" : "chu-ci",
+        bookTitle: index % 2 === 0 ? "《诗经》" : "《楚辞》",
+        workTitle: "烝民",
+        chapterTitle: "大雅",
+        quote: `古籍原句${givenName}。`,
+        sourceUrl: "https://example.com/source",
+        verificationUrl: "https://example.com/verify",
+      }],
+    },
+    features: {
+      classical: 0.65 + (index % 4) * 0.08,
+      graceful: 0.45 + (index % 5) * 0.1,
+      gentle: 0.3 + (index % 6) * 0.1,
+      bright: 0.2 + ((index + 2) % 6) * 0.1,
+      austere: 0.2 + ((index + 3) % 5) * 0.1,
+      modern: 0.1 + (index % 3) * 0.1,
+      pronounceable: 0.75 + (index % 3) * 0.06,
+      writable: 0.65 + (index % 4) * 0.06,
+      recognizable: 0.7 + (index % 4) * 0.05,
+      uncommon: 0.55 + (index % 5) * 0.08,
+      familyMeaning: index === 0 ? 0.9 : 0.2,
+      exactPhrasePreference: index % 3 === 0 ? 1 : 0.4,
+      recompositionPreference: index % 3 === 0 ? 0 : 0.6,
+    },
+    quality: {
+      pinyin: `wáng test ${index}`,
+      tones: "2-4-2",
+      meaning: `候选${givenName}的语义。`,
+      semanticExplanation: "取字关系已经人工核对。",
+      pronunciationNote: "声调起伏清楚。",
+      usabilityNote: "日常读写可用。",
+      uncommonnessNote: "相对少见但不猎奇。",
+      primaryStyle: ["classical", "graceful", "gentle", "bright", "austere"][index % 5] as PersonalizedCandidate["quality"]["primaryStyle"],
+      imageryCategory: `意象${index % 5}`,
+    },
+    eligibility: "recommendable",
+    risks: [],
   };
+}
+
+const recommendationFixtures = Array.from({ length: 20 }, (_, index) =>
+  recommendationCandidate(`令${String.fromCharCode(0x4e00 + index)}`, index),
+);
+
+function completeCalibration() {
+  const profile = createDefaultProfile();
+  profile.preference.calibrationProgress = 8;
+  window.localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(profile));
 }
 
 describe("取名实验室应用", () => {
@@ -113,40 +160,45 @@ describe("取名实验室应用", () => {
       screen.getByRole("heading", { name: "为一个名字，留下完整来路" }),
     ).toBeTruthy();
     const metrics = within(screen.getByLabelText("候选规模"));
-    expect(metrics.getByText("1,200")).toBeTruthy();
-    expect(metrics.getByText("900")).toBeTruthy();
-    expect(metrics.getByText("300")).toBeTruthy();
+    expect(metrics.getByText("25")).toBeTruthy();
+    expect(metrics.getByText("1,176")).toBeTruthy();
+    expect(metrics.getByText("0 / 8")).toBeTruthy();
     expect(metrics.getByText("126")).toBeTruthy();
-    expect(metrics.getByText("132")).toBeTruthy();
+    expect(metrics.getByText("70")).toBeTruthy();
   });
 
-  it("可以从总览进入合并后的典籍寻名", async () => {
-    render(<App corpusSearchClient={idleClient} />);
+  it("可以从总览进入 8 组家庭偏好校准", async () => {
+    const corpusSearchClient: CorpusSearchClient = {
+      discover: vi.fn(async () => recommendationFixtures),
+      search: idleClient.search,
+    };
+    render(<App corpusSearchClient={corpusSearchClient} />);
 
-    fireEvent.click(screen.getByRole("button", { name: "开始典籍寻名" }));
+    fireEvent.click(screen.getByRole("button", { name: "开始个性寻名" }));
 
     await waitFor(() => {
       expect(
-        screen.getByRole("heading", { name: "典籍寻名", level: 1 }),
+        screen.getByRole("heading", { name: "先用 8 组选择认识你们", level: 1 }),
       ).toBeTruthy();
     });
-    expect(screen.getByRole("button", { name: "A + B 可靠出处" })).toBeTruthy();
-    expect(screen.getByRole("button", { name: "人工精选" })).toBeTruthy();
+    for (let index = 0; index < 8; index += 1) {
+      fireEvent.click(screen.getByRole("button", { name: "跳过这组" }));
+    }
+    expect(await screen.findByRole("heading", { name: "个性寻名", level: 1 })).toBeTruthy();
+    expect(window.scrollTo).toHaveBeenCalledWith({ top: 0, behavior: "smooth" });
+    expect(screen.getAllByRole("heading", { level: 2 })).toHaveLength(12);
+    expect(screen.queryByText("女性感")).toBeNull();
+    expect(screen.queryByRole("button", { name: "A + B 可靠出处" })).toBeNull();
   });
 
   it("从候选卡直接带名字进入完整典籍核查", async () => {
     window.location.hash = "#explore";
-    const candidates = [
-      discoveryCandidate("景玉"),
-      ...Array.from({ length: 11 }, (_, index) =>
-        discoveryCandidate(`令${String.fromCharCode(0x4e00 + index)}`),
-      ),
-    ];
+    completeCalibration();
+    const candidates = [recommendationCandidate("景玉")];
     const corpusSearchClient: CorpusSearchClient = {
       discover: vi.fn(async () => candidates),
       search: vi.fn(async () => fullTextNoHit),
     };
-    const random = vi.spyOn(Math, "random").mockReturnValue(0.999);
     render(<App corpusSearchClient={corpusSearchClient} />);
 
     const heading = await screen.findByRole("heading", { name: "王景玉", level: 2 });
@@ -159,7 +211,31 @@ describe("取名实验室应用", () => {
     });
     expect((search as HTMLInputElement).value).toBe("王景玉");
     expect(window.location.hash).toContain("allusions?name=");
-    random.mockRestore();
+  });
+
+  it("收藏与对照保留 V2 候选的语义和证据", async () => {
+    window.location.hash = "#explore";
+    completeCalibration();
+    const candidate = recommendationCandidate("景玉");
+    const corpusSearchClient: CorpusSearchClient = {
+      discover: vi.fn(async () => [candidate]),
+      search: vi.fn(async () => fullTextNoHit),
+    };
+    render(<App corpusSearchClient={corpusSearchClient} />);
+
+    const card = (await screen.findByRole("heading", {
+      name: "王景玉",
+      level: 2,
+    })).closest("article") as HTMLElement;
+    fireEvent.click(within(card).getByRole("button", { name: "收藏" }));
+    fireEvent.click(within(card).getByRole("button", { name: "加入对照" }));
+    expect(screen.getByRole("button", { name: "已收藏" })).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "展开对照" }));
+
+    expect(await screen.findByRole("heading", { name: "王景玉", level: 2 })).toBeTruthy();
+    expect(screen.getByText("候选景玉的语义。")).toBeTruthy();
+    expect(screen.getByText("原文连续成词")).toBeTruthy();
+    expect(screen.queryByText("文化分")).toBeNull();
   });
 
   it("先展示全文命中，再用精选片段补充 A–F 证据", async () => {

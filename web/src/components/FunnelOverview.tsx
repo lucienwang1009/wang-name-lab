@@ -3,12 +3,11 @@ import { SectionHeader } from "./AppShell";
 
 interface FunnelOverviewProps {
   counts: {
-    discovery: number;
-    gradeA: number;
-    gradeB: number;
+    recommendable: number;
+    searchOnly: number;
+    calibration: number;
     fragments: number;
-    corpora: number;
-    passing: number;
+    books: number;
     favorites: number;
     compare: number;
     scenarios: number;
@@ -20,9 +19,9 @@ const steps = [
   {
     id: "explore" as const,
     number: "01",
-    title: "典籍寻名",
-    tag: "发现与精审",
-    description: "直接从古籍原句取字，混合全文发现与人工精选，反复换一批。",
+    title: "个性寻名",
+    tag: "偏好校准与推荐",
+    description: "先做 8 组直觉选择，再将个人适配、名字多样性与古籍证据合并展示。",
   },
   {
     id: "allusions" as const,
@@ -36,14 +35,14 @@ const steps = [
     number: "03",
     title: "家庭对照",
     tag: "决策层",
-    description: "把收藏压缩到四名，逐项比较出处、女性感、家族呼应与风险。",
+    description: "把收藏压缩到四名，逐项比较证据、语义、声韵、家族呼应与风险。",
   },
   {
     id: "birth" as const,
     number: "04",
     title: "出生后复排",
     tag: "校准层",
-    description: "出生前不算喜用神；出生后民俗评分权重最高仅 25%。",
+    description: "出生前不算喜用神；出生后传统命理只作可解释的弱信号，权重最高 10%。",
   },
 ];
 
@@ -53,7 +52,7 @@ export function FunnelOverview({ counts, onNavigate }: FunnelOverviewProps) {
       <SectionHeader
         eyebrow="WANG FAMILY · NAME ARCHIVE 2026"
         title="为一个名字，留下完整来路"
-        description="从古籍原文开始发现名字，再反复换一批、收藏、核验和比较。当前偏好：女孩、王姓、古典但不熟滥，可用隔字、首尾或尾首取法。"
+        description="先用少量对比学习你们真正的取舍，再从通过语义审核的古籍候选中推荐；其余全文发现只用于搜索，不冒充精选名字。"
         aside={
           <div className="status-stamp">
             <span>当前阶段</span>
@@ -83,7 +82,7 @@ export function FunnelOverview({ counts, onNavigate }: FunnelOverviewProps) {
                 type="button"
                 onClick={() => onNavigate("explore")}
               >
-                开始典籍寻名
+                开始个性寻名
               </button>
               <button
                 className="button button-quiet"
@@ -107,31 +106,31 @@ export function FunnelOverview({ counts, onNavigate }: FunnelOverviewProps) {
           <small>《诗经·大雅·烝民》</small>
           <div className="preview-rule">
             <span>可再陌生一点</span>
-            <span>仍需明确女性感</span>
+            <span>仍需声韵自然可用</span>
           </div>
         </div>
       </div>
 
       <div className="metric-strip" aria-label="候选规模">
         <div>
-          <strong>{counts.discovery.toLocaleString("zh-CN")}</strong>
-          <span>典籍寻名候选</span>
+          <strong>{counts.recommendable.toLocaleString("zh-CN")}</strong>
+          <span>已语义审核可推荐</span>
         </div>
         <div>
-          <strong>{counts.gradeA}</strong>
-          <span>A 级 · 原文连续</span>
+          <strong>{counts.searchOnly.toLocaleString("zh-CN")}</strong>
+          <span>全文发现 · 仅供搜索</span>
         </div>
         <div>
-          <strong>{counts.gradeB}</strong>
-          <span>B 级 · 同句或相邻</span>
+          <strong>{counts.calibration} / 8</strong>
+          <span>家庭偏好校准</span>
         </div>
         <div>
           <strong>{counts.fragments}</strong>
-          <span>{counts.corpora} 类精选片段</span>
+          <span>精选片段补充</span>
         </div>
         <div>
-          <strong>{counts.passing}</strong>
-          <span>通过硬筛</span>
+          <strong>{counts.books}</strong>
+          <span>部古籍全文可反查</span>
         </div>
         <div>
           <strong>{counts.scenarios}</strong>
@@ -149,9 +148,9 @@ export function FunnelOverview({ counts, onNavigate }: FunnelOverviewProps) {
           {steps.map((step, index) => {
             const amount =
               index === 0
-                ? counts.discovery
-                : index === 1
-                  ? 70
+                ? counts.recommendable
+              : index === 1
+                  ? counts.books
                   : index === 2
                     ? counts.compare
                     : counts.scenarios;

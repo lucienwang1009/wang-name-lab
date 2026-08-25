@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { rejectionRules, sourceGradeMap } from "../data/nameSystemData";
 import { rerankCandidate } from "../domain/nameSystem";
 import type { DiscoveryCandidate } from "../domain/discovery";
-import type { CuratedCandidate } from "../domain/types";
+import type { CuratedCandidate, PersonalizedCandidate } from "../domain/types";
 import {
   exportProfile,
   type BirthDetails,
@@ -17,13 +17,43 @@ type RankedCandidate = CuratedCandidate & {
   culturalScore: number;
   rank: number | null;
 };
-type ComparisonCandidate = RankedCandidate | DiscoveryCandidate;
+type ComparisonCandidate =
+  | RankedCandidate
+  | DiscoveryCandidate
+  | PersonalizedCandidate;
 
 function isRankedCandidate(
   candidate: ComparisonCandidate,
 ): candidate is RankedCandidate {
   return "culturalScore" in candidate;
 }
+
+function isPersonalizedCandidate(
+  candidate: ComparisonCandidate,
+): candidate is PersonalizedCandidate {
+  return "fullName" in candidate;
+}
+
+const comparisonName = (candidate: ComparisonCandidate): string =>
+  isPersonalizedCandidate(candidate) ? candidate.fullName : candidate.name;
+
+const comparisonPinyin = (candidate: ComparisonCandidate): string =>
+  isPersonalizedCandidate(candidate)
+    ? candidate.quality.pinyin
+    : candidate.pinyin ?? "待人工复核";
+
+const comparisonTones = (candidate: ComparisonCandidate): string =>
+  isPersonalizedCandidate(candidate)
+    ? candidate.quality.tones
+    : candidate.tones ?? "待补";
+
+const evidenceRelationLabel = (candidate: PersonalizedCandidate): string =>
+  ({
+    "exact-phrase": "原文连续成词",
+    "clause-related": "同句关联取字",
+    "passage-related": "同篇语境取字",
+    "cultural-recomposition": "透明文化重组",
+  })[candidate.evidence.relation];
 
 export function CompareDrawer({
   names,
@@ -67,54 +97,83 @@ const compareRows: Array<{
   label: string;
   value: (candidate: ComparisonCandidate) => string;
 }> = [
-  { label: "读音", value: (candidate) => candidate.pinyin ?? "待人工复核" },
-  { label: "声调", value: (candidate) => candidate.tones ?? "待补" },
-  { label: "出处", value: (candidate) => candidate.source },
-  { label: "取字", value: (candidate) => candidate.extraction },
+  { label: "读音", value: comparisonPinyin },
+  { label: "声调", value: comparisonTones },
   {
-    label: "文化分",
+    label: "核心含义",
     value: (candidate) =>
-      isRankedCandidate(candidate)
-        ? candidate.culturalScore.toFixed(1)
-        : "全文发现 · 未精审",
+      isPersonalizedCandidate(candidate)
+        ? candidate.quality.meaning
+        : candidate.familyNote || "待人工概括",
   },
   {
-    label: "女性感",
+    label: "典据关系",
     value: (candidate) =>
-      (isRankedCandidate(candidate)
-        ? candidate.scores.feminine
-        : candidate.feminine
-      ).toFixed(1),
+      isPersonalizedCandidate(candidate)
+        ? evidenceRelationLabel(candidate)
+        : isRankedCandidate(candidate)
+          ? `${candidate.grade} 级精选证据`
+          : `${candidate.grade} 级全文发现`,
   },
   {
-    label: "家族线",
+    label: "出处",
     value: (candidate) =>
-      (isRankedCandidate(candidate)
-        ? candidate.scores.family
-        : candidate.familyScore
-      ).toFixed(1),
+      isPersonalizedCandidate(candidate)
+        ? candidate.evidence.citations
+            .map((citation) => `${citation.bookTitle}·${citation.workTitle}`)
+            .join("；")
+        : candidate.source,
   },
   {
-    label: "稀有度",
+    label: "取字",
     value: (candidate) =>
-      (isRankedCandidate(candidate)
-        ? candidate.scores.rarity
-        : candidate.rarity
-      ).toFixed(1),
+      isPersonalizedCandidate(candidate)
+        ? candidate.evidence.extraction
+        : candidate.extraction,
   },
-  { label: "家族呼应", value: (candidate) => candidate.familyNote ?? "待人工判断" },
-  { label: "主要风险", value: (candidate) => candidate.risk ?? "待人工判断" },
+  {
+    label: "使用权衡",
+    value: (candidate) =>
+      isPersonalizedCandidate(candidate)
+        ? `${candidate.quality.pronunciationNote} ${candidate.quality.usabilityNote}`
+        : candidate.risk || "待人工判断",
+  },
+  {
+    label: "少见度说明",
+    value: (candidate) =>
+      isPersonalizedCandidate(candidate)
+        ? candidate.quality.uncommonnessNote
+        : "待实名数据复核",
+  },
+  {
+    label: "家族呼应",
+    value: (candidate) =>
+      isPersonalizedCandidate(candidate)
+        ? candidate.features.familyMeaning >= 0.65
+          ? "有较明确的家族意义线索"
+          : "不以家族线为主"
+        : candidate.familyNote ?? "待人工判断",
+  },
+  {
+    label: "主要风险",
+    value: (candidate) =>
+      isPersonalizedCandidate(candidate)
+        ? candidate.risks.map((risk) => risk.summary).join("；") || "暂无硬性风险"
+        : candidate.risk ?? "待人工判断",
+  },
 ];
 
 export function CompareTable({
   candidates,
   discoveryCandidates,
+  personalizedCandidates,
   profile,
   onRemove,
   onNavigate,
 }: {
   candidates: readonly RankedCandidate[];
   discoveryCandidates: readonly DiscoveryCandidate[];
+  personalizedCandidates?: readonly PersonalizedCandidate[];
   profile: LocalProfile;
   onRemove: (name: string) => void;
   onNavigate: (section: SectionId) => void;
@@ -122,6 +181,7 @@ export function CompareTable({
   const selected = profile.compareNames
     .map(
       (name) =>
+        personalizedCandidates?.find((candidate) => candidate.fullName === name) ??
         candidates.find((candidate) => candidate.name === name) ??
         discoveryCandidates.find((candidate) => candidate.name === name),
     )
@@ -145,24 +205,24 @@ export function CompareTable({
         <div className="empty-state spacious">
           <span className="empty-seal">待</span>
           <b>对照栏还是空的</b>
-          <p>从“典籍寻名”加入 2–4 个名字，再回来横向比较。</p>
+          <p>从“个性寻名”加入 2–4 个名字，再回来横向比较。</p>
           <button
             className="button button-primary"
             type="button"
             onClick={() => onNavigate("explore")}
           >
-            去典籍寻名
+            去个性寻名
           </button>
         </div>
       ) : (
         <>
           <div className="compare-nameplates">
             {selected.map((candidate) => (
-              <article key={candidate.name}>
-                <span>{isRankedCandidate(candidate) ? `第 ${candidate.rank} 名` : "全文发现"}</span>
-                <h2>{candidate.name}</h2>
-                <p>{candidate.pinyin ?? "读音待人工复核"}</p>
-                <button type="button" onClick={() => onRemove(candidate.name)}>
+              <article key={comparisonName(candidate)}>
+                <span>{isPersonalizedCandidate(candidate) ? "语义审核候选" : isRankedCandidate(candidate) ? `第 ${candidate.rank} 名` : "全文发现"}</span>
+                <h2>{comparisonName(candidate)}</h2>
+                <p>{comparisonPinyin(candidate)}</p>
+                <button type="button" onClick={() => onRemove(comparisonName(candidate))}>
                   移出
                 </button>
               </article>
@@ -174,8 +234,8 @@ export function CompareTable({
                 <tr>
                   <th scope="col">观察项</th>
                   {selected.map((candidate) => (
-                    <th key={candidate.name} scope="col">
-                      {candidate.name}
+                    <th key={comparisonName(candidate)} scope="col">
+                      {comparisonName(candidate)}
                     </th>
                   ))}
                 </tr>
@@ -185,15 +245,15 @@ export function CompareTable({
                   <tr key={row.label}>
                     <th scope="row">{row.label}</th>
                     {selected.map((candidate) => (
-                      <td key={candidate.name}>{row.value(candidate)}</td>
+                      <td key={comparisonName(candidate)}>{row.value(candidate)}</td>
                     ))}
                   </tr>
                 ))}
                 <tr>
                   <th scope="row">家庭备注</th>
                   {selected.map((candidate) => (
-                    <td key={candidate.name}>
-                      {profile.notes[candidate.name] || "尚未记录"}
+                    <td key={comparisonName(candidate)}>
+                      {profile.notes[comparisonName(candidate)] || "尚未记录"}
                     </td>
                   ))}
                 </tr>

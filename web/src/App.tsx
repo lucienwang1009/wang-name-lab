@@ -4,6 +4,7 @@ import {
   characterDictionary,
   classicalFragments,
   curatedCandidates,
+  reviewedSeedMetadata,
 } from "./data/nameSystemData";
 import {
   buildBirthScenarios,
@@ -15,8 +16,8 @@ import { useLocalProfile } from "./state/useLocalProfile";
 import { AppShell, type SectionId } from "./components/AppShell";
 import {
   AllusionLibrary,
-  ClassicsNameDiscovery,
 } from "./components/Catalogues";
+import { PersonalizedNameDiscovery } from "./components/PersonalizedNameDiscovery";
 import {
   BirthProfile,
   CompareDrawer,
@@ -28,7 +29,7 @@ import {
   corpusSearcher,
   type CorpusSearchClient,
 } from "./corpus/searchCorpus";
-import type { CorpusDiscoveryCandidate } from "./corpus/types";
+import type { PersonalizedCandidate } from "./domain/types";
 
 const sections = new Set<SectionId>([
   "overview",
@@ -62,11 +63,12 @@ export default function App({
     sectionFromHash(),
   );
   const [lookupName, setLookupName] = useState(() => nameFromHash());
-  const [corpusDiscovery, setCorpusDiscovery] = useState<
-    CorpusDiscoveryCandidate[]
+  const [recommendationCandidates, setRecommendationCandidates] = useState<
+    PersonalizedCandidate[]
   >([]);
   const [discoveryLoading, setDiscoveryLoading] = useState(true);
   const [discoveryError, setDiscoveryError] = useState<string>();
+  const [recommendationLoadAttempt, setRecommendationLoadAttempt] = useState(0);
   const local = useLocalProfile();
 
   const allusionCandidates = useMemo(
@@ -81,9 +83,9 @@ export default function App({
     () => rankCuratedCandidates(curatedCandidates),
     [],
   );
-  const discoveryCandidates = useMemo(
-    () => mergeDiscoveryCandidates(corpusDiscovery, curatedCandidates),
-    [corpusDiscovery],
+  const legacyDiscoveryCandidates = useMemo(
+    () => mergeDiscoveryCandidates([], curatedCandidates),
+    [],
   );
   const birthScenarios = useMemo(
     () => buildBirthScenarios("2026-08-20", "2026-08-30"),
@@ -108,12 +110,12 @@ export default function App({
     void corpusSearchClient
       .discover()
       .then((candidates) => {
-        if (active) setCorpusDiscovery(candidates);
+        if (active) setRecommendationCandidates(candidates);
       })
       .catch((error: unknown) => {
         if (active) {
           setDiscoveryError(
-            error instanceof Error ? error.message : "典籍寻名池加载失败。",
+            error instanceof Error ? error.message : "个性化推荐池加载失败。",
           );
         }
       })
@@ -123,7 +125,7 @@ export default function App({
     return () => {
       active = false;
     };
-  }, [corpusSearchClient, currentSection]);
+  }, [corpusSearchClient, currentSection, recommendationLoadAttempt]);
 
   const navigate = (section: SectionId) => {
     if (currentSection === section) {
@@ -158,16 +160,11 @@ export default function App({
       {currentSection === "overview" ? (
         <FunnelOverview
           counts={{
-            discovery: 1200,
-            gradeA: 900,
-            gradeB: 300,
+            recommendable: Object.keys(reviewedSeedMetadata).length,
+            searchOnly: 1176,
+            calibration: local.profile.preference.calibrationProgress,
             fragments: classicalFragments.length,
-            corpora: new Set(
-              classicalFragments.map((fragment) => fragment.corpus),
-            ).size,
-            passing: rankedCandidates.filter(
-              (candidate) => candidate.gate === "通过",
-            ).length,
+            books: 70,
             favorites: local.profile.favoriteNames.length,
             compare: local.profile.compareNames.length,
             scenarios: birthScenarios.length,
@@ -176,12 +173,16 @@ export default function App({
         />
       ) : null}
       {currentSection === "explore" ? (
-        <ClassicsNameDiscovery
-          candidates={discoveryCandidates}
+        <PersonalizedNameDiscovery
+          candidates={recommendationCandidates}
           loading={discoveryLoading}
           error={discoveryError}
+          preference={local.profile.preference}
           profile={curatedProfile}
+          onPreferenceChange={local.replacePreference}
+          onExposure={local.recordExposure}
           onLookup={openLookup}
+          onRetry={() => setRecommendationLoadAttempt((attempt) => attempt + 1)}
         />
       ) : null}
       {currentSection === "allusions" ? (
@@ -195,7 +196,8 @@ export default function App({
       {currentSection === "compare" ? (
         <CompareTable
           candidates={rankedCandidates}
-          discoveryCandidates={discoveryCandidates}
+          discoveryCandidates={legacyDiscoveryCandidates}
+          personalizedCandidates={recommendationCandidates}
           profile={local.profile}
           onRemove={local.toggleCompare}
           onNavigate={navigate}

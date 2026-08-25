@@ -10,6 +10,7 @@ import {
   type LocalProfile,
   type MetaphysicsAssessment,
   type PairwiseChoice,
+  type PreferenceState,
   type PreferenceWeights,
 } from "./storage";
 
@@ -176,6 +177,13 @@ export function useLocalProfile() {
     [updateProfile],
   );
 
+  const replacePreference = useCallback(
+    (preference: PreferenceState) => {
+      updateProfile((current) => ({ ...current, preference }));
+    },
+    [updateProfile],
+  );
+
   const recordPairwiseOutcome = useCallback(
     (leftName: string, rightName: string, choice: PairwiseChoice) => {
       updateProfile((current) => ({
@@ -250,6 +258,7 @@ export function useLocalProfile() {
     updateNote,
     updateAssessment,
     setPreferenceWeights,
+    replacePreference,
     recordPairwiseOutcome,
     recordExplicitFeedback,
     recordExposure,

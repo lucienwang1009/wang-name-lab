@@ -4,9 +4,9 @@ import { buildCorpusIndex } from "./buildIndex";
 import { createCorpusSearcher } from "./searchCorpus";
 import type {
   CorpusBook,
-  CorpusDiscoveryCandidate,
   CorpusPassage,
 } from "./types";
+import type { PersonalizedCandidate } from "../domain/types";
 
 const sourceUrl = "https://example.com/pinned.json";
 const verificationUrl = "https://example.com/verify";
@@ -82,24 +82,54 @@ const books: CorpusBook[] = [
 
 function fixtures(segmentation: "punctuated" | "unpunctuated" = "punctuated") {
   const built = buildCorpusIndex(passages);
-  const discoveryCandidate: CorpusDiscoveryCandidate = {
-    id: "corpus-discovery:令仪",
+  const recommendationCandidate: PersonalizedCandidate = {
+    id: "recommendation:令仪",
+    surname: "王",
     givenName: "令仪",
-    grade: "A",
-    bookId: "book-a",
-    bookTitle: "《甲书》",
-    category: "经",
-    passageId: passages[0].id,
-    workTitle: passages[0].workTitle,
-    chapterTitle: passages[0].chapterTitle,
-    quote: passages[0].text,
-    extraction: "转录字符连续：令仪",
-    sourceUrl,
-    verificationUrl,
-    feminine: 4.5,
-    rarity: 3.5,
-    usability: 4.5,
-    familyScore: 0,
+    fullName: "王令仪",
+    evidence: {
+      relation: "exact-phrase",
+      reviewStatus: "reviewed",
+      extraction: "原文连续成词：令仪",
+      citations: [{
+        id: "citation:令仪",
+        bookId: "book-a",
+        bookTitle: "《甲书》",
+        workTitle: passages[0].workTitle,
+        chapterTitle: passages[0].chapterTitle,
+        quote: passages[0].text,
+        sourceUrl,
+        verificationUrl,
+      }],
+    },
+    features: {
+      classical: 0.9,
+      graceful: 0.9,
+      gentle: 0.7,
+      bright: 0.4,
+      austere: 0.3,
+      modern: 0.1,
+      pronounceable: 0.9,
+      writable: 0.8,
+      recognizable: 0.9,
+      uncommon: 0.7,
+      familyMeaning: 0.2,
+      exactPhrasePreference: 1,
+      recompositionPreference: 0,
+    },
+    quality: {
+      pinyin: "wáng lìng yí",
+      tones: "2-4-2",
+      meaning: "端美的仪度。",
+      semanticExplanation: "原句称赞仪容合度。",
+      pronunciationNote: "声调起伏清楚。",
+      usabilityNote: "字形常见，不易误读。",
+      uncommonnessNote: "有典故感而非当下热名。",
+      primaryStyle: "classical",
+      imageryCategory: "仪范",
+    },
+    eligibility: "recommendable",
+    risks: [],
   };
   const values = new Map<string, unknown>([
     [
@@ -111,8 +141,8 @@ function fixtures(segmentation: "punctuated" | "unpunctuated" = "punctuated") {
         coverageCaveat: "仅测试",
         characterIndex: built.indexPathsByCharacter,
         textShards: built.textShardPaths,
-        discoveryPath: "discovery.json",
-        discoveryCount: 1,
+        recommendationPath: "recommendations-v2.json",
+        recommendationCount: 1,
         books: books.map((book) => ({
           ...book,
           source: book.source ? { ...book.source, segmentation } : undefined,
@@ -121,12 +151,14 @@ function fixtures(segmentation: "punctuated" | "unpunctuated" = "punctuated") {
     ],
     ["/corpus/aliases.json", { schemaVersion: 1, aliases: built.aliases }],
     [
-      "/corpus/discovery.json",
+      "/corpus/recommendations-v2.json",
       {
-        schemaVersion: 1,
+        schemaVersion: 2,
         buildVersion: "fixture-v1",
-        count: 1,
-        candidates: [discoveryCandidate],
+        corpusVersion: "fixture-v1",
+        recommendableCount: 1,
+        searchOnlyCount: 8,
+        candidates: [recommendationCandidate],
       },
     ],
   ]);
@@ -156,7 +188,7 @@ function createFixtureFetcher(
 }
 
 describe("浏览器端古籍全文检索", () => {
-  it("按构建版本加载并缓存典籍寻名池", async () => {
+  it("按构建版本加载并缓存语义审核后的 V2 推荐池", async () => {
     const fetcher = createFixtureFetcher();
     const searcher = createCorpusSearcher({ baseUrl: "/corpus/", fetcher });
 
@@ -164,13 +196,42 @@ describe("浏览器端古籍全文检索", () => {
     const second = await searcher.discover();
 
     expect(first).toHaveLength(1);
-    expect(first[0]).toMatchObject({ givenName: "令仪", grade: "A" });
+    expect(first[0]).toMatchObject({
+      fullName: "王令仪",
+      eligibility: "recommendable",
+      evidence: { reviewStatus: "reviewed" },
+    });
     expect(second).toEqual(first);
     expect(
       fetcher.mock.calls.filter(([input]) =>
-        new URL(input, "https://example.test").pathname.endsWith("/discovery.json"),
+        new URL(input, "https://example.test").pathname.endsWith("/recommendations-v2.json"),
       ),
     ).toHaveLength(1);
+  });
+
+  it("推荐池首次加载失败后可真正重试", async () => {
+    const values = fixtures();
+    let failed = false;
+    const fetcher = vi.fn(async (input: string) => {
+      const path = new URL(input, "https://example.test").pathname;
+      if (path === "/corpus/recommendations-v2.json" && !failed) {
+        failed = true;
+        return { ok: false, status: 503, json: async () => ({}) };
+      }
+      const value = values.get(path);
+      return value === undefined
+        ? { ok: false, status: 404, json: async () => ({}) }
+        : { ok: true, status: 200, json: async () => value };
+    });
+    const searcher = createCorpusSearcher({ baseUrl: "/corpus/", fetcher });
+
+    await expect(searcher.discover()).rejects.toThrow(/503/);
+    await expect(searcher.discover()).resolves.toHaveLength(1);
+    expect(
+      fetcher.mock.calls.filter(([input]) =>
+        new URL(input, "https://example.test").pathname.endsWith("/recommendations-v2.json"),
+      ),
+    ).toHaveLength(2);
   });
 
   it("区分 A–F 六级关系，并如实标出组合与单字旁证", async () => {

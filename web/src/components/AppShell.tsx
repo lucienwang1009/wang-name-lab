@@ -23,7 +23,7 @@ const navigation: Array<{
   shortLabel: string;
 }> = [
   { id: "overview", index: "序", label: "工作台总览", shortLabel: "总览" },
-  { id: "explore", index: "一", label: "典籍寻名", shortLabel: "寻名" },
+  { id: "explore", index: "一", label: "个性寻名", shortLabel: "寻名" },
   { id: "allusions", index: "二", label: "古籍核查", shortLabel: "核查" },
   { id: "compare", index: "三", label: "四名对照", shortLabel: "对照" },
   { id: "birth", index: "四", label: "出生后复排", shortLabel: "复排" },
