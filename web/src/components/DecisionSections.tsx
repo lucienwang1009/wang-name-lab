@@ -346,7 +346,7 @@ export function BirthProfile({
         aside={
           <div className={`birth-status ${born ? "is-born" : ""}`}>
             <span>{profile.birthStatus}</span>
-            <strong>{born ? "可录入实际信息" : "命理权重自动为 0"}</strong>
+            <strong>{born ? "可录入实际信息" : "传统权重自动为 0"}</strong>
           </div>
         }
       />
@@ -627,9 +627,11 @@ function downloadProfile(profile: LocalProfile) {
 
 export function Methodology({
   profile,
+  resetCalibration,
   clearProfile,
 }: {
   profile: LocalProfile;
+  resetCalibration: () => void;
   clearProfile: () => void;
 }) {
   const handleClear = () => {
@@ -752,6 +754,13 @@ export function Methodology({
         </div>
         <div className="vault-actions">
           <button
+            className="button button-quiet"
+            type="button"
+            onClick={resetCalibration}
+          >
+            重新校准偏好
+          </button>
+          <button
             className="button button-primary"
             type="button"
             onClick={() => downloadProfile(profile)}
@@ -766,7 +775,7 @@ export function Methodology({
 
       <footer className="method-footer">
         <p>
-          版本 0.1 · 为王姓女孩、2026 年 8 月预产窗口建立
+          版本 0.2 · 为王姓女孩、2026 年 8 月预产窗口建立
         </p>
         <p>“命名是一种祝愿，不是一份命运判决。”</p>
       </footer>

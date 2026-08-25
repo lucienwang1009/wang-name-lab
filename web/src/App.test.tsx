@@ -191,6 +191,27 @@ describe("取名实验室应用", () => {
     expect(screen.queryByRole("button", { name: "A + B 可靠出处" })).toBeNull();
   });
 
+  it("V2 推荐资源失败后可从错误页重试", async () => {
+    window.location.hash = "#explore";
+    let attempts = 0;
+    const corpusSearchClient: CorpusSearchClient = {
+      discover: vi.fn(async () => {
+        attempts += 1;
+        if (attempts === 1) throw new Error("测试资源中断。");
+        return recommendationFixtures;
+      }),
+      search: idleClient.search,
+    };
+    render(<App corpusSearchClient={corpusSearchClient} />);
+
+    expect(await screen.findByRole("heading", { name: "个性寻名暂时无法加载" })).toBeTruthy();
+    expect(screen.getByText("测试资源中断。")).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "重新加载推荐" }));
+
+    expect(await screen.findByRole("heading", { name: "先用 8 组选择认识你们" })).toBeTruthy();
+    expect(corpusSearchClient.discover).toHaveBeenCalledTimes(2);
+  });
+
   it("从候选卡直接带名字进入完整典籍核查", async () => {
     window.location.hash = "#explore";
     completeCalibration();
@@ -260,7 +281,7 @@ describe("取名实验室应用", () => {
     };
     render(<App corpusSearchClient={corpusSearchClient} />);
 
-    expect(screen.getByText("命理权重自动为 0")).toBeTruthy();
+    expect(screen.getByText("传统权重自动为 0")).toBeTruthy();
     expect(screen.getByText(/2026 年 8 月 20–30 日/)).toBeTruthy();
     expect(screen.getByText("已有参考预排（不参与排序）")).toBeTruthy();
     expect(screen.getByDisplayValue(/丙午 丙申 甲子 丁卯/)).toBeTruthy();

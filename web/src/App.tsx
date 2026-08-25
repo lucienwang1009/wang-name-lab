@@ -205,7 +205,11 @@ export default function App({
         />
       ) : null}
       {currentSection === "method" ? (
-        <Methodology profile={local.profile} clearProfile={local.clearProfile} />
+        <Methodology
+          profile={local.profile}
+          resetCalibration={local.resetCalibration}
+          clearProfile={local.clearProfile}
+        />
       ) : null}
 
       {currentSection !== "compare" ? (
