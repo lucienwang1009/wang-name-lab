@@ -207,15 +207,18 @@ export interface BirthScenario {
   status: "仅情景占位，不计算喜用神";
 }
 
-export interface RerankOptions {
+export interface TraditionalReferenceOptions {
   birthStatus: BirthStatus;
   metaphysicsWeight: number;
   metaphysicsScore?: number;
 }
 
-export interface RerankResult {
-  culturalScore: number;
+export interface TraditionalReferenceResult {
   effectiveMetaphysicsWeight: number;
-  finalScore: number;
-  status: "硬筛淘汰" | "待出生后录入" | "待命理评分" | "已复排";
+  adjustedPersonalFit: number | null;
+  status:
+    | "硬性淘汰"
+    | "待出生后录入"
+    | "待传统参考说明"
+    | "已记录传统参考";
 }

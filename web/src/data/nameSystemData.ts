@@ -553,19 +553,12 @@ export const reviewedSeedMetadata: Record<string, ReviewedSeedContent> = {
   静姝: { meaning: "娴静而美好。", semanticExplanation: "由静女其姝取静与姝，两字在同句中共同描写人物。", primaryStyle: "gentle", imageryCategory: "人物德容" },
 };
 
-export const sourceGradeMap = [
-  { grade: "A" as const, definition: "原文连续出现", sourceScore: 5 },
-  { grade: "B" as const, definition: "同一句隔字、首尾或尾首", sourceScore: 4.5 },
-  { grade: "C" as const, definition: "同篇相邻句、人物和意象一致", sourceScore: 3.5 },
-  { grade: "D" as const, definition: "古典语义重组，不宣称原文成词", sourceScore: 2 },
-];
-
 export const rejectionRules = [
-  { code: "G1", category: "女性感", trigger: "脱离典故后整体听感明显中性或男性化。", handling: "硬淘汰" },
+  { code: "G1", category: "规范用字", trigger: "存在非通用规范汉字、登记或主流输入系统不支持的风险。", handling: "硬淘汰" },
   { code: "G2", category: "原典语境", trigger: "墓葬、死亡、兵器、强烈哀悼、讽刺或贬义语境。", handling: "硬淘汰" },
   { code: "G3", category: "口语谐音", trigger: "与姓王连读形成稳定而明显的负面或玩笑谐音。", handling: "硬淘汰" },
   { code: "G4", category: "姓名碰撞", trigger: "完整姓名被显著历史人物、公众人物或强势虚构角色占用。", handling: "硬淘汰" },
   { code: "G5", category: "典故真实性", trigger: "不能提供原文、篇目、链接或合理取字路径。", handling: "硬淘汰" },
-  { code: "G6", category: "录入识读", trigger: "常用系统难以录入，或读写成本超过家庭接受度。", handling: "可调硬筛" },
-  { code: "G7", category: "偏好冲突", trigger: "组合等同于常见名，明显违背“不普通”的核心偏好。", handling: "降级/淘汰" },
+  { code: "G6", category: "读写成本", trigger: "多音、误读、书写或输入成本明显超过家庭可接受范围。", handling: "可调硬筛" },
+  { code: "G7", category: "语义完整", trigger: "只因字符相邻就组合，无法说明完整名字的语义或关系。", handling: "降为仅搜索" },
 ];

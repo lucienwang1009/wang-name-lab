@@ -3,17 +3,15 @@ import { describe, expect, it } from "vitest";
 import {
   characterDictionary,
   classicalFragments,
-  curatedCandidates,
   generationCharacters,
 } from "../data/nameSystemData";
 import {
+  applyTraditionalReference,
   buildBirthScenarios,
-  culturalScore,
   diversifyRawCandidates,
   generateAllusionCandidates,
   generateRawPool,
   normalizeGivenName,
-  rerankCandidate,
   searchClassicalEvidence,
 } from "./nameSystem";
 
@@ -82,36 +80,59 @@ describe("取名领域核心", () => {
     ).toBe(true);
   });
 
-  it("硬筛失败时文化分归零", () => {
-    const rejected = curatedCandidates.find((item) => item.gate === "不通过");
-    expect(rejected).toBeDefined();
-    expect(culturalScore(rejected!)).toBe(0);
-  });
-
-  it("出生前命理权重强制归零，出生后才允许参与", () => {
-    const candidate = curatedCandidates[0]!;
-    const culture = culturalScore(candidate);
-
+  it("出生前传统参考权重强制归零", () => {
     expect(
-      rerankCandidate(candidate, {
+      applyTraditionalReference(0.72, "recommendable", {
         birthStatus: "未出生",
-        metaphysicsWeight: 0.15,
+        metaphysicsWeight: 0.9,
         metaphysicsScore: 100,
       }),
     ).toEqual({
-      culturalScore: culture,
       effectiveMetaphysicsWeight: 0,
-      finalScore: culture,
+      adjustedPersonalFit: 0.72,
       status: "待出生后录入",
     });
+  });
 
+  it("出生后传统参考最高只占 10%", () => {
     expect(
-      rerankCandidate(candidate, {
+      applyTraditionalReference(0.72, "recommendable", {
         birthStatus: "已出生",
-        metaphysicsWeight: 0.15,
+        metaphysicsWeight: 0.9,
         metaphysicsScore: 100,
-      }).effectiveMetaphysicsWeight,
-    ).toBe(0.15);
+      }),
+    ).toEqual({
+      effectiveMetaphysicsWeight: 0.1,
+      adjustedPersonalFit: 0.748,
+      status: "已记录传统参考",
+    });
+  });
+
+  it("硬性淘汰不能被传统评分恢复", () => {
+    expect(
+      applyTraditionalReference(0.95, "blocked", {
+        birthStatus: "已出生",
+        metaphysicsWeight: 0.1,
+        metaphysicsScore: 100,
+      }),
+    ).toEqual({
+      effectiveMetaphysicsWeight: 0,
+      adjustedPersonalFit: null,
+      status: "硬性淘汰",
+    });
+  });
+
+  it("没有评分与理由时不假装已完成传统复排", () => {
+    expect(
+      applyTraditionalReference(0.72, "recommendable", {
+        birthStatus: "已出生",
+        metaphysicsWeight: 0.1,
+      }),
+    ).toEqual({
+      effectiveMetaphysicsWeight: 0.1,
+      adjustedPersonalFit: 0.72,
+      status: "待传统参考说明",
+    });
   });
 
   it("按名字分级检索原典证据，不把单字旁证冒充完整典故", () => {

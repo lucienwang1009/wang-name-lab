@@ -216,7 +216,8 @@ export function createDefaultProfile(): LocalProfile {
       solarTimePolicy: "出生后决定",
       fourPillars: "",
       useDirection: "",
-      metaphysicsNote: "",
+      metaphysicsNote:
+        "家庭已提供参考预排：女宝宝、长春，假设 2026-08-18 北京时间约 06:30，预排四柱为“丙午 丙申 甲子 丁卯”，起名参考倾向木、水，不机械补土或继续强化火。此内容仅是传统民俗预排，在实际出生时间与地点确认前不参与排序。",
     },
     preference: createDefaultPreference(),
   };
@@ -268,7 +269,10 @@ export function parseProfile(raw: string | null): LocalProfile {
           : defaults.birth.solarTimePolicy,
         fourPillars: stringValue(birth.fourPillars),
         useDirection: stringValue(birth.useDirection),
-        metaphysicsNote: stringValue(birth.metaphysicsNote),
+        metaphysicsNote: stringValue(
+          birth.metaphysicsNote,
+          defaults.birth.metaphysicsNote,
+        ) || defaults.birth.metaphysicsNote,
       },
       preference: parsePreference(parsed.preference),
     };

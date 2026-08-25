@@ -33,6 +33,8 @@ describe("本地家庭档案", () => {
     expect(profile.version).toBe(2);
     expect(profile.metaphysicsWeight).toBe(0.1);
     expect(profile.compareNames).toEqual(["甲", "乙", "丙", "丁"]);
+    expect(profile.birth.metaphysicsNote).toMatch(/丙午 丙申 甲子 丁卯/);
+    expect(profile.birth.metaphysicsNote).toMatch(/实际出生时间与地点确认前不参与排序/);
   });
 
   it("从旧版迁移收藏、排除、对比、备注和出生资料，但丢弃旧评分与批次", () => {

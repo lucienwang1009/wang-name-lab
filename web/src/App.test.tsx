@@ -238,6 +238,42 @@ describe("取名实验室应用", () => {
     expect(screen.queryByText("文化分")).toBeNull();
   });
 
+  it("方法页分开四层判断，不再展示旧文化总分", () => {
+    window.location.hash = "#method";
+    render(<App corpusSearchClient={idleClient} />);
+
+    expect(screen.getByRole("heading", { name: "典籍证据" })).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "名字质量" })).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "个人适配" })).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "传统参考边界" })).toBeTruthy();
+    expect(screen.getByText(/70 部古籍可以广泛发现/)).toBeTruthy();
+    expect(screen.queryByText("文化评分")).toBeNull();
+    expect(screen.queryByText(/25%.*女性感/)).toBeNull();
+  });
+
+  it("出生前权重为零，出生后传统参考上限为 10%", async () => {
+    window.location.hash = "#birth";
+    const candidate = recommendationCandidate("景玉");
+    const corpusSearchClient: CorpusSearchClient = {
+      discover: vi.fn(async () => [candidate]),
+      search: vi.fn(async () => fullTextNoHit),
+    };
+    render(<App corpusSearchClient={corpusSearchClient} />);
+
+    expect(screen.getByText("命理权重自动为 0")).toBeTruthy();
+    expect(screen.getByText(/2026 年 8 月 20–30 日/)).toBeTruthy();
+    expect(screen.getByText("已有参考预排（不参与排序）")).toBeTruthy();
+    expect(screen.getByDisplayValue(/丙午 丙申 甲子 丁卯/)).toBeTruthy();
+    expect(await screen.findByText("王景玉")).toBeTruthy();
+    expect(screen.queryByText("文化分")).toBeNull();
+    expect(screen.queryByText("最终分")).toBeNull();
+
+    fireEvent.click(screen.getByRole("button", { name: "已出生" }));
+    const slider = screen.getByRole("slider");
+    expect(slider.getAttribute("max")).toBe("0.1");
+    expect(screen.getByText(/0–10%/)).toBeTruthy();
+  });
+
   it("先展示全文命中，再用精选片段补充 A–F 证据", async () => {
     window.location.hash = "#allusions";
     let resolveFirst: ((result: CorpusSearchResult) => void) | undefined;

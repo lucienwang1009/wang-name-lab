@@ -5,20 +5,11 @@ import type {
   ClassicalEvidenceCitation,
   ClassicalEvidenceMatch,
   ClassicalFragment,
-  CuratedCandidate,
   RawNameCandidate,
-  RerankOptions,
-  RerankResult,
+  RecommendationEligibility,
+  TraditionalReferenceOptions,
+  TraditionalReferenceResult,
 } from "./types";
-
-export const culturalWeights = {
-  feminine: 5,
-  source: 4,
-  family: 3,
-  rarity: 3,
-  phonology: 3,
-  usability: 2,
-} as const;
 
 const round = (value: number, digits = 1): number => {
   const factor = 10 ** digits;
@@ -446,87 +437,45 @@ export function searchClassicalEvidence(
   );
 }
 
-export function culturalScore(candidate: CuratedCandidate): number {
-  if (candidate.gate !== "通过") return 0;
-  const { scores } = candidate;
-  return round(
-    scores.feminine * culturalWeights.feminine +
-      scores.source * culturalWeights.source +
-      scores.family * culturalWeights.family +
-      scores.rarity * culturalWeights.rarity +
-      scores.phonology * culturalWeights.phonology +
-      scores.usability * culturalWeights.usability,
-  );
-}
-
-export function rankCuratedCandidates(
-  candidates: readonly CuratedCandidate[],
-): Array<CuratedCandidate & { culturalScore: number; rank: number | null }> {
-  const scores = candidates.map((candidate) => culturalScore(candidate));
-  const passingScores = scores
-    .filter((score) => score > 0)
-    .sort((left, right) => right - left);
-
-  const ranked: Array<
-    CuratedCandidate & { culturalScore: number; rank: number | null }
-  > = candidates.map((candidate, index) => {
-      const score = scores[index] ?? 0;
-      return {
-        ...candidate,
-        culturalScore: score,
-        rank: score === 0 ? null : passingScores.findIndex((item) => item === score) + 1,
-      };
-    });
-
-  return ranked.sort((left, right) => {
-    if (left.rank === null && right.rank === null) {
-      return left.name.localeCompare(right.name);
-    }
-    if (left.rank === null) return 1;
-    if (right.rank === null) return -1;
-    return left.rank - right.rank || left.name.localeCompare(right.name);
-  });
-}
-
-export function rerankCandidate(
-  candidate: CuratedCandidate,
-  options: RerankOptions,
-): RerankResult {
-  const baseScore = culturalScore(candidate);
-  if (baseScore === 0) {
+export function applyTraditionalReference(
+  fit: number,
+  eligibility: RecommendationEligibility,
+  options: TraditionalReferenceOptions,
+): TraditionalReferenceResult {
+  if (eligibility === "blocked") {
     return {
-      culturalScore: 0,
       effectiveMetaphysicsWeight: 0,
-      finalScore: 0,
-      status: "硬筛淘汰",
+      adjustedPersonalFit: null,
+      status: "硬性淘汰",
     };
   }
 
+  const personalFit = clamp(fit, 0, 1);
   if (options.birthStatus === "未出生") {
     return {
-      culturalScore: baseScore,
       effectiveMetaphysicsWeight: 0,
-      finalScore: baseScore,
+      adjustedPersonalFit: personalFit,
       status: "待出生后录入",
     };
   }
 
-  const weight = clamp(options.metaphysicsWeight, 0, 0.25);
+  const weight = clamp(options.metaphysicsWeight, 0, 0.1);
   if (options.metaphysicsScore === undefined) {
     return {
-      culturalScore: baseScore,
       effectiveMetaphysicsWeight: weight,
-      finalScore: baseScore,
-      status: "待命理评分",
+      adjustedPersonalFit: personalFit,
+      status: "待传统参考说明",
     };
   }
 
-  const metaphysicsScore = clamp(options.metaphysicsScore, 0, 100);
+  const traditionalFit = clamp(options.metaphysicsScore, 0, 100) / 100;
   return {
-    culturalScore: baseScore,
     effectiveMetaphysicsWeight: weight,
-    finalScore: round(baseScore * (1 - weight) + metaphysicsScore * weight),
-    status: "已复排",
+    adjustedPersonalFit: round(
+      personalFit * (1 - weight) + traditionalFit * weight,
+      3,
+    ),
+    status: "已记录传统参考",
   };
 }
 

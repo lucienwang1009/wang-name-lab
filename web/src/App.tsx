@@ -3,15 +3,12 @@ import { useEffect, useMemo, useState } from "react";
 import {
   characterDictionary,
   classicalFragments,
-  curatedCandidates,
   reviewedSeedMetadata,
 } from "./data/nameSystemData";
 import {
   buildBirthScenarios,
   generateAllusionCandidates,
-  rankCuratedCandidates,
 } from "./domain/nameSystem";
-import { mergeDiscoveryCandidates } from "./domain/discovery";
 import { useLocalProfile } from "./state/useLocalProfile";
 import { AppShell, type SectionId } from "./components/AppShell";
 import {
@@ -79,14 +76,6 @@ export default function App({
       ),
     [],
   );
-  const rankedCandidates = useMemo(
-    () => rankCuratedCandidates(curatedCandidates),
-    [],
-  );
-  const legacyDiscoveryCandidates = useMemo(
-    () => mergeDiscoveryCandidates([], curatedCandidates),
-    [],
-  );
   const birthScenarios = useMemo(
     () => buildBirthScenarios("2026-08-20", "2026-08-30"),
     [],
@@ -103,7 +92,11 @@ export default function App({
   }, []);
 
   useEffect(() => {
-    if (currentSection !== "explore" && currentSection !== "compare") return;
+    if (
+      currentSection !== "explore" &&
+      currentSection !== "compare" &&
+      currentSection !== "birth"
+    ) return;
     let active = true;
     setDiscoveryLoading(true);
     setDiscoveryError(undefined);
@@ -195,9 +188,7 @@ export default function App({
       ) : null}
       {currentSection === "compare" ? (
         <CompareTable
-          candidates={rankedCandidates}
-          discoveryCandidates={legacyDiscoveryCandidates}
-          personalizedCandidates={recommendationCandidates}
+          candidates={recommendationCandidates}
           profile={local.profile}
           onRemove={local.toggleCompare}
           onNavigate={navigate}
@@ -205,7 +196,7 @@ export default function App({
       ) : null}
       {currentSection === "birth" ? (
         <BirthProfile
-          candidates={rankedCandidates}
+          candidates={recommendationCandidates}
           profile={local.profile}
           setBirthStatus={local.setBirthStatus}
           setMetaphysicsWeight={local.setMetaphysicsWeight}
