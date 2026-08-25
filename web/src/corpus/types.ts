@@ -1,3 +1,5 @@
+import type { PersonalizedCandidate } from "../domain/types";
+
 export type CorpusCategory = "经" | "史" | "子" | "集" | "字书";
 export type CorpusIngestionStatus = "planned" | "source-reviewed" | "ready";
 export type CorpusPriority = 1 | 2 | 3;
@@ -60,6 +62,15 @@ export interface CorpusDiscoveryFile {
   buildVersion: string;
   count: number;
   candidates: CorpusDiscoveryCandidate[];
+}
+
+export interface CorpusRecommendationFile {
+  schemaVersion: 2;
+  buildVersion: string;
+  corpusVersion: string;
+  recommendableCount: number;
+  searchOnlyCount: number;
+  candidates: PersonalizedCandidate[];
 }
 
 export interface CorpusBuildIssue {

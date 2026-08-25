@@ -83,6 +83,95 @@ export interface AllusionCandidate {
 
 export type EvidenceMatchGrade = "A" | "B" | "C" | "D" | "E" | "F";
 
+export type EvidenceRelation =
+  | "exact-phrase"
+  | "clause-related"
+  | "passage-related"
+  | "cultural-recomposition";
+
+export type EvidenceReviewStatus = "reviewed" | "automatic";
+export type RecommendationEligibility = "recommendable" | "search-only" | "blocked";
+
+export interface NameFeatureVector {
+  classical: number;
+  graceful: number;
+  gentle: number;
+  bright: number;
+  austere: number;
+  modern: number;
+  pronounceable: number;
+  writable: number;
+  recognizable: number;
+  uncommon: number;
+  familyMeaning: number;
+  exactPhrasePreference: number;
+  recompositionPreference: number;
+}
+
+export type NameStyle =
+  | "classical"
+  | "graceful"
+  | "gentle"
+  | "bright"
+  | "austere"
+  | "modern";
+
+export interface NameQuality {
+  pinyin: string;
+  tones: string;
+  meaning: string;
+  semanticExplanation: string;
+  pronunciationNote: string;
+  usabilityNote: string;
+  uncommonnessNote: string;
+  primaryStyle: NameStyle;
+  imageryCategory: string;
+}
+
+export type NameRiskKind =
+  | "registration"
+  | "source-context"
+  | "pronunciation"
+  | "usability"
+  | "name-collision";
+
+export interface NameRisk {
+  code: string;
+  kind: NameRiskKind;
+  severity: "hard" | "review" | "note";
+  summary: string;
+}
+
+export interface PersonalizedEvidenceCitation {
+  id: string;
+  bookId: string;
+  bookTitle: string;
+  workTitle: string;
+  chapterTitle: string;
+  quote: string;
+  sourceUrl: string;
+  verificationUrl: string;
+}
+
+export interface PersonalizedEvidence {
+  relation: EvidenceRelation;
+  reviewStatus: EvidenceReviewStatus;
+  extraction: string;
+  citations: PersonalizedEvidenceCitation[];
+}
+
+export interface PersonalizedCandidate {
+  id: string;
+  surname: string;
+  givenName: string;
+  fullName: string;
+  evidence: PersonalizedEvidence;
+  features: NameFeatureVector;
+  quality: NameQuality;
+  eligibility: RecommendationEligibility;
+  risks: NameRisk[];
+}
+
 export interface ClassicalEvidenceCitation {
   fragmentId: string;
   matchedChar: string;
