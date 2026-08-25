@@ -21,7 +21,8 @@ const [
   { ingestKanripo },
   { buildCorpusIndex },
   { buildDiscoveryPool },
-  { characterDictionary },
+  { buildRecommendationPool },
+  { characterDictionary, curatedCandidates, reviewedSeedMetadata },
   { chinesePoetryFiles },
   { earlyChineseFiles },
   { kanripoFiles, kanripoDirectSeries },
@@ -33,6 +34,7 @@ const [
   import("../src/corpus/importers/kanripo.ts"),
   import("../src/corpus/buildIndex.ts"),
   import("../src/corpus/buildDiscoveryPool.ts"),
+  import("../src/corpus/buildRecommendationPool.ts"),
   import("../src/data/nameSystemData.ts"),
   import("../corpus/sources/chinese-poetry.ts"),
   import("../corpus/sources/early-chinese.ts"),
@@ -146,6 +148,11 @@ const discoveryCandidates = buildDiscoveryPool({
   characters: characterDictionary,
   passages: sortedPassages,
 });
+const recommendationPool = buildRecommendationPool({
+  curatedCandidates,
+  discoveryCandidates,
+  reviewedSeeds: reviewedSeedMetadata,
+});
 
 console.log(
   `Corpus import: ${report.catalogue.totalPassages} passages, ` +
@@ -171,6 +178,15 @@ const discovery = {
   count: discoveryCandidates.length,
   candidates: discoveryCandidates,
 };
+const recommendationsV2 = {
+  schemaVersion: 2,
+  buildVersion,
+  corpusVersion: buildVersion,
+  recommendableCount: recommendationPool.recommendable.length,
+  searchOnlyCount: recommendationPool.searchOnly.length,
+  blockedCount: recommendationPool.blocked.length,
+  candidates: recommendationPool.recommendable,
+};
 const catalogue = {
   schemaVersion: 2,
   buildVersion,
@@ -182,6 +198,8 @@ const catalogue = {
   textShardsByBook: indexBuild.textShardPathsByBook,
   discoveryPath: "discovery.json",
   discoveryCount: discoveryCandidates.length,
+  recommendationPath: "recommendations-v2.json",
+  recommendationCount: recommendationPool.recommendable.length,
   books: sortedBooks,
 };
 const attribution = {
@@ -204,6 +222,10 @@ const metadataArtifacts = [
   {
     relativePath: "discovery.json",
     content: `${JSON.stringify(discovery)}\n`,
+  },
+  {
+    relativePath: "recommendations-v2.json",
+    content: `${JSON.stringify(recommendationsV2)}\n`,
   },
 ].sort((left, right) => compareText(left.relativePath, right.relativePath));
 
@@ -268,4 +290,9 @@ console.log(
   `Discovery pool: ${discoveryCandidates.length} names (` +
     `${discoveryCandidates.filter(({ grade }) => grade === "A").length} A, ` +
     `${discoveryCandidates.filter(({ grade }) => grade === "B").length} B).`,
+);
+console.log(
+  `Recommendation V2: ${recommendationPool.recommendable.length} recommendable, ` +
+    `${recommendationPool.searchOnly.length} search-only, ` +
+    `${recommendationPool.blocked.length} blocked.`,
 );

@@ -2,6 +2,7 @@ import type {
   CharacterEntry,
   ClassicalFragment,
   CuratedCandidate,
+  NameStyle,
   SourceGrade,
 } from "../domain/types";
 
@@ -516,6 +517,41 @@ export const curatedCandidates: CuratedCandidate[] = curatedRows.map(
     folkElements,
   }),
 );
+
+interface ReviewedSeedContent {
+  meaning: string;
+  semanticExplanation: string;
+  primaryStyle: NameStyle;
+  imageryCategory: string;
+}
+
+export const reviewedSeedMetadata: Record<string, ReviewedSeedContent> = {
+  皎舒: { meaning: "明月皎洁，舒展其光。", semanticExplanation: "取同句中的皎与舒，共同描写月光明净舒展。", primaryStyle: "bright", imageryCategory: "月色光影" },
+  瑶碧: { meaning: "瑶与碧皆指温润美玉。", semanticExplanation: "瑶碧在原句中连续出现，共同修饰华美玉饰。", primaryStyle: "graceful", imageryCategory: "玉石佩饰" },
+  玉蕤: { meaning: "如玉般清润的花蕊。", semanticExplanation: "玉蕤在原句中连续成词，用来写梅花清润的花朵。", primaryStyle: "graceful", imageryCategory: "梅花玉色" },
+  宜笑: { meaning: "笑意美好而得体。", semanticExplanation: "宜笑在原句中连续出现，描写自然可亲的笑容。", primaryStyle: "bright", imageryCategory: "人物神采" },
+  盈袖: { meaning: "幽香充盈衣袖。", semanticExplanation: "盈袖承接暗香，形成香气满袖的完整画面。", primaryStyle: "graceful", imageryCategory: "衣袖暗香" },
+  明睐: { meaning: "眼神明净，顾盼有神。", semanticExplanation: "由明眸善睐取明与睐，两字共同指向清亮眼神。", primaryStyle: "bright", imageryCategory: "人物神采" },
+  皎莹: { meaning: "明洁温润，如月与玉相映。", semanticExplanation: "同篇以皎写月光、以莹写温润光泽，属于篇内合意。", primaryStyle: "bright", imageryCategory: "月色玉光" },
+  舒窈: { meaning: "姿态舒缓而幽静美好。", semanticExplanation: "舒窈在原文中连续出现，保留月下人物的舒缓意态。", primaryStyle: "gentle", imageryCategory: "月下人物" },
+  疏影: { meaning: "疏朗横斜的梅影。", semanticExplanation: "疏影是原句连续意象，写梅枝映在清水间的影子。", primaryStyle: "austere", imageryCategory: "梅影清水" },
+  婉若: { meaning: "婉然轻盈，姿态流动。", semanticExplanation: "婉若在原句中连续出现，引出游龙般轻盈的姿态。", primaryStyle: "graceful", imageryCategory: "人物姿态" },
+  清圆: { meaning: "清润圆融，如荷叶浮于水面。", semanticExplanation: "清圆在原句中连续描写水面荷叶的形态与质感。", primaryStyle: "gentle", imageryCategory: "水面风荷" },
+  露华: { meaning: "晶莹润泽的露光。", semanticExplanation: "露华在诗句中连续出现，兼有露水与光华之意。", primaryStyle: "bright", imageryCategory: "春露光华" },
+  柔荑: { meaning: "柔嫩初生的白茅芽。", semanticExplanation: "柔荑在原句中连续出现，以初生植物比喻柔嫩洁白。", primaryStyle: "gentle", imageryCategory: "草木初生" },
+  令仪: { meaning: "端正美好的仪范。", semanticExplanation: "令与仪在原句中构成完整词义，指美好的威仪与风范。", primaryStyle: "graceful", imageryCategory: "德仪风范" },
+  琬琰: { meaning: "温润有光的成组美玉。", semanticExplanation: "琬琰在原句中连续出现，是并举的美玉名。", primaryStyle: "graceful", imageryCategory: "玉石品德" },
+  佩璐: { meaning: "佩戴温润美玉。", semanticExplanation: "从同句的佩与宝璐取字，形成佩玉的完整文化意象。", primaryStyle: "graceful", imageryCategory: "玉石佩饰" },
+  素华: { meaning: "清素洁白的花。", semanticExplanation: "素华在原句中连续出现，描写绿叶之间洁白的花朵。", primaryStyle: "austere", imageryCategory: "素色花木" },
+  兰佩: { meaning: "以秋兰为佩，取芬芳自持之意。", semanticExplanation: "从同句的秋兰与为佩取字，保留香草佩饰的关联。", primaryStyle: "austere", imageryCategory: "香草佩饰" },
+  云裳: { meaning: "如云霓般轻盈的衣裳。", semanticExplanation: "由云想衣裳取云与裳，保留云与衣裳的比兴关系。", primaryStyle: "graceful", imageryCategory: "云霓衣裳" },
+  清浅: { meaning: "水色清澈浅明。", semanticExplanation: "清浅在原句中连续出现，描写梅影下清澈的水面。", primaryStyle: "gentle", imageryCategory: "梅影清水" },
+  玉露: { meaning: "清润晶莹、如玉的露水。", semanticExplanation: "玉露在原句中连续出现，是清秋相逢的经典意象。", primaryStyle: "bright", imageryCategory: "清秋露华" },
+  芳甸: { meaning: "芳草繁茂的郊野。", semanticExplanation: "芳甸在原句中连续出现，描写春江边芬芳开阔的原野。", primaryStyle: "classical", imageryCategory: "春日原野" },
+  秋兰: { meaning: "清秋时节的兰草。", semanticExplanation: "秋兰在原句中连续出现，承载香草自芳的传统意象。", primaryStyle: "austere", imageryCategory: "秋日香草" },
+  芳菲: { meaning: "花草芬芳而繁盛。", semanticExplanation: "芳菲在原句中连续出现，写香气与草木盛美。", primaryStyle: "bright", imageryCategory: "花木芬芳" },
+  静姝: { meaning: "娴静而美好。", semanticExplanation: "由静女其姝取静与姝，两字在同句中共同描写人物。", primaryStyle: "gentle", imageryCategory: "人物德容" },
+};
 
 export const sourceGradeMap = [
   { grade: "A" as const, definition: "原文连续出现", sourceScore: 5 },
