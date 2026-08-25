@@ -5,7 +5,7 @@ interface FunnelOverviewProps {
   counts: {
     humanReviewed: number;
     corpusDiscoveries: number;
-    calibration: number;
+    learned: number;
     fragments: number;
     books: number;
     favorites: number;
@@ -20,8 +20,8 @@ const steps = [
     id: "explore" as const,
     number: "01",
     title: "个性寻名",
-    tag: "偏好校准与推荐",
-    description: "先做 8 组直觉选择，再将个人适配、名字多样性与古籍证据合并展示。",
+    tag: "持续学习与推荐",
+    description: "每次只看一个名字；喜欢、跳过或排除后，系统立即学习并推荐下一名。",
   },
   {
     id: "allusions" as const,
@@ -52,7 +52,7 @@ export function FunnelOverview({ counts, onNavigate }: FunnelOverviewProps) {
       <SectionHeader
         eyebrow="WANG FAMILY · NAME ARCHIVE 2026"
         title="为一个名字，留下完整来路"
-        description="先用少量人工精审候选校准取舍，再让人工精审与规则粗筛共同参与个性组批；两种审核层级始终分开标注。"
+        description="从 25 个人工精审与 436 个规则粗筛候选持续推荐；每次反馈都会更新家庭偏好，两种审核层级始终分开标注。"
         aside={
           <div className="status-stamp">
             <span>当前阶段</span>
@@ -121,8 +121,8 @@ export function FunnelOverview({ counts, onNavigate }: FunnelOverviewProps) {
           <span>全文粗筛 · 再按规则分层</span>
         </div>
         <div>
-          <strong>{counts.calibration} / 8</strong>
-          <span>家庭偏好校准</span>
+          <strong>{counts.learned}</strong>
+          <span>次反馈学习</span>
         </div>
         <div>
           <strong>{counts.fragments}</strong>

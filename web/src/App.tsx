@@ -155,7 +155,7 @@ export default function App({
           counts={{
             humanReviewed: Object.keys(reviewedSeedMetadata).length,
             corpusDiscoveries: 1200,
-            calibration: local.profile.preference.calibrationProgress,
+            learned: local.profile.preference.reactionOrder.length,
             fragments: classicalFragments.length,
             books: 70,
             favorites: local.profile.favoriteNames.length,
@@ -172,8 +172,8 @@ export default function App({
           error={discoveryError}
           preference={local.profile.preference}
           profile={curatedProfile}
-          onPreferenceChange={local.replacePreference}
-          onExposure={local.recordExposure}
+          onReaction={local.reactToCandidate}
+          onUndoReaction={local.undoReaction}
           onLookup={openLookup}
           onRetry={() => setRecommendationLoadAttempt((attempt) => attempt + 1)}
         />
@@ -212,7 +212,7 @@ export default function App({
         />
       ) : null}
 
-      {currentSection !== "compare" ? (
+      {currentSection !== "compare" && currentSection !== "explore" ? (
         <CompareDrawer
           names={local.profile.compareNames}
           onRemove={local.toggleCompare}

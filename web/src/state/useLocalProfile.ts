@@ -1,12 +1,18 @@
 import { useCallback, useState } from "react";
 
 import {
+  recordCandidateReaction as learnFromCandidateReaction,
+  undoCandidateReaction as unlearnCandidateReaction,
+} from "../domain/preferenceModel";
+import type { PersonalizedCandidate } from "../domain/types";
+import {
   clearStoredProfile,
   createDefaultPreference,
   createDefaultProfile,
   loadProfile,
   saveProfile,
   type BirthDetails,
+  type CandidateReaction,
   type LocalProfile,
   type MetaphysicsAssessment,
   type PairwiseChoice,
@@ -25,6 +31,12 @@ const toggleListValue = (
   if (values.length >= maximum) return [...values];
   return [...values, value];
 };
+
+const withoutName = (values: readonly string[], name: string): string[] =>
+  values.filter((item) => item !== name);
+
+const withName = (values: readonly string[], name: string): string[] =>
+  values.includes(name) ? [...values] : [...values, name];
 
 const withExplicitFeedback = (
   current: Record<string, number>,
@@ -235,6 +247,73 @@ export function useLocalProfile() {
     [updateProfile],
   );
 
+  const reactToCandidate = useCallback(
+    (candidate: PersonalizedCandidate, reaction: CandidateReaction) => {
+      updateProfile((current) => {
+        const name = candidate.fullName;
+        const exposureCounts = { ...current.preference.exposureCounts };
+        exposureCounts[name] = (exposureCounts[name] ?? 0) + 1;
+        return {
+          ...current,
+          favoriteNames:
+            reaction === "love"
+              ? withName(withoutName(current.favoriteNames, name), name)
+              : withoutName(current.favoriteNames, name),
+          rejectedNames:
+            reaction === "dislike"
+              ? withName(withoutName(current.rejectedNames, name), name)
+              : withoutName(current.rejectedNames, name),
+          compareNames:
+            reaction === "dislike"
+              ? withoutName(current.compareNames, name)
+              : current.compareNames,
+          preference: {
+            ...learnFromCandidateReaction(
+              current.preference,
+              candidate,
+              reaction,
+            ),
+            exposureCounts,
+          },
+        };
+      });
+    },
+    [updateProfile],
+  );
+
+  const undoReaction = useCallback(
+    (candidate: PersonalizedCandidate) => {
+      updateProfile((current) => {
+        const exposureCounts = { ...current.preference.exposureCounts };
+        const previousExposure = exposureCounts[candidate.fullName] ?? 0;
+        if (previousExposure <= 1) delete exposureCounts[candidate.fullName];
+        else exposureCounts[candidate.fullName] = previousExposure - 1;
+        const revertedPreference = unlearnCandidateReaction(
+          current.preference,
+          candidate,
+        );
+        const explicitFeedback = current.compareNames.includes(candidate.fullName)
+          ? withExplicitFeedback(
+              revertedPreference.explicitFeedback,
+              candidate.fullName,
+              0.25,
+            )
+          : revertedPreference.explicitFeedback;
+        return {
+          ...current,
+          favoriteNames: withoutName(current.favoriteNames, candidate.fullName),
+          rejectedNames: withoutName(current.rejectedNames, candidate.fullName),
+          preference: {
+            ...revertedPreference,
+            explicitFeedback,
+            exposureCounts,
+          },
+        };
+      });
+    },
+    [updateProfile],
+  );
+
   const resetCalibration = useCallback(() => {
     updateProfile((current) => ({
       ...current,
@@ -262,6 +341,8 @@ export function useLocalProfile() {
     recordPairwiseOutcome,
     recordExplicitFeedback,
     recordExposure,
+    reactToCandidate,
+    undoReaction,
     resetCalibration,
     clearProfile,
   };

@@ -27,6 +27,12 @@ export interface PersonalizedBatchOptions {
   excludedNames?: readonly string[];
 }
 
+export interface AdaptiveRecommendationOptions {
+  excludedNames?: readonly string[];
+  recentNames?: readonly string[];
+  recentLimit?: number;
+}
+
 export const similarityWeights = {
   style: 0.45,
   sharedCharacter: 0.2,
@@ -39,6 +45,19 @@ export const mmrWeights = {
   relevance: 0.75,
   diversity: 0.25,
 } as const;
+
+const adaptiveModeCycle: readonly BatchSelectionKind[] = [
+  "fit",
+  "fit",
+  "diverse",
+  "fit",
+  "explore",
+];
+
+export function adaptiveModeForStep(step: number): BatchSelectionKind {
+  const index = Math.max(0, Math.round(step)) % adaptiveModeCycle.length;
+  return adaptiveModeCycle[index] ?? "fit";
+}
 
 const styleKeys = [
   "classical",
@@ -238,6 +257,56 @@ function chooseCandidate(
     )[0];
   }
   return undefined;
+}
+
+export function selectAdaptiveRecommendation(
+  candidates: readonly PersonalizedCandidate[],
+  preference: PreferenceState,
+  options: AdaptiveRecommendationOptions = {},
+): PersonalizedBatchItem | undefined {
+  const excluded = new Set([
+    ...Object.keys(preference.reactions),
+    ...(options.excludedNames ?? []),
+  ]);
+  const remaining = candidates
+    .filter(
+      (candidate) =>
+        (candidate.eligibility === "recommendable" ||
+          candidate.eligibility === "provisional") &&
+        !excluded.has(candidate.fullName) &&
+        !excluded.has(candidate.givenName),
+    )
+    .sort((left, right) => compareText(left.id, right.id));
+  if (remaining.length === 0) return undefined;
+
+  const recentLimit = Math.max(0, Math.round(options.recentLimit ?? 6));
+  const recentNames = options.recentNames ?? preference.reactionOrder;
+  const recentSet = new Set(recentNames.slice(-recentLimit));
+  const recent = candidates
+    .filter(
+      (candidate) =>
+        recentSet.has(candidate.fullName) || recentSet.has(candidate.givenName),
+    )
+    .sort((left, right) => {
+      const leftIndex = recentNames.lastIndexOf(left.fullName);
+      const rightIndex = recentNames.lastIndexOf(right.fullName);
+      return leftIndex - rightIndex || compareText(left.id, right.id);
+    });
+  const selectionKind = adaptiveModeForStep(preference.reactionOrder.length);
+  const candidate = chooseCandidate(
+    remaining,
+    recent,
+    preference,
+    selectionKind,
+  );
+  if (!candidate) return undefined;
+  return {
+    candidate,
+    fit: personalFit(preference, candidate),
+    selectionKind,
+    reasons: recommendationReasons(preference, candidate),
+    mmr: mmrBreakdown(candidate, recent, preference, selectionKind),
+  };
 }
 
 export function buildPersonalizedBatch(

@@ -3,9 +3,12 @@ import { describe, expect, it } from "vitest";
 import { createDefaultPreference } from "../state/storage";
 import { normalizeFeatures } from "./nameFeatures";
 import {
+  adaptiveModeForStep,
   buildPersonalizedBatch,
   candidateSimilarity,
+  selectAdaptiveRecommendation,
 } from "./diversityRanker";
+import { recordCandidateReaction } from "./preferenceModel";
 import type {
   EvidenceRelation,
   NameStyle,
@@ -201,5 +204,50 @@ describe("个性化多样性组批", () => {
     expect(small.every((item) => item.candidate.eligibility === "recommendable")).toBe(
       true,
     );
+  });
+});
+
+describe("持续学习的单名字推荐", () => {
+  it("每五次安排三次适配、一次多样和一次探索", () => {
+    expect(Array.from({ length: 10 }, (_, index) => adaptiveModeForStep(index)))
+      .toEqual([
+        "fit", "fit", "diverse", "fit", "explore",
+        "fit", "fit", "diverse", "fit", "explore",
+      ]);
+  });
+
+  it("每次反馈后排除已看名字并用更新后的偏好重算下一名", () => {
+    const initial = createDefaultPreference();
+    const first = selectAdaptiveRecommendation(candidates, initial);
+    expect(first).toBeDefined();
+    const updated = recordCandidateReaction(initial, first!.candidate, "love");
+    const second = selectAdaptiveRecommendation(candidates, updated);
+
+    expect(second?.candidate.fullName).not.toBe(first?.candidate.fullName);
+    expect(second?.selectionKind).toBe("fit");
+    expect(updated.reactionOrder).toEqual([first?.candidate.fullName]);
+  });
+
+  it("最近展示历史参与 MMR，且输入顺序不影响结果", () => {
+    const preference = {
+      ...createDefaultPreference(),
+      reactionOrder: [candidates[0]!.fullName],
+      reactions: { [candidates[0]!.fullName]: "skip" as const },
+    };
+    const first = selectAdaptiveRecommendation(candidates, preference);
+    const second = selectAdaptiveRecommendation([...candidates].reverse(), preference);
+
+    expect(first).toEqual(second);
+    expect(first?.mmr.closestSelectedName).toBe(candidates[0]!.fullName);
+    expect(first?.candidate.fullName).not.toBe(candidates[0]!.fullName);
+  });
+
+  it("所有安全候选都反馈后返回完成态", () => {
+    const reacted = candidates.slice(0, 3).reduce(
+      (preference, item) => recordCandidateReaction(preference, item, "skip"),
+      createDefaultPreference(),
+    );
+
+    expect(selectAdaptiveRecommendation(candidates.slice(0, 3), reacted)).toBeUndefined();
   });
 });

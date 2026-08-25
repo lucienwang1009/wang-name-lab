@@ -26,6 +26,7 @@ export interface MetaphysicsAssessment {
 }
 
 export type PairwiseChoice = "left" | "right" | "both-dislike" | "skip";
+export type CandidateReaction = "love" | "like" | "dislike" | "skip";
 
 export interface PairwiseFeedback {
   leftName: string;
@@ -41,6 +42,8 @@ export interface PreferenceState {
   explicitFeedback: Record<string, number>;
   calibrationProgress: number;
   exposureCounts: Record<string, number>;
+  reactions: Record<string, CandidateReaction>;
+  reactionOrder: string[];
 }
 
 export interface LocalProfile {
@@ -113,6 +116,17 @@ const numberRecord = (
   );
 };
 
+function candidateReactionRecord(value: unknown): Record<string, CandidateReaction> {
+  if (!isRecord(value)) return {};
+  const allowed = new Set<CandidateReaction>(["love", "like", "dislike", "skip"]);
+  return Object.fromEntries(
+    Object.entries(value).filter(
+      (entry): entry is [string, CandidateReaction] =>
+        typeof entry[1] === "string" && allowed.has(entry[1] as CandidateReaction),
+    ),
+  );
+}
+
 function preferenceWeights(value: unknown): PreferenceWeights | undefined {
   if (!isRecord(value)) return undefined;
   const entries = NAME_FEATURE_KEYS.map((key) => {
@@ -149,6 +163,8 @@ export function createDefaultPreference(): PreferenceState {
     explicitFeedback: {},
     calibrationProgress: 0,
     exposureCounts: {},
+    reactions: {},
+    reactionOrder: [],
   };
 }
 
@@ -162,6 +178,13 @@ function parsePreference(value: unknown): PreferenceState {
     Number.isFinite(value.calibrationProgress)
       ? Math.round(clamp(value.calibrationProgress, 0, 8))
       : 0;
+  const reactions = candidateReactionRecord(value.reactions);
+  const reactionOrder = stringList(value.reactionOrder).filter(
+    (name) => reactions[name] !== undefined,
+  );
+  for (const name of Object.keys(reactions)) {
+    if (!reactionOrder.includes(name)) reactionOrder.push(name);
+  }
   return {
     weights,
     feedback,
@@ -172,6 +195,8 @@ function parsePreference(value: unknown): PreferenceState {
         ([name, count]) => [name, Math.round(count)],
       ),
     ),
+    reactions,
+    reactionOrder,
   };
 }
 

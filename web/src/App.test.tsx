@@ -162,12 +162,12 @@ describe("取名实验室应用", () => {
     const metrics = within(screen.getByLabelText("候选规模"));
     expect(metrics.getByText("25")).toBeTruthy();
     expect(metrics.getByText("1,200")).toBeTruthy();
-    expect(metrics.getByText("0 / 8")).toBeTruthy();
+    expect(metrics.getByText("次反馈学习")).toBeTruthy();
     expect(metrics.getByText("126")).toBeTruthy();
     expect(metrics.getByText("70")).toBeTruthy();
   });
 
-  it("可以从总览进入 8 组家庭偏好校准", async () => {
+  it("可以从总览直接进入单名字连续推荐，不再强制八组校准", async () => {
     const corpusSearchClient: CorpusSearchClient = {
       discover: vi.fn(async () => recommendationFixtures),
       search: idleClient.search,
@@ -176,19 +176,13 @@ describe("取名实验室应用", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "开始个性寻名" }));
 
-    await waitFor(() => {
-      expect(
-        screen.getByRole("heading", { name: "先用 8 组选择认识你们", level: 1 }),
-      ).toBeTruthy();
-    });
-    for (let index = 0; index < 8; index += 1) {
-      fireEvent.click(screen.getByRole("button", { name: "跳过这组" }));
-    }
     expect(await screen.findByRole("heading", { name: "个性寻名", level: 1 })).toBeTruthy();
-    expect(window.scrollTo).toHaveBeenCalledWith({ top: 0, behavior: "smooth" });
-    expect(screen.getAllByRole("heading", { level: 2 })).toHaveLength(12);
-    expect(screen.queryByText("女性感")).toBeNull();
-    expect(screen.queryByRole("button", { name: "A + B 可靠出处" })).toBeNull();
+    expect(screen.getAllByRole("heading", { level: 2 })).toHaveLength(1);
+    expect(screen.getByRole("button", { name: "很喜欢 · 收藏" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: "还不错" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: "不喜欢" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: "跳过" })).toBeTruthy();
+    expect(screen.queryByRole("heading", { name: "先用 8 组选择认识你们" })).toBeNull();
   });
 
   it("V2 推荐资源失败后可从错误页重试", async () => {
@@ -208,8 +202,42 @@ describe("取名实验室应用", () => {
     expect(screen.getByText("测试资源中断。")).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "重新加载推荐" }));
 
-    expect(await screen.findByRole("heading", { name: "先用 8 组选择认识你们" })).toBeTruthy();
+    expect(await screen.findByRole("heading", { name: "个性寻名" })).toBeTruthy();
     expect(corpusSearchClient.discover).toHaveBeenCalledTimes(2);
+  });
+
+  it("每次反应都会立即推荐下一名，并可撤销恢复", async () => {
+    window.location.hash = "#explore";
+    const corpusSearchClient: CorpusSearchClient = {
+      discover: vi.fn(async () => recommendationFixtures.slice(0, 6)),
+      search: idleClient.search,
+    };
+    render(<App corpusSearchClient={corpusSearchClient} />);
+
+    const first = await screen.findByRole("heading", { level: 2 });
+    const firstName = first.textContent ?? "";
+    fireEvent.click(screen.getByRole("button", { name: "加入对照" }));
+    fireEvent.click(screen.getByRole("button", { name: "还不错" }));
+
+    await waitFor(() => {
+      expect(screen.getByRole("heading", { level: 2 }).textContent).not.toBe(firstName);
+    });
+    expect(screen.getByText(/已学习 1 次/)).toBeTruthy();
+    const stored = JSON.parse(
+      window.localStorage.getItem(PROFILE_STORAGE_KEY) ?? "null",
+    );
+    expect(stored.preference.reactions[firstName]).toBe("like");
+
+    fireEvent.click(screen.getByRole("button", { name: "撤销上一步" }));
+    await waitFor(() => {
+      expect(screen.getByRole("heading", { level: 2 }).textContent).toBe(firstName);
+    });
+    expect(screen.getByText(/已学习 0 次/)).toBeTruthy();
+    const restored = JSON.parse(
+      window.localStorage.getItem(PROFILE_STORAGE_KEY) ?? "null",
+    );
+    expect(restored.compareNames).toContain(firstName);
+    expect(restored.preference.explicitFeedback[firstName]).toBe(0.25);
   });
 
   it("从候选卡直接带名字进入完整典籍核查", async () => {
@@ -260,8 +288,8 @@ describe("取名实验室应用", () => {
       level: 2,
     })).closest("article") as HTMLElement;
     expect(within(card).getByText("规则粗筛 · 待人工精审")).toBeTruthy();
-    expect(within(card).getByText("MMR 组批依据")).toBeTruthy();
-    expect(within(card).getByText(/个人适配 .* × 75% \+ 本批差异 .* × 25%/)).toBeTruthy();
+    expect(within(card).getByText("MMR 推荐模型")).toBeTruthy();
+    expect(within(card).getByText(/个人适配 .* × 75% \+ 最近差异 .* × 25%/)).toBeTruthy();
   });
 
   it("收藏与对照保留 V2 候选的语义和证据", async () => {
@@ -278,10 +306,11 @@ describe("取名实验室应用", () => {
       name: "王景玉",
       level: 2,
     })).closest("article") as HTMLElement;
-    fireEvent.click(within(card).getByRole("button", { name: "收藏" }));
     fireEvent.click(within(card).getByRole("button", { name: "加入对照" }));
-    expect(screen.getByRole("button", { name: "已收藏" })).toBeTruthy();
-    fireEvent.click(screen.getByRole("button", { name: "展开对照" }));
+    fireEvent.click(screen.getByRole("button", { name: "很喜欢 · 收藏" }));
+    expect(JSON.parse(window.localStorage.getItem(PROFILE_STORAGE_KEY) ?? "null").favoriteNames)
+      .toContain("王景玉");
+    fireEvent.click(screen.getByRole("button", { name: /四名对照.*1\/4/ }));
 
     expect(await screen.findByRole("heading", { name: "王景玉", level: 2 })).toBeTruthy();
     expect(screen.getByText("候选景玉的语义。")).toBeTruthy();

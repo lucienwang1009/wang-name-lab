@@ -5,8 +5,10 @@ import { normalizeFeatures } from "./nameFeatures";
 import {
   personalFit,
   recommendationReasons,
+  recordCandidateReaction,
   recordPairwiseChoice,
   sigmoid,
+  undoCandidateReaction,
 } from "./preferenceModel";
 import type { PersonalizedCandidate } from "./types";
 
@@ -95,6 +97,37 @@ describe("家庭偏好学习", () => {
 
     expect(Object.values(preference.weights).every((value) => value >= -3 && value <= 3))
       .toBe(true);
+  });
+
+  it("单个名字反馈会泛化更新特征，而不是只记住名字", () => {
+    const initial = createDefaultPreference();
+    const loved = recordCandidateReaction(initial, classical, "love");
+    const disliked = recordCandidateReaction(initial, classical, "dislike");
+
+    expect(loved.weights.classical).toBeGreaterThan(initial.weights.classical);
+    expect(loved.weights.graceful).toBeGreaterThan(initial.weights.graceful);
+    expect(disliked.weights.classical).toBeLessThan(initial.weights.classical);
+    expect(loved.explicitFeedback[classical.fullName]).toBe(1);
+    expect(disliked.explicitFeedback[classical.fullName]).toBe(-1);
+  });
+
+  it("跳过只记录已看，不改变权重；改选和撤销可以精确反向更新", () => {
+    const initial = createDefaultPreference();
+    const skipped = recordCandidateReaction(initial, classical, "skip");
+    expect(skipped.weights).toEqual(initial.weights);
+    expect(skipped.reactions[classical.fullName]).toBe("skip");
+    expect(skipped.reactionOrder).toEqual([classical.fullName]);
+
+    const loved = recordCandidateReaction(initial, classical, "love");
+    const changed = recordCandidateReaction(loved, classical, "dislike");
+    const directDislike = recordCandidateReaction(initial, classical, "dislike");
+    expect(changed.weights).toEqual(directDislike.weights);
+
+    const undone = undoCandidateReaction(loved, classical);
+    expect(undone.weights).toEqual(initial.weights);
+    expect(undone.reactions).toEqual({});
+    expect(undone.reactionOrder).toEqual([]);
+    expect(undone.explicitFeedback[classical.fullName]).toBeUndefined();
   });
 
   it("推荐理由来自贡献最大的可解释特征而不是百分制总分", () => {

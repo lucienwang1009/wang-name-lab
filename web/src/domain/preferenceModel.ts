@@ -1,5 +1,6 @@
 import {
   DEFAULT_PREFERENCE_WEIGHTS,
+  type CandidateReaction,
   type PairwiseChoice,
   type PreferenceState,
   type PreferenceWeights,
@@ -10,6 +11,14 @@ import type { PersonalizedCandidate } from "./types";
 const learningRate = 0.4;
 const shrinkage = 0.015;
 const explicitFeedbackWeight = 1.25;
+const onlineLearningRate = 0.55;
+
+const reactionSignals: Record<CandidateReaction, number> = {
+  love: 1,
+  like: 0.45,
+  dislike: -1,
+  skip: 0,
+};
 
 const featureLabels: Record<NameFeatureKey, string> = {
   classical: "古典气质",
@@ -28,6 +37,86 @@ const featureLabels: Record<NameFeatureKey, string> = {
 };
 
 const clampWeight = (value: number): number => Math.min(3, Math.max(-3, value));
+const stableWeight = (value: number): number =>
+  Math.round(clampWeight(value) * 1_000_000_000_000) / 1_000_000_000_000;
+
+function reactionSignal(reaction: CandidateReaction | undefined): number {
+  return reaction === undefined ? 0 : reactionSignals[reaction];
+}
+
+function updatedReactionWeights(
+  preference: PreferenceState,
+  candidate: PersonalizedCandidate,
+  signalDelta: number,
+): PreferenceWeights {
+  return Object.fromEntries(
+    NAME_FEATURE_KEYS.map((key) => [
+      key,
+      stableWeight(
+        preference.weights[key] +
+          onlineLearningRate * signalDelta * centeredFeature(candidate, key),
+      ),
+    ]),
+  ) as PreferenceWeights;
+}
+
+function explicitFeedbackForReaction(
+  preference: PreferenceState,
+  candidate: PersonalizedCandidate,
+  reaction: CandidateReaction | undefined,
+): Record<string, number> {
+  const result = { ...preference.explicitFeedback };
+  const signal = reactionSignal(reaction);
+  if (reaction === undefined || signal === 0) {
+    delete result[candidate.fullName];
+    delete result[candidate.givenName];
+  } else {
+    result[candidate.fullName] = signal;
+  }
+  return result;
+}
+
+export function recordCandidateReaction(
+  preference: PreferenceState,
+  candidate: PersonalizedCandidate,
+  reaction: CandidateReaction,
+): PreferenceState {
+  const previous = preference.reactions[candidate.fullName];
+  const signalDelta = reactionSignal(reaction) - reactionSignal(previous);
+  const reactionOrder = preference.reactionOrder.includes(candidate.fullName)
+    ? [...preference.reactionOrder]
+    : [...preference.reactionOrder, candidate.fullName];
+  return {
+    ...preference,
+    weights: updatedReactionWeights(preference, candidate, signalDelta),
+    explicitFeedback: explicitFeedbackForReaction(preference, candidate, reaction),
+    reactions: { ...preference.reactions, [candidate.fullName]: reaction },
+    reactionOrder,
+  };
+}
+
+export function undoCandidateReaction(
+  preference: PreferenceState,
+  candidate: PersonalizedCandidate,
+): PreferenceState {
+  const previous = preference.reactions[candidate.fullName];
+  if (previous === undefined) return preference;
+  const reactions = { ...preference.reactions };
+  delete reactions[candidate.fullName];
+  return {
+    ...preference,
+    weights: updatedReactionWeights(
+      preference,
+      candidate,
+      -reactionSignal(previous),
+    ),
+    explicitFeedback: explicitFeedbackForReaction(preference, candidate, undefined),
+    reactions,
+    reactionOrder: preference.reactionOrder.filter(
+      (name) => name !== candidate.fullName,
+    ),
+  };
+}
 
 export function sigmoid(value: number): number {
   if (value >= 36) return 1;

@@ -76,10 +76,34 @@ describe("本地家庭档案", () => {
         explicitFeedback: {},
         calibrationProgress: 0,
         exposureCounts: {},
+        reactions: {},
+        reactionOrder: [],
       },
     });
     expect(profile).not.toHaveProperty("culturalScores");
     expect(profile).not.toHaveProperty("currentBatchIds");
+  });
+
+  it("保存有效的连续反馈并过滤损坏的反馈顺序", () => {
+    const defaults = createDefaultProfile();
+    const profile = parseProfile(JSON.stringify({
+      version: 2,
+      preference: {
+        ...defaults.preference,
+        reactions: {
+          王令仪: "love",
+          王疏影: "skip",
+          王错误: "maybe",
+        },
+        reactionOrder: ["王令仪", "王不存在", "王疏影", "王令仪"],
+      },
+    }));
+
+    expect(profile.preference.reactions).toEqual({
+      王令仪: "love",
+      王疏影: "skip",
+    });
+    expect(profile.preference.reactionOrder).toEqual(["王令仪", "王疏影"]);
   });
 
   it("偏好资料损坏时只重置偏好模型并保留家庭资料", () => {
