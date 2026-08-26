@@ -2,7 +2,7 @@
 
 **Goal:** Let recommendation sources compete by naming quality across the complete corpus while retaining concentration limits and a genuinely selective final review.
 
-**Architecture:** Keep all 70 books in corpus search. Replace per-book source round-robin with a bounded global pool and dynamic MMR state. Tighten the blind final reviewer so `approve` means shortlist-worthy rather than merely usable, encode material shortlist blockers separately from fatal issues, and version the changed methodology as v9.
+**Architecture:** Keep all 70 books in corpus search. Replace per-book source round-robin with a bounded global pool and dynamic MMR state, without curated-fragment boosts. Tighten the blind final reviewer so `approve` means shortlist-worthy rather than merely usable, encode material shortlist blockers separately from fatal issues, deduplicate names after evidence review, and version the changed methodology as v10.
 
 **Tech Stack:** TypeScript, Node.js 22, Vitest, existing local corpus and DeepSeek pointer pipeline.
 
@@ -40,7 +40,11 @@
 2. Tell the generator to compare within a batch and return only genuinely strong combinations.
 3. Tell the final reviewer to reject word-like, rigid, masculine, stale or explanation-dependent names even when usable.
 4. Require structured `materialIssues`; local publication rejects any non-empty result even if the model says approve.
-5. Upgrade the audit protocol to `name-factory-v9`.
+5. Remove the calibration-era curated-fragment score bonus.
+6. Penalize arbitrary sliding windows from long unpunctuated text relative to complete punctuated clauses.
+7. Keep only the strongest semantic-evidence proposal per given name before name review.
+8. Pass concrete prior review risks to the final reviewer as leads for independent verification.
+9. Upgrade the audit protocol to `name-factory-v10`.
 
 ### Task 4: Verify and recalibrate in isolation
 

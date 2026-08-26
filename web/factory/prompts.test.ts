@@ -99,6 +99,7 @@ describe("候选生成提示词", () => {
       finalists: [{
         fullName: "王令仪",
         localPronunciation: { pinyin: "wáng lìng yí", tones: "2-4-2" },
+        nameReviewRisks: [],
       }],
     });
   });

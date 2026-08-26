@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
 import { normalizeSearchText } from "../src/corpus/normalizeText.ts";
-import { characterDictionary, classicalFragments } from "../src/data/nameSystemData.ts";
+import { characterDictionary } from "../src/data/nameSystemData.ts";
 import type { FactoryBook, FactoryPassage } from "./types.ts";
 
 interface CorpusCatalogueFile {
@@ -52,11 +52,6 @@ const functionCharacters = new Set([..."在之兮者也矣于於以而与與为�
 const charactersByValue = new Map(characterDictionary.map((entry) => [entry.char, entry]));
 const clausePattern = /[^，,。！？!?；;]+[，,。！？!?；;]?/gu;
 const sentenceEndingPattern = /[。！？!?；;]$/u;
-const positiveFragmentPattern = /^(正面|祝颂|清幽|静谧|吉辞|华美|德行|女子|人物)/u;
-const positiveFragmentTexts = classicalFragments
-  .filter((fragment) => positiveFragmentPattern.test(fragment.contextTone) || fragment.contextTone.includes("正面"))
-  .map((fragment) => normalizeSearchText(fragment.quote))
-  .filter((text) => [...text].length >= 4);
 
 export interface NameableSourceWindow {
   text: string;
@@ -177,6 +172,7 @@ function createSourceWindow(
   normalizedText: string,
   startIndex: number,
   endIndex: number,
+  sourcePenalty = 0,
 ): NameableSourceWindow | undefined {
   const length = [...normalizedText].length;
   if (length < 4 || length > 40 || windowNegative.test(normalizedText)) return undefined;
@@ -184,12 +180,13 @@ function createSourceWindow(
   const opportunities = pairOpportunities(normalizedText);
   const best = opportunities[0];
   if (!best) return undefined;
+  const characters = [...normalizedText];
+  const adjacentDuplicateCount = characters.slice(1).filter((character, index) =>
+    character === characters[index]
+  ).length;
   const namingCharacters = [...new Set(opportunities.flatMap(({ characters }) => characters))].sort();
-  const curatedPositiveBonus = positiveFragmentTexts.some((fragmentText) =>
-    fragmentText.includes(normalizedText) || normalizedText.includes(fragmentText)
-  ) ? 160 : 0;
   const score = best.score + (opportunities[1]?.score ?? 0) * 0.3 +
-    Math.min(opportunities.length, 12) * 4 - length * 0.5 + curatedPositiveBonus;
+    Math.min(opportunities.length, 12) * 4 - length * 0.5 - adjacentDuplicateCount * 40 - sourcePenalty;
   return {
     text,
     normalizedText,
@@ -226,6 +223,7 @@ export function extractNameableSourceWindows(
           normalizedText,
           clause.startIndex + offset,
           clause.startIndex + endOffset,
+          80,
         );
         if (sliding) windows.push(sliding);
         if (endOffset === clauseCharacters.length) break;

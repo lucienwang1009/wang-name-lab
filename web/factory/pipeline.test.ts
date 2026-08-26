@@ -82,21 +82,23 @@ function gateway({
   rejectName,
   nameScores,
   materialIssueName,
+  generationSelections,
 }: {
   rejectName?: string;
   nameScores?: Partial<NameReview["scores"]>;
   materialIssueName?: string;
+  generationSelections?: PointerSelection[];
 } = {}) {
   const requests: Array<{ role: string; input: unknown }> = [];
   const structured = vi.fn(async <T,>(request: { role: string; input: unknown }) => {
     requests.push({ role: request.role, input: request.input });
     if (request.role === "candidate-generator") {
-      return [
+      return (generationSelections ?? [
         pointerSelection("令仪"),
         pointerSelection("柔嘉"),
         pointerSelection("八方"),
         pointerSelection("无效"),
-      ] as T;
+      ]) as T;
     }
     const candidates = ((request.input as { candidates?: Array<{ proposalId: string; fullName?: string }> }).candidates ??
       (request.input as { finalists?: Array<{ proposalId: string; fullName?: string }> }).finalists ?? []);
@@ -224,6 +226,37 @@ describe("候选工厂分阶段流水线", () => {
     expect(result.candidateFile.candidates.map((candidate) => candidate.givenName)).toEqual(["令仪"]);
     expect(result.report.items.find((item) => item.proposal.givenName === "柔嘉")?.rejectionReasons)
       .toContain("姓名感不足");
+  });
+
+  it("同一名字有多条典故时只审核语义最强的一条", async () => {
+    const duplicatePassages: FactoryPassage[] = [
+      { ...passages[0]!, id: "book-a/1", bookId: "book-a", bookTitle: "《甲书》", score: 120 },
+      { ...passages[0]!, id: "book-b/1", bookId: "book-b", bookTitle: "《乙书》", score: 110 },
+    ];
+    const duplicateCorpus: LoadedFactoryCorpus = {
+      corpusVersion: "duplicates-v1",
+      books: duplicatePassages.map((passage) => ({
+        id: passage.bookId,
+        title: passage.bookTitle,
+        category: passage.category,
+        period: passage.period,
+        priority: 1,
+      })),
+      passages: duplicatePassages,
+    };
+    const fake = gateway({
+      generationSelections: duplicatePassages.map((passage) => ({
+        first: { passageId: passage.id, index: 0 },
+        second: { passageId: passage.id, index: 1 },
+        meaning: "柔和美善",
+        rationale: "连续取字",
+        imageryCategory: "德性",
+        familyConnection: "",
+      })),
+    });
+    await runFactoryPipeline({ config: config(), corpus: duplicateCorpus, gateway: fake.gateway });
+    const nameRequest = fake.requests.find((request) => request.role === "name-sound-aesthetic-reviewer");
+    expect((nameRequest?.input as { candidates: unknown[] }).candidates).toHaveLength(1);
   });
 
   it("匿名语义审查输入不包含生成器 rationale 或自评分", async () => {

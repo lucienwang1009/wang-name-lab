@@ -76,6 +76,15 @@ describe("古籍候选工厂取材", () => {
     ]));
   });
 
+  it("无句读滑动片段不因吉祥字密集压过完整句读诗句", () => {
+    const verse = { text: "柔嘉维则，令仪令色。", normalizedText: "柔嘉维则令仪令色" };
+    const commentary = {
+      text: "礼乐志白绁吴舞也七略曰汉鲁人虞公善雅歌发声尽动梁上尘丈夫相见且为乐槌牛檛鼓会众宾我从此去钓东海得鱼笑寄情相亲",
+      normalizedText: "礼乐志白绁吴舞也七略曰汉鲁人虞公善雅歌发声尽动梁上尘丈夫相见且为乐槌牛檛鼓会众宾我从此去钓东海得鱼笑寄情相亲",
+    };
+    expect(passageNameabilityScore(verse)).toBeGreaterThan(passageNameabilityScore(commentary));
+  });
+
   it("全库统一竞争时高质量来源可以同时胜过弱书目", () => {
     const make = (id: string, bookId: string, score: number, text: string): FactoryPassage => ({
       id,

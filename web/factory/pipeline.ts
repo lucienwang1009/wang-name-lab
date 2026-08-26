@@ -194,6 +194,13 @@ function reviewMap<T extends { proposalId: string }>(reviews: readonly T[]): Map
   return new Map(reviews.map((review) => [review.proposalId, review]));
 }
 
+function semanticCandidateScore(item: FactoryReviewItem): number {
+  const relationBonus = item.proposal.relation === "exact-phrase" ? 0.15 :
+    item.proposal.relation === "clause-related" ? 0.1 :
+    item.proposal.relation === "passage-related" ? 0.05 : 0;
+  return (item.semantic?.semanticScore ?? 0) + (item.semantic?.evidenceScore ?? 0) + relationBonus;
+}
+
 export async function runFactoryPipeline(options: RunPipelineOptions): Promise<PipelineResult> {
   const { config, corpus, gateway } = options;
   assertCheckpointCompatible(options.checkpoint, config, corpus.corpusVersion);
@@ -286,7 +293,22 @@ export async function runFactoryPipeline(options: RunPipelineOptions): Promise<P
     await checkpoint(options, [...completedBatchIds], pointerSelectionCount, pointerIssues, uniqueProposals, [...items.values()]);
   }
 
-  const semanticApproved = [...items.values()].filter((item) => item.status === "semantic-approved");
+  const semanticApprovedByQuality = [...items.values()]
+    .filter((item) => item.status === "semantic-approved")
+    .sort((left, right) =>
+      semanticCandidateScore(right) - semanticCandidateScore(left) ||
+      left.proposal.proposalId.localeCompare(right.proposal.proposalId)
+    );
+  const primaryNameEvidence = new Map<string, FactoryReviewItem>();
+  for (const item of semanticApprovedByQuality) {
+    if (!primaryNameEvidence.has(item.proposal.givenName)) {
+      primaryNameEvidence.set(item.proposal.givenName, item);
+    } else {
+      reject(item, "同名候选已保留语义与证据更强的典故。");
+    }
+  }
+  const semanticApproved = [...primaryNameEvidence.values()];
+  await checkpoint(options, [...completedBatchIds], pointerSelectionCount, pointerIssues, uniqueProposals, [...items.values()]);
   for (const group of chunks(semanticApproved, config.batchSize)) {
     const reviews = reviewMap(await gateway.structured(nameReviewRequest(group.map((item) => item.proposal))));
     for (const item of group) {
