@@ -7,6 +7,7 @@ import type {
   FactoryReviewReport,
   NameReview,
   NameReviewScores,
+  PointerSelection,
   ReviewDecision,
   SemanticReview,
   SourceCharacterRef,
@@ -27,6 +28,11 @@ function record(value: unknown, label: string): Record<string, unknown> {
     throw new TypeError(`${label} 必须是对象。`);
   }
   return value as Record<string, unknown>;
+}
+
+function exactKeys(item: Record<string, unknown>, allowed: readonly string[], label: string): void {
+  const extras = Object.keys(item).filter((key) => !allowed.includes(key));
+  if (extras.length > 0) throw new TypeError(`${label} 含不允许字段：${extras.join("、")}。`);
 }
 
 function text(value: unknown, label: string, { allowEmpty = false } = {}): string {
@@ -70,6 +76,38 @@ function sourceRef(value: unknown, label: string): SourceCharacterRef {
     passageId: text(item.passageId, `${label}.passageId`),
     occurrence: Number(occurrence),
   };
+}
+
+function sourcePointer(value: unknown, label: string) {
+  const item = record(value, label);
+  exactKeys(item, ["passageId", "index"], label);
+  if (!Number.isSafeInteger(item.index) || Number(item.index) < 0) {
+    throw new TypeError(`${label}.index 必须是非负整数。`);
+  }
+  return {
+    passageId: text(item.passageId, `${label}.passageId`),
+    index: Number(item.index),
+  };
+}
+
+export function parsePointerSelection(value: unknown): PointerSelection {
+  const item = record(value, "原文指针选择");
+  exactKeys(item, ["first", "second", "meaning", "rationale", "imageryCategory", "familyConnection"], "原文指针选择");
+  return {
+    first: sourcePointer(item.first, "first"),
+    second: sourcePointer(item.second, "second"),
+    meaning: text(item.meaning, "meaning"),
+    rationale: text(item.rationale, "rationale"),
+    imageryCategory: text(item.imageryCategory, "imageryCategory"),
+    familyConnection: text(item.familyConnection, "familyConnection", { allowEmpty: true }),
+  };
+}
+
+export function parsePointerSelectionList(value: unknown): PointerSelection[] {
+  const item = record(value, "指针生成响应");
+  exactKeys(item, ["selections"], "指针生成响应");
+  if (!Array.isArray(item.selections)) throw new TypeError("指针生成响应缺少 selections 数组。");
+  return item.selections.map(parsePointerSelection);
 }
 
 export function parseCandidateProposal(value: unknown): CandidateProposal {
@@ -284,6 +322,40 @@ export const proposalListJsonSchema = {
             },
           },
           extraction: { type: "string" },
+          meaning: { type: "string" },
+          rationale: { type: "string" },
+          imageryCategory: { type: "string" },
+          familyConnection: { type: "string" },
+        },
+      },
+    },
+  },
+} as const;
+
+const sourcePointerJsonSchema = {
+  type: "object",
+  additionalProperties: false,
+  required: ["passageId", "index"],
+  properties: {
+    passageId: { type: "string" },
+    index: { type: "integer", minimum: 0 },
+  },
+} as const;
+
+export const pointerSelectionListJsonSchema = {
+  type: "object",
+  additionalProperties: false,
+  required: ["selections"],
+  properties: {
+    selections: {
+      type: "array",
+      items: {
+        type: "object",
+        additionalProperties: false,
+        required: ["first", "second", "meaning", "rationale", "imageryCategory", "familyConnection"],
+        properties: {
+          first: sourcePointerJsonSchema,
+          second: sourcePointerJsonSchema,
           meaning: { type: "string" },
           rationale: { type: "string" },
           imageryCategory: { type: "string" },

@@ -6,7 +6,9 @@ import { parseFactoryArgs } from "./config.ts";
 import {
   parseCandidateProposal,
   parseNameReview,
+  parsePointerSelectionList,
   parseSemanticReview,
+  pointerSelectionListJsonSchema,
 } from "./schema.ts";
 
 const proposal = {
@@ -25,6 +27,39 @@ const proposal = {
 };
 
 describe("候选工厂运行时契约", () => {
+  it("解析只包含两个原文位置和语义元数据的指针选择", () => {
+    expect(parsePointerSelectionList({
+      selections: [{
+        first: { passageId: "shi-jing/1", index: 4 },
+        second: { passageId: "shi-jing/1", index: 5 },
+        meaning: "美好的仪范",
+        rationale: "两字组合自然",
+        imageryCategory: "仪范",
+        familyConnection: "",
+      }],
+    })).toEqual([expect.objectContaining({
+      first: { passageId: "shi-jing/1", index: 4 },
+      second: { passageId: "shi-jing/1", index: 5 },
+    })]);
+  });
+
+  it("指针响应拒绝模型自填名字、来源字和负数位置", () => {
+    const base = {
+      first: { passageId: "shi-jing/1", index: 4 },
+      second: { passageId: "shi-jing/1", index: 5 },
+      meaning: "美好的仪范",
+      rationale: "两字组合自然",
+      imageryCategory: "仪范",
+      familyConnection: "",
+    };
+    expect(() => parsePointerSelectionList({ selections: [{ ...base, givenName: "令仪" }] }))
+      .toThrow(/不允许字段/u);
+    expect(() => parsePointerSelectionList({
+      selections: [{ ...base, first: { passageId: "shi-jing/1", index: -1 } }],
+    })).toThrow(/非负整数/u);
+    expect(JSON.stringify(pointerSelectionListJsonSchema)).not.toMatch(/givenName|character|occurrence|relation|extraction/u);
+  });
+
   it("解析来源完整的双字候选", () => {
     expect(parseCandidateProposal(proposal)).toMatchObject({
       givenName: "令仪",

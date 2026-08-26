@@ -48,6 +48,27 @@ export interface SourceCharacterRef {
   occurrence: number;
 }
 
+export interface SourcePointer {
+  passageId: string;
+  index: number;
+}
+
+export interface PointerSelection {
+  first: SourcePointer;
+  second: SourcePointer;
+  meaning: string;
+  rationale: string;
+  imageryCategory: string;
+  familyConnection: string;
+}
+
+export interface PointerSelectionIssue {
+  batchId: string;
+  selectionIndex: number;
+  reason: string;
+  selection: PointerSelection;
+}
+
 export interface CandidateProposal {
   proposalId: string;
   givenName: string;
