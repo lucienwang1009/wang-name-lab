@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 2,
+  "bookId": "song-ci",
+  "sourceUrl": "https://example.test/song-ci.json",
+  "verificationUrl": "https://example.test/song-ci",
+  "passages": [
+    { "id": "song-ci/shu-ying/1", "workTitle": "山园小梅", "chapterTitle": "其一", "text": "疏影横斜水清浅，暗香浮动月黄昏。", "normalizedText": "疏影横斜水清浅暗香浮动月黄昏" },
+    { "id": "song-ci/ru-meng-ling/1", "workTitle": "如梦令", "chapterTitle": "常记溪亭日暮", "text": "常记溪亭日暮，沉醉不知归路。兴尽晚回舟，误入藕花深处。", "normalizedText": "常记溪亭日暮沉醉不知归路兴尽晚回舟误入藕花深处" }
+  ]
+}

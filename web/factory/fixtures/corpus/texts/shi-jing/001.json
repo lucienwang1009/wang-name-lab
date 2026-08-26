@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 2,
+  "bookId": "shi-jing",
+  "sourceUrl": "https://example.test/shi-jing.json",
+  "verificationUrl": "https://example.test/shi-jing",
+  "passages": [
+    { "id": "shi-jing/zheng-min/1", "workTitle": "烝民", "chapterTitle": "大雅", "text": "柔嘉维则，令仪令色，小心翼翼。", "normalizedText": "柔嘉维则令仪令色小心翼翼" },
+    { "id": "shi-jing/tao-yao/1", "workTitle": "桃夭", "chapterTitle": "周南", "text": "桃之夭夭，灼灼其华。之子于归，宜其室家。", "normalizedText": "桃之夭夭灼灼其华之子于归宜其室家" },
+    { "id": "shi-jing/noise/1", "workTitle": "噪声", "chapterTitle": "噪声", "text": "123|456|789|", "normalizedText": "123456789" }
+  ]
+}
+

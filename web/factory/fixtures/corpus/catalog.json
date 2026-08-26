@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 2,
+  "buildVersion": "fixture-v1",
+  "textShards": ["shi-jing/001.json", "song-ci/001.json"],
+  "books": [
+    { "id": "shi-jing", "title": "《诗经》", "category": "经", "period": "先秦", "priority": 1, "status": "ready" },
+    { "id": "song-ci", "title": "《宋词》", "category": "集", "period": "宋", "priority": 1, "status": "ready" }
+  ]
+}
+
