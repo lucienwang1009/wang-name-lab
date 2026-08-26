@@ -72,6 +72,8 @@ export const PUBLICATION_QUALITY_THRESHOLDS = {
   distinctiveness: 0.75,
 } as const;
 
+const uncommonPreferenceConflictPattern = /(?:不罕见|略显普通|较为普通|过于普通|缺乏个性|不够独特|流俗|显得俗套)/u;
+
 function belowThreshold(label: string, score: number, threshold: number): string | undefined {
   if (score >= threshold) return undefined;
   return `${label} ${score.toFixed(2)} 低于发布门槛 ${threshold.toFixed(2)}。`;
@@ -91,6 +93,9 @@ function nameQualityFailures(review: NonNullable<FactoryReviewItem["name"]>): st
     belowThreshold("女性气质", review.scores.femininity, PUBLICATION_QUALITY_THRESHOLDS.femininity),
     belowThreshold("日常可用性", review.scores.usability, PUBLICATION_QUALITY_THRESHOLDS.usability),
     belowThreshold("适度少见度", review.scores.distinctiveness, PUBLICATION_QUALITY_THRESHOLDS.distinctiveness),
+    uncommonPreferenceConflictPattern.test(review.uncommonnessNote)
+      ? "少见度说明明确与家庭‘不要简单熟悉’的偏好冲突。"
+      : undefined,
   ].filter((reason): reason is string => Boolean(reason));
 }
 

@@ -44,7 +44,8 @@
 6. Penalize arbitrary sliding windows from long unpunctuated text relative to complete punctuated clauses.
 7. Keep only the strongest semantic-evidence proposal per given name before name review.
 8. Pass concrete prior review risks to the final reviewer as leads for independent verification.
-9. Upgrade the audit protocol to `name-factory-v10`.
+9. Enforce explicit conflicts between the uncommonness explanation and the family's non-familiar preference locally.
+10. Upgrade the audit protocol to `name-factory-v10`.
 
 ### Task 4: Verify and recalibrate in isolation
 

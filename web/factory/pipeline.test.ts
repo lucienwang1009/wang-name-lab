@@ -83,11 +83,13 @@ function gateway({
   nameScores,
   materialIssueName,
   generationSelections,
+  uncommonnessNote,
 }: {
   rejectName?: string;
   nameScores?: Partial<NameReview["scores"]>;
   materialIssueName?: string;
   generationSelections?: PointerSelection[];
+  uncommonnessNote?: string;
 } = {}) {
   const requests: Array<{ role: string; input: unknown }> = [];
   const structured = vi.fn(async <T,>(request: { role: string; input: unknown }) => {
@@ -127,7 +129,7 @@ function gateway({
         primaryStyle: "graceful",
         pronunciationNote: "自然",
         usabilityNote: "可用",
-        uncommonnessNote: "少见",
+        uncommonnessNote: uncommonnessNote ?? "少见",
         risks: [],
       })) as T;
     }
@@ -218,6 +220,15 @@ describe("候选工厂分阶段流水线", () => {
     expect(fake.requests.some((request) => request.role === "adversarial-final-reviewer")).toBe(false);
     expect(result.report.items.find((item) => item.proposal.givenName === "令仪")?.rejectionReasons)
       .toContain("姓名感 0.82 低于发布门槛 0.84。");
+  });
+
+  it("少见度说明明确承认组合普通时不允许高分抵消家庭偏好", async () => {
+    const fake = gateway({ uncommonnessNote: "组合虽不罕见，但气质优雅。" });
+    const result = await runFactoryPipeline({ config: config(), corpus, gateway: fake.gateway });
+    expect(result.candidateFile.count).toBe(0);
+    expect(fake.requests.some((request) => request.role === "adversarial-final-reviewer")).toBe(false);
+    expect(result.report.items.find((item) => item.proposal.givenName === "令仪")?.rejectionReasons)
+      .toContain("少见度说明明确与家庭‘不要简单熟悉’的偏好冲突。");
   });
 
   it("对抗复审即使填 approve，存在短名单实质问题也必须淘汰", async () => {
