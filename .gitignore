@@ -9,3 +9,9 @@ web/public/corpus/
 .env
 .env.local
 .env.*.local
+.factory-cache/
+web/.factory-cache/
+web/factory/reports/
+web/factory/checkpoints/
+web/public/data/generated-candidates.json
+*.factory.tmp
