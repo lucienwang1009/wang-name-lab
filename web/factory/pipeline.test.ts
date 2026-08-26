@@ -81,9 +81,11 @@ function config() {
 function gateway({
   rejectName,
   nameScores,
+  materialIssueName,
 }: {
   rejectName?: string;
   nameScores?: Partial<NameReview["scores"]>;
+  materialIssueName?: string;
 } = {}) {
   const requests: Array<{ role: string; input: unknown }> = [];
   const structured = vi.fn(async <T,>(request: { role: string; input: unknown }) => {
@@ -131,6 +133,7 @@ function gateway({
       proposalId: candidate.proposalId,
       decision: "approve",
       critique: "未发现致命问题。",
+      materialIssues: candidate.fullName?.endsWith(materialIssueName ?? "__none__") ? ["姓名感不足"] : [],
       fatalIssues: [],
     })) as T;
   });
@@ -213,6 +216,14 @@ describe("候选工厂分阶段流水线", () => {
     expect(fake.requests.some((request) => request.role === "adversarial-final-reviewer")).toBe(false);
     expect(result.report.items.find((item) => item.proposal.givenName === "令仪")?.rejectionReasons)
       .toContain("姓名感 0.82 低于发布门槛 0.84。");
+  });
+
+  it("对抗复审即使填 approve，存在短名单实质问题也必须淘汰", async () => {
+    const fake = gateway({ materialIssueName: "柔嘉" });
+    const result = await runFactoryPipeline({ config: config(), corpus, gateway: fake.gateway });
+    expect(result.candidateFile.candidates.map((candidate) => candidate.givenName)).toEqual(["令仪"]);
+    expect(result.report.items.find((item) => item.proposal.givenName === "柔嘉")?.rejectionReasons)
+      .toContain("姓名感不足");
   });
 
   it("匿名语义审查输入不包含生成器 rationale 或自评分", async () => {

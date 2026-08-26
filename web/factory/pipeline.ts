@@ -334,12 +334,16 @@ export async function runFactoryPipeline(options: RunPipelineOptions): Promise<P
         reject(item, "对抗复审响应缺失。");
       } else {
         item.adversarial = review;
-        if (review.decision === "approve" && review.fatalIssues.length === 0) {
+        const blockingIssues = [...review.materialIssues, ...review.fatalIssues];
+        if (blockingIssues.length > 0) {
+          for (const issue of blockingIssues) reject(item, issue);
+          reject(item, review.critique);
+        } else if (review.decision === "approve") {
           item.status = "adversarial-approved";
         } else if (review.decision === "manual-review") {
           manualReview(item, review.critique);
         } else {
-          reject(item, [...review.fatalIssues, review.critique].filter(Boolean).join("；"));
+          reject(item, review.critique);
         }
       }
     }

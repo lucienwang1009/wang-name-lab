@@ -206,6 +206,7 @@ export function parseAdversarialReview(value: unknown): AdversarialReview {
     proposalId: text(item.proposalId, "proposalId"),
     decision: decision(item.decision, "decision"),
     critique: text(item.critique, "critique"),
+    materialIssues: stringArray(item.materialIssues, "materialIssues"),
     fatalIssues: stringArray(item.fatalIssues, "fatalIssues"),
   };
 }
@@ -441,10 +442,11 @@ export const adversarialReviewListJsonSchema = {
       items: {
         type: "object",
         additionalProperties: false,
-        required: ["proposalId", "decision", "critique", "fatalIssues"],
+        required: ["proposalId", "decision", "critique", "materialIssues", "fatalIssues"],
         properties: {
           ...reviewBase,
           critique: { type: "string" },
+          materialIssues: { type: "array", items: { type: "string" } },
           fatalIssues: { type: "array", items: { type: "string" } },
         },
       },

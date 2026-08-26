@@ -48,7 +48,7 @@ function input(givenName = "令仪"): SynthesisInput {
       uncommonnessNote: "少见度为代理判断。",
       risks: [],
     },
-    adversarial: { proposalId: `batch:${givenName}`, decision: "approve", critique: "未发现致命问题。", fatalIssues: [] },
+    adversarial: { proposalId: `batch:${givenName}`, decision: "approve", critique: "未发现致命问题。", materialIssues: [], fatalIssues: [] },
     pinyin: "wáng lìng yí",
     tones: "2-4-2",
     pronunciationRisks: [],
@@ -75,6 +75,9 @@ describe("候选发布合成", () => {
     const rejected = input();
     rejected.adversarial.decision = "reject";
     expect(() => synthesizeCandidate(rejected)).toThrow(/不能发布/);
+    const contradictory = input();
+    contradictory.adversarial.materialIssues.push("姓名感不足");
+    expect(() => synthesizeCandidate(contradictory)).toThrow(/不能发布/);
   });
 
   it("按质量和字符、书目、意象约束选择多样候选", () => {
@@ -90,4 +93,3 @@ describe("候选发布合成", () => {
     expect(selected.filter((candidate) => candidate.givenName.includes("嘉"))).toHaveLength(2);
   });
 });
-

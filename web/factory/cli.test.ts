@@ -73,7 +73,7 @@ function fakeGateway(): FactoryModelGateway {
           risks: [],
         })) as T;
       }
-      return candidates.map((item): AdversarialReview => ({ proposalId: item.proposalId, decision: "approve", critique: "无致命问题", fatalIssues: [] })) as T;
+      return candidates.map((item): AdversarialReview => ({ proposalId: item.proposalId, decision: "approve", critique: "无致命问题", materialIssues: [], fatalIssues: [] })) as T;
     },
   };
 }

@@ -113,6 +113,7 @@ export interface AdversarialReview {
   proposalId: string;
   decision: ReviewDecision;
   critique: string;
+  materialIssues: string[];
   fatalIssues: string[];
 }
 

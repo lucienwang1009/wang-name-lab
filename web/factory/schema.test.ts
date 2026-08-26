@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import { parseFactoryArgs } from "./config.ts";
 import {
+  parseAdversarialReview,
   parseCandidateProposal,
   parseNameReview,
   parsePointerSelectionList,
@@ -94,6 +95,22 @@ describe("候选工厂运行时契约", () => {
       risks: [],
     })).toThrow(/审核结论/);
   });
+
+  it("对抗复审必须结构化返回短名单实质问题", () => {
+    expect(parseAdversarialReview({
+      proposalId: proposal.proposalId,
+      decision: "reject",
+      critique: "像普通词组。",
+      materialIssues: ["姓名感不足"],
+      fatalIssues: [],
+    }).materialIssues).toEqual(["姓名感不足"]);
+    expect(() => parseAdversarialReview({
+      proposalId: proposal.proposalId,
+      decision: "approve",
+      critique: "可用。",
+      fatalIssues: [],
+    })).toThrow(/materialIssues/u);
+  });
 });
 
 describe("候选工厂 CLI 配置", () => {
@@ -101,7 +118,7 @@ describe("候选工厂 CLI 配置", () => {
     const config = parseFactoryArgs([], { cwd: "/repo/web", env: {} });
     expect(config).toMatchObject({
       model: "deepseek-v4-flash",
-      promptVersion: "name-factory-v8",
+      promptVersion: "name-factory-v9",
       maxCny: 20,
       target: 400,
       dryRun: true,

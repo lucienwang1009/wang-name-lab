@@ -92,6 +92,8 @@ describe("候选生成提示词", () => {
     expect(request.instructions).toMatch(/manual-review.*实质未决风险/su);
     expect(request.instructions).toMatch(/面向家长.*短名单/su);
     expect(request.instructions).toMatch(/偏刚.*像普通词组.*reject/su);
+    expect(request.instructions).toMatch(/materialIssues.*本地程序.*强制淘汰/su);
+    expect(JSON.stringify(request.schema)).toContain("materialIssues");
     expect(request.instructions).toMatch(/critique.*180/u);
     expect(request.input).toMatchObject({
       finalists: [{

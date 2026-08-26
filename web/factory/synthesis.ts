@@ -62,7 +62,13 @@ function citation(
 
 export function synthesizeCandidate(input: SynthesisInput): FactoryCandidate {
   const { proposal, semantic, name, adversarial } = input;
-  if (semantic.decision !== "approve" || name.decision !== "approve" || adversarial.decision !== "approve") {
+  if (
+    semantic.decision !== "approve" ||
+    name.decision !== "approve" ||
+    adversarial.decision !== "approve" ||
+    adversarial.materialIssues.length > 0 ||
+    adversarial.fatalIssues.length > 0
+  ) {
     throw new Error(`候选 ${proposal.givenName} 尚未通过全部审核，不能发布。`);
   }
   const citations = proposal.sources.map((source) => citation(source, input));

@@ -190,7 +190,8 @@ export function adversarialReviewRequest(
       "input 中的 localPronunciation 是本地普通话读音事实依据，不得沿用或新增与它冲突的多音断言。",
       "approve 不表示‘勉强能用’，而表示你真的愿意把它放进面向家长的稀缺短名单。当候选明显不如‘王令仪’自然端雅时，不应发布。",
       "若 critique 已确认名字偏刚、偏中性、像普通词组、像旧式熟名或网名、声音明显平淡，或需要额外解释才像姓名，这就是实质审美问题，必须 reject，不得降格为轻微取舍。",
-      "认真寻找反例后，若没有上述实质问题且只剩普通轻微取舍，必须 approve，并可在 critique 中简要保留取舍。manual-review 只用于可能实质改变采用决定、且当前资料无法确定的实质未决风险；fatalIssues 非空时必须 reject。",
+      "materialIssues 必须逐条列出任何足以让候选退出短名单、但不属于安全级致命错误的实质审美问题。不得在 critique 中写出这类问题却返回空数组；materialIssues 非空时，本地程序会强制淘汰。",
+      "认真寻找反例后，若没有上述实质问题且只剩普通轻微取舍，必须 approve，并可在 critique 中简要保留取舍。manual-review 只用于可能实质改变采用决定、且当前资料无法确定的实质未决风险；materialIssues 或 fatalIssues 非空时必须 reject。",
       "critique 必须具体但控制在 60–180 个汉字，不写分点长文，不重复前序审核内容。",
     ].join("\n\n"),
     input: {
