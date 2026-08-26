@@ -4,7 +4,7 @@ import { normalizeSearchText } from "../src/corpus/normalizeText.ts";
 import type { NameRisk } from "../src/domain/types.ts";
 import type { CandidateProposal, FactoryPassage } from "./types.ts";
 
-const functionCharacterPattern = /[之兮者也矣于於以而与與为為乃则則曰何所且将將公君我你]/u;
+const functionCharacterPattern = /[在之兮者也矣于於以而与與为為乃则則曰何所且将將公君我你]/u;
 const negativeContextPattern = /[墓葬死丧喪刑杀殺哀殇殤讽諷贬貶讥譏恨泪淚病疫苦怨鬼尸血灾災祸禍败敗辱贱賤恶惡凶]/u;
 const explicitSurnameCollision = /^王[八巴芭霸]/u;
 

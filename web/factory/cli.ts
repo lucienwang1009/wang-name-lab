@@ -63,6 +63,13 @@ function estimatedRequestUsage(inputCharacters: number, outputTokens: number): T
   };
 }
 
+function indexedTextLength(text: string): number {
+  return [...text].reduce(
+    (total, _character, index) => total + String(index).length + 3 + (index === 0 ? 0 : 1),
+    0,
+  );
+}
+
 export function buildDryRunPlan(config: FactoryRunConfig, corpus: LoadedFactoryCorpus): DryRunPlan {
   const selected = selectDiversePassages(corpus.passages, { passagesPerBook: config.passagesPerBook });
   const batches = createPassageBatches(selected, config.batchSize);
@@ -75,7 +82,14 @@ export function buildDryRunPlan(config: FactoryRunConfig, corpus: LoadedFactoryC
   const adversarialRequests = Math.ceil(Math.min(likelyNamePassed, Math.max(config.target * 2, config.target + 20)) / config.batchSize);
   let microCny = 0;
   for (const batch of batches) {
-    const inputCharacters = batch.passages.reduce((sum, passage) => sum + passage.text.length + 180, 0);
+    const inputCharacters = batch.passages.reduce(
+      (sum, passage) => sum
+        + passage.text.length
+        + passage.normalizedText.length
+        + indexedTextLength(passage.normalizedText)
+        + 180,
+      0,
+    );
     microCny += estimateUsageMicroCny(
       estimatedRequestUsage(inputCharacters, Math.max(1_200, batch.passages.length * config.maxCandidatesPerPassage * 180)),
       config.pricingUsdPerMillion,

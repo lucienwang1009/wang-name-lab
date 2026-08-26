@@ -68,6 +68,22 @@ describe("本地姓名规则", () => {
     }, new Map([[negative.id, negative]])).passed).toBe(false);
   });
 
+  it("把真实 smoke 暴露的“在”识别为虚词残片", () => {
+    const result = runLocalRules({
+      ...proposal,
+      proposalId: "batch:在怀",
+      givenName: "在怀",
+      relation: "cultural-recomposition",
+      sources: [
+        { character: "在", passageId: passage.id, occurrence: 0 },
+        { character: "怀", passageId: passage.id, occurrence: 0 },
+      ],
+    }, new Map([[passage.id, passage]]));
+    expect(result.risks).toEqual(expect.arrayContaining([
+      expect.objectContaining({ code: "function-character-fragment", severity: "hard" }),
+    ]));
+  });
+
   it("拒绝虚假的连续、同句和同篇取字声明", () => {
     const other = { ...passage, id: "other", workTitle: "另一篇", text: "清嘉可人", normalizedText: "清嘉可人" };
     const exact = {
@@ -95,4 +111,3 @@ describe("本地姓名规则", () => {
     ]));
   });
 });
-
