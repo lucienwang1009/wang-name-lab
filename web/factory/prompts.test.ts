@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { adversarialReviewRequest, generationRequest } from "./prompts.ts";
+import { adversarialReviewRequest, generationRequest, nameReviewRequest } from "./prompts.ts";
 import type { CandidateProposal, FactoryPassage } from "./types.ts";
 
 const passage: FactoryPassage = {
@@ -69,8 +69,30 @@ describe("候选生成提示词", () => {
       imageryCategory: "仪范",
       familyConnection: "",
     };
+    const nameRequest = nameReviewRequest([proposal]);
+    expect(nameRequest.instructions).toMatch(/本地读音分析.*事实依据/su);
+    expect(nameRequest.input).toMatchObject({
+      candidates: [{
+        fullName: "王令仪",
+        localPronunciation: {
+          pinyin: "wáng lìng yí",
+          tones: "2-4-2",
+          risks: expect.any(Array),
+        },
+      }],
+    });
+
     const request = adversarialReviewRequest([proposal], new Map(), new Map());
     expect(request.reasoningEffort).toBe("none");
     expect(request.maxOutputTokens).toBeGreaterThanOrEqual(1_200);
+    expect(request.instructions).toMatch(/普通轻微取舍.*approve/su);
+    expect(request.instructions).toMatch(/manual-review.*实质未决风险/su);
+    expect(request.instructions).toMatch(/critique.*180/u);
+    expect(request.input).toMatchObject({
+      finalists: [{
+        fullName: "王令仪",
+        localPronunciation: { pinyin: "wáng lìng yí", tones: "2-4-2" },
+      }],
+    });
   });
 });

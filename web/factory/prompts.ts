@@ -10,6 +10,7 @@ import {
   pointerSelectionListJsonSchema,
   semanticReviewListJsonSchema,
 } from "./schema.ts";
+import { derivePronunciation } from "./rules.ts";
 import type {
   AdversarialReview,
   CandidateProposal,
@@ -108,6 +109,15 @@ function proposalForReview(proposal: CandidateProposal, passagesById: ReadonlyMa
   };
 }
 
+function localPronunciation(proposal: CandidateProposal) {
+  const pronunciation = derivePronunciation(proposal.givenName);
+  return {
+    pinyin: pronunciation.pinyin,
+    tones: pronunciation.tones,
+    risks: pronunciation.risks.map(({ code, severity, summary }) => ({ code, severity, summary })),
+  };
+}
+
 export function semanticReviewRequest(
   proposals: readonly CandidateProposal[],
   passagesById: ReadonlyMap<string, FactoryPassage>,
@@ -142,6 +152,7 @@ export function nameReviewRequest(
       "你是独立的现代中文姓名审美与使用审查员，不评价古籍证据强弱，也看不到语义审查得分。",
       reviewNamingContext,
       "只从完整姓名王××出发，严格评估声调节奏、声母韵母碰撞、谐音、常见误读、字形重心、女性气质、时代感、随机拼字感、网名感和长期日常使用。",
+      "input 中的 localPronunciation 是本地读音分析给出的普通话拼音、声调和多音风险，应作为读音事实依据。不得凭空增加其中没有的常见读音；若确有方言或工具遗漏，只能作为具体、可解释的风险提出。",
       "nameFeel 或 phonology 低于 0.72 必须 reject；存在可接受但需核对的方言、多音或碰撞时 manual-review。不要因为字面古雅就放宽姓名感。",
     ].join("\n\n"),
     input: {
@@ -150,6 +161,7 @@ export function nameReviewRequest(
         fullName: `王${proposal.givenName}`,
         givenName: proposal.givenName,
         claimedMeaning: proposal.meaning,
+        localPronunciation: localPronunciation(proposal),
       })),
     },
     schemaName: "name_reviews",
@@ -172,7 +184,9 @@ export function adversarialReviewRequest(
     instructions: [
       "你是候选发布前的反方审查员。任务不是赞美，而是尽力找出高分候选仍然可能难听、牵强、像网名、像男性名、像生造词、产生负面联想或难以长期使用的原因。",
       reviewNamingContext,
-      "只有在认真寻找反例后仍无致命问题才 approve。可核实但尚不致命的问题用 manual-review；fatalIssues 非空时必须 reject。",
+      "input 中的 localPronunciation 是本地普通话读音事实依据，不得沿用或新增与它冲突的多音断言。",
+      "认真寻找反例后，若没有致命问题且只剩普通轻微取舍，必须 approve，并可在 critique 中简要保留取舍。manual-review 只用于可能实质改变采用决定、且当前资料无法确定的实质未决风险；fatalIssues 非空时必须 reject。",
+      "critique 必须具体但控制在 60–180 个汉字，不写分点长文，不重复前序审核内容。",
     ].join("\n\n"),
     input: {
       finalists: proposals.map((proposal) => ({
@@ -183,6 +197,7 @@ export function adversarialReviewRequest(
         semanticExplanation: semanticById.get(proposal.proposalId)?.explanation ?? "",
         pronunciationNote: nameById.get(proposal.proposalId)?.pronunciationNote ?? "",
         usabilityNote: nameById.get(proposal.proposalId)?.usabilityNote ?? "",
+        localPronunciation: localPronunciation(proposal),
       })),
     },
     schemaName: "adversarial_reviews",
