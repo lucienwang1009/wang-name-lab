@@ -89,7 +89,11 @@ export type EvidenceRelation =
   | "passage-related"
   | "cultural-recomposition";
 
-export type EvidenceReviewStatus = "reviewed" | "rule-screened" | "automatic";
+export type EvidenceReviewStatus =
+  | "reviewed"
+  | "ai-reviewed"
+  | "rule-screened"
+  | "automatic";
 export type RecommendationEligibility =
   | "recommendable"
   | "provisional"
