@@ -49,6 +49,7 @@ export function parseFactoryArgs(
   for (let index = 0; index < args.length; index += 1) {
     const arg = args[index];
     switch (arg) {
+      case "--": break;
       case "--live": live = true; dryRun = false; break;
       case "--dry-run": dryRun = true; live = false; break;
       case "--smoke": smoke = true; live = true; dryRun = false; break;
@@ -111,4 +112,3 @@ export function parseFactoryArgs(
     },
   };
 }
-

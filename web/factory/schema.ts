@@ -1,7 +1,10 @@
 import type {
   AdversarialReview,
   CandidateProposal,
+  FactoryCheckpoint,
   FactoryCandidateFile,
+  FactoryManifest,
+  FactoryReviewReport,
   NameReview,
   NameReviewScores,
   ReviewDecision,
@@ -198,6 +201,56 @@ export function parseFactoryCandidateFile(value: unknown): FactoryCandidateFile 
   return item as unknown as FactoryCandidateFile;
 }
 
+export function parseFactoryCheckpoint(value: unknown): FactoryCheckpoint {
+  const item = record(value, "候选工厂检查点");
+  if (
+    item.schemaVersion !== FACTORY_SCHEMA_VERSION ||
+    typeof item.runId !== "string" ||
+    typeof item.corpusVersion !== "string" ||
+    typeof item.promptVersion !== "string" ||
+    !Array.isArray(item.completedBatchIds) ||
+    !Array.isArray(item.proposals) ||
+    !Array.isArray(item.reviewItems)
+  ) {
+    throw new TypeError("候选工厂检查点格式无效。");
+  }
+  return item as unknown as FactoryCheckpoint;
+}
+
+export function parseFactoryReviewReport(value: unknown): FactoryReviewReport {
+  const item = record(value, "候选审核报告");
+  if (
+    item.schemaVersion !== FACTORY_SCHEMA_VERSION ||
+    item.model !== FACTORY_MODEL ||
+    typeof item.runId !== "string" ||
+    typeof item.corpusVersion !== "string" ||
+    !Array.isArray(item.items) ||
+    typeof item.generatedCount !== "number" ||
+    typeof item.publishedCount !== "number" ||
+    typeof item.manualReviewCount !== "number" ||
+    typeof item.rejectedCount !== "number"
+  ) {
+    throw new TypeError("候选审核报告格式无效。");
+  }
+  return item as unknown as FactoryReviewReport;
+}
+
+export function parseFactoryManifest(value: unknown): FactoryManifest {
+  const item = record(value, "候选工厂清单");
+  if (
+    item.schemaVersion !== FACTORY_SCHEMA_VERSION ||
+    item.model !== FACTORY_MODEL ||
+    typeof item.runId !== "string" ||
+    typeof item.corpusVersion !== "string" ||
+    typeof item.maxCny !== "number" ||
+    typeof item.estimatedMicroCny !== "number" ||
+    !Array.isArray(item.requests)
+  ) {
+    throw new TypeError("候选工厂清单格式无效。");
+  }
+  return item as unknown as FactoryManifest;
+}
+
 export const proposalListJsonSchema = {
   type: "object",
   additionalProperties: false,
@@ -319,4 +372,3 @@ export const adversarialReviewListJsonSchema = {
     },
   },
 } as const;
-

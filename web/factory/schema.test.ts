@@ -82,10 +82,9 @@ describe("候选工厂 CLI 配置", () => {
   });
 
   it("支持显式 live 参数并拒绝未知选项", () => {
-    expect(parseFactoryArgs(["--live", "--target", "350"], { cwd: "/repo/web", env: {} }))
+    expect(parseFactoryArgs(["--", "--live", "--target", "350"], { cwd: "/repo/web", env: {} }))
       .toMatchObject({ live: true, dryRun: false, target: 350 });
     expect(() => parseFactoryArgs(["--secret-key", "nope"], { cwd: "/repo/web", env: {} }))
       .toThrow(/未知参数/);
   });
 });
-
