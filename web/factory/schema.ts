@@ -242,6 +242,8 @@ export function parseFactoryManifest(value: unknown): FactoryManifest {
     item.model !== FACTORY_MODEL ||
     typeof item.runId !== "string" ||
     typeof item.corpusVersion !== "string" ||
+    (item.status !== "completed" && item.status !== "failed") ||
+    (item.error !== undefined && typeof item.error !== "string") ||
     typeof item.maxCny !== "number" ||
     typeof item.estimatedMicroCny !== "number" ||
     !Array.isArray(item.requests)

@@ -117,7 +117,10 @@ export async function runFactoryPipeline(options: RunPipelineOptions): Promise<P
   const selectedPassages = selectDiversePassages(corpus.passages, {
     passagesPerBook: config.passagesPerBook,
   });
-  const sourceBatches = createPassageBatches(selectedPassages, config.batchSize);
+  const allSourceBatches = createPassageBatches(selectedPassages, config.batchSize);
+  // Smoke is an end-to-end connectivity/format check, not a small production run.
+  // Keep it to one source batch (then at most one request for each review stage).
+  const sourceBatches = config.smoke ? allSourceBatches.slice(0, 1) : allSourceBatches;
   const completedBatchIds = new Set(options.checkpoint?.completedBatchIds ?? []);
   const proposals: CandidateProposal[] = [...(options.checkpoint?.proposals ?? [])];
 

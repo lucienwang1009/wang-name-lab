@@ -217,6 +217,8 @@ export interface FactoryManifest {
   promptVersion: string;
   corpusVersion: string;
   dryRun: boolean;
+  status: "completed" | "failed";
+  error?: string;
   maxCny: number;
   pricingUsdPerMillion: FactoryRunConfig["pricingUsdPerMillion"];
   cnyPerUsd: number;
@@ -258,4 +260,3 @@ export interface CandidateFeatureInput {
 }
 
 export type FactoryFeatureVector = NameFeatureVector;
-

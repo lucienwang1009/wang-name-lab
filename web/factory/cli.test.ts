@@ -169,4 +169,28 @@ describe("本地候选工厂 CLI", () => {
     });
     expect(logs.join("\n")).toContain("budget<=1.00 CNY");
   });
+
+  it("失败时也原子写出脱敏的费用清单", async () => {
+    const root = await directory();
+    const secret = `sk-${"z".repeat(24)}`;
+    const failingGateway: FactoryModelGateway = {
+      async structured() {
+        throw new Error(`upstream failed for ${secret}`);
+      },
+    };
+    await expect(runFactoryCli([
+      ...paths(root),
+      "--smoke",
+      "--run-id", "failed-smoke",
+    ], {
+      cwd: root,
+      env: {},
+      loadCorpus: async () => corpus,
+      gateway: failingGateway,
+      log: vi.fn(),
+    })).rejects.toThrow(/upstream failed/u);
+    const manifest = await readFile(join(root, "reports/failed-smoke/manifest.json"), "utf8");
+    expect(manifest).toContain('"status": "failed"');
+    expect(manifest).not.toContain(secret);
+  });
 });

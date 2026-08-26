@@ -120,6 +120,30 @@ function gateway({ rejectName }: { rejectName?: string } = {}) {
 }
 
 describe("候选工厂分阶段流水线", () => {
+  it("smoke 只取一个生成批次再完成审核链", async () => {
+    const manyBooksCorpus: LoadedFactoryCorpus = {
+      corpusVersion: "many-books-v1",
+      books: Array.from({ length: 6 }, (_, index) => ({
+        id: index === 0 ? "shi-jing" : `z-book-${index}`,
+        title: `《测试${index}》`,
+        category: "经",
+        period: "先秦",
+        priority: 1,
+      })),
+      passages: Array.from({ length: 6 }, (_, index) => ({
+        ...passages[0]!,
+        id: index === 0 ? passages[0]!.id : `z-book-${index}/1`,
+        bookId: index === 0 ? "shi-jing" : `z-book-${index}`,
+        bookTitle: `《测试${index}》`,
+      })),
+    };
+    const fake = gateway();
+    const smokeConfig = parseFactoryArgs(["--smoke", "--run-id", "smoke-fixture"], { cwd: "/repo/web", env: {} });
+    await runFactoryPipeline({ config: smokeConfig, corpus: manyBooksCorpus, gateway: fake.gateway });
+    expect(fake.requests.filter((request) => request.role === "candidate-generator")).toHaveLength(1);
+    expect(fake.requests.length).toBeLessThanOrEqual(4);
+  });
+
   it("先用校准预算跑首批，首批全数硬失败时停止扩量", async () => {
     const badGateway: FactoryModelGateway = {
       async structured<T>(request: StructuredRequest<T>) {

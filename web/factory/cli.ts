@@ -17,7 +17,7 @@ import {
   parseFactoryManifest,
   parseFactoryReviewReport,
 } from "./schema.ts";
-import { atomicWriteJson, JsonFileCache, readJsonIfExists } from "./storage.ts";
+import { atomicWriteJson, JsonFileCache, readJsonIfExists, redactSecrets } from "./storage.ts";
 import type {
   FactoryCheckpoint,
   FactoryManifest,
@@ -120,6 +120,8 @@ function manifest(
   corpusVersion: string,
   startedAt: string,
   completedAt: string,
+  status: FactoryManifest["status"],
+  error?: string,
 ): FactoryManifest {
   return {
     schemaVersion: FACTORY_SCHEMA_VERSION,
@@ -130,6 +132,8 @@ function manifest(
     promptVersion: config.promptVersion,
     corpusVersion,
     dryRun: false,
+    status,
+    ...(error ? { error } : {}),
     maxCny: config.maxCny,
     pricingUsdPerMillion: config.pricingUsdPerMillion,
     cnyPerUsd: config.cnyPerUsd,
@@ -168,20 +172,37 @@ export async function runFactoryCli(
     apiKey: env.DEEPSEEK_API_KEY ?? "",
   });
   const previousCheckpoint = await loadCheckpoint(config);
-  log(`Live run ${config.runId}: model=${config.model}, budget<=${config.maxCny.toFixed(2)} CNY.`);
-  const result = await runFactoryPipeline({
-    config,
-    corpus,
-    gateway,
-    checkpoint: previousCheckpoint,
-    now: dependencies.now,
-    onCheckpoint: async (value) => {
-      await atomicWriteJson(checkpointPath(config), value, parseFactoryCheckpoint);
-    },
-  });
-  const completedAt = (dependencies.now?.() ?? new Date()).toISOString();
-  const runManifest = manifest(config, ledger, corpus.corpusVersion, startedAt, completedAt);
   const reports = reportDirectory(config);
+  log(`Live run ${config.runId}: model=${config.model}, budget<=${config.maxCny.toFixed(2)} CNY.`);
+  let result;
+  try {
+    result = await runFactoryPipeline({
+      config,
+      corpus,
+      gateway,
+      checkpoint: previousCheckpoint,
+      now: dependencies.now,
+      onCheckpoint: async (value) => {
+        await atomicWriteJson(checkpointPath(config), value, parseFactoryCheckpoint);
+      },
+    });
+  } catch (error) {
+    const completedAt = (dependencies.now?.() ?? new Date()).toISOString();
+    const safeMessage = redactSecrets(error instanceof Error ? error.message : String(error)).slice(0, 1_000);
+    const failedManifest = manifest(
+      config,
+      ledger,
+      corpus.corpusVersion,
+      startedAt,
+      completedAt,
+      "failed",
+      safeMessage,
+    );
+    await atomicWriteJson(join(reports, "manifest.json"), failedManifest, parseFactoryManifest);
+    throw error;
+  }
+  const completedAt = (dependencies.now?.() ?? new Date()).toISOString();
+  const runManifest = manifest(config, ledger, corpus.corpusVersion, startedAt, completedAt, "completed");
   await atomicWriteJson(config.approvedOutput, result.candidateFile, parseFactoryCandidateFile);
   await atomicWriteJson(config.publicPreviewOutput, result.candidateFile, parseFactoryCandidateFile);
   await atomicWriteJson(join(reports, "review-report.json"), result.report, parseFactoryReviewReport);
@@ -205,4 +226,3 @@ if (import.meta.url === invokedPath) {
     process.exitCode = 1;
   });
 }
-

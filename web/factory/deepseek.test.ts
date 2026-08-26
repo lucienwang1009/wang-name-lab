@@ -102,6 +102,26 @@ describe("DeepSeek Responses API 客户端", () => {
     expect(ledger.records.at(-1)?.cached).toBe(true);
   });
 
+  it("缓存原始 JSON，解析器返回转换结果时仍可再次命中", async () => {
+    const fetcher = vi.fn<FactoryFetch>(async (_input, _init) => apiResponse({ items: ["令仪"] }));
+    const { client, ledger } = await setup(fetcher);
+    const transformingRequest = {
+      ...request,
+      parse(value: unknown) {
+        if (
+          typeof value !== "object" ||
+          value === null ||
+          !Array.isArray((value as { items?: unknown }).items)
+        ) throw new TypeError("items missing");
+        return (value as { items: string[] }).items;
+      },
+    };
+    await expect(client.structured(transformingRequest)).resolves.toEqual(["令仪"]);
+    await expect(client.structured(transformingRequest)).resolves.toEqual(["令仪"]);
+    expect(fetcher).toHaveBeenCalledTimes(1);
+    expect(ledger.records.at(-1)?.cached).toBe(true);
+  });
+
   it("对 429 有界退避，但对鉴权错误不重试", async () => {
     let calls = 0;
     const retryingFetcher = vi.fn<FactoryFetch>(async (_input, _init) => {
@@ -124,6 +144,38 @@ describe("DeepSeek Responses API 客户端", () => {
     const auth = await setup(authFetcher);
     await expect(auth.client.structured(request)).rejects.toThrow(/401/);
     expect(authFetcher).toHaveBeenCalledTimes(1);
+  });
+
+  it("incomplete 会按实际 usage 计费并扩大输出上限后重试", async () => {
+    let calls = 0;
+    const fetcher = vi.fn<FactoryFetch>(async (_input, _init) => {
+      calls += 1;
+      if (calls === 1) {
+        return {
+          ok: true,
+          status: 200,
+          json: async () => ({
+            status: "incomplete",
+            incomplete_details: { reason: "max_output_tokens" },
+            output: [],
+            usage: { input_tokens: 50, output_tokens: 100 },
+          }),
+          text: async () => "",
+        };
+      }
+      return apiResponse({ ok: true });
+    });
+    const { client, ledger, sleep } = await setup(fetcher);
+    await expect(client.structured(request)).resolves.toEqual({ ok: true });
+    expect(fetcher).toHaveBeenCalledTimes(2);
+    expect(sleep).toHaveBeenCalledTimes(1);
+    expect(ledger.records).toHaveLength(2);
+    expect(ledger.records[0]?.usage).toMatchObject({ inputTokens: 50, outputTokens: 100 });
+    expect(ledger.records[1]?.phase).toBe("retry");
+    const firstBody = JSON.parse(fetcher.mock.calls[0]?.[1].body ?? "{}") as { max_output_tokens?: number };
+    const secondBody = JSON.parse(fetcher.mock.calls[1]?.[1].body ?? "{}") as { max_output_tokens?: number };
+    expect(firstBody.max_output_tokens).toBe(100);
+    expect(secondBody.max_output_tokens).toBe(200);
   });
 
   it("结构化输出解析失败时只进行一次定向修复", async () => {

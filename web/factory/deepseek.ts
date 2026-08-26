@@ -33,12 +33,13 @@ export interface StructuredRequest<T> {
 }
 
 interface CachedStructuredResponse {
-  schemaVersion: 1;
+  schemaVersion: 2;
   value: unknown;
 }
 
 interface DeepSeekResponse {
   status: string;
+  incomplete_details?: { reason?: string } | null;
   output: Array<{
     type?: string;
     content?: Array<{ type?: string; text?: string }>;
@@ -55,7 +56,7 @@ function parseCached(value: unknown): CachedStructuredResponse {
   if (
     typeof value !== "object" ||
     value === null ||
-    (value as { schemaVersion?: unknown }).schemaVersion !== 1 ||
+    (value as { schemaVersion?: unknown }).schemaVersion !== 2 ||
     !("value" in value)
   ) {
     throw new TypeError("DeepSeek 缓存格式无效。");
@@ -152,6 +153,7 @@ export class DeepSeekClient {
 
   async structured<T>(request: StructuredRequest<T>): Promise<T> {
     const keyMaterial = {
+      cacheSchemaVersion: 2,
       model: this.#config.model,
       promptVersion: this.#config.promptVersion,
       role: request.role,
@@ -176,12 +178,16 @@ export class DeepSeekClient {
 
     const result = await this.#requestWithRetry(request, cacheKey);
     let parsed: T;
+    let rawValue: unknown;
     try {
-      parsed = request.parse(JSON.parse(result.text) as unknown);
+      rawValue = JSON.parse(result.text) as unknown;
+      parsed = request.parse(rawValue);
     } catch (error) {
-      parsed = await this.#repairJson(request, result.text, safeError(error), cacheKey);
+      const repaired = await this.#repairJson(request, result.text, safeError(error), cacheKey);
+      parsed = repaired.parsed;
+      rawValue = repaired.rawValue;
     }
-    await this.#cache.set(cacheKey, { schemaVersion: 1, value: parsed }, parseCached);
+    await this.#cache.set(cacheKey, { schemaVersion: 2, value: rawValue }, parseCached);
     return parsed;
   }
 
@@ -194,11 +200,12 @@ export class DeepSeekClient {
     const input = override?.input ?? request.input;
     const role = override?.role ?? request.role;
     const firstPhase = override?.phase ?? request.phase;
-    const maxOutputTokens = request.maxOutputTokens ?? 4_096;
+    const baseMaxOutputTokens = request.maxOutputTokens ?? 4_096;
     let lastError: Error | undefined;
 
     for (let attempt = 0; attempt < this.#maxAttempts; attempt += 1) {
       const phase = attempt === 0 ? firstPhase : "retry";
+      const maxOutputTokens = Math.min(16_384, baseMaxOutputTokens * (2 ** attempt));
       const reservation = this.#ledger.reserve(phase, {
         inputTokens: estimatedInputTokens(instructions, input),
         cachedInputTokens: 0,
@@ -245,11 +252,16 @@ export class DeepSeekClient {
           continue;
         }
         const apiResponse = parseApiResponse(await response.json());
-        if (apiResponse.status !== "completed") {
-          throw new Error(`DeepSeek 响应状态不是 completed：${apiResponse.status}`);
-        }
         const usage = tokenUsage(apiResponse);
         this.#ledger.commit(reservation, { cacheKey, role, usage });
+        if (apiResponse.status !== "completed") {
+          const reason = apiResponse.incomplete_details?.reason?.trim() || "unknown";
+          const error = new Error(`DeepSeek 响应状态不是 completed：${apiResponse.status}（${reason}）`);
+          if (apiResponse.status !== "incomplete" || attempt === this.#maxAttempts - 1) throw error;
+          lastError = error;
+          await this.#sleep(Math.min(4_000, 250 * (2 ** attempt)));
+          continue;
+        }
         return { text: outputText(apiResponse), usage };
       } catch (error) {
         this.#ledger.release(reservation);
@@ -272,7 +284,7 @@ export class DeepSeekClient {
     invalidText: string,
     parseError: Error,
     parentCacheKey: string,
-  ): Promise<T> {
+  ): Promise<{ parsed: T; rawValue: unknown }> {
     const repair = await this.#requestWithRetry(request, `${parentCacheKey}:repair`, {
       role: `${request.role}:json-repair`,
       phase: "retry",
@@ -283,7 +295,8 @@ export class DeepSeekClient {
       input: { invalidJson: invalidText },
     });
     try {
-      return request.parse(JSON.parse(repair.text) as unknown);
+      const rawValue = JSON.parse(repair.text) as unknown;
+      return { parsed: request.parse(rawValue), rawValue };
     } catch (error) {
       throw new TypeError(`DeepSeek JSON 定向修复仍然失败：${safeError(error).message}`);
     }
