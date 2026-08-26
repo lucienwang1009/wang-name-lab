@@ -1,0 +1,3429 @@
+{
+  "schemaVersion": 1,
+  "model": "deepseek-v4-flash",
+  "promptVersion": "name-factory-v10",
+  "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+  "runId": "v10-formal-48-20260826-1",
+  "createdAt": "2026-08-26T11:19:11.480Z",
+  "count": 34,
+  "candidates": [
+    {
+      "id": "personalized:徽音",
+      "surname": "王",
+      "givenName": "徽音",
+      "fullName": "王徽音",
+      "evidence": {
+        "relation": "exact-phrase",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《文选》·王仲宣公讌詩规范正文第 44 字“徽”，《文选》·王仲宣公讌詩规范正文第 45 字“音”；原文连续取字。",
+        "citations": [
+          {
+            "id": "wen-xuan/work-0073/passage-0001:徽:0",
+            "passageId": "wen-xuan/work-0073/passage-0001",
+            "matchedChar": "徽",
+            "occurrence": 0,
+            "bookId": "wen-xuan",
+            "bookTitle": "《文选》",
+            "workTitle": "王仲宣公讌詩",
+            "chapterTitle": "《文選》卷二十",
+            "quote": "昊天降豐澤，百卉挺葳蕤。涼風撤蒸暑，清雲卻炎暉。高會君子堂，並坐蔭華榱。嘉肴充圓方，旨酒盈金罍。管絃發徽音，曲度清且悲。合坐同所樂，但愬杯行遟。常聞詩人語，不醉且無歸。今日不極懽，含情欲待誰？見眷良不翅，守分豈能違。古人有遺言，君子福所綏。願我賢主人，與天享巍巍。克符周公業，奕世不可追。",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0001%20%E6%96%87%E9%81%B8-%E6%A2%81-%E8%95%AD%E7%B5%B1.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4h0001/"
+          },
+          {
+            "id": "wen-xuan/work-0073/passage-0001:音:0",
+            "passageId": "wen-xuan/work-0073/passage-0001",
+            "matchedChar": "音",
+            "occurrence": 0,
+            "bookId": "wen-xuan",
+            "bookTitle": "《文选》",
+            "workTitle": "王仲宣公讌詩",
+            "chapterTitle": "《文選》卷二十",
+            "quote": "昊天降豐澤，百卉挺葳蕤。涼風撤蒸暑，清雲卻炎暉。高會君子堂，並坐蔭華榱。嘉肴充圓方，旨酒盈金罍。管絃發徽音，曲度清且悲。合坐同所樂，但愬杯行遟。常聞詩人語，不醉且無歸。今日不極懽，含情欲待誰？見眷良不翅，守分豈能違。古人有遺言，君子福所綏。願我賢主人，與天享巍巍。克符周公業，奕世不可追。",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0001%20%E6%96%87%E9%81%B8-%E6%A2%81-%E8%95%AD%E7%B5%B1.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4h0001/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.6120000000000001,
+        "gentle": 0.49500000000000005,
+        "bright": 0.626,
+        "austere": 0.5974999999999999,
+        "modern": 0.18,
+        "pronounceable": 0.9,
+        "writable": 0.86,
+        "recognizable": 0.86,
+        "uncommon": 0.85,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 1,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng huī yīn",
+        "tones": "2-1-1",
+        "meaning": "徽音，意为美好的声誉、德音。",
+        "semanticExplanation": "“徽音”取自《文选》“管弦发徽音”，原文连续取字，证据确凿。“徽音”在古籍中常指美好的声誉、德音，与“德音”同义，但“徽音”二字搭配更显雅致，且“徽”字有美好之意，整体符合古典端雅偏好。作为姓名，“徽音”自然流畅，适合女性，且来源可复核。",
+        "pronunciationNote": "wáng huī yīn，声调2-1-1，前扬后平，韵母ui/in清晰，无碰撞。",
+        "usabilityNote": "徽音有古典出处（《诗经》），但现代使用不常见，书写简单，无谐音问题。",
+        "uncommonnessNote": "徽音作为姓名组合罕见，但字义美好，不显生僻。",
+        "primaryStyle": "classical",
+        "imageryCategory": "德音雅韵"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“徽音”与《诗经》“德音”近义，但来源不同，需注意避免与“王令仪”的“仪”字混淆。"
+        },
+        {
+          "code": "semantic-note-2",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“徽音”在姓名中可能稍显文雅，但整体可接受。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0343-94dbb8736c28:pointer-e3c3eaaf3407c918",
+        "semantic": {
+          "semanticScore": 0.9,
+          "evidenceScore": 0.95,
+          "explanation": "“徽音”取自《文选》“管弦发徽音”，原文连续取字，证据确凿。“徽音”在古籍中常指美好的声誉、德音，与“德音”同义，但“徽音”二字搭配更显雅致，且“徽”字有美好之意，整体符合古典端雅偏好。作为姓名，“徽音”自然流畅，适合女性，且来源可复核。"
+        },
+        "name": {
+          "phonology": 0.9,
+          "nameFeel": 0.92,
+          "femininity": 0.9,
+          "usability": 0.86,
+          "distinctiveness": 0.85
+        },
+        "adversarialCritique": "徽音有诗经出处，端雅且女性化明确，声调平缓流畅。虽与林徽因关联可能带来熟悉感，但整体独立成立，适合长期使用。"
+      }
+    },
+    {
+      "id": "personalized:柔嘉",
+      "surname": "王",
+      "givenName": "柔嘉",
+      "fullName": "王柔嘉",
+      "evidence": {
+        "relation": "exact-phrase",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《国语》·KR2e0001_002规范正文第 24 字“柔”，《国语》·KR2e0001_002规范正文第 25 字“嘉”；原文连续取字。",
+        "citations": [
+          {
+            "id": "guo-yu/work-0002/passage-0010:柔:0",
+            "passageId": "guo-yu/work-0002/passage-0010",
+            "matchedChar": "柔",
+            "occurrence": 0,
+            "bookId": "guo-yu",
+            "bookTitle": "《国语》",
+            "workTitle": "KR2e0001_002",
+            "chapterTitle": "KR2e0001_002",
+            "quote": "之一二兄弟以時相見將龢協典禮以示民訓則無亦擇其柔嘉選其馨香潔其酒醴品其百籩修其簠簋奉其犧象出其尊彛陳其鼎俎靜其巾羃敬其祓除體解節折而共飲食之於是乎有折俎加豆酬幣宴貨以示容合好胡有孑然其效戎翟也夫王公諸侯之有飫也將以講事成章建大徳昭大物也故立成禮烝而已飫以顯物宴以食好嵗飫不倦時宴不淫月㑹旬修日完不忘服物昭庸采飾顯明文章比象周旋序順容貌有崇威儀有則五味實氣五色精",
+            "sourceUrl": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR2e0001.jsonl",
+            "verificationUrl": "https://www.kanripo.org/text/KR2e0001/"
+          },
+          {
+            "id": "guo-yu/work-0002/passage-0010:嘉:0",
+            "passageId": "guo-yu/work-0002/passage-0010",
+            "matchedChar": "嘉",
+            "occurrence": 0,
+            "bookId": "guo-yu",
+            "bookTitle": "《国语》",
+            "workTitle": "KR2e0001_002",
+            "chapterTitle": "KR2e0001_002",
+            "quote": "之一二兄弟以時相見將龢協典禮以示民訓則無亦擇其柔嘉選其馨香潔其酒醴品其百籩修其簠簋奉其犧象出其尊彛陳其鼎俎靜其巾羃敬其祓除體解節折而共飲食之於是乎有折俎加豆酬幣宴貨以示容合好胡有孑然其效戎翟也夫王公諸侯之有飫也將以講事成章建大徳昭大物也故立成禮烝而已飫以顯物宴以食好嵗飫不倦時宴不淫月㑹旬修日完不忘服物昭庸采飾顯明文章比象周旋序順容貌有崇威儀有則五味實氣五色精",
+            "sourceUrl": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR2e0001.jsonl",
+            "verificationUrl": "https://www.kanripo.org/text/KR2e0001/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.96,
+        "gentle": 0.5225,
+        "bright": 0.62,
+        "austere": 0.58,
+        "modern": 0.18,
+        "pronounceable": 0.9,
+        "writable": 0.85,
+        "recognizable": 0.85,
+        "uncommon": 0.8,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 1,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng róu jiā",
+        "tones": "2-2-1",
+        "meaning": "柔嘉，柔和善美。",
+        "semanticExplanation": "两字连续取自《国语》'择其柔嘉'，'柔嘉'为原文成词，意为柔和善美，证据确凿，语义清晰，符合女性名端雅偏好。",
+        "pronunciationNote": "王柔嘉 wáng róu jiā，声调2-2-1，平缓柔和，声母韵母无碰撞，读来温婉流畅。",
+        "usabilityNote": "“柔嘉”出自《诗经·大雅·抑》“仲山甫之德，柔嘉维则”，古典有据，且日常使用无歧义，适合长期称呼。",
+        "uncommonnessNote": "“柔嘉”不常见但非生僻，兼具古典韵味与女性柔美，少见度适中。",
+        "primaryStyle": "graceful",
+        "imageryCategory": "美德"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "无实质风险，但'柔嘉'较为常见，可能略显普通"
+        },
+        {
+          "code": "name-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“柔”字可能略显柔弱，但整体平衡良好"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0016-94ac4a022112:pointer-b24b35c9c0a6f46f",
+        "semantic": {
+          "semanticScore": 0.9,
+          "evidenceScore": 0.95,
+          "explanation": "两字连续取自《国语》'择其柔嘉'，'柔嘉'为原文成词，意为柔和善美，证据确凿，语义清晰，符合女性名端雅偏好。"
+        },
+        "name": {
+          "phonology": 0.9,
+          "nameFeel": 0.9,
+          "femininity": 0.95,
+          "usability": 0.85,
+          "distinctiveness": 0.8
+        },
+        "adversarialCritique": "柔嘉温婉端雅，出处可靠，声调柔和流畅。柔字虽略显柔弱，但整体平衡良好，作为女孩名自然成立，无明显实质问题。"
+      }
+    },
+    {
+      "id": "personalized:兰芷",
+      "surname": "王",
+      "givenName": "兰芷",
+      "fullName": "王兰芷",
+      "evidence": {
+        "relation": "exact-phrase",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《史记》·KR2a0001_500规范正文第 102 字“兰”，《史记》·KR2a0001_500规范正文第 103 字“芷”；原文连续取字。",
+        "citations": [
+          {
+            "id": "shi-ji/work-0014/passage-1047:兰:0",
+            "passageId": "shi-ji/work-0014/passage-1047",
+            "matchedChar": "兰",
+            "occurrence": 0,
+            "bookId": "shi-ji",
+            "bookTitle": "《史记》",
+            "workTitle": "KR2a0001_500",
+            "chapterTitle": "KR2a0001_500",
+            "quote": "耳名曰雲夢雲夢者方九百里其中有山焉其山則盤紆岪鬱隆崇嵂崒岑巖參差日月蔽虧交錯糾紛上干青雲罷池陂陁下屬江河其土則丹青赭堊雌黃白坿錫碧金銀眾色炫燿照爛龍鱗其石則赤玉玫瑰琳珉琨珸瑊𤨙玄厲碝石武夫其東則有蕙圃衡蘭芷若射干穹窮昌蒲江離麋蕪諸蔗猼且其南則有平原廣澤登降陁靡案衍壇曼緣以大江限以巫山其高燥則生葴䔮苞荔薛莎青薠其卑溼則生藏莨蒹葭東薔雕胡蓮藕菰蘆菴䕡軒芋眾物居之",
+            "sourceUrl": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR2a0001.jsonl",
+            "verificationUrl": "https://www.kanripo.org/text/KR2a0001/"
+          },
+          {
+            "id": "shi-ji/work-0014/passage-1047:芷:0",
+            "passageId": "shi-ji/work-0014/passage-1047",
+            "matchedChar": "芷",
+            "occurrence": 0,
+            "bookId": "shi-ji",
+            "bookTitle": "《史记》",
+            "workTitle": "KR2a0001_500",
+            "chapterTitle": "KR2a0001_500",
+            "quote": "耳名曰雲夢雲夢者方九百里其中有山焉其山則盤紆岪鬱隆崇嵂崒岑巖參差日月蔽虧交錯糾紛上干青雲罷池陂陁下屬江河其土則丹青赭堊雌黃白坿錫碧金銀眾色炫燿照爛龍鱗其石則赤玉玫瑰琳珉琨珸瑊𤨙玄厲碝石武夫其東則有蕙圃衡蘭芷若射干穹窮昌蒲江離麋蕪諸蔗猼且其南則有平原廣澤登降陁靡案衍壇曼緣以大江限以巫山其高燥則生葴䔮苞荔薛莎青薠其卑溼則生藏莨蒹葭東薔雕胡蓮藕菰蘆菴䕡軒芋眾物居之",
+            "sourceUrl": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR2a0001.jsonl",
+            "verificationUrl": "https://www.kanripo.org/text/KR2a0001/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.6392,
+        "gentle": 0.517,
+        "bright": 0.617,
+        "austere": 0.5974999999999999,
+        "modern": 0.18,
+        "pronounceable": 0.9,
+        "writable": 0.84,
+        "recognizable": 0.84,
+        "uncommon": 0.85,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 1,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng lán zhǐ",
+        "tones": "2-2-3",
+        "meaning": "兰芷，兰草与白芷，皆香草。",
+        "semanticExplanation": "“兰芷”取自《史记》“衡兰芷若”，原文连续取字，证据确凿。“兰芷”为香草并称，在《楚辞》中常见，喻品性高洁，古典端雅，适合女孩名。",
+        "pronunciationNote": "wáng lán zhǐ，声调2-2-3，平仄相间，节奏舒缓，“兰”与“芷”声母l与zh无碰撞，读来清雅。",
+        "usabilityNote": "“兰芷”皆为香草，意象高洁，古典韵味浓厚，作为女性名字自然柔美，与“王”姓搭配和谐，适合长期使用。",
+        "uncommonnessNote": "“兰芷”虽源自《楚辞》，但作为人名并不常见，具有较高的辨识度，且字面清雅，不显生僻。",
+        "primaryStyle": "classical",
+        "imageryCategory": "植物"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“兰芷”在古籍中常见，但作为人名不显俗套，反而有古典韵味"
+        },
+        {
+          "code": "semantic-note-2",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“芷”字可能稍显生僻，但可接受"
+        },
+        {
+          "code": "name-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“兰芷”的古典意象较强，可能被误认为刻意追求古风，但整体仍在可接受范围内。"
+        },
+        {
+          "code": "name-note-2",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "名字偏文雅，可能不适合偏好现代简约风格的家庭。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0015-a8c7bc197b8f:pointer-bdbcf4c5d67aa60f",
+        "semantic": {
+          "semanticScore": 0.9,
+          "evidenceScore": 0.95,
+          "explanation": "“兰芷”取自《史记》“衡兰芷若”，原文连续取字，证据确凿。“兰芷”为香草并称，在《楚辞》中常见，喻品性高洁，古典端雅，适合女孩名。"
+        },
+        "name": {
+          "phonology": 0.9,
+          "nameFeel": 0.89,
+          "femininity": 0.94,
+          "usability": 0.84,
+          "distinctiveness": 0.85
+        },
+        "adversarialCritique": "兰芷香草并称，古典端雅，与王令仪气质相近。芷字稍生僻但可接受，整体自然，无实质审美问题。"
+      }
+    },
+    {
+      "id": "personalized:杜若",
+      "surname": "王",
+      "givenName": "杜若",
+      "fullName": "王杜若",
+      "evidence": {
+        "relation": "exact-phrase",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《楚辞》·湘夫人规范正文第 5 字“杜”，《楚辞》·湘夫人规范正文第 6 字“若”；原文连续取字。",
+        "citations": [
+          {
+            "id": "chu-ci/work-0005/passage-0019:杜:0",
+            "passageId": "chu-ci/work-0005/passage-0019",
+            "matchedChar": "杜",
+            "occurrence": 0,
+            "bookId": "chu-ci",
+            "bookTitle": "《楚辞》",
+            "workTitle": "湘夫人",
+            "chapterTitle": "九歌",
+            "quote": "搴汀洲兮杜若，将以遗兮远者",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E6%A5%9A%E8%BE%9E/chuci.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E6%A5%9A%E8%BE%AD"
+          },
+          {
+            "id": "chu-ci/work-0005/passage-0019:若:0",
+            "passageId": "chu-ci/work-0005/passage-0019",
+            "matchedChar": "若",
+            "occurrence": 0,
+            "bookId": "chu-ci",
+            "bookTitle": "《楚辞》",
+            "workTitle": "湘夫人",
+            "chapterTitle": "九歌",
+            "quote": "搴汀洲兮杜若，将以遗兮远者",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E6%A5%9A%E8%BE%9E/chuci.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E6%A5%9A%E8%BE%AD"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.6256,
+        "gentle": 0.5060000000000001,
+        "bright": 0.62,
+        "austere": 0.608,
+        "modern": 0.18,
+        "pronounceable": 0.88,
+        "writable": 0.85,
+        "recognizable": 0.85,
+        "uncommon": 0.88,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 1,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng dù ruò",
+        "tones": "2-4-4",
+        "meaning": "杜若，香草名，象征高洁芬芳。",
+        "semanticExplanation": "原文连续取字'杜若'，为香草名，出自《楚辞·湘夫人》，典故扎实，语义高洁芬芳，符合女性名字的古典雅致偏好。",
+        "pronunciationNote": "王杜若（wáng dù ruò），声调2-4-4，抑扬分明，节奏感强。杜、若声母d、r无碰撞，整体流畅。多音字“若”在姓名中固定读ruò，风险可控。",
+        "usabilityNote": "杜若是经典香草名，文化底蕴深厚，字形简洁，书写便利。作为女性名字，兼具古典雅致与自然清新，适合长期使用，不会产生时代隔阂。",
+        "uncommonnessNote": "杜若在古籍中常见，但作为人名并不泛滥，具有较高的辨识度，同时避免了生僻字，在常见与独特之间取得了良好平衡。",
+        "primaryStyle": "classical",
+        "imageryCategory": "植物"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "polyphonic-若",
+          "kind": "pronunciation",
+          "severity": "review",
+          "summary": "“若”存在多种常见读音（ruo4、re3），需确认姓名固定读法。"
+        },
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "'杜若'较为常见，但作为姓名尚可"
+        },
+        {
+          "code": "name-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“若”字存在多音，需在正式场合明确读音。"
+        },
+        {
+          "code": "name-note-2",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "杜若为植物名，可能被部分人视为过于自然意象，但整体接受度高。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0378-eea3018640bd:pointer-59dbfb7fc81016d2",
+        "semantic": {
+          "semanticScore": 0.9,
+          "evidenceScore": 0.95,
+          "explanation": "原文连续取字'杜若'，为香草名，出自《楚辞·湘夫人》，典故扎实，语义高洁芬芳，符合女性名字的古典雅致偏好。"
+        },
+        "name": {
+          "phonology": 0.88,
+          "nameFeel": 0.9,
+          "femininity": 0.92,
+          "usability": 0.85,
+          "distinctiveness": 0.88
+        },
+        "adversarialCritique": "杜若为经典香草名，出处扎实，音韵流畅，字形简洁。虽较常见，但作为姓名自然端雅，不显生造，适合长期使用。"
+      }
+    },
+    {
+      "id": "personalized:纯熙",
+      "surname": "王",
+      "givenName": "纯熙",
+      "fullName": "王纯熙",
+      "evidence": {
+        "relation": "exact-phrase",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《诗经》·酌规范正文第 2 字“纯”，《诗经》·酌规范正文第 3 字“熙”；原文连续取字。",
+        "citations": [
+          {
+            "id": "shi-jing/work-0293/passage-0002:纯:0",
+            "passageId": "shi-jing/work-0293/passage-0002",
+            "matchedChar": "纯",
+            "occurrence": 0,
+            "bookId": "shi-jing",
+            "bookTitle": "《诗经》",
+            "workTitle": "酌",
+            "chapterTitle": "周颂·闵予小子之什",
+            "quote": "时纯熙矣，是用大介。",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E8%AF%97%E7%BB%8F/shijing.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E8%A9%A9%E7%B6%93"
+          },
+          {
+            "id": "shi-jing/work-0293/passage-0002:熙:0",
+            "passageId": "shi-jing/work-0293/passage-0002",
+            "matchedChar": "熙",
+            "occurrence": 0,
+            "bookId": "shi-jing",
+            "bookTitle": "《诗经》",
+            "workTitle": "酌",
+            "chapterTitle": "周颂·闵予小子之什",
+            "quote": "时纯熙矣，是用大介。",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E8%AF%97%E7%BB%8F/shijing.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E8%A9%A9%E7%B6%93"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.6120000000000001,
+        "gentle": 0.49500000000000005,
+        "bright": 0.62,
+        "austere": 0.5974999999999999,
+        "modern": 0.18,
+        "pronounceable": 0.9,
+        "writable": 0.85,
+        "recognizable": 0.85,
+        "uncommon": 0.85,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 1,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng chún xī",
+        "tones": "2-2-1",
+        "meaning": "纯熙，光明盛大之意。",
+        "semanticExplanation": "“纯熙”取自《诗经·周颂·酌》“时纯熙矣”，原文连续取字，“纯熙”意为光明盛大，语义完整，出处权威，作为女孩名端雅大气，符合古典偏好。",
+        "pronunciationNote": "王纯熙 wáng chún xī，声调2-2-1，平缓上升，声母韵母和谐，读来清朗。",
+        "usabilityNote": "“纯熙”出自《诗经·周颂·酌》“于铄王师，遵养时晦，时纯熙矣”，意为光明，古典有据，且日常使用无歧义。",
+        "uncommonnessNote": "“纯熙”不常见但非生僻，兼具古典与明亮感，少见度适中。",
+        "primaryStyle": "classical",
+        "imageryCategory": "光明气象"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“纯熙”偏大气，可能略中性，但无实质语义风险"
+        },
+        {
+          "code": "name-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“纯”字可能略显直白，但整体优雅"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0052-d9687e800b83:pointer-065b06300ce8ae51",
+        "semantic": {
+          "semanticScore": 0.9,
+          "evidenceScore": 0.95,
+          "explanation": "“纯熙”取自《诗经·周颂·酌》“时纯熙矣”，原文连续取字，“纯熙”意为光明盛大，语义完整，出处权威，作为女孩名端雅大气，符合古典偏好。"
+        },
+        "name": {
+          "phonology": 0.9,
+          "nameFeel": 0.9,
+          "femininity": 0.9,
+          "usability": 0.85,
+          "distinctiveness": 0.85
+        },
+        "adversarialCritique": "纯熙出处权威，光明盛大之意端雅大气，声调清朗。虽略偏中性，但整体气质与王令仪相符，作为女孩名独立成立。"
+      }
+    },
+    {
+      "id": "personalized:芸若",
+      "surname": "王",
+      "givenName": "芸若",
+      "fullName": "王芸若",
+      "evidence": {
+        "relation": "exact-phrase",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《文选》·何平叔景福殿賦规范正文第 74 字“芸”，《文选》·何平叔景福殿賦规范正文第 75 字“若”；原文连续取字。",
+        "citations": [
+          {
+            "id": "wen-xuan/work-0030/passage-0004:芸:0",
+            "passageId": "wen-xuan/work-0030/passage-0004",
+            "matchedChar": "芸",
+            "occurrence": 0,
+            "bookId": "wen-xuan",
+            "bookTitle": "《文选》",
+            "workTitle": "何平叔景福殿賦",
+            "chapterTitle": "《文選》卷十一",
+            "quote": "雖離朱之至精，猶眩曜而不能昭晣也。爾乃開南端之豁達，張筍虡之輪豳。華鍾杌其高懸，悍獸仡以儷陳。體洪剛之猛毅，聲訇磤其若震。爰有遐狄，鐐質輪菌。坐高門之側堂，彰聖主之威神。芸若充庭，槐楓被宸。綴以萬年，綷以紫榛。或以嘉名取寵，或以美材見珍。結實商秋，敷華青春。藹藹萋萋，馥馥芬芬。爾其結構，則脩梁彩制，下褰上奇。桁梧複疊，勢合形離。赩如宛虹，赫如奔螭。南距陽榮，北極幽崖。任重道遠，厥庸孔多。於是列髹彤之繡桷，垂琬琰之文璫。",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0001%20%E6%96%87%E9%81%B8-%E6%A2%81-%E8%95%AD%E7%B5%B1.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4h0001/"
+          },
+          {
+            "id": "wen-xuan/work-0030/passage-0004:若:1",
+            "passageId": "wen-xuan/work-0030/passage-0004",
+            "matchedChar": "若",
+            "occurrence": 1,
+            "bookId": "wen-xuan",
+            "bookTitle": "《文选》",
+            "workTitle": "何平叔景福殿賦",
+            "chapterTitle": "《文選》卷十一",
+            "quote": "雖離朱之至精，猶眩曜而不能昭晣也。爾乃開南端之豁達，張筍虡之輪豳。華鍾杌其高懸，悍獸仡以儷陳。體洪剛之猛毅，聲訇磤其若震。爰有遐狄，鐐質輪菌。坐高門之側堂，彰聖主之威神。芸若充庭，槐楓被宸。綴以萬年，綷以紫榛。或以嘉名取寵，或以美材見珍。結實商秋，敷華青春。藹藹萋萋，馥馥芬芬。爾其結構，則脩梁彩制，下褰上奇。桁梧複疊，勢合形離。赩如宛虹，赫如奔螭。南距陽榮，北極幽崖。任重道遠，厥庸孔多。於是列髹彤之繡桷，垂琬琰之文璫。",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0001%20%E6%96%87%E9%81%B8-%E6%A2%81-%E8%95%AD%E7%B5%B1.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4h0001/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.6120000000000001,
+        "gentle": 0.49500000000000005,
+        "bright": 0.62,
+        "austere": 0.608,
+        "modern": 0.18,
+        "pronounceable": 0.88,
+        "writable": 0.85,
+        "recognizable": 0.85,
+        "uncommon": 0.88,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 1,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng yún ruò",
+        "tones": "2-2-4",
+        "meaning": "芸若，香草名，象征芬芳高洁。",
+        "semanticExplanation": "“芸若”出自《文选·景福殿赋》“芸若充庭”，原文连续取字，为香草名，象征芬芳高洁，语义完整，古籍证据扎实，符合古典端雅偏好。",
+        "pronunciationNote": "声调2-2-4，平仄有致，读来流畅。'若'字多音风险较低，日常读ruò为主。",
+        "usabilityNote": "'芸若'为香草名，古典雅致，适合长期使用，不易产生歧义。",
+        "uncommonnessNote": "'芸若'不常见，但字义清晰，有古籍支撑，不显生僻。",
+        "primaryStyle": "classical",
+        "imageryCategory": "草木"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "polyphonic-若",
+          "kind": "pronunciation",
+          "severity": "review",
+          "summary": "“若”存在多种常见读音（ruo4、re3），需确认姓名固定读法。"
+        },
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“芸若”较为生僻，可能需解释来源，但作为姓名仍可接受。"
+        },
+        {
+          "code": "name-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "'若'字多音需注意，但日常使用影响小。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0203-7a52aa14534a:pointer-f99a76ccda242da8",
+        "semantic": {
+          "semanticScore": 0.9,
+          "evidenceScore": 0.95,
+          "explanation": "“芸若”出自《文选·景福殿赋》“芸若充庭”，原文连续取字，为香草名，象征芬芳高洁，语义完整，古籍证据扎实，符合古典端雅偏好。"
+        },
+        "name": {
+          "phonology": 0.88,
+          "nameFeel": 0.9,
+          "femininity": 0.9,
+          "usability": 0.85,
+          "distinctiveness": 0.88
+        },
+        "adversarialCritique": "芸若为香草名，出处明确，音韵平仄有致。虽稍显生僻，但字形简洁，语义高洁，作为姓名古典雅致，可长期使用。"
+      }
+    },
+    {
+      "id": "personalized:凝碧",
+      "surname": "王",
+      "givenName": "凝碧",
+      "fullName": "王凝碧",
+      "evidence": {
+        "relation": "exact-phrase",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《宋词三百首》·帝台春规范正文第 16 字“凝”，《宋词三百首》·帝台春规范正文第 17 字“碧”；原文连续取字。",
+        "citations": [
+          {
+            "id": "song-ci-san-bai-shou/work-0072/passage-0009:凝:0",
+            "passageId": "song-ci-san-bai-shou/work-0072/passage-0009",
+            "matchedChar": "凝",
+            "occurrence": 0,
+            "bookId": "song-ci-san-bai-shou",
+            "bookTitle": "《宋词三百首》",
+            "workTitle": "帝台春",
+            "chapterTitle": "李甲·帝台春",
+            "quote": "谩伫立、遍倚危阑，尽黄昏，也只是、暮云凝碧。",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E5%AE%8B%E8%AF%8D/%E5%AE%8B%E8%AF%8D%E4%B8%89%E7%99%BE%E9%A6%96.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E5%AE%8B%E8%A9%9E%E4%B8%89%E7%99%BE%E9%A6%96"
+          },
+          {
+            "id": "song-ci-san-bai-shou/work-0072/passage-0009:碧:0",
+            "passageId": "song-ci-san-bai-shou/work-0072/passage-0009",
+            "matchedChar": "碧",
+            "occurrence": 0,
+            "bookId": "song-ci-san-bai-shou",
+            "bookTitle": "《宋词三百首》",
+            "workTitle": "帝台春",
+            "chapterTitle": "李甲·帝台春",
+            "quote": "谩伫立、遍倚危阑，尽黄昏，也只是、暮云凝碧。",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E5%AE%8B%E8%AF%8D/%E5%AE%8B%E8%AF%8D%E4%B8%89%E7%99%BE%E9%A6%96.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E5%AE%8B%E8%A9%9E%E4%B8%89%E7%99%BE%E9%A6%96"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.96,
+        "gentle": 0.5060000000000001,
+        "bright": 0.62,
+        "austere": 0.587,
+        "modern": 0.18,
+        "pronounceable": 0.88,
+        "writable": 0.85,
+        "recognizable": 0.85,
+        "uncommon": 0.82,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 1,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng níng bì",
+        "tones": "2-2-4",
+        "meaning": "凝碧，凝聚的碧绿之色。",
+        "semanticExplanation": "王凝碧取自李甲《帝台春》‘暮云凝碧’，原文连续取字，来源明确。‘凝碧’意为凝聚的碧绿之色，意象清雅，作为女性名字自然端丽，不拗口，无网名感。语义与原文契合，证据扎实。",
+        "pronunciationNote": "wáng níng bì，声调2-2-4，平仄有致，韵母ang/ing/i过渡自然，无拗口或碰撞。",
+        "usabilityNote": "凝碧二字常见但组合不泛滥，书写流畅，日常使用无生僻困扰，适合长期使用。",
+        "uncommonnessNote": "凝碧有古典意象（如王维诗），但作为姓名组合仍具新鲜感，不显生僻。",
+        "primaryStyle": "graceful",
+        "imageryCategory": "自然色彩"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "‘凝碧’在唐代有‘凝碧池’典故（安史之乱中王维被囚处），可能引发历史联想，但整体偏正面，风险较低。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0317-aace1a1695ea:pointer-f8684b5443ec0dea",
+        "semantic": {
+          "semanticScore": 0.9,
+          "evidenceScore": 0.95,
+          "explanation": "王凝碧取自李甲《帝台春》‘暮云凝碧’，原文连续取字，来源明确。‘凝碧’意为凝聚的碧绿之色，意象清雅，作为女性名字自然端丽，不拗口，无网名感。语义与原文契合，证据扎实。"
+        },
+        "name": {
+          "phonology": 0.88,
+          "nameFeel": 0.9,
+          "femininity": 0.92,
+          "usability": 0.85,
+          "distinctiveness": 0.82
+        },
+        "adversarialCritique": "凝碧意象清雅，来源明确，读音流畅。凝碧池典故虽有历史联想但偏正面，整体自然端丽，适合长期使用。"
+      }
+    },
+    {
+      "id": "personalized:温雅",
+      "surname": "王",
+      "givenName": "温雅",
+      "fullName": "王温雅",
+      "evidence": {
+        "relation": "exact-phrase",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《文心雕龙》·KR4i0001规范正文第 8 字“温”，《文心雕龙》·KR4i0001规范正文第 9 字“雅”；原文连续取字。",
+        "citations": [
+          {
+            "id": "wen-xin-diao-long/work-0001/passage-0197:温:0",
+            "passageId": "wen-xin-diao-long/work-0001/passage-0197",
+            "matchedChar": "温",
+            "occurrence": 0,
+            "bookId": "wen-xin-diao-long",
+            "bookTitle": "《文心雕龙》",
+            "workTitle": "KR4i0001",
+            "chapterTitle": "KR4i0001",
+            "quote": "贊五子作歌辭義温雅萬代之儀表也啇周之世則仲虺垂誥伊尹敷訓吉甫之徒並述詩頌義固爲經文亦師矣及乎春秋大夫則修辭聘㑹磊落如琅玕之圃焜耀似縟錦之肆薳教擇楚國之令典隨㑹講晉國之禮法趙襄以文勝從饗國僑以修辭扞鄭子太叔美秀而文公孫翬善於辭令皆文名之標者也戰代任武而文士不絶諸子以道術取資屈宋以楚辭發采樂毅報書辯以義范睢上疏宻而至蘇秦歷說壯而中李斯自奏麗而動若在文世則楊班儔矣",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4i0001%20%E6%96%87%E5%BF%83%E9%9B%95%E9%BE%8D-%E6%A2%81-%E5%8A%89%E5%8B%B0.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4i0001/"
+          },
+          {
+            "id": "wen-xin-diao-long/work-0001/passage-0197:雅:0",
+            "passageId": "wen-xin-diao-long/work-0001/passage-0197",
+            "matchedChar": "雅",
+            "occurrence": 0,
+            "bookId": "wen-xin-diao-long",
+            "bookTitle": "《文心雕龙》",
+            "workTitle": "KR4i0001",
+            "chapterTitle": "KR4i0001",
+            "quote": "贊五子作歌辭義温雅萬代之儀表也啇周之世則仲虺垂誥伊尹敷訓吉甫之徒並述詩頌義固爲經文亦師矣及乎春秋大夫則修辭聘㑹磊落如琅玕之圃焜耀似縟錦之肆薳教擇楚國之令典隨㑹講晉國之禮法趙襄以文勝從饗國僑以修辭扞鄭子太叔美秀而文公孫翬善於辭令皆文名之標者也戰代任武而文士不絶諸子以道術取資屈宋以楚辭發采樂毅報書辯以義范睢上疏宻而至蘇秦歷說壯而中李斯自奏麗而動若在文世則楊班儔矣",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4i0001%20%E6%96%87%E5%BF%83%E9%9B%95%E9%BE%8D-%E6%A2%81-%E5%8A%89%E5%8B%B0.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4i0001/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.6256,
+        "gentle": 0.95,
+        "bright": 0.614,
+        "austere": 0.58,
+        "modern": 0.18,
+        "pronounceable": 0.9,
+        "writable": 0.85,
+        "recognizable": 0.85,
+        "uncommon": 0.8,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 1,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng wēn yǎ",
+        "tones": "2-1-3",
+        "meaning": "温雅，温和文雅之意。",
+        "semanticExplanation": "“温雅”出自《文心雕龙·原道》“辞义温雅”，原文连续取字，证据确凿。温和文雅之意与原文契合，语义完整自然，作为女性名字温婉雅致，符合古典端雅偏好。",
+        "pronunciationNote": "wáng wēn yǎ，声调2-1-3，平仄起伏自然，声母w与y无碰撞，读来温润流畅。",
+        "usabilityNote": "“温雅”是常见但不过时的形容词，作为人名自然贴切，气质温和文静，适合长期使用，不易产生歧义。",
+        "uncommonnessNote": "“温雅”虽非生僻，但作为人名比“丹桂”更具现代感，且与“王”姓搭配和谐，整体不显俗套。",
+        "primaryStyle": "gentle",
+        "imageryCategory": "气质"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "polyphonic-雅",
+          "kind": "pronunciation",
+          "severity": "review",
+          "summary": "“雅”存在多种常见读音（ya3、ya1），需确认姓名固定读法。"
+        },
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“温雅”较为常见，可能略显普通"
+        },
+        {
+          "code": "name-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“雅”存在多音风险（yǎ/yā），但“温雅”中读yǎ为绝对主流，风险较低。"
+        },
+        {
+          "code": "name-note-2",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "名字较为常见，可能缺乏独特性，但胜在稳妥。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0008-ff95cc665439:pointer-0e4ff1fc35d32641",
+        "semantic": {
+          "semanticScore": 0.9,
+          "evidenceScore": 0.95,
+          "explanation": "“温雅”出自《文心雕龙·原道》“辞义温雅”，原文连续取字，证据确凿。温和文雅之意与原文契合，语义完整自然，作为女性名字温婉雅致，符合古典端雅偏好。"
+        },
+        "name": {
+          "phonology": 0.9,
+          "nameFeel": 0.88,
+          "femininity": 0.92,
+          "usability": 0.85,
+          "distinctiveness": 0.8
+        },
+        "adversarialCritique": "温雅自然流畅，语义清晰，出处明确。虽略显常见，但作为姓名温婉端雅，不拗口不生造，适合长期使用。"
+      }
+    },
+    {
+      "id": "personalized:扬婉",
+      "surname": "王",
+      "givenName": "扬婉",
+      "fullName": "王扬婉",
+      "evidence": {
+        "relation": "exact-phrase",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《诗经》·野有蔓草规范正文第 6 字“扬”，《诗经》·野有蔓草规范正文第 7 字“婉”；原文连续取字。",
+        "citations": [
+          {
+            "id": "shi-jing/work-0094/passage-0002:扬:0",
+            "passageId": "shi-jing/work-0094/passage-0002",
+            "matchedChar": "扬",
+            "occurrence": 0,
+            "bookId": "shi-jing",
+            "bookTitle": "《诗经》",
+            "workTitle": "野有蔓草",
+            "chapterTitle": "国风·郑风",
+            "quote": "有美一人，清扬婉兮。",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E8%AF%97%E7%BB%8F/shijing.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E8%A9%A9%E7%B6%93"
+          },
+          {
+            "id": "shi-jing/work-0094/passage-0002:婉:0",
+            "passageId": "shi-jing/work-0094/passage-0002",
+            "matchedChar": "婉",
+            "occurrence": 0,
+            "bookId": "shi-jing",
+            "bookTitle": "《诗经》",
+            "workTitle": "野有蔓草",
+            "chapterTitle": "国风·郑风",
+            "quote": "有美一人，清扬婉兮。",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E8%AF%97%E7%BB%8F/shijing.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E8%A9%A9%E7%B6%93"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.96,
+        "gentle": 0.49500000000000005,
+        "bright": 0.614,
+        "austere": 0.58,
+        "modern": 0.18,
+        "pronounceable": 0.86,
+        "writable": 0.84,
+        "recognizable": 0.84,
+        "uncommon": 0.8,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 1,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng yáng wǎn",
+        "tones": "2-2-3",
+        "meaning": "扬，飞扬、显扬；婉，婉约、柔美。组合为“扬婉”，意指神采飞扬而又温婉柔美。",
+        "semanticExplanation": "“扬婉”取自《诗经·野有蔓草》“清扬婉兮”，原文连续取字，证据确凿。组合“扬婉”意为神采飞扬而温婉柔美，语义完整自然，古典雅致，非常适合女孩名字，符合“王令仪”的端雅偏好。",
+        "pronunciationNote": "王扬婉，声调2-2-3，抑扬有致。声母w-y-w略有重复但距离远，韵母ang-ang-an有回环感，不拗口。无多音或谐音风险。",
+        "usabilityNote": "扬婉兼具飞扬与婉约，女性气质明显，书写简单，适合长期使用。",
+        "uncommonnessNote": "扬婉组合少见，但字义明确，不显生僻。",
+        "primaryStyle": "graceful",
+        "imageryCategory": "人物风神"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“扬婉”与“杨婉”谐音，可能被误写，但影响不大。"
+        },
+        {
+          "code": "semantic-note-2",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“扬”字稍显张扬，但“婉”字平衡了整体气质。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0038-0facffa8f080:pointer-14d7ae889e184556",
+        "semantic": {
+          "semanticScore": 0.9,
+          "evidenceScore": 1,
+          "explanation": "“扬婉”取自《诗经·野有蔓草》“清扬婉兮”，原文连续取字，证据确凿。组合“扬婉”意为神采飞扬而温婉柔美，语义完整自然，古典雅致，非常适合女孩名字，符合“王令仪”的端雅偏好。"
+        },
+        "name": {
+          "phonology": 0.86,
+          "nameFeel": 0.88,
+          "femininity": 0.9,
+          "usability": 0.84,
+          "distinctiveness": 0.8
+        },
+        "adversarialCritique": "扬婉出自诗经，古典有据，音韵流畅，婉字平衡扬字之张扬，整体端雅。唯与杨婉谐音，日常或需口头澄清，属轻微取舍。"
+      }
+    },
+    {
+      "id": "personalized:逸韵",
+      "surname": "王",
+      "givenName": "逸韵",
+      "fullName": "王逸韵",
+      "evidence": {
+        "relation": "exact-phrase",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《白氏长庆集》·KR4c0069规范正文第 31 字“逸”，《白氏长庆集》·KR4c0069规范正文第 32 字“韵”；原文连续取字。",
+        "citations": [
+          {
+            "id": "bai-shi-chang-qing-ji/work-0001/passage-2267:逸:0",
+            "passageId": "bai-shi-chang-qing-ji/work-0001/passage-2267",
+            "matchedChar": "逸",
+            "occurrence": 0,
+            "bookId": "bai-shi-chang-qing-ji",
+            "bookTitle": "《白氏长庆集》",
+            "workTitle": "KR4c0069",
+            "chapterTitle": "KR4c0069",
+            "quote": "舞鬟仾赴節絃吟玉柱品酒透金盃熱朱顔忽巳酡清奏猶未闋妍詞黯先唱逸韻劉繼發鏗然雙雅音金石相磨戞和夢得洛中早春見贈七韻衆皆賞春色君獨憐春意春意竟如何老夫知此味燭餘減夜漏衾煖添朝睡恬和臺上風虚潤池邊地開遲花養艶語懶鸎含思似訝隔年齋如勸迎春醉何日同宴遊心期二月二櫻桃花下有感而作藹藹羙周宅櫻繁春日斜一爲洛下客十見池上花爛熳豈無意爲君占年華風光饒此樹歌舞勝諸家失盡白頭伴長",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4c0069%20%E7%99%BD%E6%B0%8F%E9%95%B7%E6%85%B6%E9%9B%86-%E5%94%90-%E7%99%BD%E5%B1%85%E6%98%93.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4c0069/"
+          },
+          {
+            "id": "bai-shi-chang-qing-ji/work-0001/passage-2267:韵:0",
+            "passageId": "bai-shi-chang-qing-ji/work-0001/passage-2267",
+            "matchedChar": "韵",
+            "occurrence": 0,
+            "bookId": "bai-shi-chang-qing-ji",
+            "bookTitle": "《白氏长庆集》",
+            "workTitle": "KR4c0069",
+            "chapterTitle": "KR4c0069",
+            "quote": "舞鬟仾赴節絃吟玉柱品酒透金盃熱朱顔忽巳酡清奏猶未闋妍詞黯先唱逸韻劉繼發鏗然雙雅音金石相磨戞和夢得洛中早春見贈七韻衆皆賞春色君獨憐春意春意竟如何老夫知此味燭餘減夜漏衾煖添朝睡恬和臺上風虚潤池邊地開遲花養艶語懶鸎含思似訝隔年齋如勸迎春醉何日同宴遊心期二月二櫻桃花下有感而作藹藹羙周宅櫻繁春日斜一爲洛下客十見池上花爛熳豈無意爲君占年華風光饒此樹歌舞勝諸家失盡白頭伴長",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4c0069%20%E7%99%BD%E6%B0%8F%E9%95%B7%E6%85%B6%E9%9B%86-%E5%94%90-%E7%99%BD%E5%B1%85%E6%98%93.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4c0069/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.96,
+        "gentle": 0.48400000000000004,
+        "bright": 0.62,
+        "austere": 0.587,
+        "modern": 0.18,
+        "pronounceable": 0.88,
+        "writable": 0.84,
+        "recognizable": 0.84,
+        "uncommon": 0.82,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 1,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng yì yùn",
+        "tones": "2-4-4",
+        "meaning": "逸韵，指超逸的韵味或风度。",
+        "semanticExplanation": "“逸韵”为原文连续取字，出自白居易诗“妍词黯先唱，逸韵刘继发”，原文中“逸韵”即超逸之韵味，为现成词组。组合“王逸韵”语义自然，符合姓名审美，claimedMeaning“超逸的韵味或风度”忠实于原文，证据充分。",
+        "pronunciationNote": "声调2-4-4，仄声收尾，有力而沉稳；声母y-y无碰撞，韵母i-un过渡稍紧但可接受。",
+        "usabilityNote": "“逸韵”含义超逸，音韵流畅，适合正式场合和日常使用。",
+        "uncommonnessNote": "“逸韵”不常见，但来源可考，具有古典韵味，不显生僻。",
+        "primaryStyle": "graceful",
+        "imageryCategory": "音韵文采"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“逸韵”在姓名中偏文艺化，可能略显柔美，但符合女性姓名气质"
+        },
+        {
+          "code": "semantic-note-2",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“韵”字在姓名中较常见，与“逸”组合仍具辨识度"
+        },
+        {
+          "code": "name-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“逸韵”可能稍显文雅，但无重大风险"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0190-5dc7e2f70dd6:pointer-5f05056433d6c43a",
+        "semantic": {
+          "semanticScore": 0.9,
+          "evidenceScore": 0.95,
+          "explanation": "“逸韵”为原文连续取字，出自白居易诗“妍词黯先唱，逸韵刘继发”，原文中“逸韵”即超逸之韵味，为现成词组。组合“王逸韵”语义自然，符合姓名审美，claimedMeaning“超逸的韵味或风度”忠实于原文，证据充分。"
+        },
+        "name": {
+          "phonology": 0.88,
+          "nameFeel": 0.9,
+          "femininity": 0.88,
+          "usability": 0.84,
+          "distinctiveness": 0.82
+        },
+        "adversarialCritique": "逸韵音韵沉稳，语义超逸，出处明确。虽偏文艺，但作为姓名自然不拗口，气质端雅，适合长期使用。"
+      }
+    },
+    {
+      "id": "personalized:明馨",
+      "surname": "王",
+      "givenName": "明馨",
+      "fullName": "王明馨",
+      "evidence": {
+        "relation": "clause-related",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《古文观止》·宮之奇諫假道规范正文第 6 字“明”，《古文观止》·宮之奇諫假道规范正文第 10 字“馨”；同句位置取字。",
+        "citations": [
+          {
+            "id": "gu-wen-guan-zhi/work-0010/passage-0023:明:0",
+            "passageId": "gu-wen-guan-zhi/work-0010/passage-0023",
+            "matchedChar": "明",
+            "occurrence": 0,
+            "bookId": "gu-wen-guan-zhi",
+            "bookTitle": "《古文观止》",
+            "workTitle": "宮之奇諫假道",
+            "chapterTitle": "卷一・周文",
+            "quote": "若晉取虞，而明德以薦馨香，神其吐之乎？",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E8%92%99%E5%AD%A6/guwenguanzhi.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E5%8F%A4%E6%96%87%E8%A7%80%E6%AD%A2"
+          },
+          {
+            "id": "gu-wen-guan-zhi/work-0010/passage-0023:馨:0",
+            "passageId": "gu-wen-guan-zhi/work-0010/passage-0023",
+            "matchedChar": "馨",
+            "occurrence": 0,
+            "bookId": "gu-wen-guan-zhi",
+            "bookTitle": "《古文观止》",
+            "workTitle": "宮之奇諫假道",
+            "chapterTitle": "卷一・周文",
+            "quote": "若晉取虞，而明德以薦馨香，神其吐之乎？",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E8%92%99%E5%AD%A6/guwenguanzhi.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E5%8F%A4%E6%96%87%E8%A7%80%E6%AD%A2"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.6120000000000001,
+        "gentle": 0.49500000000000005,
+        "bright": 0.614,
+        "austere": 0.587,
+        "modern": 0.18,
+        "pronounceable": 0.92,
+        "writable": 0.88,
+        "recognizable": 0.88,
+        "uncommon": 0.82,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 0.68,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng míng xīn",
+        "tones": "2-2-1",
+        "meaning": "明德馨香，德泽流芳。",
+        "semanticExplanation": "两字同出于《古文观止》宫之奇谏假道“明德以荐馨香”一句，“明”与“馨”同句，组合“明馨”意为明德馨香，语义美好，证据直接。",
+        "pronunciationNote": "wáng míng xīn，声调2-2-1，平缓流畅，无拗口或碰撞。",
+        "usabilityNote": "字形简洁，笔画适中，日常书写与称呼均无障碍。",
+        "uncommonnessNote": "“明馨”非生僻字，但组合不常见，有古典雅致感。",
+        "primaryStyle": "classical",
+        "imageryCategory": "品德"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“明馨”作为女性名字可能稍显柔美，但符合古典端雅偏好。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0331-c95b55fc6945:pointer-f808518be983df64",
+        "semantic": {
+          "semanticScore": 0.9,
+          "evidenceScore": 0.9,
+          "explanation": "两字同出于《古文观止》宫之奇谏假道“明德以荐馨香”一句，“明”与“馨”同句，组合“明馨”意为明德馨香，语义美好，证据直接。"
+        },
+        "name": {
+          "phonology": 0.92,
+          "nameFeel": 0.88,
+          "femininity": 0.9,
+          "usability": 0.88,
+          "distinctiveness": 0.82
+        },
+        "adversarialCritique": "明馨柔美清晰，声调平缓流畅，无多音谐音风险。虽出处为同句重组，但语义自然，作为女孩名独立成立，适合长期使用。"
+      }
+    },
+    {
+      "id": "personalized:曜灵",
+      "surname": "王",
+      "givenName": "曜灵",
+      "fullName": "王曜灵",
+      "evidence": {
+        "relation": "exact-phrase",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《楚辞》·天问规范正文第 5 字“曜”，《楚辞》·天问规范正文第 6 字“灵”；原文连续取字。",
+        "citations": [
+          {
+            "id": "chu-ci/work-0013/passage-0027:曜:0",
+            "passageId": "chu-ci/work-0013/passage-0027",
+            "matchedChar": "曜",
+            "occurrence": 0,
+            "bookId": "chu-ci",
+            "bookTitle": "《楚辞》",
+            "workTitle": "天问",
+            "chapterTitle": "天问",
+            "quote": "角宿未旦，曜灵安藏？",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E6%A5%9A%E8%BE%9E/chuci.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E6%A5%9A%E8%BE%AD"
+          },
+          {
+            "id": "chu-ci/work-0013/passage-0027:灵:0",
+            "passageId": "chu-ci/work-0013/passage-0027",
+            "matchedChar": "灵",
+            "occurrence": 0,
+            "bookId": "chu-ci",
+            "bookTitle": "《楚辞》",
+            "workTitle": "天问",
+            "chapterTitle": "天问",
+            "quote": "角宿未旦，曜灵安藏？",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E6%A5%9A%E8%BE%9E/chuci.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E6%A5%9A%E8%BE%AD"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.5848,
+        "gentle": 0.47300000000000003,
+        "bright": 0.95,
+        "austere": 0.587,
+        "modern": 0.18,
+        "pronounceable": 0.88,
+        "writable": 0.84,
+        "recognizable": 0.84,
+        "uncommon": 0.82,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 1,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng yào líng",
+        "tones": "2-4-2",
+        "meaning": "曜灵，指太阳的光辉，象征光明与智慧。",
+        "semanticExplanation": "“曜灵”取自《楚辞·天问》“曜灵安藏”，原文连续取字，来源权威。曜灵指太阳光辉，象征光明与智慧，语义完整，音韵庄重，符合古典端雅要求。",
+        "pronunciationNote": "王曜灵，声调2-4-2，抑扬顿挫。声母w-y-l无碰撞，韵母ao-ing清晰。无多音或谐音风险。",
+        "usabilityNote": "曜灵意为太阳光辉，光明智慧，书写稍复杂但可接受，日常使用无不便。",
+        "uncommonnessNote": "曜灵作为名字罕见，但字义优美，不显生僻。",
+        "primaryStyle": "bright",
+        "imageryCategory": "自然光辉"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“曜”字笔画较多，书写稍繁"
+        },
+        {
+          "code": "semantic-note-2",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“灵”字在现代语境中可能带网络感，但古典出处明确，风险可控"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0007-36846f07de2d:pointer-c6417eb6a3d69998",
+        "semantic": {
+          "semanticScore": 0.92,
+          "evidenceScore": 0.95,
+          "explanation": "“曜灵”取自《楚辞·天问》“曜灵安藏”，原文连续取字，来源权威。曜灵指太阳光辉，象征光明与智慧，语义完整，音韵庄重，符合古典端雅要求。"
+        },
+        "name": {
+          "phonology": 0.88,
+          "nameFeel": 0.86,
+          "femininity": 0.86,
+          "usability": 0.84,
+          "distinctiveness": 0.82
+        },
+        "adversarialCritique": "曜灵出处权威，意象光明庄重，音韵抑扬有致；虽笔画稍繁，但整体端雅大气，不输令仪，可长期使用。"
+      }
+    },
+    {
+      "id": "personalized:怀妍",
+      "surname": "王",
+      "givenName": "怀妍",
+      "fullName": "王怀妍",
+      "evidence": {
+        "relation": "exact-phrase",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《文选》·謝惠連雪賦规范正文第 162 字“怀”，《文选》·謝惠連雪賦规范正文第 163 字“妍”；原文连续取字。",
+        "citations": [
+          {
+            "id": "wen-xuan/work-0035/passage-0003:怀:1",
+            "passageId": "wen-xuan/work-0035/passage-0003",
+            "matchedChar": "怀",
+            "occurrence": 1,
+            "bookId": "wen-xuan",
+            "bookTitle": "《文选》",
+            "workTitle": "謝惠連雪賦",
+            "chapterTitle": "《文選》卷十三",
+            "quote": "若迺積素未虧，白日朝鮮，爛兮若燭龍，銜燿照昆山。爾其流滴垂冰，緣霤承隅，粲兮若馮夷，剖蚌列明珠。至夫繽紛繁騖之貌，皓旰皦絜之儀。迴散縈積之勢，飛聚凝曜之奇。固展轉而無窮，嗟難得而備知。若迺申娛翫之無已，夜幽靜而多懷。風觸楹而轉響，月承幌而通暉。酌湘吳之醇酎，御狐狢之兼衣。對庭鵾之雙舞，瞻雲雁之孤飛。踐霜雪之交積，憐枝葉之相違。馳遙思於千里，願接手而同歸。鄒陽聞之，懣然心服。有懷妍唱，敬接末曲。於是迺作而賦積雪之歌。",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0001%20%E6%96%87%E9%81%B8-%E6%A2%81-%E8%95%AD%E7%B5%B1.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4h0001/"
+          },
+          {
+            "id": "wen-xuan/work-0035/passage-0003:妍:0",
+            "passageId": "wen-xuan/work-0035/passage-0003",
+            "matchedChar": "妍",
+            "occurrence": 0,
+            "bookId": "wen-xuan",
+            "bookTitle": "《文选》",
+            "workTitle": "謝惠連雪賦",
+            "chapterTitle": "《文選》卷十三",
+            "quote": "若迺積素未虧，白日朝鮮，爛兮若燭龍，銜燿照昆山。爾其流滴垂冰，緣霤承隅，粲兮若馮夷，剖蚌列明珠。至夫繽紛繁騖之貌，皓旰皦絜之儀。迴散縈積之勢，飛聚凝曜之奇。固展轉而無窮，嗟難得而備知。若迺申娛翫之無已，夜幽靜而多懷。風觸楹而轉響，月承幌而通暉。酌湘吳之醇酎，御狐狢之兼衣。對庭鵾之雙舞，瞻雲雁之孤飛。踐霜雪之交積，憐枝葉之相違。馳遙思於千里，願接手而同歸。鄒陽聞之，懣然心服。有懷妍唱，敬接末曲。於是迺作而賦積雪之歌。",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0001%20%E6%96%87%E9%81%B8-%E6%A2%81-%E8%95%AD%E7%B5%B1.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4h0001/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.96,
+        "gentle": 0.49500000000000005,
+        "bright": 0.608,
+        "austere": 0.58,
+        "modern": 0.18,
+        "pronounceable": 0.88,
+        "writable": 0.84,
+        "recognizable": 0.84,
+        "uncommon": 0.8,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 1,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng huái yán",
+        "tones": "2-2-2",
+        "meaning": "怀与妍组合，意为心怀美好、内蕴芳华，端庄温婉。",
+        "semanticExplanation": "“怀妍”取自《文选·雪赋》“有怀妍唱，敬接末曲”，原文连续取字，证据确凿。“怀妍”意为心怀美好、内蕴芳华，语义自然，符合女孩名字的端雅温婉风格，且“妍”字有女性美，“怀”字含蓄，整体与“王令仪”风格相近。",
+        "pronunciationNote": "声调2-2-2，平缓柔和，无多音风险，声母韵母搭配和谐。",
+        "usabilityNote": "“怀妍”端庄温婉，适合长期使用，不易误读。",
+        "uncommonnessNote": "“怀妍”组合少见但自然，不显生僻。",
+        "primaryStyle": "graceful",
+        "imageryCategory": "品德气质"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“怀妍”在原文中语境为“有怀妍唱”，指心怀美好歌唱，作为名字需注意“妍唱”的特定语境，但整体无负面联想"
+        },
+        {
+          "code": "semantic-note-2",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“妍”字较常见，可能略显普通，但组合仍具古典感"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0302-2a69408e1f45:pointer-edfa6fd6941f63c3",
+        "semantic": {
+          "semanticScore": 0.9,
+          "evidenceScore": 0.95,
+          "explanation": "“怀妍”取自《文选·雪赋》“有怀妍唱，敬接末曲”，原文连续取字，证据确凿。“怀妍”意为心怀美好、内蕴芳华，语义自然，符合女孩名字的端雅温婉风格，且“妍”字有女性美，“怀”字含蓄，整体与“王令仪”风格相近。"
+        },
+        "name": {
+          "phonology": 0.88,
+          "nameFeel": 0.86,
+          "femininity": 0.9,
+          "usability": 0.84,
+          "distinctiveness": 0.8
+        },
+        "adversarialCritique": "“怀妍”端庄温婉，妍字有女性美，怀字含蓄内敛，组合自然，与“王令仪”风格相近。声调平缓柔和，无多音谐音风险，适合长期使用。唯“妍”字稍常见，但整体仍具古典感。"
+      }
+    },
+    {
+      "id": "personalized:柔惠",
+      "surname": "王",
+      "givenName": "柔惠",
+      "fullName": "王柔惠",
+      "evidence": {
+        "relation": "exact-phrase",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《诗经》·崧高规范正文第 5 字“柔”，《诗经》·崧高规范正文第 6 字“惠”；原文连续取字。",
+        "citations": [
+          {
+            "id": "shi-jing/work-0259/passage-0030:柔:0",
+            "passageId": "shi-jing/work-0259/passage-0030",
+            "matchedChar": "柔",
+            "occurrence": 0,
+            "bookId": "shi-jing",
+            "bookTitle": "《诗经》",
+            "workTitle": "崧高",
+            "chapterTitle": "大雅·荡之什",
+            "quote": "申伯之德，柔惠且直。",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E8%AF%97%E7%BB%8F/shijing.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E8%A9%A9%E7%B6%93"
+          },
+          {
+            "id": "shi-jing/work-0259/passage-0030:惠:0",
+            "passageId": "shi-jing/work-0259/passage-0030",
+            "matchedChar": "惠",
+            "occurrence": 0,
+            "bookId": "shi-jing",
+            "bookTitle": "《诗经》",
+            "workTitle": "崧高",
+            "chapterTitle": "大雅·荡之什",
+            "quote": "申伯之德，柔惠且直。",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E8%AF%97%E7%BB%8F/shijing.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E8%A9%A9%E7%B6%93"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.6120000000000001,
+        "gentle": 0.95,
+        "bright": 0.608,
+        "austere": 0.573,
+        "modern": 0.18,
+        "pronounceable": 0.88,
+        "writable": 0.85,
+        "recognizable": 0.85,
+        "uncommon": 0.78,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 1,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng róu huì",
+        "tones": "2-2-4",
+        "meaning": "柔和温惠",
+        "semanticExplanation": "两字连续取自《诗经·崧高》'柔惠且直'，'柔惠'为原文成词，意为柔和温惠，证据确凿，语义清晰，符合女性名偏好。",
+        "pronunciationNote": "wáng róu huì，2-2-4 声调起伏自然，无拗口或碰撞。",
+        "usabilityNote": "字面直白易懂，日常使用无负担，适合长期称呼。",
+        "uncommonnessNote": "“柔惠”虽非生僻，但组合不常见，有古典温柔气质。",
+        "primaryStyle": "gentle",
+        "imageryCategory": "德行"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "无实质风险，但'柔惠'可能略显传统"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0001-ca85afb286c5:pointer-7ba187438a911a26",
+        "semantic": {
+          "semanticScore": 0.9,
+          "evidenceScore": 0.95,
+          "explanation": "两字连续取自《诗经·崧高》'柔惠且直'，'柔惠'为原文成词，意为柔和温惠，证据确凿，语义清晰，符合女性名偏好。"
+        },
+        "name": {
+          "phonology": 0.88,
+          "nameFeel": 0.86,
+          "femininity": 0.9,
+          "usability": 0.85,
+          "distinctiveness": 0.78
+        },
+        "adversarialCritique": "柔惠出自诗经，原文成词，语义清晰温婉，女性气质明确，音韵自然。虽略显传统，但端庄可用，符合古典端雅偏好，无实质问题。"
+      }
+    },
+    {
+      "id": "personalized:琳碧",
+      "surname": "王",
+      "givenName": "琳碧",
+      "fullName": "王琳碧",
+      "evidence": {
+        "relation": "exact-phrase",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《文选》·張平子西京賦规范正文第 174 字“琳”，《文选》·張平子西京賦规范正文第 175 字“碧”；原文连续取字。",
+        "citations": [
+          {
+            "id": "wen-xuan/work-0009/passage-0005:琳:0",
+            "passageId": "wen-xuan/work-0009/passage-0005",
+            "matchedChar": "琳",
+            "occurrence": 0,
+            "bookId": "wen-xuan",
+            "bookTitle": "《文选》",
+            "workTitle": "張平子西京賦",
+            "chapterTitle": "《文選》卷二",
+            "quote": "正殿路寢，用朝群辟。大夏耽耽，九戶開闢。嘉木樹庭，芳草如積。高門有閌，列坐金狄。內有常侍謁者，奉命當御。蘭臺金馬，遞宿迭居。次有天祿石渠，校文之處。重以虎威章溝，嚴更之署。徼道外周，千廬內附。衛尉八屯，警夜巡晝。植鎩懸𤟢，用戒不虞。「後宮則昭陽飛翔，增成合驩。蘭林披香，鳳皇鴛鸞。群窈窕之華麗，嗟內顧之所觀。故其館室次舍，采飾纖縟。裛以藻繡，文以朱綠。翡翠火齊，絡以美玉。流懸黎之夜光，綴隨珠以為燭。金戺玉階，彤庭煇煇。珊瑚琳碧，瓀珉璘彬。",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0001%20%E6%96%87%E9%81%B8-%E6%A2%81-%E8%95%AD%E7%B5%B1.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4h0001/"
+          },
+          {
+            "id": "wen-xuan/work-0009/passage-0005:碧:0",
+            "passageId": "wen-xuan/work-0009/passage-0005",
+            "matchedChar": "碧",
+            "occurrence": 0,
+            "bookId": "wen-xuan",
+            "bookTitle": "《文选》",
+            "workTitle": "張平子西京賦",
+            "chapterTitle": "《文選》卷二",
+            "quote": "正殿路寢，用朝群辟。大夏耽耽，九戶開闢。嘉木樹庭，芳草如積。高門有閌，列坐金狄。內有常侍謁者，奉命當御。蘭臺金馬，遞宿迭居。次有天祿石渠，校文之處。重以虎威章溝，嚴更之署。徼道外周，千廬內附。衛尉八屯，警夜巡晝。植鎩懸𤟢，用戒不虞。「後宮則昭陽飛翔，增成合驩。蘭林披香，鳳皇鴛鸞。群窈窕之華麗，嗟內顧之所觀。故其館室次舍，采飾纖縟。裛以藻繡，文以朱綠。翡翠火齊，絡以美玉。流懸黎之夜光，綴隨珠以為燭。金戺玉階，彤庭煇煇。珊瑚琳碧，瓀珉璘彬。",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0001%20%E6%96%87%E9%81%B8-%E6%A2%81-%E8%95%AD%E7%B5%B1.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4h0001/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.96,
+        "gentle": 0.5060000000000001,
+        "bright": 0.611,
+        "austere": 0.594,
+        "modern": 0.18,
+        "pronounceable": 0.88,
+        "writable": 0.85,
+        "recognizable": 0.85,
+        "uncommon": 0.84,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 1,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng lín bì",
+        "tones": "2-2-4",
+        "meaning": "琳碧，美玉与碧玉。",
+        "semanticExplanation": "“琳碧”为《文选·西京赋》原文连续成词，指美玉和碧玉，语义明确，来源可靠，组合自然，符合古典雅致偏好。",
+        "pronunciationNote": "wáng lín bì，声调2-2-4，前平后仄，收尾干脆，声母（l-b）无碰撞，音韵清亮。",
+        "usabilityNote": "'琳碧'双玉字旁，意象统一，字面华美而不俗气，女性气质突出，日常使用自然。",
+        "uncommonnessNote": "'琳'与'碧'均为常见字，但组合少见，有古典美玉意象，新颖而不生僻。",
+        "primaryStyle": "graceful",
+        "imageryCategory": "珍宝华彩"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“琳碧”稍显文雅，但作为姓名可接受，无重大风险。"
+        },
+        {
+          "code": "name-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "双玉字旁可能略显刻意，但整体协调，风险较低。"
+        },
+        {
+          "code": "name-note-2",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "与'王'姓连读时，'王琳'可能被误听为'王林'，需注意。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0348-193e76ef7c38:pointer-0bb79cd3e0fb9f76",
+        "semantic": {
+          "semanticScore": 0.85,
+          "evidenceScore": 0.95,
+          "explanation": "“琳碧”为《文选·西京赋》原文连续成词，指美玉和碧玉，语义明确，来源可靠，组合自然，符合古典雅致偏好。"
+        },
+        "name": {
+          "phonology": 0.88,
+          "nameFeel": 0.87,
+          "femininity": 0.92,
+          "usability": 0.85,
+          "distinctiveness": 0.84
+        },
+        "adversarialCritique": "琳碧双玉字旁意象统一，字面华美，女性气质突出。来源可靠，读音清亮，无负面联想，虽稍显文雅但可接受，适合长期使用。"
+      }
+    },
+    {
+      "id": "personalized:温文",
+      "surname": "王",
+      "givenName": "温文",
+      "fullName": "王温文",
+      "evidence": {
+        "relation": "exact-phrase",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《礼记》·KR1d0052_008规范正文第 106 字“温”，《礼记》·KR1d0052_008规范正文第 107 字“文”；原文连续取字。",
+        "citations": [
+          {
+            "id": "li-ji/work-0008/passage-0004:温:0",
+            "passageId": "li-ji/work-0008/passage-0004",
+            "matchedChar": "温",
+            "occurrence": 0,
+            "bookId": "li-ji",
+            "bookTitle": "《礼记》",
+            "workTitle": "KR1d0052_008",
+            "chapterTitle": "KR1d0052_008",
+            "quote": "語三而一有焉乃進其等以其序謂之郊人遠之於成均以及取爵於上尊也始立學者既興器用幣然後釋菜不舞不授器乃退儐于東序一獻無介語可也教世子凡三王教世子必以禮樂樂所以脩內也禮所以脩外也禮樂交錯於中發形於外是故其成也懌恭敬而溫文立大傅少傅以養之欲其知父子君臣之道也大傅審父子君臣之道以示之少傅奉世子以觀大傅之德行而審喻之大傅在前少傅在後入則有保出則有師是以教喻而德成也師也者",
+            "sourceUrl": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR1d0052.jsonl",
+            "verificationUrl": "https://www.kanripo.org/text/KR1d0052/"
+          },
+          {
+            "id": "li-ji/work-0008/passage-0004:文:0",
+            "passageId": "li-ji/work-0008/passage-0004",
+            "matchedChar": "文",
+            "occurrence": 0,
+            "bookId": "li-ji",
+            "bookTitle": "《礼记》",
+            "workTitle": "KR1d0052_008",
+            "chapterTitle": "KR1d0052_008",
+            "quote": "語三而一有焉乃進其等以其序謂之郊人遠之於成均以及取爵於上尊也始立學者既興器用幣然後釋菜不舞不授器乃退儐于東序一獻無介語可也教世子凡三王教世子必以禮樂樂所以脩內也禮所以脩外也禮樂交錯於中發形於外是故其成也懌恭敬而溫文立大傅少傅以養之欲其知父子君臣之道也大傅審父子君臣之道以示之少傅奉世子以觀大傅之德行而審喻之大傅在前少傅在後入則有保出則有師是以教喻而德成也師也者",
+            "sourceUrl": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR1d0052.jsonl",
+            "verificationUrl": "https://www.kanripo.org/text/KR1d0052/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.5984,
+        "gentle": 0.95,
+        "bright": 0.608,
+        "austere": 0.573,
+        "modern": 0.18,
+        "pronounceable": 0.86,
+        "writable": 0.84,
+        "recognizable": 0.84,
+        "uncommon": 0.78,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 1,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng wēn wén",
+        "tones": "2-1-2",
+        "meaning": "温润如玉，文雅有礼。",
+        "semanticExplanation": "“温文”出自《礼记·文王世子》“恭敬而温文”，原文连续取字，证据确凿。组合为经典成语，语义完整自然，温润文雅之意与所引原文契合，作为女性名字端庄雅致，不拗口，无网名感。",
+        "pronunciationNote": "声调2-1-2，温婉流畅，无多音风险，声母韵母搭配和谐。",
+        "usabilityNote": "“温文”自然优雅，适合长期使用，不易误读。",
+        "uncommonnessNote": "“温文”虽常见于“温文尔雅”，但作为名字仍具辨识度。",
+        "primaryStyle": "gentle",
+        "imageryCategory": "温文儒雅"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“温文”较为常见，可能略显普通，但作为姓名仍属典雅可用"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0314-a0bf3f75a0d5:pointer-193c49cd92c3ff75",
+        "semantic": {
+          "semanticScore": 0.9,
+          "evidenceScore": 0.95,
+          "explanation": "“温文”出自《礼记·文王世子》“恭敬而温文”，原文连续取字，证据确凿。组合为经典成语，语义完整自然，温润文雅之意与所引原文契合，作为女性名字端庄雅致，不拗口，无网名感。"
+        },
+        "name": {
+          "phonology": 0.86,
+          "nameFeel": 0.86,
+          "femininity": 0.88,
+          "usability": 0.84,
+          "distinctiveness": 0.78
+        },
+        "adversarialCritique": "温文为经典成语，出处确凿，温润文雅之意与王令仪气质相近，声调流畅自然。唯组合较常见，辨识度稍欠，但作为姓名仍端雅可用，不构成实质问题。"
+      }
+    },
+    {
+      "id": "personalized:舒灵",
+      "surname": "王",
+      "givenName": "舒灵",
+      "fullName": "王舒灵",
+      "evidence": {
+        "relation": "clause-related",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《文选》·左太沖詠史八首规范正文第 103 字“舒”，《文选》·左太沖詠史八首规范正文第 106 字“灵”；同句位置取字。",
+        "citations": [
+          {
+            "id": "wen-xuan/work-0095/passage-0002:舒:0",
+            "passageId": "wen-xuan/work-0095/passage-0002",
+            "matchedChar": "舒",
+            "occurrence": 0,
+            "bookId": "wen-xuan",
+            "bookTitle": "《文选》",
+            "workTitle": "左太沖詠史八首",
+            "chapterTitle": "《文選》卷二十一",
+            "quote": "臨組不肯𦁛，對珪不肯分。連璽燿前庭，比之猶浮雲。濟濟京城內，赫赫王侯居。冠蓋蔭四術，朱輪竟長衢。朝集金張館，暮宿許史廬。南鄰擊鍾磬，北裏吹笙竽。寂寂楊子宅，門無卿相輿。寥寥空宇中，所講在玄虛。言論準宣尼，辭賦擬相如。悠悠百世後，英名擅八區。皓天舒白日，靈景耀神州。列宅紫宮裏，飛宇若雲浮。峨峨高門內，藹藹皆王侯。自非攀龍客，何為欻來遊？被褐出閶闔，高步追許由。振衣千仞崗，濯足萬里流。荊軻飲燕市，酒酣氣益振。",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0001%20%E6%96%87%E9%81%B8-%E6%A2%81-%E8%95%AD%E7%B5%B1.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4h0001/"
+          },
+          {
+            "id": "wen-xuan/work-0095/passage-0002:灵:0",
+            "passageId": "wen-xuan/work-0095/passage-0002",
+            "matchedChar": "灵",
+            "occurrence": 0,
+            "bookId": "wen-xuan",
+            "bookTitle": "《文选》",
+            "workTitle": "左太沖詠史八首",
+            "chapterTitle": "《文選》卷二十一",
+            "quote": "臨組不肯𦁛，對珪不肯分。連璽燿前庭，比之猶浮雲。濟濟京城內，赫赫王侯居。冠蓋蔭四術，朱輪竟長衢。朝集金張館，暮宿許史廬。南鄰擊鍾磬，北裏吹笙竽。寂寂楊子宅，門無卿相輿。寥寥空宇中，所講在玄虛。言論準宣尼，辭賦擬相如。悠悠百世後，英名擅八區。皓天舒白日，靈景耀神州。列宅紫宮裏，飛宇若雲浮。峨峨高門內，藹藹皆王侯。自非攀龍客，何為欻來遊？被褐出閶闔，高步追許由。振衣千仞崗，濯足萬里流。荊軻飲燕市，酒酣氣益振。",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0001%20%E6%96%87%E9%81%B8-%E6%A2%81-%E8%95%AD%E7%B5%B1.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4h0001/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.96,
+        "gentle": 0.49500000000000005,
+        "bright": 0.614,
+        "austere": 0.58,
+        "modern": 0.18,
+        "pronounceable": 0.9,
+        "writable": 0.88,
+        "recognizable": 0.88,
+        "uncommon": 0.8,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 0.68,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng shū líng",
+        "tones": "2-1-2",
+        "meaning": "皓天舒白日，灵景耀神州——取“舒”与“灵”组合，意为舒展灵动、气韵天成。",
+        "semanticExplanation": "取自左思《咏史》'皓天舒白日，灵景耀神州'，'舒'与'灵'同句取字，组合为'舒灵'，意为舒展灵动、气韵天成。两字在原文中语义关联紧密，'舒'为舒展，'灵'为灵光，组合自然，符合古典端雅偏好，且来源可复核。",
+        "pronunciationNote": "王舒灵 wáng shū líng，声调 2-1-2，平仄相间，流畅悦耳。",
+        "usabilityNote": "舒、灵均为常用字，书写简单，名字整体轻盈灵动，适合日常使用。",
+        "uncommonnessNote": "组合虽非古籍成词，但意象自然，无拼凑感。",
+        "primaryStyle": "graceful",
+        "imageryCategory": "气质风韵"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "'灵'字在当代姓名中较常见，可能略显普通，但整体组合仍具古典气质"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0235-a72bc4ea6833:pointer-9aabd94b1add0166",
+        "semantic": {
+          "semanticScore": 0.85,
+          "evidenceScore": 0.9,
+          "explanation": "取自左思《咏史》'皓天舒白日，灵景耀神州'，'舒'与'灵'同句取字，组合为'舒灵'，意为舒展灵动、气韵天成。两字在原文中语义关联紧密，'舒'为舒展，'灵'为灵光，组合自然，符合古典端雅偏好，且来源可复核。"
+        },
+        "name": {
+          "phonology": 0.9,
+          "nameFeel": 0.88,
+          "femininity": 0.9,
+          "usability": 0.88,
+          "distinctiveness": 0.8
+        },
+        "adversarialCritique": "舒灵二字组合自然，声调起伏流畅，意象舒展灵动，有古典出处且不显生硬。唯“灵”字当代姓名中偏常见，略欠稀缺感，但整体仍端雅可用，不构成实质问题。"
+      }
+    },
+    {
+      "id": "personalized:嘉禾",
+      "surname": "王",
+      "givenName": "嘉禾",
+      "fullName": "王嘉禾",
+      "evidence": {
+        "relation": "clause-related",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《尚书》·KR1b0001_036规范正文第 52 字“嘉”，《尚书》·KR1b0001_036规范正文第 39 字“禾”；同句位置取字。",
+        "citations": [
+          {
+            "id": "shang-shu/work-0036/passage-0002:嘉:0",
+            "passageId": "shang-shu/work-0036/passage-0002",
+            "matchedChar": "嘉",
+            "occurrence": 0,
+            "bookId": "shang-shu",
+            "bookTitle": "《尚书》",
+            "workTitle": "KR1b0001_036",
+            "chapterTitle": "KR1b0001_036",
+            "quote": "我有周無斁嗚呼往哉惟休無替朕命唐叔得禾異畝同穎獻諸天子王命唐叔歸周公于東作歸禾周公既得命禾旅天子之命作嘉禾",
+            "sourceUrl": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR1b0001.jsonl",
+            "verificationUrl": "https://www.kanripo.org/text/KR1b0001/"
+          },
+          {
+            "id": "shang-shu/work-0036/passage-0002:禾:1",
+            "passageId": "shang-shu/work-0036/passage-0002",
+            "matchedChar": "禾",
+            "occurrence": 1,
+            "bookId": "shang-shu",
+            "bookTitle": "《尚书》",
+            "workTitle": "KR1b0001_036",
+            "chapterTitle": "KR1b0001_036",
+            "quote": "我有周無斁嗚呼往哉惟休無替朕命唐叔得禾異畝同穎獻諸天子王命唐叔歸周公于東作歸禾周公既得命禾旅天子之命作嘉禾",
+            "sourceUrl": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR1b0001.jsonl",
+            "verificationUrl": "https://www.kanripo.org/text/KR1b0001/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.5848,
+        "gentle": 0.47300000000000003,
+        "bright": 0.95,
+        "austere": 0.58,
+        "modern": 0.18,
+        "pronounceable": 0.9,
+        "writable": 0.85,
+        "recognizable": 0.85,
+        "uncommon": 0.8,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 0.68,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng jiā hé",
+        "tones": "2-1-2",
+        "meaning": "嘉禾之义，表美善丰饶、端雅有德。",
+        "semanticExplanation": "“嘉禾”为《尚书》篇名，原文“作嘉禾”连续成词，指美善之禾、祥瑞之征，典故扎实且来源权威。组合自然，寓意丰饶端雅，适合女性名。",
+        "pronunciationNote": "wáng jiā hé，声调2-1-2，平仄相间，节奏明快；声母w-j-h无碰撞，韵母ang-ia-e过渡自然，无谐音风险。",
+        "usabilityNote": "嘉禾为常见吉祥词，但作为人名并不泛滥，书写简便，易于日常使用，适合长期称呼。",
+        "uncommonnessNote": "嘉禾虽非生僻，但组合在当代姓名中不算高频，具有适度的辨识度。",
+        "primaryStyle": "bright",
+        "imageryCategory": "嘉禾丰年"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“嘉禾”亦为常见地名（浙江嘉兴古称），可能引发地名联想"
+        },
+        {
+          "code": "semantic-note-2",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“禾”字偏质朴，与“令仪”的端雅气质略有差异但整体协调"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0107-897af0b12150:pointer-dbe6c01097c1090c",
+        "semantic": {
+          "semanticScore": 0.88,
+          "evidenceScore": 0.9,
+          "explanation": "“嘉禾”为《尚书》篇名，原文“作嘉禾”连续成词，指美善之禾、祥瑞之征，典故扎实且来源权威。组合自然，寓意丰饶端雅，适合女性名。"
+        },
+        "name": {
+          "phonology": 0.9,
+          "nameFeel": 0.88,
+          "femininity": 0.86,
+          "usability": 0.85,
+          "distinctiveness": 0.8
+        },
+        "adversarialCritique": "嘉禾典故扎实，寓意丰饶端雅，音韵明快，书写简便；虽与地名重合，但作为姓名仍自然成立，可入短名单。"
+      }
+    },
+    {
+      "id": "personalized:环佩",
+      "surname": "王",
+      "givenName": "环佩",
+      "fullName": "王环佩",
+      "evidence": {
+        "relation": "exact-phrase",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《礼记》·KR1d0052_027规范正文第 43 字“环”，《礼记》·KR1d0052_027规范正文第 44 字“佩”；原文连续取字。",
+        "citations": [
+          {
+            "id": "li-ji/work-0027/passage-0002:环:0",
+            "passageId": "li-ji/work-0027/passage-0002",
+            "matchedChar": "环",
+            "occurrence": 0,
+            "bookId": "li-ji",
+            "bookTitle": "《礼记》",
+            "workTitle": "KR1d0052_027",
+            "chapterTitle": "KR1d0052_027",
+            "quote": "兼利萬物與日月並明明照四海而不遺微小其在朝廷則道仁聖禮義之序燕處則聽雅頌之音行步則有環佩之聲升車則有鸞和之音居處有禮進退有度百官得其宜萬事得其序詩云淑人君子其儀不忒其儀不忒正是四國此之謂也發號出令而民說謂之和上下相親謂之仁民不求其所欲而得之謂之信除去天地之害謂之義義與信和與仁霸王之器也有治民之意而無其器則不成禮之於正國也猶衡之於輕重也繩墨之於曲直也規矩之於方",
+            "sourceUrl": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR1d0052.jsonl",
+            "verificationUrl": "https://www.kanripo.org/text/KR1d0052/"
+          },
+          {
+            "id": "li-ji/work-0027/passage-0002:佩:0",
+            "passageId": "li-ji/work-0027/passage-0002",
+            "matchedChar": "佩",
+            "occurrence": 0,
+            "bookId": "li-ji",
+            "bookTitle": "《礼记》",
+            "workTitle": "KR1d0052_027",
+            "chapterTitle": "KR1d0052_027",
+            "quote": "兼利萬物與日月並明明照四海而不遺微小其在朝廷則道仁聖禮義之序燕處則聽雅頌之音行步則有環佩之聲升車則有鸞和之音居處有禮進退有度百官得其宜萬事得其序詩云淑人君子其儀不忒其儀不忒正是四國此之謂也發號出令而民說謂之和上下相親謂之仁民不求其所欲而得之謂之信除去天地之害謂之義義與信和與仁霸王之器也有治民之意而無其器則不成禮之於正國也猶衡之於輕重也繩墨之於曲直也規矩之於方",
+            "sourceUrl": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR1d0052.jsonl",
+            "verificationUrl": "https://www.kanripo.org/text/KR1d0052/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.96,
+        "gentle": 0.47850000000000004,
+        "bright": 0.602,
+        "austere": 0.601,
+        "modern": 0.18,
+        "pronounceable": 0.85,
+        "writable": 0.8,
+        "recognizable": 0.8,
+        "uncommon": 0.86,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 1,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng huán pèi",
+        "tones": "2-2-4",
+        "meaning": "环佩，指佩玉相击之声，象征清雅端庄、举止有度。",
+        "semanticExplanation": "“环佩”为《礼记》原文连续成词，指佩玉相击之声，象征端庄有礼，语义完整自然，符合古典端雅偏好。",
+        "pronunciationNote": "wáng huán pèi，声调2-2-4，收尾有力，无碰撞。",
+        "usabilityNote": "“环佩”稍文雅，但字均常用，可接受。",
+        "uncommonnessNote": "组合古典，具诗意，不显拼凑。",
+        "primaryStyle": "graceful",
+        "imageryCategory": "佩玉清音"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“环佩”在古诗文中亦常指女子佩饰，可能略显传统，但无实质风险。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0165-819d09e76b17:pointer-bbdfdbee4bc2ab4f",
+        "semantic": {
+          "semanticScore": 0.9,
+          "evidenceScore": 0.95,
+          "explanation": "“环佩”为《礼记》原文连续成词，指佩玉相击之声，象征端庄有礼，语义完整自然，符合古典端雅偏好。"
+        },
+        "name": {
+          "phonology": 0.85,
+          "nameFeel": 0.84,
+          "femininity": 0.87,
+          "usability": 0.8,
+          "distinctiveness": 0.86
+        },
+        "adversarialCritique": "环佩古典端雅，意象具体，佩玉之声象征端庄有礼，与王令仪风格高度契合。声调收束有力，字形美观，适合长期使用。"
+      }
+    },
+    {
+      "id": "personalized:柔允",
+      "surname": "王",
+      "givenName": "柔允",
+      "fullName": "王柔允",
+      "evidence": {
+        "relation": "clause-related",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《东坡全集》·KR4d0076规范正文第 69 字“柔”，《东坡全集》·KR4d0076规范正文第 71 字“允”；同句位置取字。",
+        "citations": [
+          {
+            "id": "dong-po-quan-ji/work-0001/passage-3111:柔:0",
+            "passageId": "dong-po-quan-ji/work-0001/passage-3111",
+            "matchedChar": "柔",
+            "occurrence": 0,
+            "bookId": "dong-po-quan-ji",
+            "bookTitle": "《东坡全集》",
+            "workTitle": "KR4d0076",
+            "chapterTitle": "KR4d0076",
+            "quote": "惟睿作聖輯寧夷夏德既茂於治朝輔順隂陽政兼修於内職既膺大慶益廣至仁下逮海隅夫婦無有愁歎上符天造日月為之光明受禄無疆與民同樂臣無任又吉日既涓柔儀允正穀珪往聘象服来朝中賀臣聞周姜任姒之賢位非皆極漢隂馬鄧之貴德或有慙盛哉六禮之陳襲此三宫之慶恭惟太皇太后陛下任付託之重躬保佑之勞公天下不私其親配宸極必先以德徽音不墜嗣成慈孝之風仁壽無疆坐享雲來之養臣限以官守不獲躬詣闕庭臣",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4d0076%20%E6%9D%B1%E5%9D%A1%E5%85%A8%E9%9B%86-%E5%AE%8B-%E8%98%87%E8%BB%BE.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4d0076/"
+          },
+          {
+            "id": "dong-po-quan-ji/work-0001/passage-3111:允:0",
+            "passageId": "dong-po-quan-ji/work-0001/passage-3111",
+            "matchedChar": "允",
+            "occurrence": 0,
+            "bookId": "dong-po-quan-ji",
+            "bookTitle": "《东坡全集》",
+            "workTitle": "KR4d0076",
+            "chapterTitle": "KR4d0076",
+            "quote": "惟睿作聖輯寧夷夏德既茂於治朝輔順隂陽政兼修於内職既膺大慶益廣至仁下逮海隅夫婦無有愁歎上符天造日月為之光明受禄無疆與民同樂臣無任又吉日既涓柔儀允正穀珪往聘象服来朝中賀臣聞周姜任姒之賢位非皆極漢隂馬鄧之貴德或有慙盛哉六禮之陳襲此三宫之慶恭惟太皇太后陛下任付託之重躬保佑之勞公天下不私其親配宸極必先以德徽音不墜嗣成慈孝之風仁壽無疆坐享雲來之養臣限以官守不獲躬詣闕庭臣",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4d0076%20%E6%9D%B1%E5%9D%A1%E5%85%A8%E9%9B%86-%E5%AE%8B-%E8%98%87%E8%BB%BE.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4d0076/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.96,
+        "gentle": 0.49500000000000005,
+        "bright": 0.614,
+        "austere": 0.587,
+        "modern": 0.18,
+        "pronounceable": 0.88,
+        "writable": 0.85,
+        "recognizable": 0.85,
+        "uncommon": 0.82,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 0.68,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng róu yǔn",
+        "tones": "2-2-3",
+        "meaning": "柔仪允正——柔嘉之仪，允恭端正。",
+        "semanticExplanation": "两字取自《东坡全集》同句'柔仪允正'，'柔'与'允'为连续位置，原文语境为颂扬后妃之德，'柔仪允正'意为柔嘉之仪、允恭端正。组合'柔允'自然，符合女性名偏好，且与'王令仪'的端雅风格相近。",
+        "pronunciationNote": "声调2-2-3自然流畅，“柔”字阳平圆润，“允”字上声收尾轻巧，整体读音柔和悦耳，无多音或谐音风险。",
+        "usabilityNote": "“柔允”组合自然，既具古典端雅感又不失现代适用性，日常称呼顺畅，书写简便，长期使用无负担。",
+        "uncommonnessNote": "“柔”字常见但“允”字相对少见，组合罕见度适中，既保持辨识度又不显生僻，符合姓名质感要求。",
+        "primaryStyle": "graceful",
+        "imageryCategory": "仪态德行"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "'允'字在原文中为'允正'，与'柔'组合后语义略有偏移，但整体可接受"
+        },
+        {
+          "code": "semantic-note-2",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "需确认'柔允'是否过于生僻，但作为姓名尚可"
+        },
+        {
+          "code": "name-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“柔”字可能被解读为性格柔弱，但整体语境偏正向，风险可控。"
+        },
+        {
+          "code": "name-note-2",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“允”字在部分方言中读音可能变化，但普通话标准读音明确。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0006-d8fb3a8ca1d8:pointer-beab4937b7148232",
+        "semantic": {
+          "semanticScore": 0.85,
+          "evidenceScore": 0.9,
+          "explanation": "两字取自《东坡全集》同句'柔仪允正'，'柔'与'允'为连续位置，原文语境为颂扬后妃之德，'柔仪允正'意为柔嘉之仪、允恭端正。组合'柔允'自然，符合女性名偏好，且与'王令仪'的端雅风格相近。"
+        },
+        "name": {
+          "phonology": 0.88,
+          "nameFeel": 0.88,
+          "femininity": 0.9,
+          "usability": 0.85,
+          "distinctiveness": 0.82
+        },
+        "adversarialCritique": "柔允二字取自同句，语义连贯，声调柔和，与王令仪的端雅气质相近。允字有允恭之意，不显柔弱，整体自然，无实质审美问题。"
+      }
+    },
+    {
+      "id": "personalized:甘棠",
+      "surname": "王",
+      "givenName": "甘棠",
+      "fullName": "王甘棠",
+      "evidence": {
+        "relation": "exact-phrase",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《盐铁论》·KR3a0006_008规范正文第 116 字“甘”，《盐铁论》·KR3a0006_008规范正文第 117 字“棠”；原文连续取字。",
+        "citations": [
+          {
+            "id": "yan-tie-lun/work-0008/passage-0008:甘:0",
+            "passageId": "yan-tie-lun/work-0008/passage-0008",
+            "matchedChar": "甘",
+            "occurrence": 0,
+            "bookId": "yan-tie-lun",
+            "bookTitle": "《盐铁论》",
+            "workTitle": "KR3a0006_008",
+            "chapterTitle": "KR3a0006_008",
+            "quote": "之於百姓若慈父之於子也忠焉能勿誨乎愛之能勿勞乎故春親耕以勸農賑貸以澹不足通滀水出輕繫使民務時也䝉恩被澤而至今猶以貧困其難與適道若是夫賢良曰古者春省耕以補不足秋省歛以助不給民勤於財則貢賦省民勤於力則功業牢為民愛力不奪須臾故召伯聼斷於甘棠之下為妨農業之務也今時雨澍澤種懸而不得播秋稼零落乎野而不得收田疇赤地而停落成市發春而後懸青幡而䇿土牛殆非明主勸耕稼之意而春令之",
+            "sourceUrl": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR3a0006.jsonl",
+            "verificationUrl": "https://www.kanripo.org/text/KR3a0006/"
+          },
+          {
+            "id": "yan-tie-lun/work-0008/passage-0008:棠:0",
+            "passageId": "yan-tie-lun/work-0008/passage-0008",
+            "matchedChar": "棠",
+            "occurrence": 0,
+            "bookId": "yan-tie-lun",
+            "bookTitle": "《盐铁论》",
+            "workTitle": "KR3a0006_008",
+            "chapterTitle": "KR3a0006_008",
+            "quote": "之於百姓若慈父之於子也忠焉能勿誨乎愛之能勿勞乎故春親耕以勸農賑貸以澹不足通滀水出輕繫使民務時也䝉恩被澤而至今猶以貧困其難與適道若是夫賢良曰古者春省耕以補不足秋省歛以助不給民勤於財則貢賦省民勤於力則功業牢為民愛力不奪須臾故召伯聼斷於甘棠之下為妨農業之務也今時雨澍澤種懸而不得播秋稼零落乎野而不得收田疇赤地而停落成市發春而後懸青幡而䇿土牛殆非明主勸耕稼之意而春令之",
+            "sourceUrl": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR3a0006.jsonl",
+            "verificationUrl": "https://www.kanripo.org/text/KR3a0006/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.5780000000000001,
+        "gentle": 0.4675,
+        "bright": 0.608,
+        "austere": 0.58,
+        "modern": 0.18,
+        "pronounceable": 0.88,
+        "writable": 0.84,
+        "recognizable": 0.84,
+        "uncommon": 0.8,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 1,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng gān táng",
+        "tones": "2-1-2",
+        "meaning": "甘棠，即甘棠树，象征仁政与德泽。",
+        "semanticExplanation": "“甘棠”为原文连续二字，出自《盐铁论》“召伯聼断于甘棠之下”，典出《诗经·召南·甘棠》，象征仁政德泽。组合自然，有深厚文化内涵，适合女性名字，且与“王”姓搭配和谐。",
+        "pronunciationNote": "声调2-1-2，抑扬有致，无多音问题，读感流畅。",
+        "usabilityNote": "“甘棠”有经典出处，寓意仁德，日常使用自然，适合长期。",
+        "uncommonnessNote": "“甘棠”不常见但字面易懂，有文化底蕴，不显生僻。",
+        "primaryStyle": "classical",
+        "imageryCategory": "草木"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“甘棠”为常见典故词，可能略显传统，但无负面联想；需注意与“王”姓连读时“王甘棠”稍显古朴，但可接受。"
+        },
+        {
+          "code": "name-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "可能被联想到《诗经》篇名，但无负面谐音。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0157-dc3f105b38a2:pointer-3aa942fe2cf142c6",
+        "semantic": {
+          "semanticScore": 0.85,
+          "evidenceScore": 0.95,
+          "explanation": "“甘棠”为原文连续二字，出自《盐铁论》“召伯聼断于甘棠之下”，典出《诗经·召南·甘棠》，象征仁政德泽。组合自然，有深厚文化内涵，适合女性名字，且与“王”姓搭配和谐。"
+        },
+        "name": {
+          "phonology": 0.88,
+          "nameFeel": 0.86,
+          "femininity": 0.85,
+          "usability": 0.84,
+          "distinctiveness": 0.8
+        },
+        "adversarialCritique": "甘棠典出诗经，仁政意象清晰，声调抑扬。唯“甘棠”作为成语典故词，用作人名稍显像词组而非个人名，但尚可接受。"
+      }
+    },
+    {
+      "id": "personalized:琬英",
+      "surname": "王",
+      "givenName": "琬英",
+      "fullName": "王琬英",
+      "evidence": {
+        "relation": "clause-related",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《楚辞》·远游规范正文第 9 字“琬”，《楚辞》·远游规范正文第 13 字“英”；同句位置取字。",
+        "citations": [
+          {
+            "id": "chu-ci/work-0023/passage-0043:琬:0",
+            "passageId": "chu-ci/work-0023/passage-0043",
+            "matchedChar": "琬",
+            "occurrence": 0,
+            "bookId": "chu-ci",
+            "bookTitle": "《楚辞》",
+            "workTitle": "远游",
+            "chapterTitle": "远游",
+            "quote": "吸飞泉之微液兮，怀琬琰之华英。",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E6%A5%9A%E8%BE%9E/chuci.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E6%A5%9A%E8%BE%AD"
+          },
+          {
+            "id": "chu-ci/work-0023/passage-0043:英:0",
+            "passageId": "chu-ci/work-0023/passage-0043",
+            "matchedChar": "英",
+            "occurrence": 0,
+            "bookId": "chu-ci",
+            "bookTitle": "《楚辞》",
+            "workTitle": "远游",
+            "chapterTitle": "远游",
+            "quote": "吸飞泉之微液兮，怀琬琰之华英。",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E6%A5%9A%E8%BE%9E/chuci.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E6%A5%9A%E8%BE%AD"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.6256,
+        "gentle": 0.5060000000000001,
+        "bright": 0.608,
+        "austere": 0.587,
+        "modern": 0.18,
+        "pronounceable": 0.88,
+        "writable": 0.85,
+        "recognizable": 0.85,
+        "uncommon": 0.82,
+        "familyMeaning": 0.85,
+        "exactPhrasePreference": 0.68,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng wǎn yīng",
+        "tones": "2-3-1",
+        "meaning": "琬琰之华英，琬为美玉，瑛为玉光，合为美玉之英华。",
+        "semanticExplanation": "两字取自《楚辞·远游》同句“怀琬琰之华英”，琬为美玉，英为花或精华，组合“琬英”自然形成美玉英华之意，语义完整，符合古典端雅偏好。",
+        "pronunciationNote": "王琬英 wáng wǎn yīng，声调 2-3-1，起伏有致，无拗口或碰撞。",
+        "usabilityNote": "琬、英均为常见字，书写简便，日常使用无障碍。",
+        "uncommonnessNote": "琬字相对少见但非生僻，与英组合有古典美玉意象，不显拼凑。",
+        "primaryStyle": "classical",
+        "imageryCategory": "玉器光华"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“英”字较常见，可能略显普通，但整体仍雅致。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0233-c27037cc514d:pointer-b48e935c279eec7b",
+        "semantic": {
+          "semanticScore": 0.85,
+          "evidenceScore": 0.9,
+          "explanation": "两字取自《楚辞·远游》同句“怀琬琰之华英”，琬为美玉，英为花或精华，组合“琬英”自然形成美玉英华之意，语义完整，符合古典端雅偏好。"
+        },
+        "name": {
+          "phonology": 0.88,
+          "nameFeel": 0.86,
+          "femininity": 0.92,
+          "usability": 0.85,
+          "distinctiveness": 0.82
+        },
+        "adversarialCritique": "琬英端雅有据，声调起伏自然。唯“英”字稍常见，略逊于令仪的凝练，但整体仍属稀缺短名单之列。"
+      }
+    },
+    {
+      "id": "personalized:青霓",
+      "surname": "王",
+      "givenName": "青霓",
+      "fullName": "王青霓",
+      "evidence": {
+        "relation": "clause-related",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《楚辞》·东君规范正文第 1 字“青”，《楚辞》·东君规范正文第 6 字“霓”；同句位置取字。",
+        "citations": [
+          {
+            "id": "chu-ci/work-0008/passage-0010:青:0",
+            "passageId": "chu-ci/work-0008/passage-0010",
+            "matchedChar": "青",
+            "occurrence": 0,
+            "bookId": "chu-ci",
+            "bookTitle": "《楚辞》",
+            "workTitle": "东君",
+            "chapterTitle": "九歌",
+            "quote": "青云衣兮白霓裳，举长矢兮射天狼",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E6%A5%9A%E8%BE%9E/chuci.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E6%A5%9A%E8%BE%AD"
+          },
+          {
+            "id": "chu-ci/work-0008/passage-0010:霓:0",
+            "passageId": "chu-ci/work-0008/passage-0010",
+            "matchedChar": "霓",
+            "occurrence": 0,
+            "bookId": "chu-ci",
+            "bookTitle": "《楚辞》",
+            "workTitle": "东君",
+            "chapterTitle": "九歌",
+            "quote": "青云衣兮白霓裳，举长矢兮射天狼",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E6%A5%9A%E8%BE%9E/chuci.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E6%A5%9A%E8%BE%AD"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.96,
+        "gentle": 0.49500000000000005,
+        "bright": 0.611,
+        "austere": 0.5974999999999999,
+        "modern": 0.18,
+        "pronounceable": 0.88,
+        "writable": 0.82,
+        "recognizable": 0.82,
+        "uncommon": 0.85,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 0.68,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng qīng ní",
+        "tones": "2-1-2",
+        "meaning": "青与霓并置，青云白霓相映，有高洁飘逸之致。",
+        "semanticExplanation": "取自《楚辞·东君》‘青云衣兮白霓裳’，‘青霓’为同句取字，原句‘青云’与‘白霓’并置，含义‘青云白霓相映’忠实。组合自然，有高洁飘逸之感，适合女性名字。",
+        "pronunciationNote": "wáng qīng ní，声调2-1-2，节奏明快；声母w-q-n无碰撞，韵母ang-ing-i过渡自然，无谐音。",
+        "usabilityNote": "青霓有飘逸美感，字形不复杂，但“霓”字稍显诗意，日常使用仍可接受。",
+        "uncommonnessNote": "青霓组合少见，具有较高辨识度，但字义清晰，不显生僻。",
+        "primaryStyle": "graceful",
+        "imageryCategory": "天象"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "‘霓’字可能稍显华丽，但整体无负面联想。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0001-af5f7bf1d585:pointer-55e1b3831aa8f8b8",
+        "semantic": {
+          "semanticScore": 0.85,
+          "evidenceScore": 0.9,
+          "explanation": "取自《楚辞·东君》‘青云衣兮白霓裳’，‘青霓’为同句取字，原句‘青云’与‘白霓’并置，含义‘青云白霓相映’忠实。组合自然，有高洁飘逸之感，适合女性名字。"
+        },
+        "name": {
+          "phonology": 0.88,
+          "nameFeel": 0.87,
+          "femininity": 0.9,
+          "usability": 0.82,
+          "distinctiveness": 0.85
+        },
+        "adversarialCritique": "青霓取自楚辞，意象高洁飘逸，读音清朗，字形不复杂。霓字虽稍显诗意，但整体自然，女性气质突出，无实质审美问题。"
+      }
+    },
+    {
+      "id": "personalized:馨盈",
+      "surname": "王",
+      "givenName": "馨盈",
+      "fullName": "王馨盈",
+      "evidence": {
+        "relation": "clause-related",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《玉台新咏》·KR4h0005规范正文第 3 字“馨”，《玉台新咏》·KR4h0005规范正文第 5 字“盈”；同句位置取字。",
+        "citations": [
+          {
+            "id": "yu-tai-xin-yong/work-0001/passage-0016:馨:0",
+            "passageId": "yu-tai-xin-yong/work-0001/passage-0016",
+            "matchedChar": "馨",
+            "occurrence": 0,
+            "bookId": "yu-tai-xin-yong",
+            "bookTitle": "《玉台新咏》",
+            "workTitle": "KR4h0005",
+            "chapterTitle": "KR4h0005",
+            "quote": "所思馨香盈懷袙路遠莫致之此物何足貴但感别經時其八迢迢牽牛星皎皎河漢女纎纎濯素手札札弄機杼終日不成章泣涕零如雨河漢清且淺相去復幾許盈盈一水間脉脉不得語其九明月何皎皎照我羅裳幃憂愁不能寐攬衣起徘徊行客雖云樂不如早旋歸出戶獨彷徨愁思當吿誰引領還入房涙下沾裳衣歌詩一首并序　李延年李延年知音善歌舞每爲漢武帝作新歌變曲聞者莫不感動延年侍座上起舞歌曰北方有佳人絶世而獨立一顧",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0005%20%E7%8E%89%E8%87%BA%E6%96%B0%E8%A9%A0-%E9%99%B3-%E5%BE%90%E9%99%B5.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4h0005/"
+          },
+          {
+            "id": "yu-tai-xin-yong/work-0001/passage-0016:盈:0",
+            "passageId": "yu-tai-xin-yong/work-0001/passage-0016",
+            "matchedChar": "盈",
+            "occurrence": 0,
+            "bookId": "yu-tai-xin-yong",
+            "bookTitle": "《玉台新咏》",
+            "workTitle": "KR4h0005",
+            "chapterTitle": "KR4h0005",
+            "quote": "所思馨香盈懷袙路遠莫致之此物何足貴但感别經時其八迢迢牽牛星皎皎河漢女纎纎濯素手札札弄機杼終日不成章泣涕零如雨河漢清且淺相去復幾許盈盈一水間脉脉不得語其九明月何皎皎照我羅裳幃憂愁不能寐攬衣起徘徊行客雖云樂不如早旋歸出戶獨彷徨愁思當吿誰引領還入房涙下沾裳衣歌詩一首并序　李延年李延年知音善歌舞每爲漢武帝作新歌變曲聞者莫不感動延年侍座上起舞歌曰北方有佳人絶世而獨立一顧",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0005%20%E7%8E%89%E8%87%BA%E6%96%B0%E8%A9%A0-%E9%99%B3-%E5%BE%90%E9%99%B5.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4h0005/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.96,
+        "gentle": 0.5060000000000001,
+        "bright": 0.614,
+        "austere": 0.587,
+        "modern": 0.18,
+        "pronounceable": 0.9,
+        "writable": 0.86,
+        "recognizable": 0.86,
+        "uncommon": 0.82,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 0.68,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng xīn yíng",
+        "tones": "2-1-2",
+        "meaning": "馨香盈怀，德芳自远",
+        "semanticExplanation": "“馨盈”取自《玉台新咏》“所思馨香盈怀袖”，为同句取字。馨、盈二字组合自然，馨表德芳，盈表充盈，合为“馨香盈怀”之意，典雅柔美，适合女孩名。claimedMeaning“馨香盈怀，德芳自远”忠于原文意象。组合不拗口，有古典韵味。",
+        "pronunciationNote": "声调2-1-2，平仄和谐，声母x和y无碰撞，读来轻柔悦耳。",
+        "usabilityNote": "“馨盈”意象美好，字形均衡，适合长期使用，不易误读。",
+        "uncommonnessNote": "“馨盈”虽非生僻，但组合有古典诗词感，少见度适中。",
+        "primaryStyle": "graceful",
+        "imageryCategory": "德馨芳华"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "同句取字而非原文成词，但‘馨盈’组合自然，风险较低"
+        },
+        {
+          "code": "semantic-note-2",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "‘盈’字较常见，但搭配‘馨’字整体仍具古典感"
+        },
+        {
+          "code": "name-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“馨”字稍显常见，但整体仍具辨识度"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0132-7edf03e02a30:pointer-32aca6c937feeeb0",
+        "semantic": {
+          "semanticScore": 0.85,
+          "evidenceScore": 0.85,
+          "explanation": "“馨盈”取自《玉台新咏》“所思馨香盈怀袖”，为同句取字。馨、盈二字组合自然，馨表德芳，盈表充盈，合为“馨香盈怀”之意，典雅柔美，适合女孩名。claimedMeaning“馨香盈怀，德芳自远”忠于原文意象。组合不拗口，有古典韵味。"
+        },
+        "name": {
+          "phonology": 0.9,
+          "nameFeel": 0.88,
+          "femininity": 0.92,
+          "usability": 0.86,
+          "distinctiveness": 0.82
+        },
+        "adversarialCritique": "馨盈声调柔和，意象充盈美好，出处可复核，组合自然不拗口。唯“馨”字在女孩名中较常见，辨识度稍欠，但整体仍具古典柔美气质，可入短名单。"
+      }
+    },
+    {
+      "id": "personalized:川盈",
+      "surname": "王",
+      "givenName": "川盈",
+      "fullName": "王川盈",
+      "evidence": {
+        "relation": "clause-related",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《庄子》·KR5c0126_017规范正文第 36 字“川”，《庄子》·KR5c0126_017规范正文第 46 字“盈”；同句位置取字。",
+        "citations": [
+          {
+            "id": "zhuang-zi/work-0017/passage-0002:川:0",
+            "passageId": "zhuang-zi/work-0017/passage-0002",
+            "matchedChar": "川",
+            "occurrence": 0,
+            "bookId": "zhuang-zi",
+            "bookTitle": "《庄子》",
+            "workTitle": "KR5c0126_017",
+            "chapterTitle": "KR5c0126_017",
+            "quote": "束於教也今爾出於崖涘觀於大海乃知爾醜爾將可與語大理矣天下之水莫大於海萬川歸之不知何時止而不盈尾閭泄之不知何時已而不虛春秋不變水旱不知此其過江河之流不可為量數而吾未嘗以此自多者自以比形於天地而受氣於陰陽吾在於天地之間猶小石小木之在大山也方存乎見少又奚以自多計四海之在天地之間也不似礨空之在大澤乎計中國之在海內不似稊米之在太倉乎號物之數謂之萬人處一焉人卒九州穀食之",
+            "sourceUrl": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR5c0126.jsonl",
+            "verificationUrl": "https://www.kanripo.org/text/KR5c0126/"
+          },
+          {
+            "id": "zhuang-zi/work-0017/passage-0002:盈:0",
+            "passageId": "zhuang-zi/work-0017/passage-0002",
+            "matchedChar": "盈",
+            "occurrence": 0,
+            "bookId": "zhuang-zi",
+            "bookTitle": "《庄子》",
+            "workTitle": "KR5c0126_017",
+            "chapterTitle": "KR5c0126_017",
+            "quote": "束於教也今爾出於崖涘觀於大海乃知爾醜爾將可與語大理矣天下之水莫大於海萬川歸之不知何時止而不盈尾閭泄之不知何時已而不虛春秋不變水旱不知此其過江河之流不可為量數而吾未嘗以此自多者自以比形於天地而受氣於陰陽吾在於天地之間猶小石小木之在大山也方存乎見少又奚以自多計四海之在天地之間也不似礨空之在大澤乎計中國之在海內不似稊米之在太倉乎號物之數謂之萬人處一焉人卒九州穀食之",
+            "sourceUrl": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR5c0126.jsonl",
+            "verificationUrl": "https://www.kanripo.org/text/KR5c0126/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.96,
+        "gentle": 0.4675,
+        "bright": 0.608,
+        "austere": 0.587,
+        "modern": 0.18,
+        "pronounceable": 0.88,
+        "writable": 0.84,
+        "recognizable": 0.84,
+        "uncommon": 0.82,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 0.68,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng chuān yíng",
+        "tones": "2-1-2",
+        "meaning": "川盈，意为百川汇聚而充盈，象征丰沛与涵容。",
+        "semanticExplanation": "两字出自《庄子·秋水》'万川归之，不知何时止而不盈'，同句取字，'川'与'盈'组合为'川盈'，意为百川汇聚而充盈，象征丰沛与涵容。语义自然，有经典依据，适合女孩名字。",
+        "pronunciationNote": "wáng chuān yíng，声调2-1-2，起伏自然；声母w-ch-y无碰撞，韵母ang-uan-ing过渡流畅。",
+        "usabilityNote": "川盈寓意丰沛，字形简洁，书写方便，适合长期使用。",
+        "uncommonnessNote": "川盈组合不常见，但字义清晰，无生僻感，辨识度良好。",
+        "primaryStyle": "graceful",
+        "imageryCategory": "自然意象"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "无实质风险，'川盈'意象丰盈，来源可靠"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0282-c6ba1f1895ab:pointer-842c3797a49aa390",
+        "semantic": {
+          "semanticScore": 0.88,
+          "evidenceScore": 0.9,
+          "explanation": "两字出自《庄子·秋水》'万川归之，不知何时止而不盈'，同句取字，'川'与'盈'组合为'川盈'，意为百川汇聚而充盈，象征丰沛与涵容。语义自然，有经典依据，适合女孩名字。"
+        },
+        "name": {
+          "phonology": 0.88,
+          "nameFeel": 0.86,
+          "femininity": 0.85,
+          "usability": 0.84,
+          "distinctiveness": 0.82
+        },
+        "adversarialCritique": "川盈意象丰沛，出处可靠，声调起伏自然，组合不拗口。唯“川”字作女孩名稍显刚硬，但整体仍具古典涵容之气，可入短名单。"
+      }
+    },
+    {
+      "id": "personalized:云瑟",
+      "surname": "王",
+      "givenName": "云瑟",
+      "fullName": "王云瑟",
+      "evidence": {
+        "relation": "clause-related",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《周礼》·KR1d0002_006规范正文第 158 字“云”，《周礼》·KR1d0002_006规范正文第 162 字“瑟”；同句位置取字。",
+        "citations": [
+          {
+            "id": "zhou-li/work-0006/passage-0002:云:0",
+            "passageId": "zhou-li/work-0006/passage-0002",
+            "matchedChar": "云",
+            "occurrence": 0,
+            "bookId": "zhou-li",
+            "bookTitle": "《周礼》",
+            "workTitle": "KR1d0002_006",
+            "chapterTitle": "KR1d0002_006",
+            "quote": "南呂舞大㲈以祀四望乃奏蕤賔歌函鍾舞大夏以祭山川乃奏夷則歌小呂舞大濩以享先妣乃奏無射歌夾鍾舞大武以享先祖凡六樂者文之以五聲播之以八音凡六樂者一變而致羽物及川澤之示再變而致臝物及山林之示三變而致鱗物及丘陵之示四變而致毛物及墳衍之示五變而致介物及土示六變而致象物及天神凡樂圜鍾爲宮黃鍾爲角大蔟爲徵姑洗爲羽靁鼓靁鼗孤竹之管雲和之琴瑟雲門之舞冬日至於地上之圜丘奏之若樂六",
+            "sourceUrl": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR1d0002.jsonl",
+            "verificationUrl": "https://www.kanripo.org/text/KR1d0002/"
+          },
+          {
+            "id": "zhou-li/work-0006/passage-0002:瑟:0",
+            "passageId": "zhou-li/work-0006/passage-0002",
+            "matchedChar": "瑟",
+            "occurrence": 0,
+            "bookId": "zhou-li",
+            "bookTitle": "《周礼》",
+            "workTitle": "KR1d0002_006",
+            "chapterTitle": "KR1d0002_006",
+            "quote": "南呂舞大㲈以祀四望乃奏蕤賔歌函鍾舞大夏以祭山川乃奏夷則歌小呂舞大濩以享先妣乃奏無射歌夾鍾舞大武以享先祖凡六樂者文之以五聲播之以八音凡六樂者一變而致羽物及川澤之示再變而致臝物及山林之示三變而致鱗物及丘陵之示四變而致毛物及墳衍之示五變而致介物及土示六變而致象物及天神凡樂圜鍾爲宮黃鍾爲角大蔟爲徵姑洗爲羽靁鼓靁鼗孤竹之管雲和之琴瑟雲門之舞冬日至於地上之圜丘奏之若樂六",
+            "sourceUrl": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR1d0002.jsonl",
+            "verificationUrl": "https://www.kanripo.org/text/KR1d0002/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.96,
+        "gentle": 0.49500000000000005,
+        "bright": 0.608,
+        "austere": 0.587,
+        "modern": 0.18,
+        "pronounceable": 0.88,
+        "writable": 0.85,
+        "recognizable": 0.85,
+        "uncommon": 0.82,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 0.68,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng yún sè",
+        "tones": "2-2-4",
+        "meaning": "云瑟，云和之瑟。",
+        "semanticExplanation": "‘云瑟’取自《周礼》‘云和之琴瑟’，虽非连续成词，但‘云瑟’可自然理解为‘云和之瑟’，典雅有据，组合合理。",
+        "pronunciationNote": "wáng yún sè，声调2-2-4，平仄收尾，节奏平稳。声母w-y-s无碰撞，韵母ang-un-e过渡自然，无拗口或谐音风险。",
+        "usabilityNote": "“云瑟”二字均为常用字，书写简便，日常称呼无歧义。意象清雅，适合长期使用，不显刻意。",
+        "uncommonnessNote": "“云瑟”并非常见组合，但字面易懂，不依赖生僻字，在熟悉中保有新鲜感。",
+        "primaryStyle": "graceful",
+        "imageryCategory": "乐韵"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "‘云瑟’可能被误读为‘云’与‘瑟’并列，需注意名字的直观性"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0018-5aafbdf048a4:pointer-ea1178b03f8d27ab",
+        "semantic": {
+          "semanticScore": 0.85,
+          "evidenceScore": 0.9,
+          "explanation": "‘云瑟’取自《周礼》‘云和之琴瑟’，虽非连续成词，但‘云瑟’可自然理解为‘云和之瑟’，典雅有据，组合合理。"
+        },
+        "name": {
+          "phonology": 0.88,
+          "nameFeel": 0.86,
+          "femininity": 0.9,
+          "usability": 0.85,
+          "distinctiveness": 0.82
+        },
+        "adversarialCritique": "云瑟二字清雅有据，声调平稳，无谐音或性别偏移。虽非原文成词，但‘云和之瑟’的缩合自然可解，不显生造。整体端雅度接近令仪，可入短名单。"
+      }
+    },
+    {
+      "id": "personalized:归沐",
+      "surname": "王",
+      "givenName": "归沐",
+      "fullName": "王归沐",
+      "evidence": {
+        "relation": "exact-phrase",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《诗经》·采绿规范正文第 7 字“归”，《诗经》·采绿规范正文第 8 字“沐”；原文连续取字。",
+        "citations": [
+          {
+            "id": "shi-jing/work-0226/passage-0002:归:0",
+            "passageId": "shi-jing/work-0226/passage-0002",
+            "matchedChar": "归",
+            "occurrence": 0,
+            "bookId": "shi-jing",
+            "bookTitle": "《诗经》",
+            "workTitle": "采绿",
+            "chapterTitle": "小雅·鱼藻之什",
+            "quote": "予发曲局，薄言归沐。",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E8%AF%97%E7%BB%8F/shijing.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E8%A9%A9%E7%B6%93"
+          },
+          {
+            "id": "shi-jing/work-0226/passage-0002:沐:0",
+            "passageId": "shi-jing/work-0226/passage-0002",
+            "matchedChar": "沐",
+            "occurrence": 0,
+            "bookId": "shi-jing",
+            "bookTitle": "《诗经》",
+            "workTitle": "采绿",
+            "chapterTitle": "小雅·鱼藻之什",
+            "quote": "予发曲局，薄言归沐。",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E8%AF%97%E7%BB%8F/shijing.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E8%A9%A9%E7%B6%93"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.96,
+        "gentle": 0.4675,
+        "bright": 0.608,
+        "austere": 0.587,
+        "modern": 0.18,
+        "pronounceable": 0.88,
+        "writable": 0.84,
+        "recognizable": 0.84,
+        "uncommon": 0.82,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 1,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng guī mù",
+        "tones": "2-1-4",
+        "meaning": "归沐，意为归来沐浴，喻洁净自守、清新闲适。",
+        "semanticExplanation": "“归沐”为原文连续成词，出自《诗经·采绿》“予发曲局，薄言归沐”，意为归来洗发，引申为洁净自守，语义清新自然，作为女性名有诗意且不落俗套。",
+        "pronunciationNote": "wáng guī mù，声调2-1-4，平仄起伏清晰，无拗口或碰撞。",
+        "usabilityNote": "归沐二字虽古雅，但字面易懂，日常书写与称呼无障碍，适合长期使用。",
+        "uncommonnessNote": "归沐非现代常用名，但字义清晰，不显生僻，具有古典韵味。",
+        "primaryStyle": "graceful",
+        "imageryCategory": "生活"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“沐”字稍显直白，但整体可接受"
+        },
+        {
+          "code": "semantic-note-2",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“归沐”可能被理解为“归隐沐浴”，但无负面含义"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0090-6a476f08c152:pointer-51fc695a5db4012c",
+        "semantic": {
+          "semanticScore": 0.85,
+          "evidenceScore": 0.9,
+          "explanation": "“归沐”为原文连续成词，出自《诗经·采绿》“予发曲局，薄言归沐”，意为归来洗发，引申为洁净自守，语义清新自然，作为女性名有诗意且不落俗套。"
+        },
+        "name": {
+          "phonology": 0.88,
+          "nameFeel": 0.86,
+          "femininity": 0.85,
+          "usability": 0.84,
+          "distinctiveness": 0.82
+        },
+        "adversarialCritique": "归沐出自诗经，连续成词有据，意象清新不落俗套。声调平稳，无谐音或性别偏移，端雅度接近令仪，可入短名单。"
+      }
+    },
+    {
+      "id": "personalized:晴秋",
+      "surname": "王",
+      "givenName": "晴秋",
+      "fullName": "王晴秋",
+      "evidence": {
+        "relation": "clause-related",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《白氏长庆集》·KR4c0069规范正文第 138 字“晴”，《白氏长庆集》·KR4c0069规范正文第 142 字“秋”；同句位置取字。",
+        "citations": [
+          {
+            "id": "bai-shi-chang-qing-ji/work-0001/passage-1798:晴:0",
+            "passageId": "bai-shi-chang-qing-ji/work-0001/passage-1798",
+            "matchedChar": "晴",
+            "occurrence": 0,
+            "bookId": "bai-shi-chang-qing-ji",
+            "bookTitle": "《白氏长庆集》",
+            "workTitle": "KR4c0069",
+            "chapterTitle": "KR4c0069",
+            "quote": "元約一年迴馬辭轅下頭高舉鶴出籠中翅大開但拂衣行莫迴顧的無官職趂人來九日寄微之眼暗頭風事事妨遶籬新菊為誰黃閑遊日乆心慵倦痛飲年深肺損傷呉郡兩迴逢九月越州四度見重陽怕飛盃酒多分數猒聽笙歌舊曲章蟋蟀聲寒初過雨茱茰色淺未經霜去秋共數登高㑹又𬒳今年減一塲題報㤙寺好是清涼地都無繫絆身晚晴宜野寺秋景屬閑人浄石堪敷坐寒泉可濯巾自慙容鬢上猶帶郡庭塵晚起卧聽鼕鼕衙鼓聲起遲睡足長",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4c0069%20%E7%99%BD%E6%B0%8F%E9%95%B7%E6%85%B6%E9%9B%86-%E5%94%90-%E7%99%BD%E5%B1%85%E6%98%93.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4c0069/"
+          },
+          {
+            "id": "bai-shi-chang-qing-ji/work-0001/passage-1798:秋:1",
+            "passageId": "bai-shi-chang-qing-ji/work-0001/passage-1798",
+            "matchedChar": "秋",
+            "occurrence": 1,
+            "bookId": "bai-shi-chang-qing-ji",
+            "bookTitle": "《白氏长庆集》",
+            "workTitle": "KR4c0069",
+            "chapterTitle": "KR4c0069",
+            "quote": "元約一年迴馬辭轅下頭高舉鶴出籠中翅大開但拂衣行莫迴顧的無官職趂人來九日寄微之眼暗頭風事事妨遶籬新菊為誰黃閑遊日乆心慵倦痛飲年深肺損傷呉郡兩迴逢九月越州四度見重陽怕飛盃酒多分數猒聽笙歌舊曲章蟋蟀聲寒初過雨茱茰色淺未經霜去秋共數登高㑹又𬒳今年減一塲題報㤙寺好是清涼地都無繫絆身晚晴宜野寺秋景屬閑人浄石堪敷坐寒泉可濯巾自慙容鬢上猶帶郡庭塵晚起卧聽鼕鼕衙鼓聲起遲睡足長",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4c0069%20%E7%99%BD%E6%B0%8F%E9%95%B7%E6%85%B6%E9%9B%86-%E5%94%90-%E7%99%BD%E5%B1%85%E6%98%93.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4c0069/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.5848,
+        "gentle": 0.47300000000000003,
+        "bright": 0.95,
+        "austere": 0.573,
+        "modern": 0.18,
+        "pronounceable": 0.86,
+        "writable": 0.84,
+        "recognizable": 0.84,
+        "uncommon": 0.78,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 0.68,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng qíng qiū",
+        "tones": "2-2-1",
+        "meaning": "晚晴宜野寺，取“晴”“秋”二字，意为晴空高远、秋意澄明。",
+        "semanticExplanation": "白居易诗“晚晴宜野寺，秋景属闲人”中“晴”“秋”同句取字，虽非连续，但“晚晴”与“秋景”对举，意象一致。claimedMeaning“晴空高远、秋意澄明”贴合原句意境。组合自然，作为女孩名有清朗明净之感，与“王令仪”端雅风格相合。",
+        "pronunciationNote": "wáng qíng qiū，声调2-2-1，前平后降，收束有力；声母w-q-q略有重复，但韵母差异明显，不显拗口。",
+        "usabilityNote": "晴秋意象清新，字形简单，日常使用无负担。",
+        "uncommonnessNote": "晴秋虽非生僻，但组合在姓名中不算高频，具有自然辨识度。",
+        "primaryStyle": "bright",
+        "imageryCategory": "天象"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“晴秋”为常见组合，略显普通"
+        },
+        {
+          "code": "semantic-note-2",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "原句“秋景属闲人”略带闲散意，与端雅风格略有偏差"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0318-07dc3d0dc4c4:pointer-d487a73441c76dec",
+        "semantic": {
+          "semanticScore": 0.88,
+          "evidenceScore": 0.9,
+          "explanation": "白居易诗“晚晴宜野寺，秋景属闲人”中“晴”“秋”同句取字，虽非连续，但“晚晴”与“秋景”对举，意象一致。claimedMeaning“晴空高远、秋意澄明”贴合原句意境。组合自然，作为女孩名有清朗明净之感，与“王令仪”端雅风格相合。"
+        },
+        "name": {
+          "phonology": 0.86,
+          "nameFeel": 0.85,
+          "femininity": 0.86,
+          "usability": 0.84,
+          "distinctiveness": 0.78
+        },
+        "adversarialCritique": "晴秋清朗明净，意象自然，声调起伏有致。虽稍显常见，但作为女孩名清新可亲，与王令仪端雅风格相近，可入短名单。"
+      }
+    },
+    {
+      "id": "personalized:影秋",
+      "surname": "王",
+      "givenName": "影秋",
+      "fullName": "王影秋",
+      "evidence": {
+        "relation": "clause-related",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《李商隐诗集》·KR4c0074规范正文第 20 字“影”，《李商隐诗集》·KR4c0074规范正文第 22 字“秋”；同句位置取字。",
+        "citations": [
+          {
+            "id": "li-shang-yin-shi-ji/work-0001/passage-0162:影:0",
+            "passageId": "li-shang-yin-shi-ji/work-0001/passage-0162",
+            "matchedChar": "影",
+            "occurrence": 0,
+            "bookId": "li-shang-yin-shi-ji",
+            "bookTitle": "《李商隐诗集》",
+            "workTitle": "KR4c0074",
+            "chapterTitle": "KR4c0074",
+            "quote": "只要君流盻君傾國自傾房君珊瑚散不見姮娥影清秋守月輪月中閑杵臼桂子搗成塵嘲櫻桃朱實鳥含盡靑樓人未歸南園無限樹獨自葉如幃自貺陶令棄官後仰眠書屋中誰將五斗米擬換北䆫風蝶孤蝶小徘徊翩翾蝶翅開倂應傷皎㓗頻近雪中來夜意簾垂幕半捲枕冷𬒳仍香如何爲相憶魂夢過瀟湘李夫人三首一帶不結心兩股方安髻慙愧白茅人月沒教星替其二剰結茱茰枝多擘秋蓮的獨自有波光綵􁂫盛不得其三蠻絲繫條脫妍眼和香",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4c0074%20%E6%9D%8E%E7%BE%A9%E5%B1%B1%E8%A9%A9%E9%9B%86-%E5%94%90-%E6%9D%8E%E5%95%86%E9%9A%B1.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4c0074/"
+          },
+          {
+            "id": "li-shang-yin-shi-ji/work-0001/passage-0162:秋:0",
+            "passageId": "li-shang-yin-shi-ji/work-0001/passage-0162",
+            "matchedChar": "秋",
+            "occurrence": 0,
+            "bookId": "li-shang-yin-shi-ji",
+            "bookTitle": "《李商隐诗集》",
+            "workTitle": "KR4c0074",
+            "chapterTitle": "KR4c0074",
+            "quote": "只要君流盻君傾國自傾房君珊瑚散不見姮娥影清秋守月輪月中閑杵臼桂子搗成塵嘲櫻桃朱實鳥含盡靑樓人未歸南園無限樹獨自葉如幃自貺陶令棄官後仰眠書屋中誰將五斗米擬換北䆫風蝶孤蝶小徘徊翩翾蝶翅開倂應傷皎㓗頻近雪中來夜意簾垂幕半捲枕冷𬒳仍香如何爲相憶魂夢過瀟湘李夫人三首一帶不結心兩股方安髻慙愧白茅人月沒教星替其二剰結茱茰枝多擘秋蓮的獨自有波光綵􁂫盛不得其三蠻絲繫條脫妍眼和香",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4c0074%20%E6%9D%8E%E7%BE%A9%E5%B1%B1%E8%A9%A9%E9%9B%86-%E5%94%90-%E6%9D%8E%E5%95%86%E9%9A%B1.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4c0074/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.96,
+        "gentle": 0.48400000000000004,
+        "bright": 0.605,
+        "austere": 0.5905,
+        "modern": 0.18,
+        "pronounceable": 0.86,
+        "writable": 0.84,
+        "recognizable": 0.84,
+        "uncommon": 0.83,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 0.68,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng yǐng qiū",
+        "tones": "2-3-1",
+        "meaning": "影秋，月下清影与秋色相映，清冷而端雅。",
+        "semanticExplanation": "“影秋”取自李商隐诗“不见姮娥影，清秋守月轮”，原文“影”指嫦娥之影，“秋”指清秋，组合“影秋”可解为月下清影与秋色相映，清冷端雅，符合古典审美。虽非原文成词，但同句取字且意象一致。",
+        "pronunciationNote": "王影秋 wáng yǐng qiū，声调 2-3-1，有起伏，读音流畅。",
+        "usabilityNote": "影、秋均为常见字，书写方便，名字有画面感，适合日常使用。",
+        "uncommonnessNote": "组合有诗意，但“影”字入名稍显特别，整体仍自然。",
+        "primaryStyle": "graceful",
+        "imageryCategory": "自然意象"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“影”字与姥姥名线索相关，但未机械加分，需注意家族是否介意"
+        },
+        {
+          "code": "semantic-note-2",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“影秋”略带清冷感，但适合女性名"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0272-9e52134f55d7:pointer-4fbc6b877ece1d95",
+        "semantic": {
+          "semanticScore": 0.85,
+          "evidenceScore": 0.9,
+          "explanation": "“影秋”取自李商隐诗“不见姮娥影，清秋守月轮”，原文“影”指嫦娥之影，“秋”指清秋，组合“影秋”可解为月下清影与秋色相映，清冷端雅，符合古典审美。虽非原文成词，但同句取字且意象一致。"
+        },
+        "name": {
+          "phonology": 0.86,
+          "nameFeel": 0.85,
+          "femininity": 0.88,
+          "usability": 0.84,
+          "distinctiveness": 0.83
+        },
+        "adversarialCritique": "影秋画面感强，清冷端雅，读音起伏有致。虽非原文成词但同句取字来源透明，影字与姥姥线索相关但未机械加分，整体自然可用。"
+      }
+    },
+    {
+      "id": "personalized:习槿",
+      "surname": "王",
+      "givenName": "习槿",
+      "fullName": "王习槿",
+      "evidence": {
+        "relation": "clause-related",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《唐诗三百首》·積雨輞川莊作规范正文第 3 字“习”，《唐诗三百首》·積雨輞川莊作规范正文第 7 字“槿”；同句位置取字。",
+        "citations": [
+          {
+            "id": "tang-shi-san-bai-shou/work-0142/passage-0003:习:0",
+            "passageId": "tang-shi-san-bai-shou/work-0142/passage-0003",
+            "matchedChar": "习",
+            "occurrence": 0,
+            "bookId": "tang-shi-san-bai-shou",
+            "bookTitle": "《唐诗三百首》",
+            "workTitle": "積雨輞川莊作",
+            "chapterTitle": "王維·積雨輞川莊作",
+            "quote": "山中習靜觀朝槿，松下清齋折露葵。",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E5%85%A8%E5%94%90%E8%AF%97/%E5%94%90%E8%AF%97%E4%B8%89%E7%99%BE%E9%A6%96.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E5%94%90%E8%A9%A9%E4%B8%89%E7%99%BE%E9%A6%96"
+          },
+          {
+            "id": "tang-shi-san-bai-shou/work-0142/passage-0003:槿:0",
+            "passageId": "tang-shi-san-bai-shou/work-0142/passage-0003",
+            "matchedChar": "槿",
+            "occurrence": 0,
+            "bookId": "tang-shi-san-bai-shou",
+            "bookTitle": "《唐诗三百首》",
+            "workTitle": "積雨輞川莊作",
+            "chapterTitle": "王維·積雨輞川莊作",
+            "quote": "山中習靜觀朝槿，松下清齋折露葵。",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E5%85%A8%E5%94%90%E8%AF%97/%E5%94%90%E8%AF%97%E4%B8%89%E7%99%BE%E9%A6%96.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E5%94%90%E8%A9%A9%E4%B8%89%E7%99%BE%E9%A6%96"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.5984,
+        "gentle": 0.95,
+        "bright": 0.605,
+        "austere": 0.58,
+        "modern": 0.18,
+        "pronounceable": 0.86,
+        "writable": 0.82,
+        "recognizable": 0.82,
+        "uncommon": 0.8,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 0.68,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng xí jǐn",
+        "tones": "2-2-3",
+        "meaning": "习静观槿，心自安然。",
+        "semanticExplanation": "“习槿”取自王维《积雨辋川庄作》“山中习静观朝槿”，同句取“习”与“槿”，组合自然，含义为习静观槿、心自安然。来源透明，诗意清雅，适合女孩名。",
+        "pronunciationNote": "wáng xí jǐn，声调2-2-3，收尾上声，柔和婉转。声母x-j有轻微摩擦，但整体流畅，无谐音风险。",
+        "usabilityNote": "“习槿”二字常见，书写方便。“槿”字有木槿花之意，女性气质明显，日常使用自然。",
+        "uncommonnessNote": "“习”作名字用字较少，“槿”也非高频，组合新颖但不生僻。",
+        "primaryStyle": "gentle",
+        "imageryCategory": "自然清雅"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“槿”为木槿花，意象柔美，但“习槿”组合稍显生僻"
+        },
+        {
+          "code": "semantic-note-2",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“习”字在姓名中较少见，但无实质风险"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0020-3f54d3889f96:pointer-041783e55200b24b",
+        "semantic": {
+          "semanticScore": 0.85,
+          "evidenceScore": 0.9,
+          "explanation": "“习槿”取自王维《积雨辋川庄作》“山中习静观朝槿”，同句取“习”与“槿”，组合自然，含义为习静观槿、心自安然。来源透明，诗意清雅，适合女孩名。"
+        },
+        "name": {
+          "phonology": 0.86,
+          "nameFeel": 0.85,
+          "femininity": 0.88,
+          "usability": 0.82,
+          "distinctiveness": 0.8
+        },
+        "adversarialCritique": "习槿取意清雅，木槿意象柔美，来源透明。读音流畅，书写方便。习字入名虽少见但无生硬感，整体自然，符合古典端雅偏好。"
+      }
+    },
+    {
+      "id": "personalized:安恬",
+      "surname": "王",
+      "givenName": "安恬",
+      "fullName": "王安恬",
+      "evidence": {
+        "relation": "clause-related",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《荀子》·KR3a0002_012规范正文第 126 字“安”，《荀子》·KR3a0002_012规范正文第 128 字“恬”；同句位置取字。",
+        "citations": [
+          {
+            "id": "xun-zi/work-0012/passage-0013:安:1",
+            "passageId": "xun-zi/work-0012/passage-0013",
+            "matchedChar": "安",
+            "occurrence": 1,
+            "bookId": "xun-zi",
+            "bookTitle": "《荀子》",
+            "workTitle": "KR3a0002_012",
+            "chapterTitle": "KR3a0002_012",
+            "quote": "走乎堂下出戸而巫覡有事出門而宗祀有事乗大路趨越席以養安側載睪芷以養鼻前有錯衡以養目和鸞之聲步中武象騶中韶䕶以養耳三公奉軶持納諸侯持輪挾輿先馬大侯編後大夫次之小侯元士次之庶士介而夾道庶人隱竄莫敢視望居如大神動如天帝持老養衰猶有善於是者與不老者休也休猶有安樂恬愉如是者乎故曰諸侯有老天子無老有擅國無擅天下古今一也夫曰堯舜擅讓是虚言也是淺者之傳陋者之說也不知逆順之理",
+            "sourceUrl": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR3a0002.jsonl",
+            "verificationUrl": "https://www.kanripo.org/text/KR3a0002/"
+          },
+          {
+            "id": "xun-zi/work-0012/passage-0013:恬:0",
+            "passageId": "xun-zi/work-0012/passage-0013",
+            "matchedChar": "恬",
+            "occurrence": 0,
+            "bookId": "xun-zi",
+            "bookTitle": "《荀子》",
+            "workTitle": "KR3a0002_012",
+            "chapterTitle": "KR3a0002_012",
+            "quote": "走乎堂下出戸而巫覡有事出門而宗祀有事乗大路趨越席以養安側載睪芷以養鼻前有錯衡以養目和鸞之聲步中武象騶中韶䕶以養耳三公奉軶持納諸侯持輪挾輿先馬大侯編後大夫次之小侯元士次之庶士介而夾道庶人隱竄莫敢視望居如大神動如天帝持老養衰猶有善於是者與不老者休也休猶有安樂恬愉如是者乎故曰諸侯有老天子無老有擅國無擅天下古今一也夫曰堯舜擅讓是虚言也是淺者之傳陋者之說也不知逆順之理",
+            "sourceUrl": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR3a0002.jsonl",
+            "verificationUrl": "https://www.kanripo.org/text/KR3a0002/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.6120000000000001,
+        "gentle": 0.95,
+        "bright": 0.608,
+        "austere": 0.573,
+        "modern": 0.18,
+        "pronounceable": 0.88,
+        "writable": 0.84,
+        "recognizable": 0.84,
+        "uncommon": 0.78,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 0.68,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng ān tián",
+        "tones": "2-1-2",
+        "meaning": "安恬，安宁恬静。",
+        "semanticExplanation": "王安恬取自《荀子》“休猶有安樂恬愉如是者乎”，同句位置取字，出处明确。“安恬”为古典词汇，语义完整自然，符合姓名审美。",
+        "pronunciationNote": "wáng ān tián，声调2-1-2，起伏有致，读来顺畅。",
+        "usabilityNote": "安恬与恬安意义相近，但安字更常见，整体自然。",
+        "uncommonnessNote": "安恬组合不常见，但字义易懂。",
+        "primaryStyle": "gentle",
+        "imageryCategory": "恬静"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“安恬”在古籍中较少直接连用，需注意来源透明性"
+        },
+        {
+          "code": "semantic-note-2",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "名字偏柔美，需确认符合家庭偏好"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0069-5c5895d77ddb:pointer-ce03ed8aeabd1568",
+        "semantic": {
+          "semanticScore": 0.85,
+          "evidenceScore": 0.85,
+          "explanation": "王安恬取自《荀子》“休猶有安樂恬愉如是者乎”，同句位置取字，出处明确。“安恬”为古典词汇，语义完整自然，符合姓名审美。"
+        },
+        "name": {
+          "phonology": 0.88,
+          "nameFeel": 0.86,
+          "femininity": 0.9,
+          "usability": 0.84,
+          "distinctiveness": 0.78
+        },
+        "adversarialCritique": "安恬柔和自然，声调起伏有致，无谐音或性别问题。虽古籍连用较少，但语义透明，日常称呼流畅，端雅度可接受。"
+      }
+    },
+    {
+      "id": "personalized:霞曙",
+      "surname": "王",
+      "givenName": "霞曙",
+      "fullName": "王霞曙",
+      "evidence": {
+        "relation": "clause-related",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《唐诗三百首》·和晉陵陸丞早春遊望规范正文第 2 字“霞”，《唐诗三百首》·和晉陵陸丞早春遊望规范正文第 5 字“曙”；同句位置取字。",
+        "citations": [
+          {
+            "id": "tang-shi-san-bai-shou/work-0238/passage-0002:霞:0",
+            "passageId": "tang-shi-san-bai-shou/work-0238/passage-0002",
+            "matchedChar": "霞",
+            "occurrence": 0,
+            "bookId": "tang-shi-san-bai-shou",
+            "bookTitle": "《唐诗三百首》",
+            "workTitle": "和晉陵陸丞早春遊望",
+            "chapterTitle": "杜審言·和晉陵陸丞早春遊望",
+            "quote": "雲霞出海曙，梅柳渡江春。",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E5%85%A8%E5%94%90%E8%AF%97/%E5%94%90%E8%AF%97%E4%B8%89%E7%99%BE%E9%A6%96.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E5%94%90%E8%A9%A9%E4%B8%89%E7%99%BE%E9%A6%96"
+          },
+          {
+            "id": "tang-shi-san-bai-shou/work-0238/passage-0002:曙:0",
+            "passageId": "tang-shi-san-bai-shou/work-0238/passage-0002",
+            "matchedChar": "曙",
+            "occurrence": 0,
+            "bookId": "tang-shi-san-bai-shou",
+            "bookTitle": "《唐诗三百首》",
+            "workTitle": "和晉陵陸丞早春遊望",
+            "chapterTitle": "杜審言·和晉陵陸丞早春遊望",
+            "quote": "雲霞出海曙，梅柳渡江春。",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E5%85%A8%E5%94%90%E8%AF%97/%E5%94%90%E8%AF%97%E4%B8%89%E7%99%BE%E9%A6%96.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E5%94%90%E8%A9%A9%E4%B8%89%E7%99%BE%E9%A6%96"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.5984,
+        "gentle": 0.48400000000000004,
+        "bright": 0.95,
+        "austere": 0.573,
+        "modern": 0.18,
+        "pronounceable": 0.86,
+        "writable": 0.82,
+        "recognizable": 0.82,
+        "uncommon": 0.78,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 0.68,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng xiá shǔ",
+        "tones": "2-2-3",
+        "meaning": "朝霞映海，天色初曙，取“霞曙”为名，寓含晨光初现、明丽清新的气象。",
+        "semanticExplanation": "两字取自杜审言《和晋陵陆丞早春游望》“云霞出海曙”，原文中“霞”在第2字、“曙”在第5字，同句位置取字，来源透明。claimedMeaning“朝霞映海，天色初曙”忠实于原句意象，“霞曙”组合自然，有晨光明丽、清新开阔之意，适合女性名字，且不拗口。",
+        "pronunciationNote": "wáng xiá shǔ，声调2-2-3，平缓中带升调，声母w-x-sh无碰撞，韵母ia-u和谐，整体流畅。",
+        "usabilityNote": "“霞曙”意象明丽，易于书写，日常使用无歧义，适合长期使用。",
+        "uncommonnessNote": "“霞曙”组合不常见，但意象清晰，具有古典美和独特性。",
+        "primaryStyle": "bright",
+        "imageryCategory": "自然天象"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "‘曙’字在姓名中相对少见，可能需解释读音"
+        },
+        {
+          "code": "semantic-note-2",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "‘霞曙’意象偏明亮开阔，与‘端雅’风格略有差异，但无实质风险"
+        },
+        {
+          "code": "name-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“曙”字稍显正式，但整体可接受"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0011-f6c574cde769:pointer-eed05e80c1af80b8",
+        "semantic": {
+          "semanticScore": 0.85,
+          "evidenceScore": 0.9,
+          "explanation": "两字取自杜审言《和晋陵陆丞早春游望》“云霞出海曙”，原文中“霞”在第2字、“曙”在第5字，同句位置取字，来源透明。claimedMeaning“朝霞映海，天色初曙”忠实于原句意象，“霞曙”组合自然，有晨光明丽、清新开阔之意，适合女性名字，且不拗口。"
+        },
+        "name": {
+          "phonology": 0.86,
+          "nameFeel": 0.85,
+          "femininity": 0.88,
+          "usability": 0.82,
+          "distinctiveness": 0.78
+        },
+        "adversarialCritique": "霞曙意象明丽开阔，读音流畅，书写方便。曙字虽少见但无生硬感，整体自然，符合古典审美，适合长期使用。"
+      }
+    },
+    {
+      "id": "personalized:礼诗",
+      "surname": "王",
+      "givenName": "礼诗",
+      "fullName": "王礼诗",
+      "evidence": {
+        "relation": "clause-related",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《春秋左传》·KR1e0001_005规范正文第 76 字“礼”，《春秋左传》·KR1e0001_005规范正文第 80 字“诗”；同句位置取字。",
+        "citations": [
+          {
+            "id": "chun-qiu-zuo-zhuan/work-0005/passage-0080:礼:0",
+            "passageId": "chun-qiu-zuo-zhuan/work-0005/passage-0080",
+            "matchedChar": "礼",
+            "occurrence": 0,
+            "bookId": "chun-qiu-zuo-zhuan",
+            "bookTitle": "《春秋左传》",
+            "workTitle": "KR1e0001_005",
+            "chapterTitle": "KR1e0001_005",
+            "quote": "宋公孫固如晉告急先軫曰報施救患取威定霸於是乎在矣狐偃曰楚始得曹而新昏於衛若伐曹衛楚必救之則齊宋免矣於是乎蒐于被廬作三軍謀元帥趙衰曰郤縠可臣亟聞其言矣說禮樂而敦詩書詩書義之府也禮樂德之則也德義利之本也夏書曰賦納以言明試以功車服以庸君其試之乃使郤縠將中軍郤溱佐之使狐偃將上軍讓於狐毛而佐之命趙衰為卿讓於欒枝先軫使欒枝將下軍先軫佐之荀林父御戎魏犨為右晉侯始入而教其民",
+            "sourceUrl": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR1e0001.jsonl",
+            "verificationUrl": "https://www.kanripo.org/text/KR1e0001/"
+          },
+          {
+            "id": "chun-qiu-zuo-zhuan/work-0005/passage-0080:诗:0",
+            "passageId": "chun-qiu-zuo-zhuan/work-0005/passage-0080",
+            "matchedChar": "诗",
+            "occurrence": 0,
+            "bookId": "chun-qiu-zuo-zhuan",
+            "bookTitle": "《春秋左传》",
+            "workTitle": "KR1e0001_005",
+            "chapterTitle": "KR1e0001_005",
+            "quote": "宋公孫固如晉告急先軫曰報施救患取威定霸於是乎在矣狐偃曰楚始得曹而新昏於衛若伐曹衛楚必救之則齊宋免矣於是乎蒐于被廬作三軍謀元帥趙衰曰郤縠可臣亟聞其言矣說禮樂而敦詩書詩書義之府也禮樂德之則也德義利之本也夏書曰賦納以言明試以功車服以庸君其試之乃使郤縠將中軍郤溱佐之使狐偃將上軍讓於狐毛而佐之命趙衰為卿讓於欒枝先軫使欒枝將下軍先軫佐之荀林父御戎魏犨為右晉侯始入而教其民",
+            "sourceUrl": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR1e0001.jsonl",
+            "verificationUrl": "https://www.kanripo.org/text/KR1e0001/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.5712,
+        "gentle": 0.462,
+        "bright": 0.608,
+        "austere": 0.573,
+        "modern": 0.18,
+        "pronounceable": 0.85,
+        "writable": 0.83,
+        "recognizable": 0.83,
+        "uncommon": 0.78,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 0.68,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng lǐ shī",
+        "tones": "2-3-1",
+        "meaning": "敦厚礼乐，温雅有德。",
+        "semanticExplanation": "“礼诗”取自《左传》同句“说礼乐而敦诗书”，虽非连续取字，但“礼”与“诗”在原文中紧密关联，组合后形成“礼乐诗书”的典雅意象，语义自然，适合女性名字，体现温雅有德。",
+        "pronunciationNote": "wáng lǐ shī，声调2-3-1，抑扬顿挫，节奏分明。声母l-sh无碰撞，韵母i-i衔接自然，读音清晰。",
+        "usabilityNote": "“礼诗”二字常见，书写简便，语义明确，有古典文化底蕴，日常使用无负担。",
+        "uncommonnessNote": "“礼诗”组合虽不常见，但字面易懂，不显生僻，在古典与现代之间取得平衡。",
+        "primaryStyle": "classical",
+        "imageryCategory": "德行"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“礼诗”与“礼乐诗书”关联，但单独使用可能略显抽象，需注意读音流畅性"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0030-b9903fc0eb1a:pointer-56cd955701a82912",
+        "semantic": {
+          "semanticScore": 0.85,
+          "evidenceScore": 0.9,
+          "explanation": "“礼诗”取自《左传》同句“说礼乐而敦诗书”，虽非连续取字，但“礼”与“诗”在原文中紧密关联，组合后形成“礼乐诗书”的典雅意象，语义自然，适合女性名字，体现温雅有德。"
+        },
+        "name": {
+          "phonology": 0.85,
+          "nameFeel": 0.86,
+          "femininity": 0.84,
+          "usability": 0.83,
+          "distinctiveness": 0.78
+        },
+        "adversarialCritique": "礼诗取意典雅，读音抑扬顿挫，书写简便。虽单独看略显抽象，但礼乐诗书的文化底蕴支撑其作为姓名的合理性，整体端雅自然。"
+      }
+    },
+    {
+      "id": "personalized:嘉月",
+      "surname": "王",
+      "givenName": "嘉月",
+      "fullName": "王嘉月",
+      "evidence": {
+        "relation": "clause-related",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "程序按原文位置核定：《仪礼》·KR1d0026_001规范正文第 132 字“嘉”，《仪礼》·KR1d0026_001规范正文第 122 字“月”；同句位置取字。",
+        "citations": [
+          {
+            "id": "yi-li/work-0001/passage-0009:嘉:4",
+            "passageId": "yi-li/work-0001/passage-0009",
+            "matchedChar": "嘉",
+            "occurrence": 4,
+            "bookId": "yi-li",
+            "bookTitle": "《仪礼》",
+            "workTitle": "KR1d0026_001",
+            "chapterTitle": "KR1d0026_001",
+            "quote": "疆受天之慶醴辭曰甘醴惟厚嘉薦令芳拜受祭之以定爾祥承天之休壽考不忘醮辭曰旨酒旣清嘉薦亶時始加元服兄弟具來孝友時格永乃保之再醮曰㫖酒旣湑嘉薦伊脯乃申爾服禮儀有序祭此嘉爵承天之祜三醮曰旨酒令芳籩豆有楚咸加爾服肴升折俎承天之慶受福無疆字辭曰禮儀旣備令月吉日昭告爾字爰字孔嘉髦士攸冝冝之于假永受保之曰伯某甫仲叔季唯其所當屨夏用葛玄端黒屨青絇繶純純博寸素積白屨以魁柎之緇絇",
+            "sourceUrl": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR1d0026.jsonl",
+            "verificationUrl": "https://www.kanripo.org/text/KR1d0026/"
+          },
+          {
+            "id": "yi-li/work-0001/passage-0009:月:0",
+            "passageId": "yi-li/work-0001/passage-0009",
+            "matchedChar": "月",
+            "occurrence": 0,
+            "bookId": "yi-li",
+            "bookTitle": "《仪礼》",
+            "workTitle": "KR1d0026_001",
+            "chapterTitle": "KR1d0026_001",
+            "quote": "疆受天之慶醴辭曰甘醴惟厚嘉薦令芳拜受祭之以定爾祥承天之休壽考不忘醮辭曰旨酒旣清嘉薦亶時始加元服兄弟具來孝友時格永乃保之再醮曰㫖酒旣湑嘉薦伊脯乃申爾服禮儀有序祭此嘉爵承天之祜三醮曰旨酒令芳籩豆有楚咸加爾服肴升折俎承天之慶受福無疆字辭曰禮儀旣備令月吉日昭告爾字爰字孔嘉髦士攸冝冝之于假永受保之曰伯某甫仲叔季唯其所當屨夏用葛玄端黒屨青絇繶純純博寸素積白屨以魁柎之緇絇",
+            "sourceUrl": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR1d0026.jsonl",
+            "verificationUrl": "https://www.kanripo.org/text/KR1d0026/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.6120000000000001,
+        "gentle": 0.49500000000000005,
+        "bright": 0.95,
+        "austere": 0.573,
+        "modern": 0.18,
+        "pronounceable": 0.88,
+        "writable": 0.88,
+        "recognizable": 0.88,
+        "uncommon": 0.78,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 0.68,
+        "recompositionPreference": 0.15
+      },
+      "quality": {
+        "pinyin": "wáng jiā yuè",
+        "tones": "2-1-4",
+        "meaning": "嘉月，意为美好的月份，象征吉祥如意的时光。",
+        "semanticExplanation": "“嘉月”见于《仪礼》原文“令月吉日”与“嘉荐”同段，虽非连续成词，但“嘉月”作为美好月份之意在古典中自然成立（如《楚辞》亦有“嘉月”用例）。两字同篇同段，来源透明，组合自然，符合端雅女性名偏好。",
+        "pronunciationNote": "wáng jiā yuè，声调2-1-4，平仄起伏清晰，开口音与闭口音交替，读来朗朗上口，无拗口或碰撞。",
+        "usabilityNote": "字形结构均衡，笔画适中，书写便利。寓意美好月份，吉祥如意，适合日常称呼，无生僻或歧义。",
+        "uncommonnessNote": "“嘉月”在古籍中常见（如《楚辞》），但作为现代人名并不泛滥，兼具古典底蕴与清新感。",
+        "primaryStyle": "bright",
+        "imageryCategory": "祥瑞"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "semantic-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“嘉月”在原文中并非连续成词，属同段重组，需向使用者说明来源为《仪礼》士冠礼篇而非直接成词"
+        },
+        {
+          "code": "semantic-note-2",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“嘉”字在候选集中出现频率较高，可能略显常见"
+        },
+        {
+          "code": "name-note-1",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“嘉”字略显传统，可能稍带长辈常用字印象，但整体不影响现代感。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "deepseek-v4-flash",
+        "promptVersion": "name-factory-v10",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "v10-formal-48-20260826-1",
+        "proposalId": "source-0017-021a6cda8e6a:pointer-18ee436bf6e02559",
+        "semantic": {
+          "semanticScore": 0.85,
+          "evidenceScore": 0.82,
+          "explanation": "“嘉月”见于《仪礼》原文“令月吉日”与“嘉荐”同段，虽非连续成词，但“嘉月”作为美好月份之意在古典中自然成立（如《楚辞》亦有“嘉月”用例）。两字同篇同段，来源透明，组合自然，符合端雅女性名偏好。"
+        },
+        "name": {
+          "phonology": 0.88,
+          "nameFeel": 0.86,
+          "femininity": 0.9,
+          "usability": 0.88,
+          "distinctiveness": 0.78
+        },
+        "adversarialCritique": "嘉月音韵流畅，意象明朗，虽非原文成词但古典用例可证。嘉字略传统但整体端雅，接近令仪气质，适合长期使用。"
+      }
+    }
+  ]
+}
