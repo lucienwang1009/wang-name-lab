@@ -78,7 +78,13 @@ function config() {
   ], { cwd: "/repo/web", env: {} });
 }
 
-function gateway({ rejectName }: { rejectName?: string } = {}) {
+function gateway({
+  rejectName,
+  nameScores,
+}: {
+  rejectName?: string;
+  nameScores?: Partial<NameReview["scores"]>;
+} = {}) {
   const requests: Array<{ role: string; input: unknown }> = [];
   const structured = vi.fn(async <T,>(request: { role: string; input: unknown }) => {
     requests.push({ role: request.role, input: request.input });
@@ -106,7 +112,14 @@ function gateway({ rejectName }: { rejectName?: string } = {}) {
       return candidates.map((candidate): NameReview => ({
         proposalId: candidate.proposalId,
         decision: candidate.fullName?.endsWith(rejectName ?? "__none__") ? "reject" : "approve",
-        scores: { phonology: 0.9, nameFeel: 0.9, femininity: 0.88, usability: 0.86, distinctiveness: 0.8 },
+        scores: {
+          phonology: 0.9,
+          nameFeel: 0.9,
+          femininity: 0.88,
+          usability: 0.86,
+          distinctiveness: 0.8,
+          ...nameScores,
+        },
         primaryStyle: "graceful",
         pronunciationNote: "自然",
         usabilityNote: "可用",
@@ -191,6 +204,15 @@ describe("候选工厂分阶段流水线", () => {
     expect(result.report.items.find((item) => item.proposal.givenName === "柔嘉")?.status).toBe("rejected");
     expect(result.report).toMatchObject({ pointerSelectionCount: 4, invalidPointerCount: 1 });
     expect(result.report.pointerIssues[0]?.reason).toMatch(/越界/u);
+  });
+
+  it("模型勉强 approve 但姓名感未达发布门槛时不进入对抗审核", async () => {
+    const fake = gateway({ nameScores: { nameFeel: 0.82 } });
+    const result = await runFactoryPipeline({ config: config(), corpus, gateway: fake.gateway });
+    expect(result.candidateFile.count).toBe(0);
+    expect(fake.requests.some((request) => request.role === "adversarial-final-reviewer")).toBe(false);
+    expect(result.report.items.find((item) => item.proposal.givenName === "令仪")?.rejectionReasons)
+      .toContain("姓名感 0.82 低于发布门槛 0.84。");
   });
 
   it("匿名语义审查输入不包含生成器 rationale 或自评分", async () => {

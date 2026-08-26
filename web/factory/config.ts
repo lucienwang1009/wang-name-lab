@@ -4,7 +4,7 @@ import { resolve } from "node:path";
 import type { FactoryRunConfig } from "./types.ts";
 import { FACTORY_MODEL } from "./types.ts";
 
-export const DEFAULT_PROMPT_VERSION = "name-factory-v6";
+export const DEFAULT_PROMPT_VERSION = "name-factory-v7";
 
 function positiveNumber(value: string | undefined, label: string, fallback: number): number {
   if (value === undefined) return fallback;

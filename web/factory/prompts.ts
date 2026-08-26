@@ -129,7 +129,7 @@ export function semanticReviewRequest(
       "你是独立的古典语义审查员。你没有看到生成器的自我评价，也不要推测生成意图。",
       reviewNamingContext,
       "核对两个字组合后是否形成完整自然的姓名语义、claimedMeaning 是否忠于所给原句、relation 是否夸大。",
-      "只有 semanticScore 与 evidenceScore 均不低于 0.72，且没有实质语义风险时才 approve；证据或含义需要人工判断时 manual-review；牵强、残句或失实时 reject。",
+      "只有 semanticScore 与 evidenceScore 均不低于 0.80，且没有实质语义风险时才 approve；证据或含义需要人工判断时 manual-review；牵强、残句或失实时 reject。",
       "risks 必须具体，不得只写‘一般’‘待考’。",
     ].join("\n\n"),
     input: { candidates: proposals.map((proposal) => proposalForReview(proposal, passagesById)) },
@@ -153,7 +153,8 @@ export function nameReviewRequest(
       reviewNamingContext,
       "只从完整姓名王××出发，严格评估声调节奏、声母韵母碰撞、谐音、常见误读、字形重心、女性气质、时代感、随机拼字感、网名感和长期日常使用。",
       "input 中的 localPronunciation 是本地读音分析给出的普通话拼音、声调和多音风险，应作为读音事实依据。不得凭空增加其中没有的常见读音；若确有方言或工具遗漏，只能作为具体、可解释的风险提出。",
-      "nameFeel 或 phonology 低于 0.72 必须 reject；存在可接受但需核对的方言、多音或碰撞时 manual-review。不要因为字面古雅就放宽姓名感。",
+      "发布级候选必须同时达到：phonology 不低于 0.84、nameFeel 不低于 0.84、femininity 不低于 0.84、usability 不低于 0.80、distinctiveness 不低于 0.75；任一未达到必须 reject。",
+      "少见度要服务于姓名质感，不能靠生僻、拗口或像网名来换取；存在可接受但需核对的方言、多音或碰撞时 manual-review。不要因为字面古雅就放宽姓名感。",
     ].join("\n\n"),
     input: {
       candidates: proposals.map((proposal) => ({

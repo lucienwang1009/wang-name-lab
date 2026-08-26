@@ -62,6 +62,38 @@ const calibrationBookOrder = [
 
 const calibrationBookRank = new Map<string, number>(calibrationBookOrder.map((bookId, index) => [bookId, index]));
 
+export const PUBLICATION_QUALITY_THRESHOLDS = {
+  semanticScore: 0.8,
+  evidenceScore: 0.8,
+  phonology: 0.84,
+  nameFeel: 0.84,
+  femininity: 0.84,
+  usability: 0.8,
+  distinctiveness: 0.75,
+} as const;
+
+function belowThreshold(label: string, score: number, threshold: number): string | undefined {
+  if (score >= threshold) return undefined;
+  return `${label} ${score.toFixed(2)} 低于发布门槛 ${threshold.toFixed(2)}。`;
+}
+
+function semanticQualityFailures(review: NonNullable<FactoryReviewItem["semantic"]>): string[] {
+  return [
+    belowThreshold("语义完整度", review.semanticScore, PUBLICATION_QUALITY_THRESHOLDS.semanticScore),
+    belowThreshold("证据忠实度", review.evidenceScore, PUBLICATION_QUALITY_THRESHOLDS.evidenceScore),
+  ].filter((reason): reason is string => Boolean(reason));
+}
+
+function nameQualityFailures(review: NonNullable<FactoryReviewItem["name"]>): string[] {
+  return [
+    belowThreshold("音韵", review.scores.phonology, PUBLICATION_QUALITY_THRESHOLDS.phonology),
+    belowThreshold("姓名感", review.scores.nameFeel, PUBLICATION_QUALITY_THRESHOLDS.nameFeel),
+    belowThreshold("女性气质", review.scores.femininity, PUBLICATION_QUALITY_THRESHOLDS.femininity),
+    belowThreshold("日常可用性", review.scores.usability, PUBLICATION_QUALITY_THRESHOLDS.usability),
+    belowThreshold("适度少见度", review.scores.distinctiveness, PUBLICATION_QUALITY_THRESHOLDS.distinctiveness),
+  ].filter((reason): reason is string => Boolean(reason));
+}
+
 function prioritizeCalibrationBatches(
   passages: readonly FactoryPassage[],
   batchSize: number,
@@ -241,12 +273,13 @@ export async function runFactoryPipeline(options: RunPipelineOptions): Promise<P
         reject(item, "语义审核响应缺失。");
       } else {
         item.semantic = review;
-        if (review.decision === "approve" && review.semanticScore >= 0.72 && review.evidenceScore >= 0.72) {
+        const qualityFailures = semanticQualityFailures(review);
+        if (review.decision === "approve" && qualityFailures.length === 0) {
           item.status = "semantic-approved";
         } else if (review.decision === "manual-review") {
           manualReview(item, review.risks.join("；") || "语义需要人工复核。");
         } else {
-          reject(item, review.risks.join("；") || "语义审核未通过。");
+          reject(item, [...review.risks, ...qualityFailures].join("；") || "语义审核未通过。");
         }
       }
     }
@@ -262,12 +295,13 @@ export async function runFactoryPipeline(options: RunPipelineOptions): Promise<P
         reject(item, "姓名感审核响应缺失。");
       } else {
         item.name = review;
-        if (review.decision === "approve" && review.scores.nameFeel >= 0.72 && review.scores.phonology >= 0.72) {
+        const qualityFailures = nameQualityFailures(review);
+        if (review.decision === "approve" && qualityFailures.length === 0) {
           item.status = "name-approved";
         } else if (review.decision === "manual-review") {
           manualReview(item, review.risks.join("；") || "姓名感需要人工复核。");
         } else {
-          reject(item, review.risks.join("；") || "姓名感审核未通过。");
+          reject(item, [...review.risks, ...qualityFailures].join("；") || "姓名感审核未通过。");
         }
       }
     }
