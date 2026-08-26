@@ -160,6 +160,26 @@ describe("候选工厂分阶段流水线", () => {
       .rejects.toThrow(/校准批次/);
   });
 
+  it("自动生成审计跨 passage 指针并在审核前淘汰", async () => {
+    const checkpoints: Array<{ pointerIssues: Array<{ reason: string }> }> = [];
+    const crossGateway: FactoryModelGateway = {
+      async structured<T>(request: StructuredRequest<T>) {
+        if (request.role !== "candidate-generator") throw new Error("不应进入审核阶段");
+        return [{
+          ...pointerSelection("柔嘉"),
+          second: { passageId: passages[1]!.id, index: 1 },
+        }] as T;
+      },
+    };
+    await expect(runFactoryPipeline({
+      config: config(),
+      corpus,
+      gateway: crossGateway,
+      onCheckpoint: async (value) => { checkpoints.push(value); },
+    })).rejects.toThrow(/校准批次/u);
+    expect(checkpoints.at(-1)?.pointerIssues[0]?.reason).toMatch(/同一个段落/u);
+  });
+
   it("只发布依次通过本地、语义、姓名感和对抗审核的候选", async () => {
     const fake = gateway({ rejectName: "柔嘉" });
     const result = await runFactoryPipeline({ config: config(), corpus, gateway: fake.gateway, now: () => new Date("2026-08-26T00:00:00Z") });

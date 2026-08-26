@@ -194,7 +194,7 @@ export async function runFactoryPipeline(options: RunPipelineOptions): Promise<P
       phase,
     ));
     pointerSelectionCount += selections.length;
-    const compiled = compilePointerSelections(selections, batch);
+    const compiled = compilePointerSelections(selections, batch, { allowCrossPassage: false });
     pointerIssues.push(...compiled.issues);
     const acceptedFromBatch = compiled.proposals;
     const batchPassed = acceptedFromBatch.some((proposal) => runLocalRules(proposal, passagesById).passed);

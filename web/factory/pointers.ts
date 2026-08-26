@@ -16,6 +16,10 @@ export interface CompiledPointerSelections {
   issues: PointerSelectionIssue[];
 }
 
+export interface PointerCompilerOptions {
+  allowCrossPassage?: boolean;
+}
+
 interface ResolvedPointer {
   passage: FactoryPassage;
   index: number;
@@ -124,6 +128,7 @@ function proposalId(batchId: string, selection: PointerSelection): string {
 export function compilePointerSelections(
   selections: readonly PointerSelection[],
   batch: PassageBatch,
+  { allowCrossPassage = true }: PointerCompilerOptions = {},
 ): CompiledPointerSelections {
   const passagesById = new Map(batch.passages.map((passage) => [passage.id, passage]));
   const proposals: CandidateProposal[] = [];
@@ -136,6 +141,9 @@ export function compilePointerSelections(
       selection.first.passageId === selection.second.passageId &&
       selection.first.index === selection.second.index
     ) reasons.push("两个来源位置不能相同。");
+    if (!allowCrossPassage && selection.first.passageId !== selection.second.passageId) {
+      reasons.push("自动生成的两个来源位置必须来自同一个段落。");
+    }
     if (!first.value || !second.value || reasons.length > 0) {
       issues.push({ batchId: batch.id, selectionIndex, reason: reasons.join("；"), selection });
       return;

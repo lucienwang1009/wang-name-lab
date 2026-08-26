@@ -95,6 +95,11 @@ describe("原文指针编译", () => {
       "passage-related",
       "cultural-recomposition",
     ]);
+    const automatic = compilePointerSelections([
+      selection({ passageId: first.id, index: 0 }, { passageId: third.id, index: 0 }),
+    ], batch, { allowCrossPassage: false });
+    expect(automatic.proposals).toEqual([]);
+    expect(automatic.issues[0]?.reason).toMatch(/同一个段落/u);
   });
 
   it("同一句中的非连续位置归为同句取字", () => {

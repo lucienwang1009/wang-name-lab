@@ -101,7 +101,7 @@ describe("候选工厂 CLI 配置", () => {
     const config = parseFactoryArgs([], { cwd: "/repo/web", env: {} });
     expect(config).toMatchObject({
       model: "deepseek-v4-flash",
-      promptVersion: "name-factory-v4",
+      promptVersion: "name-factory-v5",
       maxCny: 20,
       target: 400,
       dryRun: true,

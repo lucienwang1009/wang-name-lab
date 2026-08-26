@@ -23,10 +23,11 @@ const passage: FactoryPassage = {
 describe("候选生成提示词", () => {
   it("只让模型选择原文位置，不让模型填写名字和证据关系", () => {
     const request = generationRequest({ id: "source-0001-test", passages: [passage] }, 3, "calibration");
-    expect(request.instructions).toMatch(/只能使用本次 input\.passages/u);
+    expect(request.instructions).toMatch(/只能选择本次 input\.passages/u);
     expect(request.instructions).toMatch(/Unicode.*0 开始/u);
     expect(request.instructions).toMatch(/直接复制 indexedText.*编号/su);
     expect(request.instructions).toMatch(/不要自行计数/u);
+    expect(request.instructions).toMatch(/必须来自同一个 passageId/u);
     expect(request.instructions).toMatch(/只返回.*passageId.*index/su);
     expect(request.instructions).toMatch(/不得返回.*名字/su);
     expect(request.instructions).not.toMatch(/王令仪|王景玉/u);
@@ -37,9 +38,20 @@ describe("候选生成提示词", () => {
       passages: [{
         passageId: passage.id,
         normalizedText: "柔嘉维则令仪令色",
-        indexedText: "[0]柔 [1]嘉 [2]维 [3]则 [4]令 [5]仪 [6]令 [7]色",
+        sourceWindows: expect.arrayContaining([
+          {
+            text: "柔嘉维则，令仪令色。",
+            indexedText: "[0]柔 [1]嘉 [2]维 [3]则 [4]令 [5]仪 [6]令 [7]色",
+          },
+          {
+            text: "令仪令色。",
+            indexedText: "[4]令 [5]仪 [6]令 [7]色",
+          },
+        ]),
       }],
     });
+    const inputPassage = (request.input as { passages: Array<Record<string, unknown>> }).passages[0];
+    expect(inputPassage).not.toHaveProperty("indexedText");
   });
 
   it("对抗复审不让隐藏推理耗尽结构化输出预算", () => {
