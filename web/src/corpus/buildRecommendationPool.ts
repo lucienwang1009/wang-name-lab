@@ -21,6 +21,7 @@ export interface ReviewedSeedMetadata {
 export interface BuildRecommendationPoolOptions {
   curatedCandidates: readonly CuratedCandidate[];
   discoveryCandidates: readonly CorpusDiscoveryCandidate[];
+  generatedCandidates?: readonly PersonalizedCandidate[];
   reviewedSeeds: Readonly<Record<string, ReviewedSeedMetadata>>;
 }
 
@@ -286,6 +287,7 @@ function mergeCitations(
 export function buildRecommendationPool({
   curatedCandidates,
   discoveryCandidates,
+  generatedCandidates = [],
   reviewedSeeds,
 }: BuildRecommendationPoolOptions): RecommendationPoolBuild {
   const byName = new Map<string, PersonalizedCandidate>();
@@ -306,6 +308,28 @@ export function buildRecommendationPool({
         citations: mergeCitations(existing.evidence.citations, converted.evidence.citations),
       },
     });
+  }
+
+  for (const candidate of [...generatedCandidates].sort((a, b) =>
+    compareText(a.givenName, b.givenName),
+  )) {
+    const converted: PersonalizedCandidate = {
+      ...candidate,
+      evidence: {
+        ...candidate.evidence,
+        citations: [...candidate.evidence.citations],
+      },
+      risks: [...candidate.risks],
+    };
+    converted.eligibility = recommendationEligibility(converted);
+    const existing = byName.get(converted.givenName);
+    if (existing) {
+      converted.evidence.citations = mergeCitations(
+        converted.evidence.citations,
+        existing.evidence.citations,
+      );
+    }
+    byName.set(converted.givenName, converted);
   }
 
   for (const candidate of [...curatedCandidates].sort((a, b) =>

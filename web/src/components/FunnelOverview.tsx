@@ -4,6 +4,7 @@ import { SectionHeader } from "./AppShell";
 interface FunnelOverviewProps {
   counts: {
     humanReviewed: number;
+    aiReviewed: number;
     corpusDiscoveries: number;
     learned: number;
     fragments: number;
@@ -52,7 +53,7 @@ export function FunnelOverview({ counts, onNavigate }: FunnelOverviewProps) {
       <SectionHeader
         eyebrow="WANG FAMILY · NAME ARCHIVE 2026"
         title="为一个名字，留下完整来路"
-        description="从 25 个人工精审与 436 个规则粗筛候选持续推荐；每次反馈都会更新家庭偏好，两种审核层级始终分开标注。"
+        description={`从 ${counts.humanReviewed} 个人工精审与 ${counts.aiReviewed} 个 AI 多重审核候选持续推荐；规则自动组合只保留在全文搜索，不再混入默认信息流。`}
         aside={
           <div className="status-stamp">
             <span>当前阶段</span>
@@ -115,6 +116,10 @@ export function FunnelOverview({ counts, onNavigate }: FunnelOverviewProps) {
         <div>
           <strong>{counts.humanReviewed.toLocaleString("zh-CN")}</strong>
           <span>人工精审 · 名字级语义</span>
+        </div>
+        <div>
+          <strong>{counts.aiReviewed.toLocaleString("zh-CN")}</strong>
+          <span>AI 多重审核 · 本地工厂</span>
         </div>
         <div>
           <strong>{counts.corpusDiscoveries.toLocaleString("zh-CN")}</strong>

@@ -52,7 +52,8 @@ export function recommendationEligibility(
     candidate.quality.pinyin.trim().length > 0;
 
   if (
-    candidate.evidence.reviewStatus === "reviewed" &&
+    (candidate.evidence.reviewStatus === "reviewed" ||
+      candidate.evidence.reviewStatus === "ai-reviewed") &&
     hasCitation &&
     hasNameLevelExplanation
   ) {

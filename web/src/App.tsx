@@ -92,11 +92,6 @@ export default function App({
   }, []);
 
   useEffect(() => {
-    if (
-      currentSection !== "explore" &&
-      currentSection !== "compare" &&
-      currentSection !== "birth"
-    ) return;
     let active = true;
     setDiscoveryLoading(true);
     setDiscoveryError(undefined);
@@ -153,7 +148,12 @@ export default function App({
       {currentSection === "overview" ? (
         <FunnelOverview
           counts={{
-            humanReviewed: Object.keys(reviewedSeedMetadata).length,
+            humanReviewed: recommendationCandidates.length > 0
+              ? recommendationCandidates.filter((candidate) => candidate.evidence.reviewStatus === "reviewed").length
+              : Object.keys(reviewedSeedMetadata).length,
+            aiReviewed: recommendationCandidates.filter(
+              (candidate) => candidate.evidence.reviewStatus === "ai-reviewed",
+            ).length,
             corpusDiscoveries: 1200,
             learned: local.profile.preference.reactionOrder.length,
             fragments: classicalFragments.length,

@@ -75,6 +75,53 @@ const reviewedSeeds: Record<string, ReviewedSeedMetadata> = {
 };
 
 describe("方法论 V2 推荐池", () => {
+  it("合并 AI 审核候选，并让人工精审优先于同名 AI 记录", () => {
+    const generated = {
+      id: "personalized:令仪",
+      surname: "王",
+      givenName: "令仪",
+      fullName: "王令仪",
+      evidence: {
+        relation: "exact-phrase" as const,
+        reviewStatus: "ai-reviewed" as const,
+        extraction: "AI 连续取字",
+        citations: [{
+          id: "ai:令仪",
+          bookId: "shi-jing",
+          bookTitle: "《诗经》",
+          workTitle: "烝民",
+          chapterTitle: "大雅",
+          quote: "柔嘉维则，令仪令色。",
+          sourceUrl,
+          verificationUrl: `${sourceUrl}/verify`,
+        }],
+      },
+      features: { classical: 0.9, graceful: 0.9, gentle: 0.5, bright: 0.5, austere: 0.4, modern: 0.1, pronounceable: 0.9, writable: 0.9, recognizable: 0.9, uncommon: 0.7, familyMeaning: 0.1, exactPhrasePreference: 1, recompositionPreference: 0.1 },
+      quality: { pinyin: "wáng lìng yí", tones: "2-4-2", meaning: "AI 释义", semanticExplanation: "AI 多重审核通过", pronunciationNote: "自然", usabilityNote: "可用", uncommonnessNote: "少见", primaryStyle: "graceful" as const, imageryCategory: "仪范" },
+      eligibility: "recommendable" as const,
+      risks: [],
+    };
+    const aiOnly = buildRecommendationPool({
+      curatedCandidates: [],
+      discoveryCandidates: [],
+      generatedCandidates: [generated],
+      reviewedSeeds: {},
+    });
+    expect(aiOnly.recommendable[0]?.evidence.reviewStatus).toBe("ai-reviewed");
+
+    const withHuman = buildRecommendationPool({
+      curatedCandidates: [curated("令仪")],
+      discoveryCandidates: [],
+      generatedCandidates: [generated],
+      reviewedSeeds,
+    });
+    expect(withHuman.recommendable[0]).toMatchObject({
+      evidence: { reviewStatus: "reviewed" },
+      quality: { meaning: "端正美好的仪范。" },
+    });
+    expect(withHuman.recommendable[0]?.evidence.citations).toHaveLength(2);
+  });
+
   it("区分人工精审、规则粗筛和仅检索", () => {
     const pool = buildRecommendationPool({
       curatedCandidates: [curated("令仪")],

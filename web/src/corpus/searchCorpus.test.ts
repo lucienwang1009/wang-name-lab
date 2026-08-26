@@ -190,6 +190,34 @@ function createFixtureFetcher(
 }
 
 describe("浏览器端古籍全文检索", () => {
+  it("加载只包含人工或 AI 完整审核候选的 V3 推荐池", async () => {
+    const values = fixtures();
+    const catalogue = structuredClone(values.get("/corpus/catalog.json")) as Record<string, unknown>;
+    catalogue.recommendationPath = "recommendations-v3.json";
+    values.set("/corpus/catalog.json", catalogue);
+    const v2 = values.get("/corpus/recommendations-v2.json") as { candidates: PersonalizedCandidate[] };
+    const aiCandidate = structuredClone(v2.candidates[0]!);
+    aiCandidate.evidence.reviewStatus = "ai-reviewed";
+    values.set("/corpus/recommendations-v3.json", {
+      schemaVersion: 3,
+      buildVersion: "fixture-v1",
+      corpusVersion: "fixture-v1",
+      recommendableCount: 1,
+      humanReviewedCount: 0,
+      aiReviewedCount: 1,
+      searchOnlyCount: 8,
+      blockedCount: 0,
+      candidates: [aiCandidate],
+    });
+    const searcher = createCorpusSearcher({ baseUrl: "/corpus/", fetcher: createFixtureFetcher(values) });
+    await expect(searcher.discover()).resolves.toEqual([
+      expect.objectContaining({
+        fullName: "王令仪",
+        evidence: expect.objectContaining({ reviewStatus: "ai-reviewed" }),
+      }),
+    ]);
+  });
+
   it("按构建版本加载并缓存分层后的 V2 候选池", async () => {
     const fetcher = createFixtureFetcher();
     const searcher = createCorpusSearcher({ baseUrl: "/corpus/", fetcher });

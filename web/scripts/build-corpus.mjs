@@ -22,6 +22,11 @@ const [
   { buildCorpusIndex },
   { buildDiscoveryPool },
   { buildRecommendationPool },
+  {
+    emptyGeneratedCandidateArtifact,
+    parseGeneratedCandidateArtifact,
+    verifyGeneratedCandidateEvidence,
+  },
   { characterDictionary, curatedCandidates, reviewedSeedMetadata },
   { chinesePoetryFiles },
   { earlyChineseFiles },
@@ -35,6 +40,7 @@ const [
   import("../src/corpus/buildIndex.ts"),
   import("../src/corpus/buildDiscoveryPool.ts"),
   import("../src/corpus/buildRecommendationPool.ts"),
+  import("../src/corpus/generatedCandidates.ts"),
   import("../src/data/nameSystemData.ts"),
   import("../corpus/sources/chinese-poetry.ts"),
   import("../corpus/sources/early-chinese.ts"),
@@ -43,7 +49,12 @@ const [
 
 const scriptDirectory = dirname(fileURLToPath(import.meta.url));
 const outputDirectory = resolve(scriptDirectory, "../public/corpus");
+const dataDirectory = resolve(scriptDirectory, "../public/data");
 const vendorRoot = resolve(scriptDirectory, "../corpus/vendor");
+const generatedCandidateSource = resolve(
+  scriptDirectory,
+  "../corpus/generated/approved-candidates.json",
+);
 const indexDirectory = resolve(outputDirectory, "index");
 const textDirectory = resolve(outputDirectory, "texts");
 const maximumFileBytes = 1024 * 1024;
@@ -148,11 +159,6 @@ const discoveryCandidates = buildDiscoveryPool({
   characters: characterDictionary,
   passages: sortedPassages,
 });
-const recommendationPool = buildRecommendationPool({
-  curatedCandidates,
-  discoveryCandidates,
-  reviewedSeeds: reviewedSeedMetadata,
-});
 
 console.log(
   `Corpus import: ${report.catalogue.totalPassages} passages, ` +
@@ -166,30 +172,51 @@ if (report.blockingErrors.length > 0) {
   throw new Error("语料构建门禁失败；未发布任何新生成文件。");
 }
 
-const indexBuild = buildCorpusIndex(sortedPassages);
 const buildVersion = sha256(
   JSON.stringify(
     sourceLock.files.map(({ key, sha256: checksum }) => [key, checksum]),
   ),
 );
+let generatedArtifact = emptyGeneratedCandidateArtifact(buildVersion);
+try {
+  generatedArtifact = parseGeneratedCandidateArtifact(
+    JSON.parse(await readFile(generatedCandidateSource, "utf8")),
+    buildVersion,
+  );
+} catch (error) {
+  if (error?.code !== "ENOENT") throw error;
+}
+const generatedCandidates = verifyGeneratedCandidateEvidence(
+  generatedArtifact,
+  sortedPassages,
+);
+const recommendationPool = buildRecommendationPool({
+  curatedCandidates,
+  discoveryCandidates,
+  generatedCandidates,
+  reviewedSeeds: reviewedSeedMetadata,
+});
+const indexBuild = buildCorpusIndex(sortedPassages);
 const discovery = {
   schemaVersion: 1,
   buildVersion,
   count: discoveryCandidates.length,
   candidates: discoveryCandidates,
 };
-const recommendationsV2 = {
-  schemaVersion: 2,
+const recommendationsV3 = {
+  schemaVersion: 3,
   buildVersion,
   corpusVersion: buildVersion,
   recommendableCount: recommendationPool.recommendable.length,
-  ruleScreenedCount: recommendationPool.provisional.length,
+  humanReviewedCount: recommendationPool.recommendable.filter(
+    ({ evidence }) => evidence.reviewStatus === "reviewed",
+  ).length,
+  aiReviewedCount: recommendationPool.recommendable.filter(
+    ({ evidence }) => evidence.reviewStatus === "ai-reviewed",
+  ).length,
   searchOnlyCount: recommendationPool.searchOnly.length,
   blockedCount: recommendationPool.blocked.length,
-  candidates: [
-    ...recommendationPool.recommendable,
-    ...recommendationPool.provisional,
-  ],
+  candidates: recommendationPool.recommendable,
 };
 const catalogue = {
   schemaVersion: 2,
@@ -202,11 +229,11 @@ const catalogue = {
   textShardsByBook: indexBuild.textShardPathsByBook,
   discoveryPath: "discovery.json",
   discoveryCount: discoveryCandidates.length,
-  recommendationPath: "recommendations-v2.json",
-  recommendationCount:
-    recommendationPool.recommendable.length + recommendationPool.provisional.length,
-  humanReviewedCount: recommendationPool.recommendable.length,
-  ruleScreenedCount: recommendationPool.provisional.length,
+  recommendationPath: "recommendations-v3.json",
+  recommendationCount: recommendationPool.recommendable.length,
+  humanReviewedCount: recommendationsV3.humanReviewedCount,
+  aiReviewedCount: recommendationsV3.aiReviewedCount,
+  ruleScreenedCount: 0,
   books: sortedBooks,
 };
 const attribution = {
@@ -231,16 +258,19 @@ const metadataArtifacts = [
     content: `${JSON.stringify(discovery)}\n`,
   },
   {
-    relativePath: "recommendations-v2.json",
-    content: `${JSON.stringify(recommendationsV2)}\n`,
+    relativePath: "recommendations-v3.json",
+    content: `${JSON.stringify(recommendationsV3)}\n`,
   },
 ].sort((left, right) => compareText(left.relativePath, right.relativePath));
 
 function assertWithinBudget(relativePath, content) {
   const byteLength = Buffer.byteLength(content, "utf8");
-  if (byteLength > maximumFileBytes) {
+  const maximumBytes = relativePath === "recommendations-v3.json"
+    ? maximumFileBytes * 4
+    : maximumFileBytes;
+  if (byteLength > maximumBytes) {
     throw new Error(
-      `${relativePath} 为 ${byteLength} 字节，超过 1 MiB 构建预算。`,
+      `${relativePath} 为 ${byteLength} 字节，超过 ${maximumBytes} 字节构建预算。`,
     );
   }
 }
@@ -262,6 +292,7 @@ await Promise.all([
 await Promise.all([
   mkdir(indexDirectory, { recursive: true }),
   mkdir(textDirectory, { recursive: true }),
+  mkdir(dataDirectory, { recursive: true }),
 ]);
 let artifactCount = 0;
 async function writeArtifact(relativePath, content) {
@@ -275,6 +306,11 @@ await Promise.all(
   metadataArtifacts.map((artifact) =>
     writeArtifact(artifact.relativePath, artifact.content),
   ),
+);
+await writeFile(
+  resolve(dataDirectory, "generated-candidates.json"),
+  `${JSON.stringify(generatedArtifact)}\n`,
+  "utf8",
 );
 for (const path of Object.keys(indexBuild.textShards).sort(compareText)) {
   const shard = indexBuild.textShards[path];
@@ -299,8 +335,8 @@ console.log(
     `${discoveryCandidates.filter(({ grade }) => grade === "B").length} B).`,
 );
 console.log(
-  `Recommendation V2: ${recommendationPool.recommendable.length} recommendable, ` +
-    `${recommendationPool.provisional.length} rule-screened, ` +
+  `Recommendation V3: ${recommendationsV3.humanReviewedCount} human-reviewed, ` +
+    `${recommendationsV3.aiReviewedCount} AI-reviewed, ` +
     `${recommendationPool.searchOnly.length} search-only, ` +
     `${recommendationPool.blocked.length} blocked.`,
 );

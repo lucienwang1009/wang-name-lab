@@ -292,6 +292,25 @@ describe("取名实验室应用", () => {
     expect(within(card).getByText(/个人适配 .* × 75% \+ 最近差异 .* × 25%/)).toBeTruthy();
   });
 
+  it("AI 工厂候选显示为多重审核，并展示完整读音而不冒充人工", async () => {
+    window.location.hash = "#explore";
+    const aiCandidate = recommendationCandidate("令仪");
+    aiCandidate.evidence.reviewStatus = "ai-reviewed";
+    const corpusSearchClient: CorpusSearchClient = {
+      discover: vi.fn(async () => [aiCandidate]),
+      search: idleClient.search,
+    };
+    render(<App corpusSearchClient={corpusSearchClient} />);
+
+    const card = (await screen.findByRole("heading", {
+      name: "王令仪",
+      level: 2,
+    })).closest("article") as HTMLElement;
+    expect(within(card).getByText("AI 多重审核")).toBeTruthy();
+    expect(within(card).getByText(`${aiCandidate.quality.pinyin} · ${aiCandidate.quality.tones}`)).toBeTruthy();
+    expect(within(card).queryByText("人工精审")).toBeNull();
+  });
+
   it("收藏与对照保留 V2 候选的语义和证据", async () => {
     window.location.hash = "#explore";
     completeCalibration();

@@ -207,7 +207,9 @@ export function CompareTable({
                   isPersonalizedCandidate(candidate)
                     ? candidate.evidence.reviewStatus === "reviewed"
                       ? "人工精审候选"
-                      : "规则粗筛 · 待精审"
+                      : candidate.evidence.reviewStatus === "ai-reviewed"
+                        ? "AI 多重审核候选"
+                        : "规则粗筛 · 待精审"
                     : "旧版保留名称"
                 }</span>
                 <h2>{comparisonName(candidate)}</h2>

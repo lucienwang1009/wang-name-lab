@@ -97,6 +97,8 @@ function AdaptiveNameCard({
   const { candidate, reasons, selectionKind } = item;
   const citation = candidate.evidence.citations[0];
   const humanReviewed = candidate.evidence.reviewStatus === "reviewed";
+  const aiReviewed = candidate.evidence.reviewStatus === "ai-reviewed";
+  const fullyReviewed = humanReviewed || aiReviewed;
   const compared = profile.compareNames.includes(candidate.fullName);
   const compareFull = profile.compareNames.length >= 4;
   const mode = modeLabels[selectionKind];
@@ -106,8 +108,8 @@ function AdaptiveNameCard({
       <div className="adaptive-nameplate">
         <div className="adaptive-card-kicker">
           <span className="recommendation-kind">{mode.title}</span>
-          <span className={`review-tier ${humanReviewed ? "is-reviewed" : "is-rule-screened"}`}>
-            {humanReviewed ? "人工精审" : "规则粗筛 · 待人工精审"}
+          <span className={`review-tier ${humanReviewed ? "is-reviewed" : aiReviewed ? "is-ai-reviewed" : "is-rule-screened"}`}>
+            {humanReviewed ? "人工精审" : aiReviewed ? "AI 多重审核" : "规则粗筛 · 待人工精审"}
           </span>
         </div>
         <span className="adaptive-style-mark">
@@ -115,7 +117,7 @@ function AdaptiveNameCard({
         </span>
         <h2>{candidate.fullName}</h2>
         <p className="adaptive-pronunciation">
-          {humanReviewed
+          {fullyReviewed
             ? `${candidate.quality.pinyin} · ${candidate.quality.tones}`
             : "读音、声调与谐音待人工复核"}
         </p>
@@ -208,6 +210,9 @@ export function PersonalizedNameDiscovery({
   const humanReviewedCount = candidates.filter(
     (candidate) => candidate.evidence.reviewStatus === "reviewed",
   ).length;
+  const aiReviewedCount = candidates.filter(
+    (candidate) => candidate.evidence.reviewStatus === "ai-reviewed",
+  ).length;
   const ruleScreenedCount = candidates.filter(
     (candidate) => candidate.evidence.reviewStatus === "rule-screened",
   ).length;
@@ -260,7 +265,7 @@ export function PersonalizedNameDiscovery({
       <SectionHeader
         eyebrow="ADAPTIVE NAME FEED · 每次选择都重新学习"
         title="个性寻名"
-        description={`一次认真看一个名字。每次选择都会立即更新家庭偏好，再从 ${humanReviewedCount} 个人工精审与 ${ruleScreenedCount} 个规则粗筛候选中计算下一名；约 20% 的推荐用于探索新方向。`}
+        description={`一次认真看一个名字。每次选择都会立即更新家庭偏好，再从 ${humanReviewedCount} 个人工精审与 ${aiReviewedCount} 个 AI 多重审核候选中计算下一名${ruleScreenedCount > 0 ? `；兼容资源中另有 ${ruleScreenedCount} 个待精审候选` : ""}；约 20% 的推荐用于探索新方向。`}
         aside={
           <div className="adaptive-header-count">
             <strong>{learnedCount}</strong>

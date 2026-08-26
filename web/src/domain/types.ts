@@ -152,6 +152,9 @@ export interface NameRisk {
 
 export interface PersonalizedEvidenceCitation {
   id: string;
+  passageId?: string;
+  matchedChar?: string;
+  occurrence?: number;
   bookId: string;
   bookTitle: string;
   workTitle: string;
@@ -159,6 +162,29 @@ export interface PersonalizedEvidenceCitation {
   quote: string;
   sourceUrl: string;
   verificationUrl: string;
+}
+
+export interface CandidateFactoryScores {
+  phonology: number;
+  nameFeel: number;
+  femininity: number;
+  usability: number;
+  distinctiveness: number;
+}
+
+export interface CandidateFactoryAudit {
+  model: "deepseek-v4-flash";
+  promptVersion: string;
+  corpusVersion: string;
+  runId: string;
+  proposalId: string;
+  semantic: {
+    semanticScore: number;
+    evidenceScore: number;
+    explanation: string;
+  };
+  name: CandidateFactoryScores;
+  adversarialCritique: string;
 }
 
 export interface PersonalizedEvidence {
@@ -178,6 +204,7 @@ export interface PersonalizedCandidate {
   quality: NameQuality;
   eligibility: RecommendationEligibility;
   risks: NameRisk[];
+  factoryAudit?: CandidateFactoryAudit;
 }
 
 export interface ClassicalEvidenceCitation {

@@ -1748,6 +1748,12 @@
   border-color: rgba(45, 77, 68, 0.35);
 }
 
+.review-tier.is-ai-reviewed {
+  color: #355f68;
+  border-color: rgba(53, 95, 104, 0.34);
+  background: rgba(214, 234, 235, 0.62);
+}
+
 .review-tier.is-rule-screened {
   color: var(--ink-faint);
   border-style: dashed;

@@ -85,6 +85,12 @@ describe("名字级特征", () => {
     ).toBe("search-only");
   });
 
+  it("通过完整流水线的 AI 审核候选也可以主动推荐", () => {
+    expect(recommendationEligibility(candidate({
+      evidence: { ...candidate().evidence, reviewStatus: "ai-reviewed" },
+    }))).toBe("recommendable");
+  });
+
   it("规则粗筛有可靠出处时进入待精审层而不冒充人工精审", () => {
     expect(
       recommendationEligibility(

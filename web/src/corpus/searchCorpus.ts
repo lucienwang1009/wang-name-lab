@@ -142,29 +142,47 @@ function parseRecommendationFile(
 ): CorpusRecommendationFile {
   if (
     !isRecord(value) ||
-    value.schemaVersion !== 2 ||
+    (value.schemaVersion !== 2 && value.schemaVersion !== 3) ||
     value.buildVersion !== expectedBuildVersion ||
     value.corpusVersion !== expectedBuildVersion ||
     typeof value.recommendableCount !== "number" ||
-    typeof value.ruleScreenedCount !== "number" ||
     typeof value.searchOnlyCount !== "number" ||
     typeof value.blockedCount !== "number" ||
-    !Array.isArray(value.candidates) ||
-    value.candidates.length !==
-      value.recommendableCount + value.ruleScreenedCount ||
+    !Array.isArray(value.candidates)
+  ) {
+    throw new TypeError("个性化推荐池格式无效或与全文库版本不一致。");
+  }
+  if (value.schemaVersion === 2) {
+    if (
+      typeof value.ruleScreenedCount !== "number" ||
+      value.candidates.length !== value.recommendableCount + value.ruleScreenedCount ||
+      value.candidates.some(
+        (candidate) =>
+          !isRecord(candidate) ||
+          !isRecord(candidate.evidence) ||
+          !(
+            (candidate.eligibility === "recommendable" &&
+              candidate.evidence.reviewStatus === "reviewed") ||
+            (candidate.eligibility === "provisional" &&
+              candidate.evidence.reviewStatus === "rule-screened")
+          ),
+      )
+    ) throw new TypeError("V2 个性化推荐池格式无效。");
+  } else if (
+    typeof value.humanReviewedCount !== "number" ||
+    typeof value.aiReviewedCount !== "number" ||
+    value.candidates.length !== value.recommendableCount ||
+    value.recommendableCount !== value.humanReviewedCount + value.aiReviewedCount ||
     value.candidates.some(
       (candidate) =>
         !isRecord(candidate) ||
+        candidate.eligibility !== "recommendable" ||
         !isRecord(candidate.evidence) ||
-        !(
-          (candidate.eligibility === "recommendable" &&
-            candidate.evidence.reviewStatus === "reviewed") ||
-          (candidate.eligibility === "provisional" &&
-            candidate.evidence.reviewStatus === "rule-screened")
-        ),
+        (candidate.evidence.reviewStatus !== "reviewed" &&
+          candidate.evidence.reviewStatus !== "ai-reviewed"),
     )
   ) {
-    throw new TypeError("个性化推荐池格式无效或与全文库版本不一致。");
+    throw new TypeError("V3 个性化推荐池格式无效。");
   }
   return value as unknown as CorpusRecommendationFile;
 }
@@ -477,7 +495,7 @@ export function createCorpusSearcher({
       const catalogue = await loadCatalogue();
       const recommendations = parseRecommendationFile(
         await loadJson(
-          catalogue.recommendationPath ?? "recommendations-v2.json",
+          catalogue.recommendationPath ?? "recommendations-v3.json",
           catalogue.buildVersion,
         ),
         catalogue.buildVersion,

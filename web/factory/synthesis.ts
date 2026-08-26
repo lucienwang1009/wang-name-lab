@@ -47,6 +47,9 @@ function citation(
   if (!passage) throw new Error(`发布时找不到来源段落 ${source.passageId}。`);
   return {
     id: `${passage.id}:${source.character}:${source.occurrence}`,
+    passageId: passage.id,
+    matchedChar: source.character,
+    occurrence: source.occurrence,
     bookId: passage.bookId,
     bookTitle: passage.bookTitle,
     workTitle: passage.workTitle,
@@ -193,4 +196,3 @@ export function selectDiverseCandidates(
   }
   return selected;
 }
-

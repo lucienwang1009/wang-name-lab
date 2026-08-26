@@ -66,7 +66,7 @@ export interface CorpusDiscoveryFile {
   candidates: CorpusDiscoveryCandidate[];
 }
 
-export interface CorpusRecommendationFile {
+export interface CorpusRecommendationFileV2 {
   schemaVersion: 2;
   buildVersion: string;
   corpusVersion: string;
@@ -76,6 +76,22 @@ export interface CorpusRecommendationFile {
   blockedCount: number;
   candidates: PersonalizedCandidate[];
 }
+
+export interface CorpusRecommendationFileV3 {
+  schemaVersion: 3;
+  buildVersion: string;
+  corpusVersion: string;
+  recommendableCount: number;
+  humanReviewedCount: number;
+  aiReviewedCount: number;
+  searchOnlyCount: number;
+  blockedCount: number;
+  candidates: PersonalizedCandidate[];
+}
+
+export type CorpusRecommendationFile =
+  | CorpusRecommendationFileV2
+  | CorpusRecommendationFileV3;
 
 export interface CorpusBuildIssue {
   code: string;
