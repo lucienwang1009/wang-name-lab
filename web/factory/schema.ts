@@ -247,6 +247,8 @@ export function parseFactoryCheckpoint(value: unknown): FactoryCheckpoint {
     typeof item.corpusVersion !== "string" ||
     typeof item.promptVersion !== "string" ||
     !Array.isArray(item.completedBatchIds) ||
+    typeof item.pointerSelectionCount !== "number" ||
+    !Array.isArray(item.pointerIssues) ||
     !Array.isArray(item.proposals) ||
     !Array.isArray(item.reviewItems)
   ) {
@@ -263,6 +265,9 @@ export function parseFactoryReviewReport(value: unknown): FactoryReviewReport {
     typeof item.runId !== "string" ||
     typeof item.corpusVersion !== "string" ||
     !Array.isArray(item.items) ||
+    typeof item.pointerSelectionCount !== "number" ||
+    typeof item.invalidPointerCount !== "number" ||
+    !Array.isArray(item.pointerIssues) ||
     typeof item.generatedCount !== "number" ||
     typeof item.publishedCount !== "number" ||
     typeof item.manualReviewCount !== "number" ||

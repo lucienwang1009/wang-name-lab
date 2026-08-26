@@ -77,7 +77,7 @@ export function buildDryRunPlan(config: FactoryRunConfig, corpus: LoadedFactoryC
   for (const batch of batches) {
     const inputCharacters = batch.passages.reduce((sum, passage) => sum + passage.text.length + 180, 0);
     microCny += estimateUsageMicroCny(
-      estimatedRequestUsage(inputCharacters, Math.max(1_200, batch.passages.length * config.maxCandidatesPerPassage * 280)),
+      estimatedRequestUsage(inputCharacters, Math.max(1_200, batch.passages.length * config.maxCandidatesPerPassage * 180)),
       config.pricingUsdPerMillion,
       config.cnyPerUsd,
     );
@@ -176,7 +176,7 @@ export async function runFactoryCli(
 
   if (config.dryRun) {
     const plan = buildDryRunPlan(config, corpus);
-    log(`Dry run: ${plan.selectedPassages} 条原句，${plan.generationBatches} 个生成批次，预计约 ${plan.estimatedRawCandidates} 个原始提案。`);
+    log(`Dry run: ${plan.selectedPassages} 条原句，${plan.generationBatches} 个生成批次，预计约 ${plan.estimatedRawCandidates} 组原文位置选择。`);
     log(`预计 ${plan.estimatedRequests} 次模型请求，保守估算 ${plan.conservativeCostCny.toFixed(4)} 元；实际远程请求 0。`);
     return { mode: "dry-run", runId: config.runId, dryRunPlan: plan };
   }

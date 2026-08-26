@@ -1,6 +1,8 @@
 # 本地古籍候选工厂
 
-该工具只在本机运行，使用 `deepseek-v4-flash` 从现有 70 部古籍全文库生成并多轮审核王姓女孩名字。GitHub Pages 和 GitHub Actions 不会调用 DeepSeek，也不需要 API Key。
+该工具只在本机运行，使用 `deepseek-v4-flash` 从现有 70 部古籍全文库选择适合组成王姓女孩名字的原文位置，并进行多轮审核。GitHub Pages 和 GitHub Actions 不会调用 DeepSeek，也不需要 API Key。
+
+生成阶段采用 `name-factory-v3` 指针协议：模型可以阅读批次内的古籍原文，但只能返回两个 `passageId/index` 位置和待审核的语义说明。姓名用字、同字出现序号、取字关系、稳定 ID 和证据说明全部由本地程序从 `normalizedText` 计算，模型不能填写这些事实字段。越界、错段落或重复位置会被淘汰，并写入本地审核报告。
 
 ## 安全准备
 
@@ -51,7 +53,7 @@ pnpm --dir web factory:build -- --max-cny 20 --target 400 --passages-per-book 16
 
 恢复时必须沿用原运行的预算与规模参数。程序会读取上一次脱敏费用清单，把已发生费用带入同一个硬上限；参数、语料或提示词版本不一致时拒绝恢复。
 
-正式结果写入 `web/corpus/generated/approved-candidates.json`，本地完整报告写入 `web/factory/reports/<run-id>/`。失败运行也会保留脱敏的 `manifest.json`，记录已发生请求和估算费用。只有通过本地硬规则、匿名语义审核、姓名感审核和对抗复审的候选会进入发布文件。
+正式结果写入 `web/corpus/generated/approved-candidates.json`，本地完整报告写入 `web/factory/reports/<run-id>/`。`review-report.json` 会记录 `pointerSelectionCount`、`invalidPointerCount` 和逐条 `pointerIssues`，用于核对模型指针准确率。失败运行也会保留脱敏的 `manifest.json`，记录已发生请求和估算费用。只有通过本地硬规则、匿名语义审核、姓名感审核和对抗复审的候选会进入发布文件。
 
 ## 费用说明
 

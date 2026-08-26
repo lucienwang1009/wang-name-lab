@@ -10,7 +10,7 @@ import { runFactoryCli } from "./cli.ts";
 import type { StructuredRequest } from "./deepseek.ts";
 import type { FactoryModelGateway } from "./pipeline.ts";
 import type { LoadedFactoryCorpus } from "./corpus.ts";
-import type { AdversarialReview, CandidateProposal, FactoryPassage, NameReview, SemanticReview } from "./types.ts";
+import type { AdversarialReview, FactoryPassage, NameReview, PointerSelection, SemanticReview } from "./types.ts";
 
 const temporaryDirectories: string[] = [];
 const passage: FactoryPassage = {
@@ -48,19 +48,13 @@ function fakeGateway(): FactoryModelGateway {
     async structured<T>(request: StructuredRequest<T>) {
       if (request.role === "candidate-generator") {
         return [{
-          proposalId: "fixture:令仪",
-          givenName: "令仪",
-          relation: "exact-phrase",
-          sources: [
-            { character: "令", passageId: passage.id, occurrence: 0 },
-            { character: "仪", passageId: passage.id, occurrence: 0 },
-          ],
-          extraction: "连续取字",
+          first: { passageId: passage.id, index: 4 },
+          second: { passageId: passage.id, index: 5 },
           meaning: "端美的仪度",
           rationale: "完整",
           imageryCategory: "仪范",
           familyConnection: "",
-        } satisfies CandidateProposal] as T;
+        } satisfies PointerSelection] as T;
       }
       const input = request.input as { candidates?: Array<{ proposalId: string }>; finalists?: Array<{ proposalId: string }> };
       const candidates = input.candidates ?? input.finalists ?? [];

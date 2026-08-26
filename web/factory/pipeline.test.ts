@@ -8,9 +8,9 @@ import type { StructuredRequest } from "./deepseek.ts";
 import { runFactoryPipeline, type FactoryModelGateway } from "./pipeline.ts";
 import type {
   AdversarialReview,
-  CandidateProposal,
   FactoryPassage,
   NameReview,
+  PointerSelection,
   SemanticReview,
 } from "./types.ts";
 
@@ -51,16 +51,16 @@ const corpus: LoadedFactoryCorpus = {
   passages,
 };
 
-function proposal(givenName: string, passageId = passages[0]?.id ?? ""): CandidateProposal {
+function pointerSelection(givenName: "令仪" | "柔嘉" | "八方" | "无效"): PointerSelection {
+  const positions = {
+    令仪: { passageId: passages[0]?.id ?? "", first: 4, second: 5 },
+    柔嘉: { passageId: passages[0]?.id ?? "", first: 0, second: 1 },
+    八方: { passageId: passages[1]?.id ?? "", first: 0, second: 1 },
+    无效: { passageId: passages[0]?.id ?? "", first: 999, second: 1 },
+  }[givenName];
   return {
-    proposalId: `source:${givenName}`,
-    givenName,
-    relation: "exact-phrase",
-    sources: [
-      { character: [...givenName][0] ?? "令", passageId, occurrence: 0 },
-      { character: [...givenName][1] ?? "仪", passageId, occurrence: 0 },
-    ],
-    extraction: "连续取字",
+    first: { passageId: positions.passageId, index: positions.first },
+    second: { passageId: positions.passageId, index: positions.second },
     meaning: "完整含义",
     rationale: "生成器内部理由不应泄露给匿名审查",
     imageryCategory: "德性",
@@ -83,10 +83,15 @@ function gateway({ rejectName }: { rejectName?: string } = {}) {
   const structured = vi.fn(async <T,>(request: { role: string; input: unknown }) => {
     requests.push({ role: request.role, input: request.input });
     if (request.role === "candidate-generator") {
-      return [proposal("令仪"), proposal("柔嘉"), proposal("八方", "test/negative-sound")] as T;
+      return [
+        pointerSelection("令仪"),
+        pointerSelection("柔嘉"),
+        pointerSelection("八方"),
+        pointerSelection("无效"),
+      ] as T;
     }
-    const candidates = ((request.input as { candidates?: Array<{ proposalId: string }> }).candidates ??
-      (request.input as { finalists?: Array<{ proposalId: string }> }).finalists ?? []);
+    const candidates = ((request.input as { candidates?: Array<{ proposalId: string; fullName?: string }> }).candidates ??
+      (request.input as { finalists?: Array<{ proposalId: string; fullName?: string }> }).finalists ?? []);
     if (request.role === "anonymous-semantic-reviewer") {
       return candidates.map((candidate): SemanticReview => ({
         proposalId: candidate.proposalId,
@@ -100,7 +105,7 @@ function gateway({ rejectName }: { rejectName?: string } = {}) {
     if (request.role === "name-sound-aesthetic-reviewer") {
       return candidates.map((candidate): NameReview => ({
         proposalId: candidate.proposalId,
-        decision: candidate.proposalId.endsWith(rejectName ?? "__none__") ? "reject" : "approve",
+        decision: candidate.fullName?.endsWith(rejectName ?? "__none__") ? "reject" : "approve",
         scores: { phonology: 0.9, nameFeel: 0.9, femininity: 0.88, usability: 0.86, distinctiveness: 0.8 },
         primaryStyle: "graceful",
         pronunciationNote: "自然",
@@ -148,7 +153,7 @@ describe("候选工厂分阶段流水线", () => {
     const badGateway: FactoryModelGateway = {
       async structured<T>(request: StructuredRequest<T>) {
         if (request.role !== "candidate-generator") throw new Error("不应进入审核阶段");
-        return [proposal("八方", "test/negative-sound")] as T;
+        return [pointerSelection("八方")] as T;
       },
     };
     await expect(runFactoryPipeline({ config: config(), corpus, gateway: badGateway }))
@@ -164,6 +169,8 @@ describe("候选工厂分阶段流水线", () => {
       localRisks: expect.arrayContaining([expect.objectContaining({ severity: "hard" })]),
     });
     expect(result.report.items.find((item) => item.proposal.givenName === "柔嘉")?.status).toBe("rejected");
+    expect(result.report).toMatchObject({ pointerSelectionCount: 4, invalidPointerCount: 1 });
+    expect(result.report.pointerIssues[0]?.reason).toMatch(/越界/u);
   });
 
   it("匿名语义审查输入不包含生成器 rationale 或自评分", async () => {

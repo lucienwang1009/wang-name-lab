@@ -222,6 +222,9 @@ export interface FactoryReviewReport {
   corpusVersion: string;
   model: typeof FACTORY_MODEL;
   promptVersion: string;
+  pointerSelectionCount: number;
+  invalidPointerCount: number;
+  pointerIssues: PointerSelectionIssue[];
   generatedCount: number;
   publishedCount: number;
   manualReviewCount: number;
@@ -255,6 +258,8 @@ export interface FactoryCheckpoint {
   corpusVersion: string;
   promptVersion: string;
   completedBatchIds: string[];
+  pointerSelectionCount: number;
+  pointerIssues: PointerSelectionIssue[];
   proposals: CandidateProposal[];
   reviewItems: FactoryReviewItem[];
 }

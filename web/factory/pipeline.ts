@@ -6,6 +6,7 @@ import {
   nameReviewRequest,
   semanticReviewRequest,
 } from "./prompts.ts";
+import { compilePointerSelections } from "./pointers.ts";
 import { deduplicateProposals, runLocalRules } from "./rules.ts";
 import { selectDiverseCandidates, synthesizeCandidate } from "./synthesis.ts";
 import type {
@@ -16,6 +17,7 @@ import type {
   FactoryReviewItem,
   FactoryReviewReport,
   FactoryRunConfig,
+  PointerSelectionIssue,
 } from "./types.ts";
 import { FACTORY_MODEL, FACTORY_SCHEMA_VERSION } from "./types.ts";
 
@@ -102,6 +104,8 @@ function checkpointFor(
   config: FactoryRunConfig,
   corpusVersion: string,
   completedBatchIds: readonly string[],
+  pointerSelectionCount: number,
+  pointerIssues: readonly PointerSelectionIssue[],
   proposals: readonly CandidateProposal[],
   items: readonly FactoryReviewItem[],
 ): FactoryCheckpoint {
@@ -111,6 +115,8 @@ function checkpointFor(
     corpusVersion,
     promptVersion: config.promptVersion,
     completedBatchIds: [...completedBatchIds],
+    pointerSelectionCount,
+    pointerIssues: [...pointerIssues],
     proposals: [...proposals],
     reviewItems: [...items],
   };
@@ -134,10 +140,20 @@ function assertCheckpointCompatible(
 async function checkpoint(
   options: RunPipelineOptions,
   completedBatchIds: readonly string[],
+  pointerSelectionCount: number,
+  pointerIssues: readonly PointerSelectionIssue[],
   proposals: readonly CandidateProposal[],
   items: readonly FactoryReviewItem[],
 ): Promise<FactoryCheckpoint> {
-  const value = checkpointFor(options.config, options.corpus.corpusVersion, completedBatchIds, proposals, items);
+  const value = checkpointFor(
+    options.config,
+    options.corpus.corpusVersion,
+    completedBatchIds,
+    pointerSelectionCount,
+    pointerIssues,
+    proposals,
+    items,
+  );
   await options.onCheckpoint?.(value);
   return value;
 }
@@ -158,6 +174,8 @@ export async function runFactoryPipeline(options: RunPipelineOptions): Promise<P
   // Keep it to one source batch (then at most one request for each review stage).
   const sourceBatches = config.smoke ? allSourceBatches.slice(0, 1) : allSourceBatches;
   const completedBatchIds = new Set(options.checkpoint?.completedBatchIds ?? []);
+  let pointerSelectionCount = options.checkpoint?.pointerSelectionCount ?? 0;
+  const pointerIssues: PointerSelectionIssue[] = [...(options.checkpoint?.pointerIssues ?? [])];
   const proposals: CandidateProposal[] = [...(options.checkpoint?.proposals ?? [])];
   const calibrationAttemptLimit = config.smoke ? 1 : Math.min(3, sourceBatches.length);
   let calibrationAttempts = sourceBatches
@@ -170,15 +188,15 @@ export async function runFactoryPipeline(options: RunPipelineOptions): Promise<P
     if (completedBatchIds.has(batch.id)) continue;
     const isCalibration = !calibrationPassed && calibrationAttempts < calibrationAttemptLimit;
     const phase = isCalibration ? "calibration" : "generation";
-    const generated = await gateway.structured(generationRequest(
+    const selections = await gateway.structured(generationRequest(
       batch,
       config.maxCandidatesPerPassage,
       phase,
     ));
-    const allowedPassages = new Set(batch.passages.map((passage) => passage.id));
-    const acceptedFromBatch = generated.filter((proposal) =>
-      proposal.sources.every((source) => allowedPassages.has(source.passageId))
-    );
+    pointerSelectionCount += selections.length;
+    const compiled = compilePointerSelections(selections, batch);
+    pointerIssues.push(...compiled.issues);
+    const acceptedFromBatch = compiled.proposals;
     const batchPassed = acceptedFromBatch.some((proposal) => runLocalRules(proposal, passagesById).passed);
     if (isCalibration) {
       calibrationAttempts += 1;
@@ -186,7 +204,14 @@ export async function runFactoryPipeline(options: RunPipelineOptions): Promise<P
     }
     proposals.push(...acceptedFromBatch);
     completedBatchIds.add(batch.id);
-    await checkpoint(options, [...completedBatchIds], proposals, []);
+    await checkpoint(
+      options,
+      [...completedBatchIds],
+      pointerSelectionCount,
+      pointerIssues,
+      proposals,
+      [],
+    );
     if (isCalibration && !calibrationPassed && calibrationAttempts >= calibrationAttemptLimit) {
       throw new Error(`连续 ${calibrationAttempts} 个校准批次没有产生任何通过本地硬规则的候选；已停止扩量，请先调整提示词或取材规则。`);
     }
@@ -202,7 +227,7 @@ export async function runFactoryPipeline(options: RunPipelineOptions): Promise<P
     else reject(item, local.risks.filter((risk) => risk.severity === "hard").map((risk) => risk.summary).join("；"));
     items.set(proposal.proposalId, item);
   }
-  await checkpoint(options, [...completedBatchIds], uniqueProposals, [...items.values()]);
+  await checkpoint(options, [...completedBatchIds], pointerSelectionCount, pointerIssues, uniqueProposals, [...items.values()]);
 
   const localPassed = [...items.values()].filter((item) => item.status === "rule-passed");
   for (const group of chunks(localPassed, config.batchSize)) {
@@ -225,7 +250,7 @@ export async function runFactoryPipeline(options: RunPipelineOptions): Promise<P
         }
       }
     }
-    await checkpoint(options, [...completedBatchIds], uniqueProposals, [...items.values()]);
+    await checkpoint(options, [...completedBatchIds], pointerSelectionCount, pointerIssues, uniqueProposals, [...items.values()]);
   }
 
   const semanticApproved = [...items.values()].filter((item) => item.status === "semantic-approved");
@@ -246,7 +271,7 @@ export async function runFactoryPipeline(options: RunPipelineOptions): Promise<P
         }
       }
     }
-    await checkpoint(options, [...completedBatchIds], uniqueProposals, [...items.values()]);
+    await checkpoint(options, [...completedBatchIds], pointerSelectionCount, pointerIssues, uniqueProposals, [...items.values()]);
   }
 
   const preliminaries = [...items.values()]
@@ -284,7 +309,7 @@ export async function runFactoryPipeline(options: RunPipelineOptions): Promise<P
         }
       }
     }
-    await checkpoint(options, [...completedBatchIds], uniqueProposals, [...items.values()]);
+    await checkpoint(options, [...completedBatchIds], pointerSelectionCount, pointerIssues, uniqueProposals, [...items.values()]);
   }
 
   const synthesized = [...items.values()].flatMap((item) => {
@@ -336,12 +361,22 @@ export async function runFactoryPipeline(options: RunPipelineOptions): Promise<P
     corpusVersion: corpus.corpusVersion,
     model: FACTORY_MODEL,
     promptVersion: config.promptVersion,
+    pointerSelectionCount,
+    invalidPointerCount: pointerIssues.length,
+    pointerIssues,
     generatedCount: uniqueProposals.length,
     publishedCount: selectedCandidates.length,
     manualReviewCount: reviewItems.filter((item) => item.status === "manual-review").length,
     rejectedCount: reviewItems.filter((item) => item.status === "rejected").length,
     items: reviewItems,
   };
-  const finalCheckpoint = await checkpoint(options, [...completedBatchIds], uniqueProposals, reviewItems);
+  const finalCheckpoint = await checkpoint(
+    options,
+    [...completedBatchIds],
+    pointerSelectionCount,
+    pointerIssues,
+    uniqueProposals,
+    reviewItems,
+  );
   return { candidateFile, report, checkpoint: finalCheckpoint };
 }

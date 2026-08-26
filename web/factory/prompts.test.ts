@@ -21,15 +21,18 @@ const passage: FactoryPassage = {
 };
 
 describe("候选生成提示词", () => {
-  it("明确限定输入原字、出现序号和证据关系", () => {
+  it("只让模型选择原文位置，不让模型填写名字和证据关系", () => {
     const request = generationRequest({ id: "source-0001-test", passages: [passage] }, 3, "calibration");
     expect(request.instructions).toMatch(/只能使用本次 input\.passages/u);
-    expect(request.instructions).toMatch(/只出现一次就必须填 0/u);
-    expect(request.instructions).toMatch(/名字和 character 使用规范简体字/u);
-    expect(request.instructions).toMatch(/exact-phrase 仅限同一 passage/u);
-    expect(request.instructions).toMatch(/王令仪.*只用于理解风格/u);
+    expect(request.instructions).toMatch(/Unicode.*0 开始/u);
+    expect(request.instructions).toMatch(/只返回.*passageId.*index/su);
+    expect(request.instructions).toMatch(/不得返回.*名字/su);
+    expect(request.instructions).not.toMatch(/王令仪|王景玉/u);
+    expect(JSON.stringify(request.schema)).not.toMatch(
+      /givenName|character|occurrence|relation|extraction/u,
+    );
     expect(request.input).toMatchObject({
-      passages: [{ passageId: passage.id, allowedCharacters: expect.stringContaining("令仪") }],
+      passages: [{ passageId: passage.id, normalizedText: "柔嘉维则令仪令色" }],
     });
   });
 
