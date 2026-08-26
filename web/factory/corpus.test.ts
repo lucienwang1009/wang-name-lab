@@ -76,11 +76,49 @@ describe("古籍候选工厂取材", () => {
     ]));
   });
 
-  it("按书轮询而不是让单一大书垄断", async () => {
-    const corpus = await loadFactoryCorpus(fixtureRoot);
-    const selected = selectDiversePassages(corpus.passages, { passagesPerBook: 2 });
-    expect(selected.slice(0, 2).map((passage) => passage.bookId)).toEqual(["shi-jing", "song-ci"]);
-    expect(new Set(selected.map((passage) => passage.bookId))).toEqual(new Set(["shi-jing", "song-ci"]));
+  it("全库统一竞争时高质量来源可以同时胜过弱书目", () => {
+    const make = (id: string, bookId: string, score: number, text: string): FactoryPassage => ({
+      id,
+      bookId,
+      bookTitle: `《${bookId}》`,
+      category: "集",
+      period: "先秦",
+      workTitle: id,
+      chapterTitle: "测试",
+      text,
+      normalizedText: text.replace(/[，。]/gu, ""),
+      sourceUrl: "https://example.test/source",
+      verificationUrl: "https://example.test/verify",
+      score,
+    });
+    const selected = selectDiversePassages([
+      make("strong-a-1", "strong", 300, "柔嘉维则，令仪令色。"),
+      make("strong-a-2", "strong", 290, "婉若清扬，惠风和畅。"),
+      make("weak-b-1", "weak", 10, "林木山石，道路车马。"),
+    ], { passagesPerBook: 1 });
+    expect(selected.map((passage) => passage.id)).toEqual(["strong-a-1", "strong-a-2"]);
+  });
+
+  it("全局质量优先仍限制单书垄断", () => {
+    const passages = Array.from({ length: 6 }, (_, index): FactoryPassage => ({
+      id: `strong-${index}`,
+      bookId: "strong",
+      bookTitle: "《强书》",
+      category: "集",
+      period: "先秦",
+      workTitle: `强作品${index}`,
+      chapterTitle: "测试",
+      text: "柔嘉维则，令仪令色。",
+      normalizedText: "柔嘉维则令仪令色",
+      sourceUrl: "https://example.test/source",
+      verificationUrl: "https://example.test/verify",
+      score: 300 - index,
+    }));
+    passages.push({ ...passages[0]!, id: "weak-1", bookId: "weak", bookTitle: "《弱书》", workTitle: "弱作品", score: 20 });
+    const selected = selectDiversePassages(passages, { passagesPerBook: 2 });
+    expect(selected).toHaveLength(4);
+    expect(selected.some((passage) => passage.bookId === "weak")).toBe(true);
+    expect(selected.filter((passage) => passage.bookId === "strong")).toHaveLength(3);
   });
 
   it("用 MMR 在质量接近时避开重复用字和作品", () => {

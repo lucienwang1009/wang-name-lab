@@ -360,41 +360,77 @@ export function selectDiversePassages(
     byBook.set(passage.bookId, group);
   }
   for (const group of byBook.values()) group.sort(comparePassage);
-  const bookOrder = [...byBook.entries()].sort(
-    ([leftId, left], [rightId, right]) =>
-      (left[0]?.category ?? "").localeCompare(right[0]?.category ?? "") ||
-      leftId.localeCompare(rightId),
+  const target = Math.min(passages.length, passagesPerBook * byBook.size);
+  if (target === 0) return [];
+
+  // The legacy flag still controls the total source scale, but no longer grants
+  // every book a quota. Globally strong passages compete first; small per-book
+  // fallbacks only ensure the bounded pool can satisfy concentration caps.
+  const globallyRanked = [...passages].sort(comparePassage);
+  const poolLimit = Math.min(passages.length, Math.max(256, target * 6));
+  const poolById = new Map(
+    globallyRanked.slice(0, poolLimit).map((passage) => [passage.id, passage]),
+  );
+  const fallbackPerBook = Math.max(1, Math.ceil(target / byBook.size));
+  for (const group of byBook.values()) {
+    for (const passage of group.slice(0, fallbackPerBook)) poolById.set(passage.id, passage);
+  }
+
+  const bookLimit = Math.max(
+    3,
+    Math.ceil(target * 0.08),
+    Math.ceil(target / byBook.size),
+  );
+  const uniqueWorkCount = new Set(passages.map((passage) => `${passage.bookId}\u0000${passage.workTitle}`)).size;
+  const workLimit = Math.max(
+    2,
+    Math.ceil(target * 0.04),
+    Math.ceil(target / uniqueWorkCount),
   );
   const selected: FactoryPassage[] = [];
-  const remainingByBook = new Map(
-    [...byBook.entries()].map(([bookId, group]) => [bookId, [...group]]),
-  );
   const charactersByPassage = new Map(
-    passages.map((passage) => [passage.id, passageNamingCharacters(passage)]),
+    [...poolById.values()].map((passage) => [passage.id, passageNamingCharacters(passage)]),
   );
-  for (let round = 0; round < passagesPerBook; round += 1) {
-    for (const [bookId] of bookOrder) {
-      const remaining = remainingByBook.get(bookId) ?? [];
-      const ranked = remaining.map((passage) => {
-        const characters = charactersByPassage.get(passage.id) ?? new Set<string>();
-        const maximumSimilarity = selected.reduce((maximum, existing) => Math.max(
-          maximum,
-          jaccard(characters, charactersByPassage.get(existing.id) ?? new Set<string>()),
-        ), 0);
-        const sameWork = selected.some((existing) =>
-          existing.bookId === passage.bookId && existing.workTitle === passage.workTitle
-        );
-        return {
-          passage,
-          mmrScore: passage.score - maximumSimilarity * 120 - (sameWork ? 80 : 0),
-        };
-      }).sort((left, right) =>
-        right.mmrScore - left.mmrScore || comparePassage(left.passage, right.passage)
+  const remaining = [...poolById.values()].map((passage) => ({ passage, maximumSimilarity: 0 }));
+  const bookCounts = new Map<string, number>();
+  const workCounts = new Map<string, number>();
+
+  while (selected.length < target) {
+    let bestIndex = -1;
+    let bestScore = Number.NEGATIVE_INFINITY;
+    for (let index = 0; index < remaining.length; index += 1) {
+      const candidate = remaining[index];
+      if (!candidate) continue;
+      const { passage, maximumSimilarity } = candidate;
+      const bookCount = bookCounts.get(passage.bookId) ?? 0;
+      const workKey = `${passage.bookId}\u0000${passage.workTitle}`;
+      const workCount = workCounts.get(workKey) ?? 0;
+      if (bookCount >= bookLimit || workCount >= workLimit) continue;
+      const mmrScore = passage.score - maximumSimilarity * 120 - workCount * 80 - bookCount * 12;
+      const currentBest = bestIndex >= 0 ? remaining[bestIndex]?.passage : undefined;
+      if (
+        mmrScore > bestScore ||
+        (mmrScore === bestScore && currentBest && comparePassage(passage, currentBest) < 0)
+      ) {
+        bestIndex = index;
+        bestScore = mmrScore;
+      }
+    }
+    if (bestIndex < 0) break;
+    const [chosenEntry] = remaining.splice(bestIndex, 1);
+    const chosen = chosenEntry?.passage;
+    if (!chosen) break;
+    selected.push(chosen);
+    bookCounts.set(chosen.bookId, (bookCounts.get(chosen.bookId) ?? 0) + 1);
+    const workKey = `${chosen.bookId}\u0000${chosen.workTitle}`;
+    workCounts.set(workKey, (workCounts.get(workKey) ?? 0) + 1);
+    const chosenCharacters = charactersByPassage.get(chosen.id) ?? new Set<string>();
+    for (const candidate of remaining) {
+      const characters = charactersByPassage.get(candidate.passage.id) ?? new Set<string>();
+      candidate.maximumSimilarity = Math.max(
+        candidate.maximumSimilarity,
+        jaccard(characters, chosenCharacters),
       );
-      const chosen = ranked[0]?.passage;
-      if (!chosen) continue;
-      selected.push(chosen);
-      remainingByBook.set(bookId, remaining.filter((passage) => passage.id !== chosen.id));
     }
   }
   return selected;

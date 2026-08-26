@@ -28,6 +28,8 @@ describe("候选生成提示词", () => {
     expect(request.instructions).toMatch(/直接复制 indexedText.*编号/su);
     expect(request.instructions).toMatch(/不要自行计数/u);
     expect(request.instructions).toMatch(/必须来自同一个 passageId/u);
+    expect(request.instructions).toMatch(/批次内横向比较/u);
+    expect(request.instructions).toMatch(/宁缺毋滥/u);
     expect(request.instructions).toMatch(/只返回.*passageId.*index/su);
     expect(request.instructions).toMatch(/不得返回.*名字/su);
     expect(request.instructions).not.toMatch(/王令仪|王景玉/u);
@@ -71,6 +73,7 @@ describe("候选生成提示词", () => {
     };
     const nameRequest = nameReviewRequest([proposal]);
     expect(nameRequest.instructions).toMatch(/本地读音分析.*事实依据/su);
+    expect(nameRequest.instructions).toMatch(/不能因为共享“仪”.*加分/su);
     expect(nameRequest.input).toMatchObject({
       candidates: [{
         fullName: "王令仪",
@@ -87,6 +90,8 @@ describe("候选生成提示词", () => {
     expect(request.maxOutputTokens).toBeGreaterThanOrEqual(1_200);
     expect(request.instructions).toMatch(/普通轻微取舍.*approve/su);
     expect(request.instructions).toMatch(/manual-review.*实质未决风险/su);
+    expect(request.instructions).toMatch(/面向家长.*短名单/su);
+    expect(request.instructions).toMatch(/偏刚.*像普通词组.*reject/su);
     expect(request.instructions).toMatch(/critique.*180/u);
     expect(request.input).toMatchObject({
       finalists: [{
