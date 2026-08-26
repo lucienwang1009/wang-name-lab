@@ -60,6 +60,20 @@ describe("古籍候选工厂取材", () => {
       passageNameabilityScore(repeatedMonth),
     );
     expect(extractNameableSourceWindows(graceful)[0]?.pairOpportunityCount).toBeGreaterThan(0);
+    expect(passageNameabilityScore(graceful)).toBeGreaterThan(passageNameabilityScore({
+      text: "总角之宴，言笑晏晏，信誓旦旦，不思其反。",
+      normalizedText: "总角之宴言笑晏晏信誓旦旦不思其反",
+    }));
+  });
+
+  it("为无句读长文本生成保留绝对下标的滑动窗口", () => {
+    const text = "翩若惊鸿婉若游龙荣曜秋菊华茂春松髣髴兮若轻云之蔽月飘飖兮若流风之回雪延颈秀项皓质呈露芳泽无加";
+    const windows = extractNameableSourceWindows({ text, normalizedText: text });
+    expect(windows.length).toBeGreaterThan(1);
+    expect(windows).toEqual(expect.arrayContaining([
+      expect.objectContaining({ startIndex: 0, endIndex: 24 }),
+      expect.objectContaining({ startIndex: 16, endIndex: 40 }),
+    ]));
   });
 
   it("按书轮询而不是让单一大书垄断", async () => {

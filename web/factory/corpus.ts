@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
 import { normalizeSearchText } from "../src/corpus/normalizeText.ts";
-import { characterDictionary } from "../src/data/nameSystemData.ts";
+import { characterDictionary, classicalFragments } from "../src/data/nameSystemData.ts";
 import type { FactoryBook, FactoryPassage } from "./types.ts";
 
 interface CorpusCatalogueFile {
@@ -52,6 +52,11 @@ const functionCharacters = new Set([..."在之兮者也矣于於以而与與为�
 const charactersByValue = new Map(characterDictionary.map((entry) => [entry.char, entry]));
 const clausePattern = /[^，,。！？!?；;]+[，,。！？!?；;]?/gu;
 const sentenceEndingPattern = /[。！？!?；;]$/u;
+const positiveFragmentPattern = /^(正面|祝颂|清幽|静谧|吉辞|华美|德行|女子|人物)/u;
+const positiveFragmentTexts = classicalFragments
+  .filter((fragment) => positiveFragmentPattern.test(fragment.contextTone) || fragment.contextTone.includes("正面"))
+  .map((fragment) => normalizeSearchText(fragment.quote))
+  .filter((text) => [...text].length >= 4);
 
 export interface NameableSourceWindow {
   text: string;
@@ -180,8 +185,11 @@ function createSourceWindow(
   const best = opportunities[0];
   if (!best) return undefined;
   const namingCharacters = [...new Set(opportunities.flatMap(({ characters }) => characters))].sort();
+  const curatedPositiveBonus = positiveFragmentTexts.some((fragmentText) =>
+    fragmentText.includes(normalizedText) || normalizedText.includes(fragmentText)
+  ) ? 160 : 0;
   const score = best.score + (opportunities[1]?.score ?? 0) * 0.3 +
-    Math.min(opportunities.length, 12) * 4 - length * 0.5;
+    Math.min(opportunities.length, 12) * 4 - length * 0.5 + curatedPositiveBonus;
   return {
     text,
     normalizedText,
@@ -199,13 +207,30 @@ export function extractNameableSourceWindows(
   const clauses = sourceClauses(passage.text);
   const windows: NameableSourceWindow[] = [];
   clauses.forEach((clause, index) => {
-    const single = createSourceWindow(
-      clause.text,
-      clause.normalizedText,
-      clause.startIndex,
-      clause.endIndex,
-    );
-    if (single) windows.push(single);
+    const clauseCharacters = [...clause.normalizedText];
+    if (clauseCharacters.length <= 40) {
+      const single = createSourceWindow(
+        clause.text,
+        clause.normalizedText,
+        clause.startIndex,
+        clause.endIndex,
+      );
+      if (single) windows.push(single);
+    } else {
+      for (let offset = 0; offset < clauseCharacters.length; offset += 16) {
+        const endOffset = Math.min(offset + 24, clauseCharacters.length);
+        if (endOffset - offset < 8) break;
+        const normalizedText = clauseCharacters.slice(offset, endOffset).join("");
+        const sliding = createSourceWindow(
+          normalizedText,
+          normalizedText,
+          clause.startIndex + offset,
+          clause.startIndex + endOffset,
+        );
+        if (sliding) windows.push(sliding);
+        if (endOffset === clauseCharacters.length) break;
+      }
+    }
     const next = clauses[index + 1];
     if (!clause.closesSentence && next) {
       const combined = createSourceWindow(
