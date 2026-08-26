@@ -87,6 +87,38 @@ function outputText(response: DeepSeekResponse): string {
   return texts.join("");
 }
 
+function parseFirstJsonValue(text: string): unknown {
+  const trimmed = text.trim();
+  try {
+    return JSON.parse(trimmed) as unknown;
+  } catch (originalError) {
+    if (trimmed[0] !== "{" && trimmed[0] !== "[") throw originalError;
+    const stack: string[] = [];
+    let inString = false;
+    let escaped = false;
+    for (let index = 0; index < trimmed.length; index += 1) {
+      const character = trimmed[index] ?? "";
+      if (inString) {
+        if (escaped) escaped = false;
+        else if (character === "\\") escaped = true;
+        else if (character === '"') inString = false;
+        continue;
+      }
+      if (character === '"') {
+        inString = true;
+        continue;
+      }
+      if (character === "{" || character === "[") stack.push(character);
+      else if (character === "}" || character === "]") {
+        const expected = character === "}" ? "{" : "[";
+        if (stack.pop() !== expected) throw originalError;
+        if (stack.length === 0) return JSON.parse(trimmed.slice(0, index + 1)) as unknown;
+      }
+    }
+    throw originalError;
+  }
+}
+
 function tokenUsage(response: DeepSeekResponse): TokenUsage {
   return {
     inputTokens: Math.max(0, response.usage?.input_tokens ?? 0),
@@ -180,7 +212,7 @@ export class DeepSeekClient {
     let parsed: T;
     let rawValue: unknown;
     try {
-      rawValue = JSON.parse(result.text) as unknown;
+      rawValue = parseFirstJsonValue(result.text);
       parsed = request.parse(rawValue);
     } catch (error) {
       const repaired = await this.#repairJson(request, result.text, safeError(error), cacheKey);
@@ -295,7 +327,7 @@ export class DeepSeekClient {
       input: { invalidJson: invalidText },
     });
     try {
-      const rawValue = JSON.parse(repair.text) as unknown;
+      const rawValue = parseFirstJsonValue(repair.text);
       return { parsed: request.parse(rawValue), rawValue };
     } catch (error) {
       throw new TypeError(`DeepSeek JSON 定向修复仍然失败：${safeError(error).message}`);

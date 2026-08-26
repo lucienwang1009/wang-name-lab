@@ -70,8 +70,19 @@ export class BudgetLedger {
   readonly #spentByPhase = new Map<FactoryPhase, number>();
   #reservationSequence = 0;
 
-  constructor(config: FactoryRunConfig) {
+  constructor(config: FactoryRunConfig, previousRecords: readonly FactoryRequestRecord[] = []) {
     this.#config = config;
+    this.records.push(...previousRecords.map((record) => ({
+      ...record,
+      usage: { ...record.usage },
+    })));
+    for (const record of previousRecords) {
+      this.#spentByPhase.set(
+        record.phase,
+        (this.#spentByPhase.get(record.phase) ?? 0) + record.estimatedMicroCny,
+      );
+    }
+    this.#reservationSequence = previousRecords.length;
   }
 
   get spentMicroCny(): number {
@@ -174,4 +185,3 @@ export class BudgetLedger {
     return record;
   }
 }
-

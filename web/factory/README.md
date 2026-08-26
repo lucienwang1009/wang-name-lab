@@ -46,8 +46,10 @@ pnpm --dir web factory:build -- --max-cny 20 --target 400 --run-id first-2026-08
 中断后使用原 run-id 恢复：
 
 ```bash
-pnpm --dir web factory:build -- --run-id first-2026-08 --resume
+pnpm --dir web factory:build -- --max-cny 20 --target 400 --passages-per-book 16 --batch-size 8 --run-id first-2026-08 --resume
 ```
+
+恢复时必须沿用原运行的预算与规模参数。程序会读取上一次脱敏费用清单，把已发生费用带入同一个硬上限；参数、语料或提示词版本不一致时拒绝恢复。
 
 正式结果写入 `web/corpus/generated/approved-candidates.json`，本地完整报告写入 `web/factory/reports/<run-id>/`。失败运行也会保留脱敏的 `manifest.json`，记录已发生请求和估算费用。只有通过本地硬规则、匿名语义审核、姓名感审核和对抗复审的候选会进入发布文件。
 

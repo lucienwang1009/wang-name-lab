@@ -114,6 +114,25 @@ async function loadCheckpoint(config: FactoryRunConfig): Promise<FactoryCheckpoi
   return value;
 }
 
+async function loadResumeManifest(
+  config: FactoryRunConfig,
+  corpusVersion: string,
+): Promise<FactoryManifest | undefined> {
+  if (!config.resume) return undefined;
+  const path = join(reportDirectory(config), "manifest.json");
+  const value = await readJsonIfExists(path, parseFactoryManifest);
+  if (!value) throw new Error(`找不到可恢复的费用清单：${path}`);
+  if (
+    value.runId !== config.runId ||
+    value.corpusVersion !== corpusVersion ||
+    value.promptVersion !== config.promptVersion ||
+    value.maxCny !== config.maxCny
+  ) {
+    throw new Error("费用清单与当前 run-id、语料、提示词版本或预算不一致，不能安全恢复。 ");
+  }
+  return value;
+}
+
 function manifest(
   config: FactoryRunConfig,
   ledger: BudgetLedger,
@@ -163,8 +182,9 @@ export async function runFactoryCli(
   }
   if (!config.live) throw new Error("真实候选构建必须显式使用 --live。 ");
 
-  const startedAt = (dependencies.now?.() ?? new Date()).toISOString();
-  const ledger = new BudgetLedger(config);
+  const previousManifest = await loadResumeManifest(config, corpus.corpusVersion);
+  const startedAt = previousManifest?.startedAt ?? (dependencies.now?.() ?? new Date()).toISOString();
+  const ledger = new BudgetLedger(config, previousManifest?.requests);
   const gateway = dependencies.gateway ?? new DeepSeekClient({
     config,
     ledger,

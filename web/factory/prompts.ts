@@ -34,6 +34,8 @@ function passagePayload(passage: FactoryPassage) {
     workTitle: passage.workTitle,
     chapterTitle: passage.chapterTitle,
     text: passage.text,
+    normalizedText: passage.normalizedText,
+    allowedCharacters: [...new Set([...passage.normalizedText])].join(""),
   };
 }
 
@@ -48,9 +50,13 @@ export function generationRequest(
     instructions: [
       "你是古典汉语取名候选生成器，只提出候选，不评分，不声称审核通过。",
       sharedNamingContext,
+      "绝对来源约束：只能使用本次 input.passages，不得引用、补写或暗示任何未提供的篇章、名句或典故；审美锚点“王令仪”和家庭示例“王景玉”只用于理解风格，除非相应字实际出现在所给原文，否则绝不能作为候选或出处。",
+      "givenName 的第一个字必须逐字等于 sources[0].character，第二个字必须逐字等于 sources[1].character；名字和 character 使用规范简体字，每个 character 必须原样出现在对应 passage 的 allowedCharacters 与 normalizedText 中。原文 text 可能是繁体，但只允许确定的简繁对应，不得做异体猜测或同义替换。",
+      "occurrence 是同一个 character 在该 passage.normalizedText 中从 0 开始的出现次数序号：只出现一次就必须填 0。无法确定原字和序号时，宁可不生成。",
+      "关系必须如实标注：exact-phrase 仅限同一 passage 中两字按该顺序连续出现；clause-related 限同一句或紧密分句；passage-related 限同一 passage；跨 passage 只能标 cultural-recomposition。",
       `每条原句最多提出 ${maxCandidatesPerPassage} 个真正自然的候选；没有好名字时可以不生成。`,
-      "sources 中 occurrence 是该字在对应原文中从 0 开始的出现序号，不是字符下标。两个来源字必须按顺序组成 givenName。",
-      "proposalId 必须使用“批次ID:姓名”的形式。familyConnection 没有真实关联时返回空字符串。",
+      "extraction 只能描述所给原文中实际可见的字词关系，不得用外部名句给组合补证。",
+      "proposalId 必须使用“批次ID:givenName”的形式，givenName 不含姓氏“王”。familyConnection 没有真实关联时返回空字符串。",
       "避免集中使用玉、影、清、月、若、汐、梓、萱等高频命名字；优先语义完整、音节清楚、端雅但不陈俗的组合。",
     ].join("\n\n"),
     input: { batchId: batch.id, passages: batch.passages.map(passagePayload) },
@@ -160,7 +166,10 @@ export function adversarialReviewRequest(
     schema: adversarialReviewListJsonSchema,
     parse: parseAdversarialReviewList,
     maxOutputTokens: Math.max(1_200, proposals.length * 180),
-    reasoningEffort: "high",
+    // The adversarial role is enforced by the prompt and independent review input.
+    // Hidden high-effort reasoning can consume the entire Responses output budget
+    // before JSON is emitted, so keep reasoning disabled for deterministic review output.
+    reasoningEffort: "none",
     temperature: 0.1,
   };
 }

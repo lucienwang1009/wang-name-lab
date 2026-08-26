@@ -41,6 +41,21 @@ describe("候选工厂预算账本", () => {
     expect(ledger.reservedMicroCny).toBe(0);
   });
 
+  it("恢复运行继承此前请求费用与阶段占用", () => {
+    const config = parseFactoryArgs([], { cwd: "/repo/web", env: {} });
+    const first = new BudgetLedger(config);
+    const reservation = first.reserve("generation", usage);
+    first.commit(reservation, {
+      cacheKey: "previous",
+      role: "generator",
+      usage: { inputTokens: 100, cachedInputTokens: 0, outputTokens: 50, reasoningTokens: 0 },
+    });
+    const resumed = new BudgetLedger(config, first.records);
+    expect(resumed.spentMicroCny).toBe(first.spentMicroCny);
+    expect(resumed.records).not.toBe(first.records);
+    expect(resumed.records[0]?.usage).not.toBe(first.records[0]?.usage);
+  });
+
   it("释放失败请求的预算预留", () => {
     const config = parseFactoryArgs([], { cwd: "/repo/web", env: {} });
     const ledger = new BudgetLedger(config);
@@ -50,4 +65,3 @@ describe("候选工厂预算账本", () => {
     expect(ledger.reservedMicroCny).toBe(0);
   });
 });
-

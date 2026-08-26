@@ -12,6 +12,7 @@ import type {
   CandidateProposal,
   FactoryCandidateFile,
   FactoryCheckpoint,
+  FactoryPassage,
   FactoryReviewItem,
   FactoryReviewReport,
   FactoryRunConfig,
@@ -41,6 +42,41 @@ function chunks<T>(values: readonly T[], size: number): T[][] {
   const result: T[][] = [];
   for (let index = 0; index < values.length; index += size) result.push(values.slice(index, index + size));
   return result;
+}
+
+const calibrationBookOrder = [
+  "shi-jing",
+  "chu-ci",
+  "tang-shi-san-bai-shou",
+  "song-ci-san-bai-shou",
+  "gu-shi-shi-jiu-shou",
+  "cao-zi-jian-ji",
+  "lao-zi",
+  "zhuang-zi",
+  "huai-nan-zi",
+  "wen-xin-diao-long",
+  "li-tai-bai-ji",
+] as const;
+
+const calibrationBookRank = new Map<string, number>(calibrationBookOrder.map((bookId, index) => [bookId, index]));
+
+function prioritizeCalibrationBatches(
+  passages: readonly FactoryPassage[],
+  batchSize: number,
+): ReturnType<typeof createPassageBatches> {
+  const ranked = [...passages].sort((left, right) => {
+    const leftRank = calibrationBookRank.get(left.bookId) ?? Number.MAX_SAFE_INTEGER;
+    const rightRank = calibrationBookRank.get(right.bookId) ?? Number.MAX_SAFE_INTEGER;
+    return leftRank - rightRank || right.score - left.score || left.id.localeCompare(right.id);
+  });
+  const calibrationCount = Math.min(ranked.length, batchSize * 3);
+  const calibrationPassages = ranked.slice(0, calibrationCount);
+  const calibrationIds = new Set(calibrationPassages.map((passage) => passage.id));
+  const remainingPassages = passages.filter((passage) => !calibrationIds.has(passage.id));
+  return [
+    ...createPassageBatches(calibrationPassages, batchSize),
+    ...createPassageBatches(remainingPassages, batchSize),
+  ];
 }
 
 function newReviewItem(proposal: CandidateProposal): FactoryReviewItem {
@@ -117,16 +153,23 @@ export async function runFactoryPipeline(options: RunPipelineOptions): Promise<P
   const selectedPassages = selectDiversePassages(corpus.passages, {
     passagesPerBook: config.passagesPerBook,
   });
-  const allSourceBatches = createPassageBatches(selectedPassages, config.batchSize);
+  const allSourceBatches = prioritizeCalibrationBatches(selectedPassages, config.batchSize);
   // Smoke is an end-to-end connectivity/format check, not a small production run.
   // Keep it to one source batch (then at most one request for each review stage).
   const sourceBatches = config.smoke ? allSourceBatches.slice(0, 1) : allSourceBatches;
   const completedBatchIds = new Set(options.checkpoint?.completedBatchIds ?? []);
   const proposals: CandidateProposal[] = [...(options.checkpoint?.proposals ?? [])];
+  const calibrationAttemptLimit = config.smoke ? 1 : Math.min(3, sourceBatches.length);
+  let calibrationAttempts = sourceBatches
+    .slice(0, calibrationAttemptLimit)
+    .filter((batch) => completedBatchIds.has(batch.id))
+    .length;
+  let calibrationPassed = proposals.some((proposal) => runLocalRules(proposal, passagesById).passed);
 
-  for (const [batchIndex, batch] of sourceBatches.entries()) {
+  for (const batch of sourceBatches) {
     if (completedBatchIds.has(batch.id)) continue;
-    const phase = batchIndex === 0 ? "calibration" : "generation";
+    const isCalibration = !calibrationPassed && calibrationAttempts < calibrationAttemptLimit;
+    const phase = isCalibration ? "calibration" : "generation";
     const generated = await gateway.structured(generationRequest(
       batch,
       config.maxCandidatesPerPassage,
@@ -136,15 +179,17 @@ export async function runFactoryPipeline(options: RunPipelineOptions): Promise<P
     const acceptedFromBatch = generated.filter((proposal) =>
       proposal.sources.every((source) => allowedPassages.has(source.passageId))
     );
-    if (
-      phase === "calibration" &&
-      !acceptedFromBatch.some((proposal) => runLocalRules(proposal, passagesById).passed)
-    ) {
-      throw new Error("校准批次没有产生任何通过本地硬规则的候选；已停止扩量，请先调整提示词或取材规则。");
+    const batchPassed = acceptedFromBatch.some((proposal) => runLocalRules(proposal, passagesById).passed);
+    if (isCalibration) {
+      calibrationAttempts += 1;
+      calibrationPassed ||= batchPassed;
     }
     proposals.push(...acceptedFromBatch);
     completedBatchIds.add(batch.id);
     await checkpoint(options, [...completedBatchIds], proposals, []);
+    if (isCalibration && !calibrationPassed && calibrationAttempts >= calibrationAttemptLimit) {
+      throw new Error(`连续 ${calibrationAttempts} 个校准批次没有产生任何通过本地硬规则的候选；已停止扩量，请先调整提示词或取材规则。`);
+    }
   }
 
   const uniqueProposals = deduplicateProposals(proposals);

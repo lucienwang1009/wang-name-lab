@@ -201,6 +201,23 @@ describe("DeepSeek Responses API 客户端", () => {
     expect(repairBody.instructions).toMatch(/修复 JSON/);
   });
 
+  it("安全提取模型追加内容前的第一个完整 JSON", async () => {
+    const fetcher = vi.fn<FactoryFetch>(async (_input, _init) => ({
+      ...apiResponse({ ok: true }),
+      json: async () => ({
+        status: "completed",
+        output: [{
+          type: "message",
+          content: [{ type: "output_text", text: '{"ok":true}{"ok":false}' }],
+        }],
+        usage: { input_tokens: 10, output_tokens: 10 },
+      }),
+    }));
+    const { client } = await setup(fetcher);
+    await expect(client.structured(request)).resolves.toEqual({ ok: true });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
   it("没有 Key 且缓存未命中时快速失败", async () => {
     const fetcher = vi.fn<FactoryFetch>(async (_input, _init) => apiResponse({ ok: true }));
     const { client } = await setup(fetcher, "");
