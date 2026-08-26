@@ -1,4 +1,13 @@
-# Third-party corpus notices
+# Third-party notices
+
+## pinyin-pro
+
+- Project: <https://github.com/zh-lx/pinyin-pro>
+- Version: `3.29.3`
+- Licence declared by upstream: MIT
+- Use: local derivation of full-name pinyin, tone numbers, and polyphonic-character review flags in the offline candidate factory
+
+The package runs only during local candidate construction and testing. Its output is treated as a pronunciation aid rather than a substitute for family or dialect review.
 
 ## chinese-poetry/chinese-poetry
 

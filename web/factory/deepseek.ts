@@ -96,7 +96,8 @@ function tokenUsage(response: DeepSeekResponse): TokenUsage {
 }
 
 function estimatedInputTokens(instructions: string, input: unknown): number {
-  return Math.max(1, Math.ceil((instructions.length + JSON.stringify(input).length) / 2));
+  const characters = instructions.length + JSON.stringify(input).length;
+  return Math.max(256, Math.ceil(characters * 1.2) + 256);
 }
 
 function retryableStatus(status: number): boolean {
@@ -288,4 +289,3 @@ export class DeepSeekClient {
     }
   }
 }
-

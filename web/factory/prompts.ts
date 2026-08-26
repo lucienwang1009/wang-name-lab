@@ -40,9 +40,10 @@ function passagePayload(passage: FactoryPassage) {
 export function generationRequest(
   batch: PassageBatch,
   maxCandidatesPerPassage: number,
+  phase: "calibration" | "generation" = "generation",
 ): StructuredRequest<CandidateProposal[]> {
   return {
-    phase: "generation",
+    phase,
     role: "candidate-generator",
     instructions: [
       "你是古典汉语取名候选生成器，只提出候选，不评分，不声称审核通过。",
@@ -163,4 +164,3 @@ export function adversarialReviewRequest(
     temperature: 0.1,
   };
 }
-

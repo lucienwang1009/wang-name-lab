@@ -121,13 +121,25 @@ export async function runFactoryPipeline(options: RunPipelineOptions): Promise<P
   const completedBatchIds = new Set(options.checkpoint?.completedBatchIds ?? []);
   const proposals: CandidateProposal[] = [...(options.checkpoint?.proposals ?? [])];
 
-  for (const batch of sourceBatches) {
+  for (const [batchIndex, batch] of sourceBatches.entries()) {
     if (completedBatchIds.has(batch.id)) continue;
-    const generated = await gateway.structured(generationRequest(batch, config.maxCandidatesPerPassage));
-    const allowedPassages = new Set(batch.passages.map((passage) => passage.id));
-    proposals.push(...generated.filter((proposal) =>
-      proposal.sources.every((source) => allowedPassages.has(source.passageId))
+    const phase = batchIndex === 0 ? "calibration" : "generation";
+    const generated = await gateway.structured(generationRequest(
+      batch,
+      config.maxCandidatesPerPassage,
+      phase,
     ));
+    const allowedPassages = new Set(batch.passages.map((passage) => passage.id));
+    const acceptedFromBatch = generated.filter((proposal) =>
+      proposal.sources.every((source) => allowedPassages.has(source.passageId))
+    );
+    if (
+      phase === "calibration" &&
+      !acceptedFromBatch.some((proposal) => runLocalRules(proposal, passagesById).passed)
+    ) {
+      throw new Error("校准批次没有产生任何通过本地硬规则的候选；已停止扩量，请先调整提示词或取材规则。");
+    }
+    proposals.push(...acceptedFromBatch);
     completedBatchIds.add(batch.id);
     await checkpoint(options, [...completedBatchIds], proposals, []);
   }
@@ -285,4 +297,3 @@ export async function runFactoryPipeline(options: RunPipelineOptions): Promise<P
   const finalCheckpoint = await checkpoint(options, [...completedBatchIds], uniqueProposals, reviewItems);
   return { candidateFile, report, checkpoint: finalCheckpoint };
 }
-

@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { parseFactoryArgs } from "./config.ts";
 import type { LoadedFactoryCorpus } from "./corpus.ts";
+import type { StructuredRequest } from "./deepseek.ts";
 import { runFactoryPipeline, type FactoryModelGateway } from "./pipeline.ts";
 import type {
   AdversarialReview,
@@ -119,6 +120,17 @@ function gateway({ rejectName }: { rejectName?: string } = {}) {
 }
 
 describe("候选工厂分阶段流水线", () => {
+  it("先用校准预算跑首批，首批全数硬失败时停止扩量", async () => {
+    const badGateway: FactoryModelGateway = {
+      async structured<T>(request: StructuredRequest<T>) {
+        if (request.role !== "candidate-generator") throw new Error("不应进入审核阶段");
+        return [proposal("八方", "test/negative-sound")] as T;
+      },
+    };
+    await expect(runFactoryPipeline({ config: config(), corpus, gateway: badGateway }))
+      .rejects.toThrow(/校准批次/);
+  });
+
   it("只发布依次通过本地、语义、姓名感和对抗审核的候选", async () => {
     const fake = gateway({ rejectName: "柔嘉" });
     const result = await runFactoryPipeline({ config: config(), corpus, gateway: fake.gateway, now: () => new Date("2026-08-26T00:00:00Z") });
@@ -165,4 +177,3 @@ describe("候选工厂分阶段流水线", () => {
     expect(result.report.generatedCount).toBe(3);
   });
 });
-

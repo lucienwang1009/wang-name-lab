@@ -29,7 +29,7 @@
 
 ## 总体架构
 
-在仓库中新增独立的 TypeScript 工具目录 `factory/`，通过 `pnpm factory:build` 运行：
+在现有前端 TypeScript 包中新增独立工具目录 `web/factory/`，从仓库根目录通过 `pnpm --dir web factory:build` 运行。这样复用同一份 Node 版本、锁文件与测试工具，但工厂仍只在本机执行：
 
 ```text
 现有古籍全文与段落索引
@@ -92,11 +92,11 @@
 
 一次运行产生三类文件：
 
-1. `web/public/data/generated-candidates.json`：供网页加载的已通过候选；
-2. `factory/reports/<run-id>/review-report.json`：通过、待复核和淘汰明细；
-3. `factory/reports/<run-id>/manifest.json`：模型、提示词、输入版本、请求数、token 和估算费用。
+1. `web/corpus/generated/approved-candidates.json`：经审核、可提交并由语料构建器导入的源候选；
+2. `web/public/data/generated-candidates.json`：本地预览及构建后的静态候选副本；
+3. `web/factory/reports/<run-id>/review-report.json` 与 `manifest.json`：通过、待复核、淘汰、模型版本、请求数、token 和估算费用。
 
-模型原始响应与请求缓存放在本地缓存目录并加入 `.gitignore`。网页发布文件不得包含提示词、API 响应或任何凭据。
+模型结构化响应缓存放在 `web/.factory-cache/`，检查点与完整报告只留在本地并加入 `.gitignore`。网页发布文件不得包含提示词、API 原始响应或任何凭据。
 
 ## 网页接入与偏好闭环
 
