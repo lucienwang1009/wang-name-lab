@@ -16,4 +16,6 @@
 pnpm --dir web corpus:build
 ```
 
-Luna 原始报告保存在被 Git 忽略的 `web/factory/reports/<run-id>/`。主审只能从报告中选择少量真实姓名感合格的结果，并补齐原文、取字位置、风险和模型归属；构建期会再次逐条核对固定语料。历史 DeepSeek 产物与新增 Luna 产物分别保存，避免混写来源，构建时再合并进入推荐池。
+Luna 原始报告保存在被 Git 忽略的 `web/factory/reports/<run-id>/`。主审只能从报告中选择少量真实姓名感合格的结果，并补齐原文、取字位置、风险和模型归属；构建期会再次逐条核对固定语料。历史 DeepSeek 产物与每一批 Luna 产物分别保存，避免混写来源；`web/corpus/generated/` 中的每个 JSON 都必须是完整、可独立审计的发布批次，构建时再统一合并进入推荐池。
+
+未发布候选也不能丢弃。版本化历史保存在 `web/factory/history/`，每条记录包含代理原始输出、来源批次和主审状态：`published` 已发布，`deferred` 值得以后按新偏好重审，`rejected` 是可用于改进提示词和过滤规则的负例。`rejected` 不是物理删除；若规则、语料或家庭偏好变化，可以从原始证据重新评估。

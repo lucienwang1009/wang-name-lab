@@ -1,0 +1,487 @@
+{
+  "schemaVersion": 1,
+  "model": "gpt-5.6-luna",
+  "promptVersion": "luna-parallel-main-review-v1",
+  "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+  "runId": "luna-parallel-20260828-2",
+  "createdAt": "2026-08-28T16:00:00+08:00",
+  "count": 5,
+  "candidates": [
+    {
+      "id": "personalized:佩音",
+      "surname": "王",
+      "givenName": "佩音",
+      "fullName": "王佩音",
+      "evidence": {
+        "relation": "clause-related",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "Luna layered 路线提出后，经主审按固定语料逐字复核；两个字均来自 wen-xuan/work-0036/passage-0003，不扩大声明取字关系。",
+        "citations": [
+          {
+            "id": "wen-xuan/work-0036/passage-0003:佩:0",
+            "passageId": "wen-xuan/work-0036/passage-0003",
+            "matchedChar": "佩",
+            "occurrence": 0,
+            "bookId": "wen-xuan",
+            "bookTitle": "《文选》",
+            "workTitle": "謝希逸月賦",
+            "chapterTitle": "《文選》卷十三",
+            "quote": "歌曰：美人邁兮音塵闕，隔千里兮共明月。臨風歎兮將焉歇，川路長兮不可越。歌響未終，餘景就畢。滿堂變容，迴遑如失。又稱歌曰：月既沒兮露欲晞，歲方晏兮無與歸。佳期可以還，微霜霑人衣！陳王曰：「善。」迺命執事，獻壽羞璧。敬佩玉音，復之無斁。",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0001%20%E6%96%87%E9%81%B8-%E6%A2%81-%E8%95%AD%E7%B5%B1.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4h0001/"
+          },
+          {
+            "id": "wen-xuan/work-0036/passage-0003:音:1",
+            "passageId": "wen-xuan/work-0036/passage-0003",
+            "matchedChar": "音",
+            "occurrence": 1,
+            "bookId": "wen-xuan",
+            "bookTitle": "《文选》",
+            "workTitle": "謝希逸月賦",
+            "chapterTitle": "《文選》卷十三",
+            "quote": "歌曰：美人邁兮音塵闕，隔千里兮共明月。臨風歎兮將焉歇，川路長兮不可越。歌響未終，餘景就畢。滿堂變容，迴遑如失。又稱歌曰：月既沒兮露欲晞，歲方晏兮無與歸。佳期可以還，微霜霑人衣！陳王曰：「善。」迺命執事，獻壽羞璧。敬佩玉音，復之無斁。",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0001%20%E6%96%87%E9%81%B8-%E6%A2%81-%E8%95%AD%E7%B5%B1.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4h0001/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.94,
+        "graceful": 0.9,
+        "gentle": 0.82,
+        "bright": 0.76,
+        "austere": 0.58,
+        "modern": 0.55,
+        "pronounceable": 0.95,
+        "writable": 0.98,
+        "recognizable": 1,
+        "uncommon": 0.9,
+        "familyMeaning": 0.18,
+        "exactPhrasePreference": 0.2,
+        "recompositionPreference": 1
+      },
+      "quality": {
+        "pinyin": "wáng pèi yīn",
+        "tones": "2-4-1",
+        "meaning": "声名清雅，品行可敬。",
+        "semanticExplanation": "取《文选·月赋》“敬佩玉音，复之无斁”中的“佩”与“音”。原句“佩”是敬服的动作，“音”是受赞许的话语；姓名将二者透明重组为声名与品行值得敬重，不宣称“佩音”是原文固定词。",
+        "pronunciationNote": "wáng pèi yīn，声调2-4-1，起落清楚，和王姓连读利落。",
+        "usabilityNote": "两字常用易写，女性感自然；“佩”也会让人联想到佩饰。",
+        "uncommonnessNote": "组合少见但已有现实使用，属于不生僻的低频姓名。",
+        "primaryStyle": "graceful",
+        "imageryCategory": "玉音可佩"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "luna-pei-grammar",
+          "kind": "source-context",
+          "severity": "note",
+          "summary": "原句中的“佩”是“敬佩”的动词，不是玉佩；姓名释义属于同句重组。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "gpt-5.6-luna",
+        "promptVersion": "luna-parallel-main-review-v1",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "luna-parallel-20260828-2",
+        "proposalId": "layered-01",
+        "semantic": {
+          "semanticScore": 0.91,
+          "evidenceScore": 0.98,
+          "explanation": "取《文选·月赋》“敬佩玉音，复之无斁”中的“佩”与“音”。原句“佩”是敬服的动作，“音”是受赞许的话语；姓名将二者透明重组为声名与品行值得敬重，不宣称“佩音”是原文固定词。"
+        },
+        "name": {
+          "phonology": 0.93,
+          "nameFeel": 0.93,
+          "femininity": 0.91,
+          "usability": 0.95,
+          "distinctiveness": 0.9
+        },
+        "adversarialCritique": "主审保留：读音、女性感和成年姓名感均衡；释义必须保留“佩”为动词的原句语法。"
+      }
+    },
+    {
+      "id": "personalized:淑慎",
+      "surname": "王",
+      "givenName": "淑慎",
+      "fullName": "王淑慎",
+      "evidence": {
+        "relation": "exact-phrase",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "Luna bidirectional 路线提出后，经主审按固定语料逐字复核；两个字均来自 shi-jing/work-0028/passage-0011，不扩大声明取字关系。",
+        "citations": [
+          {
+            "id": "shi-jing/work-0028/passage-0011:淑:0",
+            "passageId": "shi-jing/work-0028/passage-0011",
+            "matchedChar": "淑",
+            "occurrence": 0,
+            "bookId": "shi-jing",
+            "bookTitle": "《诗经》",
+            "workTitle": "燕燕",
+            "chapterTitle": "国风·邶风",
+            "quote": "终温且惠，淑慎其身。",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E8%AF%97%E7%BB%8F/shijing.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E8%A9%A9%E7%B6%93"
+          },
+          {
+            "id": "shi-jing/work-0028/passage-0011:慎:0",
+            "passageId": "shi-jing/work-0028/passage-0011",
+            "matchedChar": "慎",
+            "occurrence": 0,
+            "bookId": "shi-jing",
+            "bookTitle": "《诗经》",
+            "workTitle": "燕燕",
+            "chapterTitle": "国风·邶风",
+            "quote": "终温且惠，淑慎其身。",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E8%AF%97%E7%BB%8F/shijing.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E8%A9%A9%E7%B6%93"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.99,
+        "graceful": 0.92,
+        "gentle": 0.78,
+        "bright": 0.36,
+        "austere": 0.88,
+        "modern": 0.18,
+        "pronounceable": 0.92,
+        "writable": 0.97,
+        "recognizable": 1,
+        "uncommon": 0.92,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 1,
+        "recompositionPreference": 0.08
+      },
+      "quality": {
+        "pinyin": "wáng shū shèn",
+        "tones": "2-1-4",
+        "meaning": "贤善自持，审慎有度。",
+        "semanticExplanation": "直接取《诗经·邶风·燕燕》“终温且惠，淑慎其身”。“淑慎”在原句中连续出现，并在女性语境中形容贤善谨慎，典故关系直接。",
+        "pronunciationNote": "wáng shū shèn，声调2-1-4，尾字去声使端庄感较强。",
+        "usabilityNote": "字形平易、女性语境明确；整体传统而克制，不是轻盈甜美路线。",
+        "uncommonnessNote": "现代组合少见，但古代封号和传统德性语汇中可见，古典辨识度很高。",
+        "primaryStyle": "classical",
+        "imageryCategory": "温惠淑慎"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "luna-shushen-traditional",
+          "kind": "usability",
+          "severity": "review",
+          "summary": "“淑慎”传统伦理色彩浓，并曾用于古代封号；是否显得过于端肃需家长判断。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "gpt-5.6-luna",
+        "promptVersion": "luna-parallel-main-review-v1",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "luna-parallel-20260828-2",
+        "proposalId": "bidirectional-02",
+        "semantic": {
+          "semanticScore": 0.98,
+          "evidenceScore": 0.99,
+          "explanation": "直接取《诗经·邶风·燕燕》“终温且惠，淑慎其身”。“淑慎”在原句中连续出现，并在女性语境中形容贤善谨慎，典故关系直接。"
+        },
+        "name": {
+          "phonology": 0.9,
+          "nameFeel": 0.91,
+          "femininity": 0.94,
+          "usability": 0.93,
+          "distinctiveness": 0.92
+        },
+        "adversarialCritique": "主审保留为端雅德性路线：出处强、像正式姓名；最大问题是“慎”的严肃感与明显传统色彩。"
+      }
+    },
+    {
+      "id": "personalized:绮澄",
+      "surname": "王",
+      "givenName": "绮澄",
+      "fullName": "王绮澄",
+      "evidence": {
+        "relation": "clause-related",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "Luna independent 路线提出后，经主审按固定语料逐字复核；两个字均来自 wen-xuan/work-0232/passage-0001，不扩大声明取字关系。",
+        "citations": [
+          {
+            "id": "wen-xuan/work-0232/passage-0001:绮:0",
+            "passageId": "wen-xuan/work-0232/passage-0001",
+            "matchedChar": "绮",
+            "occurrence": 0,
+            "bookId": "wen-xuan",
+            "bookTitle": "《文选》",
+            "workTitle": "謝玄暉晚登三山還望京邑一首",
+            "chapterTitle": "《文選》卷二十七",
+            "quote": "灞涘望長安，河陽視京縣。白日麗飛甍，參差皆可見。餘霞散成綺，澄江靜如練。喧鳥覆春洲，雜英滿芳甸。去矣方滯淫，懷哉罷歡宴。佳期悵何許，淚下如流霰。有情知望鄉，誰能縝不變？",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0001%20%E6%96%87%E9%81%B8-%E6%A2%81-%E8%95%AD%E7%B5%B1.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4h0001/"
+          },
+          {
+            "id": "wen-xuan/work-0232/passage-0001:澄:0",
+            "passageId": "wen-xuan/work-0232/passage-0001",
+            "matchedChar": "澄",
+            "occurrence": 0,
+            "bookId": "wen-xuan",
+            "bookTitle": "《文选》",
+            "workTitle": "謝玄暉晚登三山還望京邑一首",
+            "chapterTitle": "《文選》卷二十七",
+            "quote": "灞涘望長安，河陽視京縣。白日麗飛甍，參差皆可見。餘霞散成綺，澄江靜如練。喧鳥覆春洲，雜英滿芳甸。去矣方滯淫，懷哉罷歡宴。佳期悵何許，淚下如流霰。有情知望鄉，誰能縝不變？",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0001%20%E6%96%87%E9%81%B8-%E6%A2%81-%E8%95%AD%E7%B5%B1.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4h0001/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.96,
+        "graceful": 0.94,
+        "gentle": 0.8,
+        "bright": 0.92,
+        "austere": 0.57,
+        "modern": 0.5,
+        "pronounceable": 0.84,
+        "writable": 0.86,
+        "recognizable": 0.9,
+        "uncommon": 0.96,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 0.22,
+        "recompositionPreference": 1
+      },
+      "quality": {
+        "pinyin": "wáng qǐ chéng",
+        "tones": "2-3-2",
+        "meaning": "绮丽有文采，澄明而清正。",
+        "semanticExplanation": "取谢朓诗“余霞散成绮，澄江静如练”句界两侧的“绮”与“澄”。“绮”写霞色如锦，“澄”写江水清澈；两字相邻但分属前后意象，因此按同句关联重组展示，不冒充固定词。",
+        "pronunciationNote": "wáng qǐ chéng，声调2-3-2，三字有明显起伏；“澄”在此读chéng。",
+        "usabilityNote": "组合少见、女性感明确；“澄”是多音字，偶尔需要说明读音。",
+        "uncommonnessNote": "两字都可识读，组合罕见，辨识度高而没有网红模板感。",
+        "primaryStyle": "bright",
+        "imageryCategory": "绮霞澄江"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "luna-cheng-polyphonic",
+          "kind": "pronunciation",
+          "severity": "review",
+          "summary": "“澄”可读chéng或dèng，本名按澄明义读chéng。"
+        },
+        {
+          "code": "luna-clause-boundary",
+          "kind": "source-context",
+          "severity": "note",
+          "summary": "“绮”“澄”位于诗句分界两侧，是相邻意象重组，并非原文固定词。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "gpt-5.6-luna",
+        "promptVersion": "luna-parallel-main-review-v1",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "luna-parallel-20260828-2",
+        "proposalId": "independent-03",
+        "semantic": {
+          "semanticScore": 0.91,
+          "evidenceScore": 0.98,
+          "explanation": "取谢朓诗“余霞散成绮，澄江静如练”句界两侧的“绮”与“澄”。“绮”写霞色如锦，“澄”写江水清澈；两字相邻但分属前后意象，因此按同句关联重组展示，不冒充固定词。"
+        },
+        "name": {
+          "phonology": 0.9,
+          "nameFeel": 0.94,
+          "femininity": 0.93,
+          "usability": 0.84,
+          "distinctiveness": 0.96
+        },
+        "adversarialCritique": "主审保留：在独特性、音律和女性感之间较均衡；原句后段含思乡情绪，但取字段的景物语义明净。"
+      }
+    },
+    {
+      "id": "personalized:含微",
+      "surname": "王",
+      "givenName": "含微",
+      "fullName": "王含微",
+      "evidence": {
+        "relation": "clause-related",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "Luna independent 路线提出后，经主审按固定语料逐字复核；两个字均来自 bai-shi-chang-qing-ji/work-0001/passage-2277，不扩大声明取字关系。",
+        "citations": [
+          {
+            "id": "bai-shi-chang-qing-ji/work-0001/passage-2277:含:0",
+            "passageId": "bai-shi-chang-qing-ji/work-0001/passage-2277",
+            "matchedChar": "含",
+            "occurrence": 0,
+            "bookId": "bai-shi-chang-qing-ji",
+            "bookTitle": "《白氏长庆集》",
+            "workTitle": "KR4c0069",
+            "chapterTitle": "KR4c0069",
+            "quote": "宜春濯足浄可朝漱齒遶砌紫鱗遊拂簾白鳥起何言履道叟便是滄浪子君若趂歸程請君先到此願以潺湲聲洗君塵土耳北䆫竹石一片瑟瑟石數竿青青竹向我如有情依然看不足况臨北簷下復近西塘曲筠風㪚餘清苔雨含微緑有妻亦衰病無子方老獨莫掩夜䆫扉共渠相伴宿飮後戲示弟子吾爲爾先生爾爲吾弟子孔門有遺訓復坐吾告爾先生饌酒食弟子服勞止孝敬不在他在兹而已矣欲我少愁憂欲我多歡喜無如醖好酒酒湏多且㫖㫖",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4c0069%20%E7%99%BD%E6%B0%8F%E9%95%B7%E6%85%B6%E9%9B%86-%E5%94%90-%E7%99%BD%E5%B1%85%E6%98%93.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4c0069/"
+          },
+          {
+            "id": "bai-shi-chang-qing-ji/work-0001/passage-2277:微:0",
+            "passageId": "bai-shi-chang-qing-ji/work-0001/passage-2277",
+            "matchedChar": "微",
+            "occurrence": 0,
+            "bookId": "bai-shi-chang-qing-ji",
+            "bookTitle": "《白氏长庆集》",
+            "workTitle": "KR4c0069",
+            "chapterTitle": "KR4c0069",
+            "quote": "宜春濯足浄可朝漱齒遶砌紫鱗遊拂簾白鳥起何言履道叟便是滄浪子君若趂歸程請君先到此願以潺湲聲洗君塵土耳北䆫竹石一片瑟瑟石數竿青青竹向我如有情依然看不足况臨北簷下復近西塘曲筠風㪚餘清苔雨含微緑有妻亦衰病無子方老獨莫掩夜䆫扉共渠相伴宿飮後戲示弟子吾爲爾先生爾爲吾弟子孔門有遺訓復坐吾告爾先生饌酒食弟子服勞止孝敬不在他在兹而已矣欲我少愁憂欲我多歡喜無如醖好酒酒湏多且㫖㫖",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4c0069%20%E7%99%BD%E6%B0%8F%E9%95%B7%E6%85%B6%E9%9B%86-%E5%94%90-%E7%99%BD%E5%B1%85%E6%98%93.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4c0069/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.94,
+        "graceful": 0.92,
+        "gentle": 0.86,
+        "bright": 0.76,
+        "austere": 0.58,
+        "modern": 0.56,
+        "pronounceable": 0.95,
+        "writable": 1,
+        "recognizable": 1,
+        "uncommon": 0.96,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 0.22,
+        "recompositionPreference": 1
+      },
+      "quality": {
+        "pinyin": "wáng hán wēi",
+        "tones": "2-2-1",
+        "meaning": "含蓄细腻，见微而知新。",
+        "semanticExplanation": "取白居易诗句“筠风散余清，苔雨含微绿”中的连续“含微”。原句是青苔含有浅淡新绿，“含”为蕴含，“微”为细微；姓名保留含蓄、细微的字义，但不把景物句拔高为固定德目。",
+        "pronunciationNote": "wáng hán wēi，声调2-2-1，读音轻柔，尾音清收。",
+        "usabilityNote": "两字极易读写，组合罕见；风格偏含蓄文雅，不甜腻。",
+        "uncommonnessNote": "公开检索可见极少量同名使用，但没有显著公众人物碰撞。",
+        "primaryStyle": "graceful",
+        "imageryCategory": "苔雨微绿"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "luna-hanwei-image",
+          "kind": "source-context",
+          "severity": "note",
+          "summary": "原句“含微绿”描写雨后苔色，姓名含义是透明转义，不是原文中的人格评价。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "gpt-5.6-luna",
+        "promptVersion": "luna-parallel-main-review-v1",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "luna-parallel-20260828-2",
+        "proposalId": "independent-04",
+        "semantic": {
+          "semanticScore": 0.89,
+          "evidenceScore": 0.98,
+          "explanation": "取白居易诗句“筠风散余清，苔雨含微绿”中的连续“含微”。原句是青苔含有浅淡新绿，“含”为蕴含，“微”为细微；姓名保留含蓄、细微的字义，但不把景物句拔高为固定德目。"
+        },
+        "name": {
+          "phonology": 0.93,
+          "nameFeel": 0.94,
+          "femininity": 0.92,
+          "usability": 0.96,
+          "distinctiveness": 0.97
+        },
+        "adversarialCritique": "主审重点保留：姓名感自然且不普通；主要风险是原文写苔色，典故说明必须保持克制。"
+      }
+    },
+    {
+      "id": "personalized:端仪",
+      "surname": "王",
+      "givenName": "端仪",
+      "fullName": "王端仪",
+      "evidence": {
+        "relation": "exact-phrase",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "Luna poetry 路线提出后，经主审按固定语料逐字复核；两个字均来自 yue-fu-shi-ji/work-0001/passage-0303，不扩大声明取字关系。",
+        "citations": [
+          {
+            "id": "yue-fu-shi-ji/work-0001/passage-0303:端:0",
+            "passageId": "yue-fu-shi-ji/work-0001/passage-0303",
+            "matchedChar": "端",
+            "occurrence": 0,
+            "bookId": "yue-fu-shi-ji",
+            "bookTitle": "《乐府诗集》",
+            "workTitle": "KR4h0034",
+            "chapterTitle": "KR4h0034",
+            "quote": "烈樂穆皇后室奏穆徳凱容樂髙宗朙皇帝室奏朙徳凱容樂古今樂録曰梁何佟之周捨等議以為周禮牲出入奏昭夏而齊氏仍宋儀等迎神奏昭夏牲出入更奏引牲樂乃以牲牢之樂用接祖宗之靈宋季之失禮也肅咸樂　謝超宗絜誠厎孝孝感烟霜寅儀式序肅禮綿張金蕐樹藻肅哲騰光殷殷升奏嚴嚴階庠匪椒匪玉是降是將懋分神衷翊祐傳昌引牲樂肇祀嚴靈恭禮尊國達敬傳典結孝陳則芬滌既肅犧牷既整聳誠流思端儀選景肆禮佇夜綿樂",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0034%20%E6%A8%82%E5%BA%9C%E8%A9%A9%E9%9B%86-%E5%AE%8B-%E9%83%AD%E8%8C%82%E5%80%A9.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4h0034/"
+          },
+          {
+            "id": "yue-fu-shi-ji/work-0001/passage-0303:仪:2",
+            "passageId": "yue-fu-shi-ji/work-0001/passage-0303",
+            "matchedChar": "仪",
+            "occurrence": 2,
+            "bookId": "yue-fu-shi-ji",
+            "bookTitle": "《乐府诗集》",
+            "workTitle": "KR4h0034",
+            "chapterTitle": "KR4h0034",
+            "quote": "烈樂穆皇后室奏穆徳凱容樂髙宗朙皇帝室奏朙徳凱容樂古今樂録曰梁何佟之周捨等議以為周禮牲出入奏昭夏而齊氏仍宋儀等迎神奏昭夏牲出入更奏引牲樂乃以牲牢之樂用接祖宗之靈宋季之失禮也肅咸樂　謝超宗絜誠厎孝孝感烟霜寅儀式序肅禮綿張金蕐樹藻肅哲騰光殷殷升奏嚴嚴階庠匪椒匪玉是降是將懋分神衷翊祐傳昌引牲樂肇祀嚴靈恭禮尊國達敬傳典結孝陳則芬滌既肅犧牷既整聳誠流思端儀選景肆禮佇夜綿樂",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0034%20%E6%A8%82%E5%BA%9C%E8%A9%A9%E9%9B%86-%E5%AE%8B-%E9%83%AD%E8%8C%82%E5%80%A9.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4h0034/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.99,
+        "graceful": 0.96,
+        "gentle": 0.7,
+        "bright": 0.48,
+        "austere": 0.86,
+        "modern": 0.2,
+        "pronounceable": 0.95,
+        "writable": 0.98,
+        "recognizable": 1,
+        "uncommon": 0.94,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 1,
+        "recompositionPreference": 0.08
+      },
+      "quality": {
+        "pinyin": "wáng duān yí",
+        "tones": "2-1-2",
+        "meaning": "端正有则，仪度从容。",
+        "semanticExplanation": "取《乐府诗集》祭祀乐章“耸诚流思，端仪选景”中的连续“端仪”。“端”指端正，“仪”指礼仪与仪态；姓名沿用端谨有度的含义，同时明确原文属于礼乐语境。",
+        "pronunciationNote": "wáng duān yí，声调2-1-2，开口清楚，和“王令仪”一样属于端雅仪度路线。",
+        "usabilityNote": "两字常用、正式姓名感强；风格比现代流行名字更庄重。",
+        "uncommonnessNote": "组合少见但已有现实姓名使用，属于古典而非生造。",
+        "primaryStyle": "graceful",
+        "imageryCategory": "端正仪度"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "luna-duanyi-ceremonial",
+          "kind": "source-context",
+          "severity": "review",
+          "summary": "出处是祭祀礼乐语境，“端仪”气质正式，可能显得比同龄名字更庄重。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "gpt-5.6-luna",
+        "promptVersion": "luna-parallel-main-review-v1",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "luna-parallel-20260828-2",
+        "proposalId": "poetry-05",
+        "semantic": {
+          "semanticScore": 0.94,
+          "evidenceScore": 0.97,
+          "explanation": "取《乐府诗集》祭祀乐章“耸诚流思，端仪选景”中的连续“端仪”。“端”指端正，“仪”指礼仪与仪态；姓名沿用端谨有度的含义，同时明确原文属于礼乐语境。"
+        },
+        "name": {
+          "phonology": 0.92,
+          "nameFeel": 0.94,
+          "femininity": 0.88,
+          "usability": 0.95,
+          "distinctiveness": 0.94
+        },
+        "adversarialCritique": "主审保留：最贴近“令仪”的端雅骨架而不重复用字；风险是礼制感较强、年轻感不高。"
+      }
+    }
+  ]
+}

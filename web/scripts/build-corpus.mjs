@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -51,10 +51,7 @@ const scriptDirectory = dirname(fileURLToPath(import.meta.url));
 const outputDirectory = resolve(scriptDirectory, "../public/corpus");
 const dataDirectory = resolve(scriptDirectory, "../public/data");
 const vendorRoot = resolve(scriptDirectory, "../corpus/vendor");
-const generatedCandidateSources = [
-  resolve(scriptDirectory, "../corpus/generated/approved-candidates.json"),
-  resolve(scriptDirectory, "../corpus/generated/luna-approved-candidates.json"),
-];
+const generatedCandidateDirectory = resolve(scriptDirectory, "../corpus/generated");
 const indexDirectory = resolve(outputDirectory, "index");
 const textDirectory = resolve(outputDirectory, "texts");
 const maximumFileBytes = 1024 * 1024;
@@ -178,6 +175,10 @@ const buildVersion = sha256(
   ),
 );
 const generatedArtifacts = [];
+const generatedCandidateSources = (await readdir(generatedCandidateDirectory))
+  .filter((filename) => filename.endsWith(".json"))
+  .sort(compareText)
+  .map((filename) => resolve(generatedCandidateDirectory, filename));
 for (const generatedCandidateSource of generatedCandidateSources) {
   try {
     generatedArtifacts.push(parseGeneratedCandidateArtifact(
