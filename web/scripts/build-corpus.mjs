@@ -25,7 +25,7 @@ const [
   {
     emptyGeneratedCandidateArtifact,
     parseGeneratedCandidateArtifact,
-    verifyGeneratedCandidateEvidence,
+    verifyGeneratedCandidateArtifacts,
   },
   { characterDictionary, curatedCandidates, reviewedSeedMetadata },
   { chinesePoetryFiles },
@@ -51,10 +51,10 @@ const scriptDirectory = dirname(fileURLToPath(import.meta.url));
 const outputDirectory = resolve(scriptDirectory, "../public/corpus");
 const dataDirectory = resolve(scriptDirectory, "../public/data");
 const vendorRoot = resolve(scriptDirectory, "../corpus/vendor");
-const generatedCandidateSource = resolve(
-  scriptDirectory,
-  "../corpus/generated/approved-candidates.json",
-);
+const generatedCandidateSources = [
+  resolve(scriptDirectory, "../corpus/generated/approved-candidates.json"),
+  resolve(scriptDirectory, "../corpus/generated/luna-approved-candidates.json"),
+];
 const indexDirectory = resolve(outputDirectory, "index");
 const textDirectory = resolve(outputDirectory, "texts");
 const maximumFileBytes = 1024 * 1024;
@@ -177,17 +177,22 @@ const buildVersion = sha256(
     sourceLock.files.map(({ key, sha256: checksum }) => [key, checksum]),
   ),
 );
-let generatedArtifact = emptyGeneratedCandidateArtifact(buildVersion);
-try {
-  generatedArtifact = parseGeneratedCandidateArtifact(
-    JSON.parse(await readFile(generatedCandidateSource, "utf8")),
-    buildVersion,
-  );
-} catch (error) {
-  if (error?.code !== "ENOENT") throw error;
+const generatedArtifacts = [];
+for (const generatedCandidateSource of generatedCandidateSources) {
+  try {
+    generatedArtifacts.push(parseGeneratedCandidateArtifact(
+      JSON.parse(await readFile(generatedCandidateSource, "utf8")),
+      buildVersion,
+    ));
+  } catch (error) {
+    if (error?.code !== "ENOENT") throw error;
+  }
 }
-const generatedCandidates = verifyGeneratedCandidateEvidence(
-  generatedArtifact,
+if (generatedArtifacts.length === 0) {
+  generatedArtifacts.push(emptyGeneratedCandidateArtifact(buildVersion));
+}
+const generatedCandidates = verifyGeneratedCandidateArtifacts(
+  generatedArtifacts,
   sortedPassages,
 );
 const recommendationPool = buildRecommendationPool({
@@ -309,7 +314,12 @@ await Promise.all(
 );
 await writeFile(
   resolve(dataDirectory, "generated-candidates.json"),
-  `${JSON.stringify(generatedArtifact)}\n`,
+  `${JSON.stringify({
+    schemaVersion: 2,
+    corpusVersion: buildVersion,
+    count: generatedCandidates.length,
+    artifacts: generatedArtifacts,
+  })}\n`,
   "utf8",
 );
 for (const path of Object.keys(indexBuild.textShards).sort(compareText)) {

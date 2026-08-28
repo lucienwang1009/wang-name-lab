@@ -1,0 +1,769 @@
+{
+  "schemaVersion": 1,
+  "model": "gpt-5.6-luna",
+  "promptVersion": "luna-recomposed-v1",
+  "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+  "runId": "luna-native-20260828-1",
+  "createdAt": "2026-08-28T15:15:00+08:00",
+  "count": 8,
+  "candidates": [
+    {
+      "id": "personalized:惠慎",
+      "surname": "王",
+      "givenName": "惠慎",
+      "fullName": "王惠慎",
+      "evidence": {
+        "relation": "clause-related",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "本地逐字核验：normalizedText 第 4 字与第 6 字，非连续同 passage 取字；occurrence 已复核。；Luna 复审与主审均按“同段重组”解释，不宣称为原文固定词。",
+        "citations": [
+          {
+            "id": "shi-jing/work-0028/passage-0011:惠:0",
+            "passageId": "shi-jing/work-0028/passage-0011",
+            "matchedChar": "惠",
+            "occurrence": 0,
+            "bookId": "shi-jing",
+            "bookTitle": "《诗经》",
+            "workTitle": "燕燕",
+            "chapterTitle": "国风·邶风",
+            "quote": "终温且惠，淑慎其身。",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E8%AF%97%E7%BB%8F/shijing.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E8%A9%A9%E7%B6%93"
+          },
+          {
+            "id": "shi-jing/work-0028/passage-0011:慎:0",
+            "passageId": "shi-jing/work-0028/passage-0011",
+            "matchedChar": "慎",
+            "occurrence": 0,
+            "bookId": "shi-jing",
+            "bookTitle": "《诗经》",
+            "workTitle": "燕燕",
+            "chapterTitle": "国风·邶风",
+            "quote": "终温且惠，淑慎其身。",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E8%AF%97%E7%BB%8F/shijing.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E8%A9%A9%E7%B6%93"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.98,
+        "graceful": 0.86,
+        "gentle": 0.78,
+        "bright": 0.46,
+        "austere": 0.84,
+        "modern": 0.25,
+        "pronounceable": 0.9,
+        "writable": 0.98,
+        "recognizable": 1,
+        "uncommon": 0.94,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 0.16,
+        "recompositionPreference": 1
+      },
+      "quality": {
+        "pinyin": "wáng huì shèn",
+        "tones": "2-4-4",
+        "meaning": "温厚仁惠，审慎而有分寸。",
+        "semanticExplanation": "取《诗经·邶风·燕燕》“终温且惠，淑慎其身”中的“惠”与“慎”。原句赞美女子温惠、淑慎，两字重组仍完整承接同一品格语境。",
+        "pronunciationNote": "wáng huì shèn，声调2-4-4，读音清楚有力度，后两个去声使气质较端肃。",
+        "usabilityNote": "两字易认易写，古典女性语境明确；“慎”使整体比常见柔美女名更克制。",
+        "uncommonnessNote": "组合罕见而字形平易，辨识度高。",
+        "primaryStyle": "classical",
+        "imageryCategory": "温惠淑慎"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "luna-stern-shen",
+          "kind": "usability",
+          "severity": "review",
+          "summary": "“慎”带自持、谨慎的严肃色彩，完整姓名不属于轻盈甜美路线。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "gpt-5.6-luna",
+        "promptVersion": "luna-recomposed-v1",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "luna-native-20260828-1",
+        "proposalId": "luna-recomposed-01",
+        "semantic": {
+          "semanticScore": 0.95,
+          "evidenceScore": 0.99,
+          "explanation": "取《诗经·邶风·燕燕》“终温且惠，淑慎其身”中的“惠”与“慎”。原句赞美女子温惠、淑慎，两字重组仍完整承接同一品格语境。"
+        },
+        "name": {
+          "phonology": 0.87,
+          "nameFeel": 0.88,
+          "femininity": 0.84,
+          "usability": 0.92,
+          "distinctiveness": 0.94
+        },
+        "adversarialCritique": "主审保留：出处、少见度和女性语境都很强；是否喜欢“慎”字的严肃感需要家长亲自判断。"
+      }
+    },
+    {
+      "id": "personalized:舒清",
+      "surname": "王",
+      "givenName": "舒清",
+      "fullName": "王舒清",
+      "evidence": {
+        "relation": "clause-related",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "本地逐字核验：normalizedText 第 5 字与第 8 字，非连续同 passage 取字；occurrence 已复核。；Luna 复审与主审均按“同段重组”解释，不宣称为原文固定词。",
+        "citations": [
+          {
+            "id": "gu-wen-guan-zhi/work-0107/passage-0048:舒:0",
+            "passageId": "gu-wen-guan-zhi/work-0107/passage-0048",
+            "matchedChar": "舒",
+            "occurrence": 0,
+            "bookId": "gu-wen-guan-zhi",
+            "bookTitle": "《古文观止》",
+            "workTitle": "歸去來兮辭",
+            "chapterTitle": "卷七・六朝唐文",
+            "quote": "登東皋以舒嘯，臨清流而賦詩。",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E8%92%99%E5%AD%A6/guwenguanzhi.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E5%8F%A4%E6%96%87%E8%A7%80%E6%AD%A2"
+          },
+          {
+            "id": "gu-wen-guan-zhi/work-0107/passage-0048:清:0",
+            "passageId": "gu-wen-guan-zhi/work-0107/passage-0048",
+            "matchedChar": "清",
+            "occurrence": 0,
+            "bookId": "gu-wen-guan-zhi",
+            "bookTitle": "《古文观止》",
+            "workTitle": "歸去來兮辭",
+            "chapterTitle": "卷七・六朝唐文",
+            "quote": "登東皋以舒嘯，臨清流而賦詩。",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E8%92%99%E5%AD%A6/guwenguanzhi.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E5%8F%A4%E6%96%87%E8%A7%80%E6%AD%A2"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.92,
+        "graceful": 0.88,
+        "gentle": 0.82,
+        "bright": 0.8,
+        "austere": 0.62,
+        "modern": 0.56,
+        "pronounceable": 0.94,
+        "writable": 1,
+        "recognizable": 1,
+        "uncommon": 0.82,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 0.18,
+        "recompositionPreference": 1
+      },
+      "quality": {
+        "pinyin": "wáng shū qīng",
+        "tones": "2-1-1",
+        "meaning": "舒朗从容，清澈自持。",
+        "semanticExplanation": "取陶渊明《归去来兮辞》“登东皋以舒啸，临清流而赋诗”中的“舒”与“清”。两字处在同一隐逸场景，分别承接舒展的心境与清澈的环境。",
+        "pronunciationNote": "wáng shū qīng，声调2-1-1，音节清晰舒缓，尾音偏平。",
+        "usabilityNote": "常用字、读写无障碍，姓名感自然；来源不是固定成词，而是同句意境重组。",
+        "uncommonnessNote": "组合不算生僻，辨识度中等，胜在读写和语义自然。",
+        "primaryStyle": "graceful",
+        "imageryCategory": "舒啸清流"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "luna-common-qing",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“清”在现代名字中使用较多，组合的稀有度中等。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "gpt-5.6-luna",
+        "promptVersion": "luna-recomposed-v1",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "luna-native-20260828-1",
+        "proposalId": "luna-recomposed-02",
+        "semantic": {
+          "semanticScore": 0.91,
+          "evidenceScore": 0.98,
+          "explanation": "取陶渊明《归去来兮辞》“登东皋以舒啸，临清流而赋诗”中的“舒”与“清”。两字处在同一隐逸场景，分别承接舒展的心境与清澈的环境。"
+        },
+        "name": {
+          "phonology": 0.91,
+          "nameFeel": 0.91,
+          "femininity": 0.88,
+          "usability": 0.96,
+          "distinctiveness": 0.83
+        },
+        "adversarialCritique": "主审保留：比物候拼接更像真实姓名，原句也容易解释；独特性低于本批的景舒、惠慎。"
+      }
+    },
+    {
+      "id": "personalized:景舒",
+      "surname": "王",
+      "givenName": "景舒",
+      "fullName": "王景舒",
+      "evidence": {
+        "relation": "clause-related",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "本地逐字核验：normalizedText 第 96 字与第 100 字，非连续同 passage 取字；occurrence 已复核。；Luna 复审与主审均按“同段重组”解释，不宣称为原文固定词。",
+        "citations": [
+          {
+            "id": "wen-xuan/work-0413/passage-0012:景:0",
+            "passageId": "wen-xuan/work-0413/passage-0012",
+            "matchedChar": "景",
+            "occurrence": 0,
+            "bookId": "wen-xuan",
+            "bookTitle": "《文选》",
+            "workTitle": "曹子建七啟八首",
+            "chapterTitle": "《文選》卷三十四",
+            "quote": "顯朝惟清，王道遐均。民望如草，我澤如春。河濱無洗耳之士，喬岳無巢居之民。是以俊乂來仕，觀國之光。舉不遺才，進各異方。讚典禮於辟雍，講文德於明堂；正流俗之華說，綜孔氏之舊章。散樂移風，國富民康。神應休臻，屢獲嘉祥。故甘靈紛而晨降，景星宵而舒光。觀游龍於神淵，聆鳴鳳於高岡。此霸道之至隆，而雍熙之盛際。然主上猶以沈恩之未廣，懼聲教之未厲，采英奇於仄陋，宣皇明於巖穴。此甯子商歌之秋，而呂望所以投綸而逝也。",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0001%20%E6%96%87%E9%81%B8-%E6%A2%81-%E8%95%AD%E7%B5%B1.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4h0001/"
+          },
+          {
+            "id": "wen-xuan/work-0413/passage-0012:舒:0",
+            "passageId": "wen-xuan/work-0413/passage-0012",
+            "matchedChar": "舒",
+            "occurrence": 0,
+            "bookId": "wen-xuan",
+            "bookTitle": "《文选》",
+            "workTitle": "曹子建七啟八首",
+            "chapterTitle": "《文選》卷三十四",
+            "quote": "顯朝惟清，王道遐均。民望如草，我澤如春。河濱無洗耳之士，喬岳無巢居之民。是以俊乂來仕，觀國之光。舉不遺才，進各異方。讚典禮於辟雍，講文德於明堂；正流俗之華說，綜孔氏之舊章。散樂移風，國富民康。神應休臻，屢獲嘉祥。故甘靈紛而晨降，景星宵而舒光。觀游龍於神淵，聆鳴鳳於高岡。此霸道之至隆，而雍熙之盛際。然主上猶以沈恩之未廣，懼聲教之未厲，采英奇於仄陋，宣皇明於巖穴。此甯子商歌之秋，而呂望所以投綸而逝也。",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0001%20%E6%96%87%E9%81%B8-%E6%A2%81-%E8%95%AD%E7%B5%B1.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4h0001/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.95,
+        "graceful": 0.91,
+        "gentle": 0.83,
+        "bright": 0.92,
+        "austere": 0.58,
+        "modern": 0.6,
+        "pronounceable": 0.95,
+        "writable": 1,
+        "recognizable": 1,
+        "uncommon": 0.9,
+        "familyMeaning": 0.3,
+        "exactPhrasePreference": 0.2,
+        "recompositionPreference": 1
+      },
+      "quality": {
+        "pinyin": "wáng jǐng shū",
+        "tones": "2-3-1",
+        "meaning": "景星朗照，心性舒展。",
+        "semanticExplanation": "取《文选·七启》“景星宵而舒光”中的“景”与“舒”。两字同属景星舒光的主干意象，既延续“景玉”的明朗方向，也有可逐字复核的新典故。",
+        "pronunciationNote": "wáng jǐng shū，声调2-3-1，起伏清楚，王姓与“景舒”衔接利落。",
+        "usabilityNote": "两字常用易写，组合少见而有现代姓名感；“景”略中性，“舒”使整体柔和。",
+        "uncommonnessNote": "常用字形成少见组合，辨识度较高而不显刻意。",
+        "primaryStyle": "bright",
+        "imageryCategory": "景星舒光"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "luna-neutral-jing",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“景”单字略偏中性，完整姓名的女性感主要由“舒”与整体读感形成。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "gpt-5.6-luna",
+        "promptVersion": "luna-recomposed-v1",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "luna-native-20260828-1",
+        "proposalId": "luna-recomposed-03",
+        "semantic": {
+          "semanticScore": 0.95,
+          "evidenceScore": 0.99,
+          "explanation": "取《文选·七启》“景星宵而舒光”中的“景”与“舒”。两字同属景星舒光的主干意象，既延续“景玉”的明朗方向，也有可逐字复核的新典故。"
+        },
+        "name": {
+          "phonology": 0.93,
+          "nameFeel": 0.94,
+          "femininity": 0.87,
+          "usability": 0.96,
+          "distinctiveness": 0.91
+        },
+        "adversarialCritique": "主审重点保留：音律、真实姓名感和典故关系均衡，也是与家庭自拟“景玉”最自然的相邻探索方向。"
+      }
+    },
+    {
+      "id": "personalized:允嘉",
+      "surname": "王",
+      "givenName": "允嘉",
+      "fullName": "王允嘉",
+      "evidence": {
+        "relation": "clause-related",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "本地逐字核验：normalizedText 第 39 字与第 41 字，非连续同 passage 取字；occurrence 已复核。；Luna 复审与主审均按“同段重组”解释，不宣称为原文固定词。",
+        "citations": [
+          {
+            "id": "wen-xuan/work-0569/passage-0003:允:0",
+            "passageId": "wen-xuan/work-0569/passage-0003",
+            "matchedChar": "允",
+            "occurrence": 0,
+            "bookId": "wen-xuan",
+            "bookTitle": "《文选》",
+            "workTitle": "沈休文齊故安陸昭王碑文一首",
+            "chapterTitle": "《文選》卷五十九",
+            "quote": "帝出于震，日衣青光。方軌茅社，俾侯安陸；受瑞析珪，遂荒雲野。式掌儲命，帝難其人，公以宗室羽儀，允膺嘉選。協隆三善，仰敷四德。博望之苑載暉，龍樓之門以峻。獻替帷扆，實掌喉脣。奉待漏之書，銜如絲之旨。前暉後光，非止恒受。公以密戚上賢，俄而奉職，出納惟允，劍璽增華。伊昔帝唐，九官咸事，熊豹臨戭，納言是司。自此迄今，其任無爽。爰自近侍，式贊權衡。而皇情眷眷，慮深求瘼。姑蘇奧壤，任切關河，都會殷負，提封百萬。全趙之袨服叢臺，方此為劣；",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0001%20%E6%96%87%E9%81%B8-%E6%A2%81-%E8%95%AD%E7%B5%B1.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4h0001/"
+          },
+          {
+            "id": "wen-xuan/work-0569/passage-0003:嘉:0",
+            "passageId": "wen-xuan/work-0569/passage-0003",
+            "matchedChar": "嘉",
+            "occurrence": 0,
+            "bookId": "wen-xuan",
+            "bookTitle": "《文选》",
+            "workTitle": "沈休文齊故安陸昭王碑文一首",
+            "chapterTitle": "《文選》卷五十九",
+            "quote": "帝出于震，日衣青光。方軌茅社，俾侯安陸；受瑞析珪，遂荒雲野。式掌儲命，帝難其人，公以宗室羽儀，允膺嘉選。協隆三善，仰敷四德。博望之苑載暉，龍樓之門以峻。獻替帷扆，實掌喉脣。奉待漏之書，銜如絲之旨。前暉後光，非止恒受。公以密戚上賢，俄而奉職，出納惟允，劍璽增華。伊昔帝唐，九官咸事，熊豹臨戭，納言是司。自此迄今，其任無爽。爰自近侍，式贊權衡。而皇情眷眷，慮深求瘼。姑蘇奧壤，任切關河，都會殷負，提封百萬。全趙之袨服叢臺，方此為劣；",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0001%20%E6%96%87%E9%81%B8-%E6%A2%81-%E8%95%AD%E7%B5%B1.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4h0001/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.93,
+        "graceful": 0.88,
+        "gentle": 0.8,
+        "bright": 0.77,
+        "austere": 0.66,
+        "modern": 0.58,
+        "pronounceable": 0.94,
+        "writable": 1,
+        "recognizable": 1,
+        "uncommon": 0.87,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 0.16,
+        "recompositionPreference": 1
+      },
+      "quality": {
+        "pinyin": "wáng yǔn jiā",
+        "tones": "2-3-1",
+        "meaning": "诚允端正，美善可嘉。",
+        "semanticExplanation": "取《文选》“公以宗室羽仪，允膺嘉选”中的“允”与“嘉”。原句的“允”近于确实、恰当地，“嘉”指美好的选任；姓名释义同时参考两字稳定的常用义，不把原句误说成固定德目。",
+        "pronunciationNote": "wáng yǔn jiā，声调2-3-1，节奏分明，读来清亮。",
+        "usabilityNote": "常用字、易书写，古典感与现代姓名感较平衡；“嘉”是近年较常见的名字用字。",
+        "uncommonnessNote": "“嘉”常见，但“允嘉”整体组合仍有一定辨识度。",
+        "primaryStyle": "graceful",
+        "imageryCategory": "允膺嘉选"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "luna-grammar-yun",
+          "kind": "source-context",
+          "severity": "review",
+          "summary": "原句中的“允”近于“确实、恰当地”，典故说明不能误称“允嘉”为原文固定品格词。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "gpt-5.6-luna",
+        "promptVersion": "luna-recomposed-v1",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "luna-native-20260828-1",
+        "proposalId": "luna-recomposed-04",
+        "semantic": {
+          "semanticScore": 0.89,
+          "evidenceScore": 0.98,
+          "explanation": "取《文选》“公以宗室羽仪，允膺嘉选”中的“允”与“嘉”。原句的“允”近于确实、恰当地，“嘉”指美好的选任；姓名释义同时参考两字稳定的常用义，不把原句误说成固定德目。"
+        },
+        "name": {
+          "phonology": 0.92,
+          "nameFeel": 0.92,
+          "femininity": 0.88,
+          "usability": 0.95,
+          "distinctiveness": 0.87
+        },
+        "adversarialCritique": "主审保留：完整姓名自然，证据可核；释义必须保留语法边界，不能把原句中的副词“允”直接拔高为一整套德性。"
+      }
+    },
+    {
+      "id": "personalized:温容",
+      "surname": "王",
+      "givenName": "温容",
+      "fullName": "王温容",
+      "evidence": {
+        "relation": "clause-related",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "本地逐字核验：normalizedText 第 3 字与第 8 字取字，两个位置来自同一 passage；occurrence 已复核。；Luna 复审与主审均按“同段重组”解释，不宣称为原文固定词。",
+        "citations": [
+          {
+            "id": "zhong-yong/work-0001/passage-0245:温:0",
+            "passageId": "zhong-yong/work-0001/passage-0245",
+            "matchedChar": "温",
+            "occurrence": 0,
+            "bookId": "zhong-yong",
+            "bookTitle": "《中庸》",
+            "workTitle": "中庸",
+            "chapterTitle": "中庸",
+            "quote": "寬裕溫柔，足以有容也；",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E5%9B%9B%E4%B9%A6%E4%BA%94%E7%BB%8F/zhongyong.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E4%B8%AD%E5%BA%B8"
+          },
+          {
+            "id": "zhong-yong/work-0001/passage-0245:容:0",
+            "passageId": "zhong-yong/work-0001/passage-0245",
+            "matchedChar": "容",
+            "occurrence": 0,
+            "bookId": "zhong-yong",
+            "bookTitle": "《中庸》",
+            "workTitle": "中庸",
+            "chapterTitle": "中庸",
+            "quote": "寬裕溫柔，足以有容也；",
+            "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/b8594f81a89752241442f2ce267d6f66f96704ee/%E5%9B%9B%E4%B9%A6%E4%BA%94%E7%BB%8F/zhongyong.json",
+            "verificationUrl": "https://zh.wikisource.org/zh-hans/%E4%B8%AD%E5%BA%B8"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.96,
+        "graceful": 0.91,
+        "gentle": 0.91,
+        "bright": 0.66,
+        "austere": 0.7,
+        "modern": 0.38,
+        "pronounceable": 0.92,
+        "writable": 0.96,
+        "recognizable": 0.98,
+        "uncommon": 0.9,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 0.18,
+        "recompositionPreference": 1
+      },
+      "quality": {
+        "pinyin": "wáng wēn róng",
+        "tones": "2-1-2",
+        "meaning": "温厚宽容，柔和而有容人之量。",
+        "semanticExplanation": "取《中庸》“宽裕温柔，足以有容也”中的“温”与“容”。二字虽不连续，却同属一句对理想人格的完整论述，组合后仍保持温柔、有容的原义。",
+        "pronunciationNote": "wáng wēn róng，声调2-1-2，开合舒缓；“温容”与王姓衔接自然。",
+        "usabilityNote": "两字常用易写，组合少见但不生僻；气质偏古典温雅。",
+        "uncommonnessNote": "单字常见，双字组合不常见，辨识度主要来自搭配。",
+        "primaryStyle": "graceful",
+        "imageryCategory": "温厚有容"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "luna-recomposition",
+          "kind": "source-context",
+          "severity": "note",
+          "summary": "“温容”是从同句“温柔……有容”重组，并非原文连续词。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "gpt-5.6-luna",
+        "promptVersion": "luna-recomposed-v1",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "luna-native-20260828-1",
+        "proposalId": "luna-recomposed-05",
+        "semantic": {
+          "semanticScore": 0.95,
+          "evidenceScore": 0.98,
+          "explanation": "取《中庸》“宽裕温柔，足以有容也”中的“温”与“容”。二字虽不连续，却同属一句对理想人格的完整论述，组合后仍保持温柔、有容的原义。"
+        },
+        "name": {
+          "phonology": 0.91,
+          "nameFeel": 0.92,
+          "femininity": 0.9,
+          "usability": 0.93,
+          "distinctiveness": 0.9
+        },
+        "adversarialCritique": "主审保留：姓名感、女性感和出处完整性都较强；需要明确它是同句重组，不是古籍中的固定词。"
+      }
+    },
+    {
+      "id": "personalized:允温",
+      "surname": "王",
+      "givenName": "允温",
+      "fullName": "王允温",
+      "evidence": {
+        "relation": "clause-related",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "本地逐字核验：normalizedText 第 129 字与第 131 字取字，两个位置来自同一 passage；occurrence 已复核。；Luna 复审与主审均按“同段重组”解释，不宣称为原文固定词。",
+        "citations": [
+          {
+            "id": "wen-xuan/work-0011/passage-0008:允:0",
+            "passageId": "wen-xuan/work-0011/passage-0008",
+            "matchedChar": "允",
+            "occurrence": 0,
+            "bookId": "wen-xuan",
+            "bookTitle": "《文选》",
+            "workTitle": "張平子南都賦",
+            "chapterTitle": "《文選》卷四",
+            "quote": "近則考侯思故，匪居匪寧。穢長沙之無樂，歷江湘而北征。曜朱光於白水，會九世而飛榮。察茲邦之神偉，啟天心而寤靈。於其宮室，則有園廬舊宅，隆崇崔嵬。御房穆以華麗，連閣煥其相徽。聖皇之所逍遙，靈祇之所保綏。章陵鬱以青蔥，清廟肅以微微。皇祖歆而降福，彌萬祀而無衰。帝王臧其擅美，詠南音以顧懷。且其君子，弘懿明叡，允恭溫良。容止可則，出言有章。進退屈伸，與時抑揚。方今天地之睢剌，帝亂其政，豺虎肆虐，真人革命之秋也。",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0001%20%E6%96%87%E9%81%B8-%E6%A2%81-%E8%95%AD%E7%B5%B1.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4h0001/"
+          },
+          {
+            "id": "wen-xuan/work-0011/passage-0008:温:0",
+            "passageId": "wen-xuan/work-0011/passage-0008",
+            "matchedChar": "温",
+            "occurrence": 0,
+            "bookId": "wen-xuan",
+            "bookTitle": "《文选》",
+            "workTitle": "張平子南都賦",
+            "chapterTitle": "《文選》卷四",
+            "quote": "近則考侯思故，匪居匪寧。穢長沙之無樂，歷江湘而北征。曜朱光於白水，會九世而飛榮。察茲邦之神偉，啟天心而寤靈。於其宮室，則有園廬舊宅，隆崇崔嵬。御房穆以華麗，連閣煥其相徽。聖皇之所逍遙，靈祇之所保綏。章陵鬱以青蔥，清廟肅以微微。皇祖歆而降福，彌萬祀而無衰。帝王臧其擅美，詠南音以顧懷。且其君子，弘懿明叡，允恭溫良。容止可則，出言有章。進退屈伸，與時抑揚。方今天地之睢剌，帝亂其政，豺虎肆虐，真人革命之秋也。",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0001%20%E6%96%87%E9%81%B8-%E6%A2%81-%E8%95%AD%E7%B5%B1.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4h0001/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.94,
+        "graceful": 0.84,
+        "gentle": 0.85,
+        "bright": 0.62,
+        "austere": 0.75,
+        "modern": 0.42,
+        "pronounceable": 0.88,
+        "writable": 0.98,
+        "recognizable": 0.99,
+        "uncommon": 0.92,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 0.2,
+        "recompositionPreference": 1
+      },
+      "quality": {
+        "pinyin": "wáng yǔn wēn",
+        "tones": "2-3-1",
+        "meaning": "诚笃可信，气质温良。",
+        "semanticExplanation": "取《文选·南都赋》“弘懿明叡，允恭温良”中的“允”与“温”。两字位于同一德性铺陈中，重组后表达诚信而温良，语义关系紧密。",
+        "pronunciationNote": "wáng yǔn wēn，声调2-3-1，有转折起伏，读音清楚。",
+        "usabilityNote": "两字均易认易写；“允”略偏中性，“温”使整体气质柔和。",
+        "uncommonnessNote": "“允温”组合少见，古典感明显，但不依赖生僻字。",
+        "primaryStyle": "classical",
+        "imageryCategory": "诚信温良"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "luna-neutral-yun",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“允”在现代姓名中偏中性，整体女性感主要由“温”字形成。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "gpt-5.6-luna",
+        "promptVersion": "luna-recomposed-v1",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "luna-native-20260828-1",
+        "proposalId": "luna-recomposed-06",
+        "semantic": {
+          "semanticScore": 0.93,
+          "evidenceScore": 0.98,
+          "explanation": "取《文选·南都赋》“弘懿明叡，允恭温良”中的“允”与“温”。两字位于同一德性铺陈中，重组后表达诚信而温良，语义关系紧密。"
+        },
+        "name": {
+          "phonology": 0.87,
+          "nameFeel": 0.89,
+          "femininity": 0.85,
+          "usability": 0.91,
+          "distinctiveness": 0.92
+        },
+        "adversarialCritique": "主审保留：少见、端正且可长期使用；主要风险是“允”的中性气质，需要家长接受。"
+      }
+    },
+    {
+      "id": "personalized:明舒",
+      "surname": "王",
+      "givenName": "明舒",
+      "fullName": "王明舒",
+      "evidence": {
+        "relation": "clause-related",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "本地逐字核验：normalizedText 第 37 字与第 174 字取字，两个位置来自同一 passage；occurrence 已复核。；Luna 复审与主审均按“同段重组”解释，不宣称为原文固定词。",
+        "citations": [
+          {
+            "id": "wen-xuan/work-0061/passage-0001:明:0",
+            "passageId": "wen-xuan/work-0061/passage-0001",
+            "matchedChar": "明",
+            "occurrence": 0,
+            "bookId": "wen-xuan",
+            "bookTitle": "《文选》",
+            "workTitle": "宋玉神女賦并序",
+            "chapterTitle": "《文選》卷十九",
+            "quote": "楚襄王與宋玉遊於雲夢之浦，使玉賦高唐之事。其夜王寢，果夢與神女遇，其狀甚麗。王異之，明日，以白玉。玉曰：「其夢若何？」王曰：「晡夕之後，精神怳忽，若有所喜。紛紛擾擾，未知何意。目色髣髴，乍若有記。見一婦人，狀甚奇異。寐而夢之，寤不自識。罔兮不樂，悵然失志。於是撫心定氣，復見所夢。」王曰：「狀何如也？」玉曰：「茂矣美矣！諸好備矣！盛矣麗矣！難測究矣！上古既無，世所未見。瓌姿瑋態，不可勝贊。其始來也，耀乎若白日初出照屋梁。其少進也，皎若明月舒其光。",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0001%20%E6%96%87%E9%81%B8-%E6%A2%81-%E8%95%AD%E7%B5%B1.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4h0001/"
+          },
+          {
+            "id": "wen-xuan/work-0061/passage-0001:舒:0",
+            "passageId": "wen-xuan/work-0061/passage-0001",
+            "matchedChar": "舒",
+            "occurrence": 0,
+            "bookId": "wen-xuan",
+            "bookTitle": "《文选》",
+            "workTitle": "宋玉神女賦并序",
+            "chapterTitle": "《文選》卷十九",
+            "quote": "楚襄王與宋玉遊於雲夢之浦，使玉賦高唐之事。其夜王寢，果夢與神女遇，其狀甚麗。王異之，明日，以白玉。玉曰：「其夢若何？」王曰：「晡夕之後，精神怳忽，若有所喜。紛紛擾擾，未知何意。目色髣髴，乍若有記。見一婦人，狀甚奇異。寐而夢之，寤不自識。罔兮不樂，悵然失志。於是撫心定氣，復見所夢。」王曰：「狀何如也？」玉曰：「茂矣美矣！諸好備矣！盛矣麗矣！難測究矣！上古既無，世所未見。瓌姿瑋態，不可勝贊。其始來也，耀乎若白日初出照屋梁。其少進也，皎若明月舒其光。",
+            "sourceUrl": "https://raw.githubusercontent.com/kr-shadow/KR4/82a0ffcb9f183352c137a41ffdeb110a2c3bf32a/KR4h0001%20%E6%96%87%E9%81%B8-%E6%A2%81-%E8%95%AD%E7%B5%B1.txt",
+            "verificationUrl": "https://www.kanripo.org/text/KR4h0001/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.9,
+        "graceful": 0.88,
+        "gentle": 0.82,
+        "bright": 0.9,
+        "austere": 0.51,
+        "modern": 0.58,
+        "pronounceable": 0.93,
+        "writable": 0.99,
+        "recognizable": 1,
+        "uncommon": 0.78,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 0.22,
+        "recompositionPreference": 1
+      },
+      "quality": {
+        "pinyin": "wáng míng shū",
+        "tones": "2-2-1",
+        "meaning": "明朗清澈，舒展从容。",
+        "semanticExplanation": "取《文选·神女赋》“皎若明月舒其光”中的“明”与“舒”。两个字属于同一比喻的主干意象，重组后由明月舒光引申为明朗、舒展。",
+        "pronunciationNote": "wáng míng shū，声调2-2-1，尾音清亮；前两字同为阳平，节奏较平稳。",
+        "usabilityNote": "常用字、无输入障碍，现代姓名感自然；原文语境为文学赋体的人物描写。",
+        "uncommonnessNote": "字形平易，组合辨识度中等，胜在读写自然。",
+        "primaryStyle": "bright",
+        "imageryCategory": "明月舒光"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "luna-tone-22",
+          "kind": "pronunciation",
+          "severity": "note",
+          "summary": "“王明”连续两个阳平，朗读起伏较小，但尾字阴平能够收束。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "gpt-5.6-luna",
+        "promptVersion": "luna-recomposed-v1",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "luna-native-20260828-1",
+        "proposalId": "luna-recomposed-07",
+        "semantic": {
+          "semanticScore": 0.92,
+          "evidenceScore": 0.97,
+          "explanation": "取《文选·神女赋》“皎若明月舒其光”中的“明”与“舒”。两个字属于同一比喻的主干意象，重组后由明月舒光引申为明朗、舒展。"
+        },
+        "name": {
+          "phonology": 0.9,
+          "nameFeel": 0.91,
+          "femininity": 0.87,
+          "usability": 0.95,
+          "distinctiveness": 0.8
+        },
+        "adversarialCritique": "主审保留：四项候选中最接近现代真实姓名，典故链条也清楚；独特性略弱于“温容”“允温”。"
+      }
+    },
+    {
+      "id": "personalized:明懿",
+      "surname": "王",
+      "givenName": "明懿",
+      "fullName": "王明懿",
+      "evidence": {
+        "relation": "clause-related",
+        "reviewStatus": "ai-reviewed",
+        "extraction": "本地逐字核验：normalizedText 第 36 字与第 126 字取字，两个位置来自同一 passage；occurrence 已复核。；Luna 复审与主审均按“同段重组”解释，不宣称为原文固定词。",
+        "citations": [
+          {
+            "id": "yi-zhou-shu/work-0006/passage-0010:明:0",
+            "passageId": "yi-zhou-shu/work-0006/passage-0010",
+            "matchedChar": "明",
+            "occurrence": 0,
+            "bookId": "yi-zhou-shu",
+            "bookTitle": "《逸周书》",
+            "workTitle": "KR2d0001_006",
+            "chapterTitle": "KR2d0001_006",
+            "quote": "安民長悌曰恭執禮敬賔曰恭芘親之門曰恭尊長讓善曰恭淵源流通曰恭照臨四方曰明譖訴不行曰明威儀悉備曰欽大慮靜民曰定安民大慮曰定安民法古曰定純行不二曰定謀慮不威曰德辟地有德曰襄甲胄有勞曰襄有伐而還曰釐質淵受諫曰釐慈惠愛親曰釐博聞多能曰獻聰明叡哲曰獻温柔聖善曰懿五宗安之曰孝恊時肇享曰孝秉德不囘曰孝大慮行節曰孝執心克莊曰齊輔輕供就曰齊温年好樂曰康安樂撫民曰康令民安樂曰康",
+            "sourceUrl": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR2d0001.jsonl",
+            "verificationUrl": "https://www.kanripo.org/text/KR2d0001/"
+          },
+          {
+            "id": "yi-zhou-shu/work-0006/passage-0010:懿:0",
+            "passageId": "yi-zhou-shu/work-0006/passage-0010",
+            "matchedChar": "懿",
+            "occurrence": 0,
+            "bookId": "yi-zhou-shu",
+            "bookTitle": "《逸周书》",
+            "workTitle": "KR2d0001_006",
+            "chapterTitle": "KR2d0001_006",
+            "quote": "安民長悌曰恭執禮敬賔曰恭芘親之門曰恭尊長讓善曰恭淵源流通曰恭照臨四方曰明譖訴不行曰明威儀悉備曰欽大慮靜民曰定安民大慮曰定安民法古曰定純行不二曰定謀慮不威曰德辟地有德曰襄甲胄有勞曰襄有伐而還曰釐質淵受諫曰釐慈惠愛親曰釐博聞多能曰獻聰明叡哲曰獻温柔聖善曰懿五宗安之曰孝恊時肇享曰孝秉德不囘曰孝大慮行節曰孝執心克莊曰齊輔輕供就曰齊温年好樂曰康安樂撫民曰康令民安樂曰康",
+            "sourceUrl": "https://raw.githubusercontent.com/direct-phonology/ect-krp/b28fab8f54b0e3ec3ca97cc2baa8caecfe71259f/jsonl/KR2d0001.jsonl",
+            "verificationUrl": "https://www.kanripo.org/text/KR2d0001/"
+          }
+        ]
+      },
+      "features": {
+        "classical": 0.97,
+        "graceful": 0.88,
+        "gentle": 0.84,
+        "bright": 0.76,
+        "austere": 0.82,
+        "modern": 0.34,
+        "pronounceable": 0.9,
+        "writable": 0.72,
+        "recognizable": 0.9,
+        "uncommon": 0.93,
+        "familyMeaning": 0.08,
+        "exactPhrasePreference": 0.12,
+        "recompositionPreference": 1
+      },
+      "quality": {
+        "pinyin": "wáng míng yì",
+        "tones": "2-2-4",
+        "meaning": "明达清正，温柔美善。",
+        "semanticExplanation": "取《逸周书》同一谥法段落“照临四方曰明”与“温柔圣善曰懿”。二字并非相邻，却同属对德行的训释，组合为明达而美善。",
+        "pronunciationNote": "wáng míng yì，声调2-2-4，尾字去声利落；“明懿”端庄清亮。",
+        "usabilityNote": "“明”易用，“懿”古典且书写成本较高；整体正式感强。",
+        "uncommonnessNote": "组合少见、辨识度高，不靠怪字制造稀有感。",
+        "primaryStyle": "classical",
+        "imageryCategory": "明达懿善"
+      },
+      "eligibility": "recommendable",
+      "risks": [
+        {
+          "code": "luna-distant-recomposition",
+          "kind": "source-context",
+          "severity": "review",
+          "summary": "两字来自同一长段中的两条训释，语义相容但距离较远。"
+        },
+        {
+          "code": "luna-writing-yi",
+          "kind": "usability",
+          "severity": "note",
+          "summary": "“懿”笔画较多，幼年书写与口头解释成本偏高。"
+        }
+      ],
+      "factoryAudit": {
+        "model": "gpt-5.6-luna",
+        "promptVersion": "luna-recomposed-v1",
+        "corpusVersion": "0844b9ffb558f983ca39d59b4b09ebd33de7e4c545cffa72ceff70dc800f51d9",
+        "runId": "luna-native-20260828-1",
+        "proposalId": "luna-recomposed-08",
+        "semantic": {
+          "semanticScore": 0.92,
+          "evidenceScore": 0.93,
+          "explanation": "取《逸周书》同一谥法段落“照临四方曰明”与“温柔圣善曰懿”。二字并非相邻，却同属对德行的训释，组合为明达而美善。"
+        },
+        "name": {
+          "phonology": 0.88,
+          "nameFeel": 0.9,
+          "femininity": 0.9,
+          "usability": 0.8,
+          "distinctiveness": 0.94
+        },
+        "adversarialCritique": "主审保留：端雅而不普通；证据关系弱于前三名，因为两字分处同一长段的两条训释，应作为重组典故展示。"
+      }
+    }
+  ]
+}

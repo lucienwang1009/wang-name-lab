@@ -4,6 +4,7 @@ import type { PersonalizedCandidate } from "../domain/types.ts";
 import type { CorpusPassage } from "./types.ts";
 import {
   parseGeneratedCandidateArtifact,
+  verifyGeneratedCandidateArtifacts,
   verifyGeneratedCandidateEvidence,
 } from "./generatedCandidates.ts";
 
@@ -67,6 +68,16 @@ function artifact(candidates: PersonalizedCandidate[] = [candidate]) {
 describe("AI 候选构建期导入", () => {
   it("验证模型、提示词、运行和语料版本", () => {
     expect(parseGeneratedCandidateArtifact(artifact(), "fixture-v1").count).toBe(1);
+    const lunaCandidate = structuredClone(candidate);
+    lunaCandidate.factoryAudit!.model = "gpt-5.6-luna";
+    expect(parseGeneratedCandidateArtifact({
+      ...artifact([lunaCandidate]),
+      model: "gpt-5.6-luna",
+    }, "fixture-v1").model).toBe("gpt-5.6-luna");
+    expect(() => parseGeneratedCandidateArtifact({
+      ...artifact(),
+      model: "gpt-5.6-luna",
+    }, "fixture-v1")).toThrow(/完整审核状态/);
     expect(() => parseGeneratedCandidateArtifact({ ...artifact(), corpusVersion: "stale" }, "fixture-v1"))
       .toThrow(/版本不一致/);
   });
@@ -92,5 +103,29 @@ describe("AI 候选构建期导入", () => {
       [passage],
     )).toThrow(/姓名重复/);
   });
-});
 
+  it("允许多个审核模型产物并拒绝跨文件重名", () => {
+    const deepseekArtifact = parseGeneratedCandidateArtifact(artifact(), "fixture-v1");
+    const lunaCandidate = structuredClone(candidate);
+    lunaCandidate.givenName = "柔嘉";
+    lunaCandidate.fullName = "王柔嘉";
+    lunaCandidate.id = "personalized:柔嘉";
+    lunaCandidate.evidence.citations = [
+      { ...candidate.evidence.citations[0]!, id: `${passage.id}:柔:0`, matchedChar: "柔", occurrence: 0 },
+      { ...candidate.evidence.citations[1]!, id: `${passage.id}:嘉:0`, matchedChar: "嘉", occurrence: 0 },
+    ];
+    lunaCandidate.factoryAudit!.model = "gpt-5.6-luna";
+    const lunaArtifact = parseGeneratedCandidateArtifact({
+      ...artifact([lunaCandidate]),
+      model: "gpt-5.6-luna",
+    }, "fixture-v1");
+    expect(verifyGeneratedCandidateArtifacts(
+      [deepseekArtifact, lunaArtifact],
+      [passage],
+    ).map(({ givenName }) => givenName)).toEqual(["令仪", "柔嘉"]);
+    expect(() => verifyGeneratedCandidateArtifacts(
+      [deepseekArtifact, deepseekArtifact],
+      [passage],
+    )).toThrow(/跨文件重名/);
+  });
+});

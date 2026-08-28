@@ -173,7 +173,7 @@ export interface CandidateFactoryScores {
 }
 
 export interface CandidateFactoryAudit {
-  model: "deepseek-v4-flash";
+  model: "deepseek-v4-flash" | "gpt-5.6-luna";
   promptVersion: string;
   corpusVersion: string;
   runId: string;

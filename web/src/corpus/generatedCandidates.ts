@@ -5,7 +5,7 @@ import type { CorpusPassage } from "./types.ts";
 
 export interface GeneratedCandidateArtifact {
   schemaVersion: 1;
-  model: "deepseek-v4-flash";
+  model: "deepseek-v4-flash" | "gpt-5.6-luna";
   promptVersion: string;
   corpusVersion: string;
   runId: string;
@@ -13,6 +13,11 @@ export interface GeneratedCandidateArtifact {
   count: number;
   candidates: PersonalizedCandidate[];
 }
+
+const SUPPORTED_REVIEW_MODELS = new Set([
+  "deepseek-v4-flash",
+  "gpt-5.6-luna",
+]);
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -25,7 +30,7 @@ export function parseGeneratedCandidateArtifact(
   if (
     !isRecord(value) ||
     value.schemaVersion !== 1 ||
-    value.model !== "deepseek-v4-flash" ||
+    !SUPPORTED_REVIEW_MODELS.has(String(value.model)) ||
     value.corpusVersion !== expectedCorpusVersion ||
     typeof value.promptVersion !== "string" ||
     typeof value.runId !== "string" ||
@@ -42,7 +47,7 @@ export function parseGeneratedCandidateArtifact(
       !isRecord(candidate.factoryAudit) ||
       candidate.eligibility !== "recommendable" ||
       candidate.evidence.reviewStatus !== "ai-reviewed" ||
-      candidate.factoryAudit.model !== "deepseek-v4-flash" ||
+      candidate.factoryAudit.model !== value.model ||
       candidate.factoryAudit.corpusVersion !== expectedCorpusVersion ||
       candidate.factoryAudit.promptVersion !== value.promptVersion ||
       candidate.factoryAudit.runId !== value.runId
@@ -107,6 +112,23 @@ export function verifyGeneratedCandidateEvidence(
   return [...artifact.candidates];
 }
 
+export function verifyGeneratedCandidateArtifacts(
+  artifacts: readonly GeneratedCandidateArtifact[],
+  passages: readonly CorpusPassage[],
+): PersonalizedCandidate[] {
+  const candidates = artifacts.flatMap((artifact) =>
+    verifyGeneratedCandidateEvidence(artifact, passages)
+  );
+  const seenNames = new Set<string>();
+  for (const candidate of candidates) {
+    if (seenNames.has(candidate.givenName)) {
+      throw new Error(`不同 AI 审核产物中存在跨文件重名：${candidate.givenName}。`);
+    }
+    seenNames.add(candidate.givenName);
+  }
+  return candidates;
+}
+
 export function emptyGeneratedCandidateArtifact(corpusVersion: string): GeneratedCandidateArtifact {
   return {
     schemaVersion: 1,
@@ -119,4 +141,3 @@ export function emptyGeneratedCandidateArtifact(corpusVersion: string): Generate
     candidates: [],
   };
 }
-
